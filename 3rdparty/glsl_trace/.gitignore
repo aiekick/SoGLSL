@@ -1,0 +1,8 @@
+*.user
+*.glsl_dbg
+/build
+glslang
+SPIRV-Cross
+GLFW
+GLEW
+Vulkan-Headers

@@ -1,0 +1,30 @@
+git submodule add --force -b "master" https://github.com/KhronosGroup/glslang.git 3rdparty/glslang
+git submodule add --force -b "master" https://github.com/glfw/glfw.git 3rdparty/glfw
+git submodule add --force -b "master" https://github.com/leethomason/tinyxml2.git 3rdparty/tinyxml2
+git submodule add --force -b "master" https://github.com/g-truc/glm.git 3rdparty/glm
+git submodule add --force -b "master" https://github.com/nothings/stb.git 3rdparty/stb
+git submodule add --force -b "master" https://github.com/wolfpld/tracy.git 3rdparty/tracy
+git submodule add --force -b "c" https://github.com/Dav1dde/glad.git 3rdparty/glad
+git submodule add --force -b "master" https://github.com/azhirnov/glsl_trace.git 3rdparty/glsl_trace
+git submodule add --force -b "master" https://github.com/curl/curl.git 3rdparty/curl
+git submodule add --force -b "master" https://github.com/aiekick/ImGuizmo.git 3rdparty/ImGuizmo
+git submodule add --force -b "master" https://github.com/aiekick/imgui_markdown.git 3rdparty/ImGuiMarkDown
+git submodule add --force -b "master" https://github.com/aiekick/cTools.git 3rdparty/ctools
+git submodule add --force -b "master" https://github.com/aiekick/rtmidi.git 3rdparty/rtmidi
+git submodule add --force -b "LibOnly" https://github.com/aiekick/ImGuiFileDialog.git 3rdparty/ImGuiFileDialog
+git submodule add --force -b "docking_layout" https://github.com/aiekick/imgui.git 3rdparty/imgui
+git submodule add --force -b "master" https://github.com/aiekick/ImGuiColorTextEdit.git 3rdparty/ImGuiColorTextEdit
+git submodule add --force -b "master" https://github.com/aiekick/miniaudio.git 3rdparty/miniaudio
+git submodule add --force -b "master" https://github.com/aiekick/kissfft.git 3rdparty/kissfft
+git submodule add --force -b "master" https://github.com/aiekick/picojson.git 3rdparty/picojson
+git submodule add --force -b "main" https://github.com/aiekick/alphanum.git 3rdparty/alphanum
+git submodule add --force -b "master" https://github.com/aiekick/efsw.git 3rdparty/efsw
+git submodule add --force -b "master" https://github.com/aiekick/OpenXR-SDK-Source.git 3rdparty/OpenXR_SDK
+git submodule add --force -b "main" https://github.com/libsdl-org/SDL.git 3rdparty/SDL
+git submodule add --force -b "master" https://github.com/assimp/assimp 3rdparty/assimp
+git submodule add --force -b "master" https://github.com/epezent/implot.git 3rdparty/implot
+git submodule add --force -b "master" https://github.com/aiekick/ImCoolBar.git 3rdparty/imcoolbar
+git submodule add --force -b "master" https://github.com/aiekick/InAppGpuProfiler.git 3rdparty/InAppGpuProfiler
+
+git submodule add --force -b "v1.x" https://github.com/baldurk/renderdoc.git 3rdparty/renderdoc
+
