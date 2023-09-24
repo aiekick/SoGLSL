@@ -313,7 +313,7 @@ bool Messaging::m_DrawMessage(const MessageBlockWeak& vMsg, const size_t& vMsgId
         auto ci_ptr = m_GetCategoryInfos(ptr->type);
         if (ci_ptr != nullptr) {
             ImGui::PushStyleColor(ImGuiCol_Text, ci_ptr->color);
-            ImGui::Text("%s ", ci_ptr->icon);
+            ImGui::Text("%s ", ci_ptr->icon.c_str());
             ImGui::PopStyleColor();
         }
 
