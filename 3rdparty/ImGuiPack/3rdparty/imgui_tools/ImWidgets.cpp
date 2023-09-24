@@ -2297,7 +2297,8 @@ inline bool inSliderBehaviorStepperT(const ImRect& bb, ImGuiID id, ImGuiDataType
             } else {
                 const float mouse_abs_pos = g.IO.MousePos[axis];
                 if (g.ActiveIdIsJustActivated) {
-                    float grab_t = ScaleRatioFromValueT<TYPE, SIGNEDTYPE, FLOATTYPE>(data_type, *v, v_min, v_max, is_logarithmic, logarithmic_zero_epsilon, zero_deadzone_halfsize);
+                    float grab_t = inScaleRatioFromValueT<TYPE, SIGNEDTYPE, FLOATTYPE>(data_type, *v, v_min, v_max, is_logarithmic,
+                                                                                       logarithmic_zero_epsilon, zero_deadzone_halfsize);
                     if (axis == ImGuiAxis_Y)
                         grab_t = 1.0f - grab_t;
                     const float grab_pos           = ImLerp(slider_usable_pos_min, slider_usable_pos_max, grab_t);
