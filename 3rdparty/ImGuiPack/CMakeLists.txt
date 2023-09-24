@@ -241,6 +241,10 @@ target_include_directories(${PROJECT} PRIVATE
 	${IMGUIPACK_INCLUDE_DIRS}
 )
 
+if(UNIX)
+    target_compile_options(${PROJECT} PUBLIC "-Wno-unknown-pragmas -Wno-unused-variable - Wno-unused-parameter")
+endif()
+ 
 if(USE_DEBUG_SANITIZER)
 	target_compile_options(${PROJECT} PRIVATE $<$<CONFIG:Debug>:-fsanitize=address -static-libasan -static-libasan>)
 	target_link_options(${PROJECT} PRIVATE $<$<CONFIG:Debug>:-fsanitize=address -static-libasan>)
