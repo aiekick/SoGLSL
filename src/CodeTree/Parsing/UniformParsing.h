@@ -22,7 +22,6 @@
 #include <map>
 #include <unordered_map>
 #include <list>
-#include <glslang/glslang/Include/BaseTypes.h>
 
 struct UniformParsedStruct
 {
