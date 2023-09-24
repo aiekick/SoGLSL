@@ -9,9 +9,9 @@ project(${PROJECT} CXX)
 
 option(USE_SDL "Enale SDL instead of GLFW" OFF)
 option(USE_PROFILER_TRACY "Enale Tracy Profiler" OFF)
-option(USE_NETWORK "Enable NETWORK (Shader Inport, Versions, Changelog)" OFF)
-option(USE_STD_FILESYSTEM "Enable std::fielsystem use for path and ImGuiFileDialog" OFF)
-option(USE_VR "Enable VR Backend via OpenXR" OFF)
+option(USE_NETWORK "Enable NETWORK (Shader Inport, Versions, Changelog)" ON)
+option(USE_STD_FILESYSTEM "Enable std::fielsystem use for path and ImGuiFileDialog" ON)
+option(USE_VR "Enable VR Backend via OpenXR" ON)
 
 ## for group smake targets in the dir cmakeTargets
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -29,10 +29,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 ## some defines for debug mode (before 3rdparty.cmake)
 if(MSVC)
-	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG /Zi /MTd")
+	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG /Zi /MTd /NODEFAULTLIB:library")
 	set(CMAKE_CXX_FLAGS_RELEASE "/MT")
 else()
-  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG -g")
+  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG -g /NODEFAULTLIB:library")
 endif()
 
 
