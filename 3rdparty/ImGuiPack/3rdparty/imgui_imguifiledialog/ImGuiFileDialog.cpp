@@ -1331,6 +1331,7 @@ IGFD_API std::string IGFD::FilterManager::ReplaceExtentionWithCurrentFilterIfNee
                     } else {  // add extention
                         result = vFileName + current_filter;
                     }
+                    break;
                 }
                 case IGFD_ResultMode_AddIfNoFileExt: {
                     const auto& count_dots = Utils::GetCharCountInString(vFileName, '.');
@@ -1342,6 +1343,7 @@ IGFD_API std::string IGFD::FilterManager::ReplaceExtentionWithCurrentFilterIfNee
                         const auto& file_name_without_user_ext = vFileName.substr(0, lp);
                         result = file_name_without_user_ext + current_filter;
                     }
+                    break;
                 }
             }
 
@@ -3321,14 +3323,13 @@ IGFD_API bool IGFD::KeyExplorerFeature::prFlashableSelectable(
     using namespace ImGui;
 
     ImGuiWindow* window = GetCurrentWindow();
-    if (window->SkipItems)
-        return false;
+    if (window->SkipItems) return false;
 
-    ImGuiContext& g = *GImGui;
+    ImGuiContext& g         = *GImGui;
     const ImGuiStyle& style = g.Style;
 
     // Submit label or explicit size to ItemSize(), whereas ItemAdd() will submit a larger/spanning rectangle.
-    ImGuiID id = window->GetID(label);
+    ImGuiID id        = window->GetID(label);
     ImVec2 label_size = CalcTextSize(label, NULL, true);
     ImVec2 size(size_arg.x != 0.0f ? size_arg.x : label_size.x, size_arg.y != 0.0f ? size_arg.y : label_size.y);
     ImVec2 pos = window->DC.CursorPos;
@@ -3336,13 +3337,11 @@ IGFD_API bool IGFD::KeyExplorerFeature::prFlashableSelectable(
     ItemSize(size, 0.0f);
 
     // Fill horizontal space
-    // We don't support (size < 0.0f) in Selectable() because the ItemSpacing extension would make explicitly right-aligned sizes not visibly match
-    // other widgets.
+    // We don't support (size < 0.0f) in Selectable() because the ItemSpacing extension would make explicitly right-aligned sizes not visibly match other widgets.
     const bool span_all_columns = (flags & ImGuiSelectableFlags_SpanAllColumns) != 0;
-    const float min_x = span_all_columns ? window->ParentWorkRect.Min.x : pos.x;
-    const float max_x = span_all_columns ? window->ParentWorkRect.Max.x : window->WorkRect.Max.x;
-    if (size_arg.x == 0.0f || (flags & ImGuiSelectableFlags_SpanAvailWidth))
-        size.x = ImMax(label_size.x, max_x - min_x);
+    const float min_x           = span_all_columns ? window->ParentWorkRect.Min.x : pos.x;
+    const float max_x           = span_all_columns ? window->ParentWorkRect.Max.x : window->WorkRect.Max.x;
+    if (size_arg.x == 0.0f || (flags & ImGuiSelectableFlags_SpanAvailWidth)) size.x = ImMax(label_size.x, max_x - min_x);
 
     // Text stays at the submission position, but bounding box may be extended on both sides
     const ImVec2 text_min = pos;
@@ -3371,14 +3370,13 @@ IGFD_API bool IGFD::KeyExplorerFeature::prFlashableSelectable(
     }
 
     const bool disabled_item = (flags & ImGuiSelectableFlags_Disabled) != 0;
-    const bool item_add = ItemAdd(bb, id, NULL, disabled_item ? ImGuiItemFlags_Disabled : ImGuiItemFlags_None);
+    const bool item_add      = ItemAdd(bb, id, NULL, disabled_item ? ImGuiItemFlags_Disabled : ImGuiItemFlags_None);
     if (span_all_columns) {
         window->ClipRect.Min.x = backup_clip_rect_min_x;
         window->ClipRect.Max.x = backup_clip_rect_max_x;
     }
 
-    if (!item_add)
-        return false;
+    if (!item_add) return false;
 
     const bool disabled_global = (g.CurrentItemFlags & ImGuiItemFlags_Disabled) != 0;
     if (disabled_item && !disabled_global)  // Only testing this as an optimization
@@ -3408,7 +3406,7 @@ IGFD_API bool IGFD::KeyExplorerFeature::prFlashableSelectable(
     if (flags & ImGuiSelectableFlags_AllowDoubleClick) {
         button_flags |= ImGuiButtonFlags_PressedOnClickRelease | ImGuiButtonFlags_PressedOnDoubleClick;
     }
-    if ((flags & ImGuiSelectableFlags_AllowOverlap) || (g.LastItemData.InFlags & ImGuiItemFlags_AllowOverlap)) {
+    if (flags & ImGuiSelectableFlags_AllowItemOverlap) {
         button_flags |= ImGuiButtonFlags_AllowOverlap;
     }
 
@@ -3424,8 +3422,7 @@ IGFD_API bool IGFD::KeyExplorerFeature::prFlashableSelectable(
     //   - (2) usage will fail with clipped items
     //   The multi-select API aim to fix those issues, e.g. may be replaced with a BeginSelection() API.
     if ((flags & ImGuiSelectableFlags_SelectOnNav) && g.NavJustMovedToId != 0 && g.NavJustMovedToFocusScopeId == g.CurrentFocusScopeId)
-        if (g.NavJustMovedToId == id)
-            selected = pressed = true;
+        if (g.NavJustMovedToId == id) selected = pressed = true;
 
     // Update NavId when clicking or when Hovering (this doesn't happen on most widgets), so navigation can be resumed with gamepad/keyboard
     if (pressed || (hovered && (flags & ImGuiSelectableFlags_SetNavIdOnHover))) {
@@ -3434,8 +3431,9 @@ IGFD_API bool IGFD::KeyExplorerFeature::prFlashableSelectable(
             g.NavDisableHighlight = true;
         }
     }
-    if (pressed)
-        MarkItemEdited(id);
+    if (pressed) MarkItemEdited(id);
+
+    if (flags & ImGuiSelectableFlags_AllowItemOverlap) SetItemAllowOverlap();
 
     // In this branch, Selectable() cannot toggle the selection so this will never trigger.
     if (selected != was_selected)  //-V547
@@ -3461,12 +3459,9 @@ IGFD_API bool IGFD::KeyExplorerFeature::prFlashableSelectable(
     RenderTextClipped(text_min, text_max, label, NULL, &label_size, style.SelectableTextAlign, &bb);
 
     // Automatically close popups
-    if (pressed && (window->Flags & ImGuiWindowFlags_Popup) && !(flags & ImGuiSelectableFlags_DontClosePopups) &&
-        !(g.LastItemData.InFlags & ImGuiItemFlags_SelectableDontClosePopup))
-        CloseCurrentPopup();
+    if (pressed && (window->Flags & ImGuiWindowFlags_Popup) && !(flags & ImGuiSelectableFlags_DontClosePopups) && !(g.LastItemData.InFlags & ImGuiItemFlags_SelectableDontClosePopup)) CloseCurrentPopup();
 
-    if (disabled_item && !disabled_global)
-        EndDisabled();
+    if (disabled_item && !disabled_global) EndDisabled();
 
     IMGUI_TEST_ENGINE_ITEM_INFO(id, label, g.LastItemData.StatusFlags);
     return pressed;  //-V1020
@@ -4865,7 +4860,7 @@ IGFD_C_API void IGFD_OpenDialog2(ImGuiFileDialog* vContextPtr,
     }
 }
 
-IGFD_C_API void IGFD_OpenPaneDialog(ImGuiFileDialog* vContextPtr,
+IGFD_C_API void IGFD_OpenDialogWithPane(ImGuiFileDialog* vContextPtr,
     const char* vKey,
     const char* vTitle,
     const char* vFilters,
@@ -4882,7 +4877,7 @@ IGFD_C_API void IGFD_OpenPaneDialog(ImGuiFileDialog* vContextPtr,
     }
 }
 
-IGFD_C_API void IGFD_OpenPaneDialog2(ImGuiFileDialog* vContextPtr,
+IGFD_C_API void IGFD_OpenDialogWithPane2(ImGuiFileDialog* vContextPtr,
     const char* vKey,
     const char* vTitle,
     const char* vFilters,

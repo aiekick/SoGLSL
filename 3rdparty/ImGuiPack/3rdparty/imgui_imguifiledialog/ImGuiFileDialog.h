@@ -1,5 +1,14 @@
 #pragma once
+
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wunknown-pragmas"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#endif
+
+#ifdef _MSC_VER
 #pragma warning(disable : 4251)
+#endif
 
 #pragma region IGFD LICENSE
 
@@ -1976,7 +1985,7 @@ public:
                    // singleton)
     virtual ~FileDialog();  // ImGuiFileDialog Destructor
 
-    // todo : need to refactor all theses function to maybe just one
+    virtual // todo : need to refactor all theses function to maybe just one
     //  standard dialog
     void OpenDialog(                        // open simple dialog (path and fileName can be specified)
         const std::string& vKey,            // key dialog
@@ -2209,7 +2218,7 @@ IGFD_C_API void IGFD_OpenDialog2(  // open a standard dialog
     void* vUserDatas,              // user datas (can be retrieved in pane)
     ImGuiFileDialogFlags vFlags);  // ImGuiFileDialogFlags
 
-IGFD_C_API void IGFD_OpenPaneDialog(  // open a standard dialog with pane
+IGFD_C_API void IGFD_OpenDialogWithPane(  // open a standard dialog with pane
     ImGuiFileDialog* vContextPtr,     // ImGuiFileDialog context
     const char* vKey,                 // key dialog
     const char* vTitle,               // title
@@ -2222,7 +2231,7 @@ IGFD_C_API void IGFD_OpenPaneDialog(  // open a standard dialog with pane
     void* vUserDatas,                 // user datas (can be retrieved in pane)
     ImGuiFileDialogFlags vFlags);     // ImGuiFileDialogFlags
 
-IGFD_C_API void IGFD_OpenPaneDialog2(  // open a standard dialog with pane
+IGFD_C_API void IGFD_OpenDialogWithPane2(  // open a standard dialog with pane
     ImGuiFileDialog* vContextPtr,      // ImGuiFileDialog context
     const char* vKey,                  // key dialog
     const char* vTitle,                // title

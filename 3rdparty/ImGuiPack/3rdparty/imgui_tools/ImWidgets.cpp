@@ -2080,6 +2080,22 @@ bool ImGui::TextureOverLay(float vWidth, ct::texture* vTex, ImVec4 vBorderColor,
 ///// SLIDERS //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+extern template IMGUI_API float ImGui::ScaleRatioFromValueT<ImS32, ImS32, float>(ImGuiDataType, ImS32, ImS32, ImS32, bool, float, float);
+extern template IMGUI_API float ImGui::ScaleRatioFromValueT<ImU32, ImS32, float>(ImGuiDataType, ImU32, ImU32, ImU32, bool, float, float);
+extern template IMGUI_API float ImGui::ScaleRatioFromValueT<ImS64, ImS64, double>(ImGuiDataType, ImS64, ImS64, ImS64, bool, float, float);
+extern template IMGUI_API float ImGui::ScaleRatioFromValueT<ImU64, ImS64, double>(ImGuiDataType, ImU64, ImU64, ImU64, bool, float, float);
+extern template IMGUI_API float ImGui::ScaleRatioFromValueT<float, float, float>(ImGuiDataType, float, float, float, bool, float, float);
+extern template IMGUI_API float ImGui::ScaleRatioFromValueT<double, double, double>(ImGuiDataType, double, double, double, bool, float, float);
+
+extern template IMGUI_API ImS32 ImGui::ScaleValueFromRatioT<ImS32, ImS32, float>(ImGuiDataType, float, ImS32, ImS32, bool, float, float);
+extern template IMGUI_API ImU32 ImGui::ScaleValueFromRatioT<ImU32, ImS32, float>(ImGuiDataType, float, ImU32, ImU32, bool, float, float);
+extern template IMGUI_API ImS64 ImGui::ScaleValueFromRatioT<ImS64, ImS64, double>(ImGuiDataType, float, ImS64, ImS64, bool, float, float);
+extern template IMGUI_API ImU64 ImGui::ScaleValueFromRatioT<ImU64, ImS64, double>(ImGuiDataType, float, ImU64, ImU64, bool, float, float);
+extern template IMGUI_API float ImGui::ScaleValueFromRatioT<float, float, float>(ImGuiDataType, float, float, float, bool, float, float);
+extern template IMGUI_API double ImGui::ScaleValueFromRatioT<double, double, double>(ImGuiDataType, float, double, double, bool, float, float);
+
+extern template IMGUI_API float ImGui::RoundScalarWithFormatT<float>(const char*, ImGuiDataType, float);
+
 // FIXME: Move more of the code into SliderBehavior()
 template <typename TYPE, typename SIGNEDTYPE, typename FLOATTYPE>
 inline bool inSliderBehaviorStepperT(const ImRect& bb, ImGuiID id, ImGuiDataType data_type, TYPE* v, const TYPE v_min, const TYPE v_max, const TYPE v_step, const char* format, ImGuiSliderFlags flags, ImRect* out_grab_bb) {
