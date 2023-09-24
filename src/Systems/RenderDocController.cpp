@@ -17,7 +17,11 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include <Systems/RenderDocController.h>
-#include <Windows.h>
+#ifdef WIN32
+    #include <Windows.h>
+#elif defined(__linux__)
+    #include <dlfcn.h>
+#endif
 #include <cstdio>
 
 bool RenderDocController::Init()
