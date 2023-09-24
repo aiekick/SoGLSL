@@ -242,7 +242,7 @@ target_include_directories(${PROJECT} PRIVATE
 )
 
 if(UNIX)
-    target_compile_options(${PROJECT} PUBLIC "-Wno-unknown-pragmas -Wno-unused-variable - Wno-unused-parameter")
+    target_compile_options(${PROJECT} PUBLIC "-Wno-unknown-pragmas -Wno-unused-variable -Wno-unused-parameter")
 endif()
  
 if(USE_DEBUG_SANITIZER)
