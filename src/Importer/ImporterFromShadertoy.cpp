@@ -991,12 +991,12 @@ void ImporterFromShadertoy::SetShaderBufferFormat(const std::string& vBufferId)
 		}
 		else
 		{
-			LogVarError("%i n'est pas id de buffer valide; non trouvé !", vBufferId);
+			LogVarError("%s n'est pas id de buffer valide; non trouvé !", vBufferId.c_str());
 		}
 	}
 	else
 	{
-		LogVarError("ShaderInfos %i not found !", vBufferId);
+        LogVarError("ShaderInfos %s not found !", vBufferId.c_str());
 	}
 }
 
@@ -1120,7 +1120,7 @@ void ImporterFromShadertoy::DoChannelInput(
 			}
 			else
 			{
-				LogVarError("Channel id %i not found", id);
+				LogVarError("Channel id %s not found", id.c_str());
 			}
 		}
 		else // l'input n'est pas référencé on va ajoute un uniform de type texture vide
