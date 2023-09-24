@@ -200,7 +200,7 @@ inline static void sLoadMesh(
 
 								for (size_t i = 0; i != mesh->mNumVertices; ++i)
 								{
-									const int64_t firstTimeMark = std::chrono::duration_cast<std::chrono::milliseconds>
+									const int64_t _firstTimeMark = std::chrono::duration_cast<std::chrono::milliseconds>
 										(std::chrono::system_clock::now().time_since_epoch()).count();
 
 									if (!vWorking)
@@ -254,10 +254,10 @@ inline static void sLoadMesh(
 
 									vProgress = vProgress + progressVerts;
 
-									const int64_t secondTimeMark = std::chrono::duration_cast<std::chrono::milliseconds>
+									const int64_t _secondTimeMark = std::chrono::duration_cast<std::chrono::milliseconds>
 										(std::chrono::system_clock::now().time_since_epoch()).count();
 
-									vGenerationTime = vGenerationTime + (double)(secondTimeMark - firstTimeMark) / 1000.0;
+									vGenerationTime = vGenerationTime + (double)(_secondTimeMark - _firstTimeMark) / 1000.0;
 								}
 
 								sceneMeshPtr->GetIndices()->reserve(mesh->mNumFaces * 3U);
@@ -267,7 +267,7 @@ inline static void sLoadMesh(
 									if (!vWorking)
 										break;
 
-									const int64_t firstTimeMark = std::chrono::duration_cast<std::chrono::milliseconds>
+									const int64_t _firstTimeMark = std::chrono::duration_cast<std::chrono::milliseconds>
 										(std::chrono::system_clock::now().time_since_epoch()).count();
 
 									const aiFace& face = mesh->mFaces[i];
@@ -279,10 +279,10 @@ inline static void sLoadMesh(
 										sceneMeshPtr->GetIndices()->push_back(face.mIndices[j]);
 									}
 
-									const int64_t secondTimeMark = std::chrono::duration_cast<std::chrono::milliseconds>
+									const int64_t _secondTimeMark = std::chrono::duration_cast<std::chrono::milliseconds>
 										(std::chrono::system_clock::now().time_since_epoch()).count();
 
-									vGenerationTime = vGenerationTime + (double)(secondTimeMark - firstTimeMark) / 1000.0;
+									vGenerationTime = vGenerationTime + (double)(_secondTimeMark - _firstTimeMark) / 1000.0;
 								}
 
 								//if (sceneMeshPtr->Init())

@@ -38,22 +38,18 @@
 #include <Texture/Texture3D.h>
 #include <Texture/TextureSound.h>
 #include <Profiler/TracyProfiler.h>
-#include <ImGuiPack.h>
 #include <Uniforms/UniformHelper.h>
 #include <CodeTree/Parsing/UniformParsing.h>
 #include <VR/Backend/VRBackend.h>
 #include <Res/CustomFont.h>
+#include <Res/CustomFont2.h>
 
 #include <Mesh/Model/QuadModel.h>
 #include <Mesh/Model/PointModel.h>
 #include <Mesh/Model/PNTBTCModel.h>
 #include <Mesh/Model/PNCModel.h>
 
-#include <imgui.h>
-#ifndef IMGUI_DEFINE_MATH_OPERATORS
-
-#endif
-#include <imgui_internal.h>
+#include <ImGuiPack.h>
 
 #include <chrono>
 #include <ctime>

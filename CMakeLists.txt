@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.1)
-cmake_policy(SET CMP0079 NEW) # link glfw to ImGuiPack
 
 set(PROJECT SoGLSL)
 
@@ -29,18 +28,17 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 ## some defines for debug mode (before 3rdparty.cmake)
 if(MSVC)
-	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG /Zi /MTd /NODEFAULTLIB:library")
+	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG /Zi /MTd")
 	set(CMAKE_CXX_FLAGS_RELEASE "/MT")
 else()
-  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG -g /NODEFAULTLIB:library")
+  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG -g")
 endif()
-
 
 set(LLVM_USE_CRT_DEBUG MTd CACHE STRING "" FORCE)
 set(LLVM_USE_CRT_MINSIZEREL MT CACHE STRING "" FORCE)
 set(LLVM_USE_CRT_RELEASE MT CACHE STRING "" FORCE)
 set(LLVM_USE_CRT_RELWITHDEBINFO MT CACHE STRING "" FORCE)
-set(USE_MSVC_RUNTIME_LIBRARY_DLL OFF CACHE BOOL "")
+set(USE_MSVC_RUNTIME_LIBRARY_DLL OFF CACHE BOOL "" FORCE)
 
 if(USE_VR)
 add_definitions(-DUSE_VR)
@@ -94,16 +92,18 @@ if(MSVC)
     add_definitions(-DMSVC)
 	add_definitions(-DNOMINMAX) ## for avoid issue regarding std::max and std::min
 else ()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -Wdeprecated-declarations -Wno-unknown-pragmas -Wno-unused-variable -Wno-unused-parameter")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 -Wall -Wextra -Wpedantic -Wdeprecated-declarations -Wno-unknown-pragmas -Wno-unused-variable -Wno-unused-parameter")
 endif ()
 
 #needed by the class ExportBuffer
 if ("${CMAKE_EXE_LINKER_FLAGS}" STREQUAL "/machine:x64")
 	set(ARCH x64)
 	add_definitions(-DVERSION_X64)
+	message("${PROJECT} Build X64")
 else()
 	set(ARCH x32)
 	add_definitions(-DVERSION_X32)
+	message("${PROJECT} Build X32")
 endif()
 
 file(GLOB PROJECT_MAIN ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
@@ -122,11 +122,6 @@ source_group(src/Imgui_Misc FILES ${IMGUI_MISC_SRC})
 
 file(GLOB_RECURSE CMAKE_RECURSE ${CMAKE_CURRENT_SOURCE_DIR}/cmake/*.cmake)
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/cmake PREFIX cmake FILES ${CMAKE_RECURSE})
-
-if (APPLE)
-	##set(ICON icon.icns)
-	##set_source_files_properties(icon.icns PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-endif()
 
 add_library(${PROJECT} STATIC
 	${CMAKE_RECURSE} 
@@ -177,7 +172,5 @@ target_link_libraries(${PROJECT} PRIVATE
 	${MINIAUDIO_LIBRARIES}
 	${IMGUIPACK_LIBRARIES}
 )
-
-target_link_libraries(${IMGUIPACK_LIBRARIES} ${GLFW_LIBRARIES})
 
 set(CTOOLS_LIBRARIES ${CTOOLS_LIBRARIES} PARENT_SCOPE)

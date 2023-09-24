@@ -20,7 +20,7 @@
 #include <CodeTree/ShaderKey.h>
 #include <CodeTree/CodeTree.h>
 #include <Renderer/Shader.h>
-#include <Messaging.h>
+#include <ImGuiPack.h>
 #include <Res/CustomFont.h>
 
 SyntaxErrors::SyntaxMessagingFunction SyntaxErrors::s_SyntaxMessagingFunction = 0;
