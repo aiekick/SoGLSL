@@ -42,7 +42,6 @@ bool RenderDocController::Init()
     }
 #else
 // Apple is not supported by renderdoc
-#error UNKNOWN PLATFORM
 #endif
 
     if (m_GetApiPtr)
