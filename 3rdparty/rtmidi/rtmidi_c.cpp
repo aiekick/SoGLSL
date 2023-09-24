@@ -136,7 +136,7 @@ const char* rtmidi_get_port_name (RtMidiPtr device, unsigned int portNumber)
 {
     try {
         std::string name = ((RtMidi*) device->ptr)->getPortName (portNumber);
-        return _strdup (name.c_str ());
+        return strdup (name.c_str ());
 
     } catch (const RtMidiError & err) {
         device->ok  = false;
