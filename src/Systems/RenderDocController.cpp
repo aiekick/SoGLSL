@@ -40,13 +40,8 @@ bool RenderDocController::Init()
     {
         m_GetApiPtr = (pRENDERDOC_GetAPI)dlsym(mod, "RENDERDOC_GetAPI");
     }
-#elif defined(__APPLE__)
-    void* mod = dlopen("librenderdoc.dylib", RTLD_NOW | RTLD_NOLOAD);
-    if (mod)
-    {
-        m_GetApiPtr = (pRENDERDOC_GetAPI)dlsym(mod, "RENDERDOC_GetAPI");
-    }
 #else
+// Apple is not supported by renderdoc
 #error UNKNOWN PLATFORM
 #endif
 
