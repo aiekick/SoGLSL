@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -93,109 +93,161 @@ int UniformHelper::UploadUniformForGlslType(const GuiBackend_Window& vWin, Unifo
         }
 
         // samplers
-        switch (vUniform->glslType) {
-            case uType::uTypeEnum::U_SAMPLER2D:
-                if (vUniform->pipe != nullptr && !vUniform->uSampler2DFromThread) {
-                    if (!vUniform->sound_histo_ptr) {
-                        if (vUniform->pipe->getBackBuffer())
-                            vUniform->uSampler2D = vUniform->pipe->getBackBuffer()->getTextureID(vUniform->attachment);
-                    }
-                }
-                if (vIsCompute && vUniform->uImage2D > -1) {
-                    glBindImageTexture(vUniform->slot, vUniform->uImage2D, 0, GL_FALSE, 0, GL_READ_WRITE, vUniform->computeTextureFormat);
-                }
-                if (vUniform->loc > -1) {
-                    if (vUniform->texture_ptr) {
-                        if (vUniform->texture_ptr->getBack()) {
-                            vUniform->uSampler2D = vUniform->texture_ptr->getBack()->glTex;
+        {
+            AIGPScoped("Uniforms", "Samplers");
+            switch (vUniform->glslType) {
+                case uType::uTypeEnum::U_SAMPLER2D:
+                    if (vUniform->pipe != nullptr && !vUniform->uSampler2DFromThread) {
+                        if (!vUniform->sound_histo_ptr) {
+                            if (vUniform->pipe->getBackBuffer())
+                                vUniform->uSampler2D = vUniform->pipe->getBackBuffer()->getTextureID(vUniform->attachment);
                         }
                     }
-
-                    if (vUniform->uSampler2D < 0 && empty_texture_ptr && empty_texture_ptr->getBack()) {
-                        vUniform->uSampler2D = empty_texture_ptr->getBack()->glTex;
+                    if (vIsCompute && vUniform->uImage2D > -1) {
+                        glBindImageTexture(vUniform->slot, vUniform->uImage2D, 0, GL_FALSE, 0, GL_READ_WRITE, vUniform->computeTextureFormat);
                     }
+                    if (vUniform->loc > -1) {
+                        if (vUniform->texture_ptr) {
+                            if (vUniform->texture_ptr->getBack()) {
+                                vUniform->uSampler2D = vUniform->texture_ptr->getBack()->glTex;
+                            }
+                        }
 
-                    if (vUniform->uSampler2D > -1) {
+                        if (vUniform->uSampler2D < 0 && empty_texture_ptr && empty_texture_ptr->getBack()) {
+                            vUniform->uSampler2D = empty_texture_ptr->getBack()->glTex;
+                        }
+
+                        if (vUniform->uSampler2D > -1) {
+                            glActiveTexture(GL_TEXTURE0 + vTextureSlotId);
+                            glBindTexture(GL_TEXTURE_2D, vUniform->uSampler2D);
+                            glUniform1i(vUniform->loc, vTextureSlotId);
+                            ++vTextureSlotId;
+                        }
+                    }
+                    break;
+                case uType::uTypeEnum::U_SAMPLER3D:
+                    if (vIsCompute && vUniform->uImage3D > -1)
+                        glBindImageTexture(vUniform->slot, vUniform->uImage3D, 0, GL_FALSE, 0, GL_READ_WRITE, vUniform->computeTextureFormat);
+                    if (vUniform->uSampler3D > -1 && vUniform->loc > -1) {
+                        if (vUniform->volume_ptr) {
+                            if (vUniform->volume_ptr->getBack()) {
+                                vUniform->uSampler3D = vUniform->volume_ptr->getBack()->glTex;
+                            }
+                        }
+
                         glActiveTexture(GL_TEXTURE0 + vTextureSlotId);
-                        glBindTexture(GL_TEXTURE_2D, vUniform->uSampler2D);
+                        glBindTexture(GL_TEXTURE_3D, vUniform->uSampler3D);
                         glUniform1i(vUniform->loc, vTextureSlotId);
                         ++vTextureSlotId;
                     }
-                }
-                break;
-            case uType::uTypeEnum::U_SAMPLER3D:
-                if (vIsCompute && vUniform->uImage3D > -1)
-                    glBindImageTexture(vUniform->slot, vUniform->uImage3D, 0, GL_FALSE, 0, GL_READ_WRITE, vUniform->computeTextureFormat);
-                if (vUniform->uSampler3D > -1 && vUniform->loc > -1) {
-                    if (vUniform->volume_ptr)
-                        if (vUniform->volume_ptr->getBack())
-                            vUniform->uSampler3D = vUniform->volume_ptr->getBack()->glTex;
-
-                    glActiveTexture(GL_TEXTURE0 + vTextureSlotId);
-                    glBindTexture(GL_TEXTURE_3D, vUniform->uSampler3D);
-                    glUniform1i(vUniform->loc, vTextureSlotId);
-                    ++vTextureSlotId;
-                }
-                break;
-            case uType::uTypeEnum::U_SAMPLERCUBE:
-                if (vUniform->uSamplerCube > -1 && vUniform->loc > -1) {
-                    glActiveTexture(GL_TEXTURE0 + vTextureSlotId);
-                    glBindTexture(GL_TEXTURE_CUBE_MAP, vUniform->uSamplerCube);
-                    glUniform1i(vUniform->loc, vTextureSlotId);
-                    ++vTextureSlotId;
-                }
-                break;
-            case uType::uTypeEnum::U_SAMPLER1D:
-            default: break;
+                    break;
+                case uType::uTypeEnum::U_SAMPLERCUBE:
+                    if (vUniform->uSamplerCube > -1 && vUniform->loc > -1) {
+                        glActiveTexture(GL_TEXTURE0 + vTextureSlotId);
+                        glBindTexture(GL_TEXTURE_CUBE_MAP, vUniform->uSamplerCube);
+                        glUniform1i(vUniform->loc, vTextureSlotId);
+                        ++vTextureSlotId;
+                    }
+                    break;
+                case uType::uTypeEnum::U_SAMPLER1D:
+                default: break;
+            }
         }
 
         if (vUniform->loc > -1) {
-            switch (vUniform->glslType) {
-                case uType::uTypeEnum::U_FLOAT: glUniform1f(vUniform->loc, vUniform->x); break;
-                case uType::uTypeEnum::U_VEC2: glUniform2f(vUniform->loc, vUniform->x, vUniform->y); break;
-                case uType::uTypeEnum::U_VEC3: glUniform3f(vUniform->loc, vUniform->x, vUniform->y, vUniform->z); break;
-                case uType::uTypeEnum::U_VEC4: glUniform4f(vUniform->loc, vUniform->x, vUniform->y, vUniform->z, vUniform->w); break;
-                case uType::uTypeEnum::U_INT: glUniform1i(vUniform->loc, vUniform->ix); break;
-                case uType::uTypeEnum::U_IVEC2: glUniform2i(vUniform->loc, vUniform->ix, vUniform->iy); break;
-                case uType::uTypeEnum::U_IVEC3: glUniform3i(vUniform->loc, vUniform->ix, vUniform->iy, vUniform->iz); break;
-                case uType::uTypeEnum::U_IVEC4: glUniform4i(vUniform->loc, vUniform->ix, vUniform->iy, vUniform->iz, vUniform->iw); break;
-                case uType::uTypeEnum::U_UINT: glUniform1ui(vUniform->loc, vUniform->ux); break;
-                case uType::uTypeEnum::U_UVEC2: glUniform2ui(vUniform->loc, vUniform->ux, vUniform->uy); break;
-                case uType::uTypeEnum::U_UVEC3: glUniform3ui(vUniform->loc, vUniform->ux, vUniform->uy, vUniform->uz); break;
-                case uType::uTypeEnum::U_UVEC4: glUniform4ui(vUniform->loc, vUniform->ux, vUniform->uy, vUniform->uz, vUniform->uw); break;
-                case uType::uTypeEnum::U_BOOL: glUniform1i(vUniform->loc, vUniform->bx); break;
-                case uType::uTypeEnum::U_BVEC2: glUniform2i(vUniform->loc, vUniform->bx, vUniform->by); break;
-                case uType::uTypeEnum::U_BVEC3: glUniform3i(vUniform->loc, vUniform->bx, vUniform->by, vUniform->bz); break;
-                case uType::uTypeEnum::U_BVEC4: glUniform4i(vUniform->loc, vUniform->bx, vUniform->by, vUniform->bz, vUniform->bw); break;
-                default: break;
+            {
+                AIGPScoped("Uniforms", "F/U/I/B VEC1/2/3/4");
+                switch (vUniform->glslType) {
+                    case uType::uTypeEnum::U_FLOAT: {
+                        glUniform1f(vUniform->loc, vUniform->x);
+                    } break;
+                    case uType::uTypeEnum::U_VEC2: {
+                        glUniform2f(vUniform->loc, vUniform->x, vUniform->y);
+                    } break;
+                    case uType::uTypeEnum::U_VEC3: {
+                        glUniform3f(vUniform->loc, vUniform->x, vUniform->y, vUniform->z);
+                    } break;
+                    case uType::uTypeEnum::U_VEC4: {
+                        glUniform4f(vUniform->loc, vUniform->x, vUniform->y, vUniform->z, vUniform->w);
+                    } break;
+                    case uType::uTypeEnum::U_INT: {
+                        glUniform1i(vUniform->loc, vUniform->ix);
+                    } break;
+                    case uType::uTypeEnum::U_IVEC2: {
+                        glUniform2i(vUniform->loc, vUniform->ix, vUniform->iy);
+                    } break;
+                    case uType::uTypeEnum::U_IVEC3: {
+                        glUniform3i(vUniform->loc, vUniform->ix, vUniform->iy, vUniform->iz);
+                    } break;
+                    case uType::uTypeEnum::U_IVEC4: {
+                        glUniform4i(vUniform->loc, vUniform->ix, vUniform->iy, vUniform->iz, vUniform->iw);
+                    } break;
+                    case uType::uTypeEnum::U_UINT: {
+                        glUniform1ui(vUniform->loc, vUniform->ux);
+                    } break;
+                    case uType::uTypeEnum::U_UVEC2: {
+                        glUniform2ui(vUniform->loc, vUniform->ux, vUniform->uy);
+                    } break;
+                    case uType::uTypeEnum::U_UVEC3: {
+                        glUniform3ui(vUniform->loc, vUniform->ux, vUniform->uy, vUniform->uz);
+                    } break;
+                    case uType::uTypeEnum::U_UVEC4: {
+                        glUniform4ui(vUniform->loc, vUniform->ux, vUniform->uy, vUniform->uz, vUniform->uw);
+                    } break;
+                    case uType::uTypeEnum::U_BOOL: {
+                        glUniform1i(vUniform->loc, vUniform->bx);
+                    } break;
+                    case uType::uTypeEnum::U_BVEC2: {
+                        glUniform2i(vUniform->loc, vUniform->bx, vUniform->by);
+                    } break;
+                    case uType::uTypeEnum::U_BVEC3: {
+                        glUniform3i(vUniform->loc, vUniform->bx, vUniform->by, vUniform->bz);
+                    } break;
+                    case uType::uTypeEnum::U_BVEC4: {
+                        glUniform4i(vUniform->loc, vUniform->bx, vUniform->by, vUniform->bz, vUniform->bw);
+                    } break;
+                    default: break;
+                }
             }
 
             if (vUniform->uFloatArr) {
+                AIGPScoped("Uniforms", "Matrixs");
                 switch (vUniform->glslType) {
-                    case uType::uTypeEnum::U_MAT2: glUniformMatrix2fv(vUniform->loc, 1, GL_FALSE, (GLfloat*)(vUniform->uFloatArr)); break;
-                    case uType::uTypeEnum::U_MAT3: glUniformMatrix3fv(vUniform->loc, 1, GL_FALSE, (GLfloat*)(vUniform->uFloatArr)); break;
-                    case uType::uTypeEnum::U_MAT4: glUniformMatrix4fv(vUniform->loc, 1, GL_FALSE, (GLfloat*)(vUniform->uFloatArr)); break;
+                    case uType::uTypeEnum::U_MAT2: {
+                        glUniformMatrix2fv(vUniform->loc, 1, GL_FALSE, (GLfloat*)(vUniform->uFloatArr));
+                    } break;
+                    case uType::uTypeEnum::U_MAT3: {
+                        glUniformMatrix3fv(vUniform->loc, 1, GL_FALSE, (GLfloat*)(vUniform->uFloatArr));
+                    } break;
+                    case uType::uTypeEnum::U_MAT4: {
+                        glUniformMatrix4fv(vUniform->loc, 1, GL_FALSE, (GLfloat*)(vUniform->uFloatArr));
+                    } break;
                     default: break;
                 }
             }
 
             if (vUniform->count > 0) {
+                AIGPScoped("Uniforms", "Float Arrays");
                 switch (vUniform->glslType) {
                     case uType::uTypeEnum::U_FLOAT_ARRAY:
-                        if (vUniform->uFloatArr)
+                        if (vUniform->uFloatArr) {
                             glUniform1fv(vUniform->loc, vUniform->count, vUniform->uFloatArr);
+                        }
                         break;
                     case uType::uTypeEnum::U_VEC2_ARRAY:
-                        if (vUniform->uVec2Arr)
+                        if (vUniform->uVec2Arr) {
                             glUniform2fv(vUniform->loc, vUniform->count, (GLfloat*)(vUniform->uVec2Arr));
+                        }
                         break;
                     case uType::uTypeEnum::U_VEC3_ARRAY:
-                        if (vUniform->uVec3Arr)
+                        if (vUniform->uVec3Arr) {
                             glUniform3fv(vUniform->loc, vUniform->count, (GLfloat*)(vUniform->uVec2Arr));
+                        }
                         break;
                     case uType::uTypeEnum::U_VEC4_ARRAY:
-                        if (vUniform->uVec4Arr)
+                        if (vUniform->uVec4Arr) {
                             glUniform4fv(vUniform->loc, vUniform->count, (GLfloat*)(vUniform->uVec4Arr));
+                        }
                         break;
                     default: break;
                 }

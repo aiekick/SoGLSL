@@ -15,7 +15,7 @@
 
 #pragma once
 
-#include <renderdoc/util/test/demos/renderdoc_app.h>
+#include <Systems/RenderDocApp.h>
 
 class RenderDocController
 {
