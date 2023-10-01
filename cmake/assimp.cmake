@@ -33,3 +33,7 @@ set(USE_MSVC_RUNTIME_LIBRARY_DLL OFF CACHE BOOL "" FORCE)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/assimp EXCLUDE_FROM_ALL)
 
 set_target_properties(assimp PROPERTIES FOLDER 3rdparty)
+
+target_include_directories(assimp PRIVATE 
+	${ZLIB_INCLUDE_DIR}
+)
