@@ -94,9 +94,9 @@ int UniformHelper::UploadUniformForGlslType(const GuiBackend_Window& vWin, Unifo
 
         // samplers
         {
-            AIGPScoped("Uniforms", "Samplers");
             switch (vUniform->glslType) {
-                case uType::uTypeEnum::U_SAMPLER2D:
+                case uType::uTypeEnum::U_SAMPLER2D: {
+                    AIGPScopedPtr(vUniform.get(), "Upload Sampler2D", "%s", vUniform->name.c_str());
                     if (vUniform->pipe != nullptr && !vUniform->uSampler2DFromThread) {
                         if (!vUniform->sound_histo_ptr) {
                             if (vUniform->pipe->getBackBuffer())
@@ -124,8 +124,9 @@ int UniformHelper::UploadUniformForGlslType(const GuiBackend_Window& vWin, Unifo
                             ++vTextureSlotId;
                         }
                     }
-                    break;
-                case uType::uTypeEnum::U_SAMPLER3D:
+                } break;
+                case uType::uTypeEnum::U_SAMPLER3D: {
+                    AIGPScopedPtr(vUniform.get(), "Upload Sampler3D", "%s", vUniform->name.c_str());
                     if (vIsCompute && vUniform->uImage3D > -1)
                         glBindImageTexture(vUniform->slot, vUniform->uImage3D, 0, GL_FALSE, 0, GL_READ_WRITE, vUniform->computeTextureFormat);
                     if (vUniform->uSampler3D > -1 && vUniform->loc > -1) {
@@ -140,86 +141,102 @@ int UniformHelper::UploadUniformForGlslType(const GuiBackend_Window& vWin, Unifo
                         glUniform1i(vUniform->loc, vTextureSlotId);
                         ++vTextureSlotId;
                     }
-                    break;
-                case uType::uTypeEnum::U_SAMPLERCUBE:
+                } break;
+                case uType::uTypeEnum::U_SAMPLERCUBE: {
+                    AIGPScopedPtr(vUniform.get(), "Upload SamplerCube", "%s", vUniform->name.c_str());
                     if (vUniform->uSamplerCube > -1 && vUniform->loc > -1) {
                         glActiveTexture(GL_TEXTURE0 + vTextureSlotId);
                         glBindTexture(GL_TEXTURE_CUBE_MAP, vUniform->uSamplerCube);
                         glUniform1i(vUniform->loc, vTextureSlotId);
                         ++vTextureSlotId;
                     }
-                    break;
+                } break;
                 case uType::uTypeEnum::U_SAMPLER1D:
                 default: break;
             }
         }
 
         if (vUniform->loc > -1) {
-            {
-                AIGPScoped("Uniforms", "F/U/I/B VEC1/2/3/4");
-                switch (vUniform->glslType) {
-                    case uType::uTypeEnum::U_FLOAT: {
-                        glUniform1f(vUniform->loc, vUniform->x);
-                    } break;
-                    case uType::uTypeEnum::U_VEC2: {
-                        glUniform2f(vUniform->loc, vUniform->x, vUniform->y);
-                    } break;
-                    case uType::uTypeEnum::U_VEC3: {
-                        glUniform3f(vUniform->loc, vUniform->x, vUniform->y, vUniform->z);
-                    } break;
-                    case uType::uTypeEnum::U_VEC4: {
-                        glUniform4f(vUniform->loc, vUniform->x, vUniform->y, vUniform->z, vUniform->w);
-                    } break;
-                    case uType::uTypeEnum::U_INT: {
-                        glUniform1i(vUniform->loc, vUniform->ix);
-                    } break;
-                    case uType::uTypeEnum::U_IVEC2: {
-                        glUniform2i(vUniform->loc, vUniform->ix, vUniform->iy);
-                    } break;
-                    case uType::uTypeEnum::U_IVEC3: {
-                        glUniform3i(vUniform->loc, vUniform->ix, vUniform->iy, vUniform->iz);
-                    } break;
-                    case uType::uTypeEnum::U_IVEC4: {
-                        glUniform4i(vUniform->loc, vUniform->ix, vUniform->iy, vUniform->iz, vUniform->iw);
-                    } break;
-                    case uType::uTypeEnum::U_UINT: {
-                        glUniform1ui(vUniform->loc, vUniform->ux);
-                    } break;
-                    case uType::uTypeEnum::U_UVEC2: {
-                        glUniform2ui(vUniform->loc, vUniform->ux, vUniform->uy);
-                    } break;
-                    case uType::uTypeEnum::U_UVEC3: {
-                        glUniform3ui(vUniform->loc, vUniform->ux, vUniform->uy, vUniform->uz);
-                    } break;
-                    case uType::uTypeEnum::U_UVEC4: {
-                        glUniform4ui(vUniform->loc, vUniform->ux, vUniform->uy, vUniform->uz, vUniform->uw);
-                    } break;
-                    case uType::uTypeEnum::U_BOOL: {
-                        glUniform1i(vUniform->loc, vUniform->bx);
-                    } break;
-                    case uType::uTypeEnum::U_BVEC2: {
-                        glUniform2i(vUniform->loc, vUniform->bx, vUniform->by);
-                    } break;
-                    case uType::uTypeEnum::U_BVEC3: {
-                        glUniform3i(vUniform->loc, vUniform->bx, vUniform->by, vUniform->bz);
-                    } break;
-                    case uType::uTypeEnum::U_BVEC4: {
-                        glUniform4i(vUniform->loc, vUniform->bx, vUniform->by, vUniform->bz, vUniform->bw);
-                    } break;
-                    default: break;
-                }
+            switch (vUniform->glslType) {
+                case uType::uTypeEnum::U_FLOAT: {
+                    AIGPScopedPtr(vUniform.get(), "Upload float", "%s", vUniform->name.c_str());
+                    glUniform1fv(vUniform->loc, 1, &vUniform->x);
+                } break;
+                case uType::uTypeEnum::U_VEC2: {
+                    AIGPScopedPtr(vUniform.get(), "Upload vec2", "%s", vUniform->name.c_str());
+                    glUniform2fv(vUniform->loc, 1, &vUniform->x);
+                } break;
+                case uType::uTypeEnum::U_VEC3: {
+                    AIGPScopedPtr(vUniform.get(), "Upload vec3", "%s", vUniform->name.c_str());
+                    glUniform3fv(vUniform->loc, 1, &vUniform->x);
+                } break;
+                case uType::uTypeEnum::U_VEC4: {
+                    AIGPScopedPtr(vUniform.get(), "Upload vec4", "%s", vUniform->name.c_str());
+                    glUniform4fv(vUniform->loc, 1, &vUniform->x);
+                } break;
+                case uType::uTypeEnum::U_INT: {
+                    AIGPScopedPtr(vUniform.get(), "Upload int", "%s", vUniform->name.c_str());
+                    glUniform1iv(vUniform->loc, 1, &vUniform->ix);
+                } break;
+                case uType::uTypeEnum::U_IVEC2: {
+                    AIGPScopedPtr(vUniform.get(), "Upload ivec2", "%s", vUniform->name.c_str());
+                    glUniform2iv(vUniform->loc, 1, &vUniform->ix);
+                } break;
+                case uType::uTypeEnum::U_IVEC3: {
+                    AIGPScopedPtr(vUniform.get(), "Upload ivec3", "%s", vUniform->name.c_str());
+                    glUniform3iv(vUniform->loc, 1, &vUniform->ix);
+                } break;
+                case uType::uTypeEnum::U_IVEC4: {
+                    AIGPScopedPtr(vUniform.get(), "Upload ivec4", "%s", vUniform->name.c_str());
+                    glUniform4iv(vUniform->loc, 1, &vUniform->ix);
+                } break;
+                case uType::uTypeEnum::U_UINT: {
+                    AIGPScopedPtr(vUniform.get(), "Upload uint", "%s", vUniform->name.c_str());
+                    glUniform1uiv(vUniform->loc, 1, &vUniform->ux);
+                } break;
+                case uType::uTypeEnum::U_UVEC2: {
+                    AIGPScopedPtr(vUniform.get(), "Upload uvec2", "%s", vUniform->name.c_str());
+                    glUniform2uiv(vUniform->loc, 1, &vUniform->ux);
+                } break;
+                case uType::uTypeEnum::U_UVEC3: {
+                    AIGPScopedPtr(vUniform.get(), "Upload uvec3", "%s", vUniform->name.c_str());
+                    glUniform3uiv(vUniform->loc, 1, &vUniform->ux);
+                } break;
+                case uType::uTypeEnum::U_UVEC4: {
+                    AIGPScopedPtr(vUniform.get(), "Upload uvec3", "%s", vUniform->name.c_str());
+                    glUniform4uiv(vUniform->loc, 1, &vUniform->ux);
+                } break;
+                case uType::uTypeEnum::U_BOOL: {
+                    AIGPScopedPtr(vUniform.get(), "Upload bool", "%s", vUniform->name.c_str());
+                    glUniform1iv(vUniform->loc, 1, (GLint*)&vUniform->bx);
+                } break;
+                case uType::uTypeEnum::U_BVEC2: {
+                    AIGPScopedPtr(vUniform.get(), "Upload bvec2", "%s", vUniform->name.c_str());
+                    glUniform2iv(vUniform->loc, 1, (GLint*)&vUniform->bx);
+                } break;
+                case uType::uTypeEnum::U_BVEC3: {
+                    AIGPScopedPtr(vUniform.get(), "Upload bvec3", "%s", vUniform->name.c_str());
+                    glUniform3iv(vUniform->loc, 1, (GLint*)&vUniform->bx);
+                } break;
+                case uType::uTypeEnum::U_BVEC4: {
+                    AIGPScopedPtr(vUniform.get(), "Upload bvec4", "%s", vUniform->name.c_str());
+                    glUniform4iv(vUniform->loc, 1, (GLint*)&vUniform->bx);
+                } break;
+                default: break;
             }
 
             if (vUniform->uFloatArr) {
-                AIGPScoped("Uniforms", "Matrixs");
                 switch (vUniform->glslType) {
                     case uType::uTypeEnum::U_MAT2: {
+                        AIGPScopedPtr(vUniform.get(), "Upload mat2", "%s", vUniform->name.c_str());
                         glUniformMatrix2fv(vUniform->loc, 1, GL_FALSE, (GLfloat*)(vUniform->uFloatArr));
                     } break;
                     case uType::uTypeEnum::U_MAT3: {
+                        AIGPScopedPtr(vUniform.get(), "Upload mat3", "%s", vUniform->name.c_str());
                         glUniformMatrix3fv(vUniform->loc, 1, GL_FALSE, (GLfloat*)(vUniform->uFloatArr));
                     } break;
                     case uType::uTypeEnum::U_MAT4: {
+                        AIGPScopedPtr(vUniform.get(), "Upload mat4", "%s", vUniform->name.c_str());
                         glUniformMatrix4fv(vUniform->loc, 1, GL_FALSE, (GLfloat*)(vUniform->uFloatArr));
                     } break;
                     default: break;
@@ -227,25 +244,28 @@ int UniformHelper::UploadUniformForGlslType(const GuiBackend_Window& vWin, Unifo
             }
 
             if (vUniform->count > 0) {
-                AIGPScoped("Uniforms", "Float Arrays");
                 switch (vUniform->glslType) {
                     case uType::uTypeEnum::U_FLOAT_ARRAY:
                         if (vUniform->uFloatArr) {
+                            AIGPScopedPtr(vUniform.get(), "Upload float array", "%s", vUniform->name.c_str());
                             glUniform1fv(vUniform->loc, vUniform->count, vUniform->uFloatArr);
                         }
                         break;
                     case uType::uTypeEnum::U_VEC2_ARRAY:
                         if (vUniform->uVec2Arr) {
+                            AIGPScopedPtr(vUniform.get(), "Upload vec2 array", "%s", vUniform->name.c_str());
                             glUniform2fv(vUniform->loc, vUniform->count, (GLfloat*)(vUniform->uVec2Arr));
                         }
                         break;
                     case uType::uTypeEnum::U_VEC3_ARRAY:
                         if (vUniform->uVec3Arr) {
+                            AIGPScopedPtr(vUniform.get(), "Upload vec3 array", "%s", vUniform->name.c_str());
                             glUniform3fv(vUniform->loc, vUniform->count, (GLfloat*)(vUniform->uVec2Arr));
                         }
                         break;
                     case uType::uTypeEnum::U_VEC4_ARRAY:
                         if (vUniform->uVec4Arr) {
+                            AIGPScopedPtr(vUniform.get(), "Upload vec4 array", "%s", vUniform->name.c_str());
                             glUniform4fv(vUniform->loc, vUniform->count, (GLfloat*)(vUniform->uVec4Arr));
                         }
                         break;
@@ -266,7 +286,7 @@ int UniformHelper::UpdateMipMap(const GuiBackend_Window& vWin, UniformVariantPtr
             switch (vUniform->glslType) {
                 case uType::uTypeEnum::U_SAMPLER1D:
                     if (vUniform->uSampler1D > -1) {
-                        AIGPScoped("U_SAMPLER1D", "UpdateMipMap %s", vUniform->name.c_str());
+                        AIGPScopedPtr(vUniform.get(), "update sampler1D mipmap", "%s", vUniform->name.c_str());
                         glBindTexture(GL_TEXTURE_1D, vUniform->uSampler1D);
                         glGenerateMipmap(GL_TEXTURE_1D);
                         glBindTexture(GL_TEXTURE_1D, 0);
@@ -275,28 +295,28 @@ int UniformHelper::UpdateMipMap(const GuiBackend_Window& vWin, UniformVariantPtr
                     break;
                 case uType::uTypeEnum::U_SAMPLER2D:
                     if (vUniform->uSampler2D > -1) {
-                        AIGPScoped("U_SAMPLER2D", "UpdateMipMap %s", vUniform->name.c_str());
+                        AIGPScopedPtr(vUniform.get(), "update sampler2D mipmap", "%s", vUniform->name.c_str());
                         glBindTexture(GL_TEXTURE_2D, vUniform->uSampler2D);
                         glGenerateMipmap(GL_TEXTURE_2D);
                         glBindTexture(GL_TEXTURE_2D, 0);
                         ++vTextureSlotId;
                     }
                     break;
-                case uType::uTypeEnum::U_SAMPLERCUBE:
-                    if (vUniform->uSamplerCube > -1) {
-                        AIGPScoped("U_SAMPLERCUBE", "UpdateMipMap %s", vUniform->name.c_str());
-                        glBindTexture(GL_TEXTURE_CUBE_MAP, vUniform->uSamplerCube);
-                        glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
-                        glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-                        ++vTextureSlotId;
-                    }
-                    break;
                 case uType::uTypeEnum::U_SAMPLER3D:
                     if (vUniform->uSampler3D > -1) {
-                        AIGPScoped("U_SAMPLER3D", "UpdateMipMap %s", vUniform->name.c_str());
+                        AIGPScopedPtr(vUniform.get(), "update sampler3D mipmap", "%s", vUniform->name.c_str());
                         glBindTexture(GL_TEXTURE_3D, vUniform->uSampler3D);
                         glGenerateMipmap(GL_TEXTURE_3D);
                         glBindTexture(GL_TEXTURE_3D, 0);
+                        ++vTextureSlotId;
+                    }
+                    break;
+                case uType::uTypeEnum::U_SAMPLERCUBE:
+                    if (vUniform->uSamplerCube > -1) {
+                        AIGPScopedPtr(vUniform.get(), "update samplerCube mipmap", "%s", vUniform->name.c_str());
+                        glBindTexture(GL_TEXTURE_CUBE_MAP, vUniform->uSamplerCube);
+                        glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+                        glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
                         ++vTextureSlotId;
                     }
                     break;
