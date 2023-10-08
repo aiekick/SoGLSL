@@ -2,3 +2,7 @@
 	path = 3rdparty/ImGuiPack
 	url = https://github.com/aiekick/ImGuiPack.git
 	branch = master
+[submodule "3rdparty/ctools"]
+	path = 3rdparty/ctools
+	url = https://github.com/aiekick/cTools.git
+	branch = master
