@@ -328,6 +328,41 @@ int UniformHelper::UpdateMipMap(const GuiBackend_Window& vWin, UniformVariantPtr
     return vTextureSlotId;
 }
 
+////////////////////////////////////////
+// if absolute path is z:\\, we will have an issue since each uniforms params are spliited by ':'
+// theses two function will secure / desecure these path by replace "Z:\\" by "drive(Z)" and "drive(Z)" by "Z:\\"
+std::string UniformHelper::SecureAbsolutePath(const std::string& vAbsolutePath) {
+    auto res = vAbsolutePath;
+    // will replace "Z:\\" by "[drive[Z]]"
+#ifdef WIN32
+    if (!vAbsolutePath.empty()) {
+        const auto& pos = vAbsolutePath.find(":\\");
+        if (pos == 1U) {
+            res = ct::toStr("[drive[%c]]", vAbsolutePath[0]) + vAbsolutePath.substr(3);
+        }
+    }
+#endif
+    return res;
+}
+
+std::string UniformHelper::DeSecureAbsolutePath(const std::string& vAbsolutePath) {
+    auto res = vAbsolutePath;
+    // will replace "[drive[Z]]" by "Z:\\"
+#ifdef WIN32
+    if (!vAbsolutePath.empty()) {
+        const auto& pos = vAbsolutePath.find("[drive[");
+        if (pos == 0U) {
+            char drive_letter = vAbsolutePath[7];
+            if (vAbsolutePath[8] == ']' && vAbsolutePath[9] == ']') {
+                res = ct::toStr("%c:\\", drive_letter) + vAbsolutePath.substr(10);
+            }
+        }
+    }
+#endif
+    return res;
+}
+////////////////////////////////////////
+
 std::string UniformHelper::SerializeUniform(UniformVariantPtr vUniform) {
     ZoneScoped;
     std::string str;
@@ -355,7 +390,8 @@ std::string UniformHelper::SerializeUniform(UniformVariantPtr vUniform) {
                     str = vUniform->name + ":target:" + vUniform->target + "\n";
                 } else if (vUniform->textureFileChoosebox || vUniform->textureChoiceActivated) {
                     if (vUniform->filePathNames.size() == 1) {
-                        str = vUniform->name + ":choose:" + FileHelper::Instance()->GetPathRelativeToApp(vUniform->filePathNames[0]);
+                        str = vUniform->name + ":choose:" + SecureAbsolutePath(
+                                  FileHelper::Instance()->GetPathRelativeToApp(vUniform->filePathNames[0]));
                         if (vUniform->textureFlipChoosebox)
                             str += ":flip:" + ct::toStr(vUniform->flip ? "true" : "false");
                         if (vUniform->textureMipmapChoosebox)
@@ -731,7 +767,6 @@ void UniformHelper::DeSerializeUniform(ShaderKeyPtr vShaderKey, UniformVariantPt
                         size_t idx = 0;
                         for (auto it = vParams.begin(); it != vParams.end(); ++it) {
                             std::string word = *it;
-
                             if (word == "flip" && (vUniform->textureFlipChoosebox || vUniform->textureChoiceActivated)) {
                                 if (vParams.size() > idx + 1)
                                     vUniform->flip = ct::ivariant(vParams[idx + 1]).GetB();
@@ -745,13 +780,12 @@ void UniformHelper::DeSerializeUniform(ShaderKeyPtr vShaderKey, UniformVariantPt
                                 if (vParams.size() > idx + 1)
                                     vUniform->filter = vParams[idx + 1];
                             }
-
                             idx++;
                         }
                     }
 
                     vUniform->filePathNames.clear();
-                    vUniform->filePathNames.emplace_back(vParams[2]);
+                    vUniform->filePathNames.emplace_back(DeSecureAbsolutePath(vParams[2]));
                     vUniform->textureFileChoosebox = true;
                     if (vShaderKey) {
                         vShaderKey->Complete_Uniform_Picture_With_Texture(vUniform);

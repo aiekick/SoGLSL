@@ -34,6 +34,7 @@ public:
 	static std::string SerializeUniform(UniformVariantPtr vUniform);
 	static std::string SerializeUniformAsConst(UniformVariantPtr vUniform);
 	static std::string SerializeUniformAsWidget(UniformVariantPtr vUniform);
-
+    static std::string SecureAbsolutePath(const std::string& vAbsolutePath);
+    static std::string DeSecureAbsolutePath(const std::string& vAbsolutePath);
 	static void DeSerializeUniform(ShaderKeyPtr vShaderKey, UniformVariantPtr vUniform, const std::vector<std::string>& vParams);
 };
