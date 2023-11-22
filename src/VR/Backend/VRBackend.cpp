@@ -54,15 +54,24 @@ bool VRBackend::Init(CodeTreePtr vCodeTree)
 
 	Unit();
 
-	if (CreateXRInstance())
-		if (CreateXRSystem())
-			if (CreateXRSession())
-				if (CreateXRViews())
-					if (CreateXRSwapChains())
-						if (CreateXRRefSpace())
-							if (m_Actions.CreateXRActions(m_xr_instance, m_xr_session, m_BasePose))
-								if (CreateFrameBuffers())
+	if (CreateXRInstance()) {
+		if (CreateXRSystem()) {
+			if (CreateXRSession()) {
+				if (CreateXRViews()) {
+					if (CreateXRSwapChains()) {
+						if (CreateXRRefSpace()) {
+							if (m_Actions.CreateXRActions(m_xr_instance, m_xr_session, m_BasePose)) {
+								if (CreateFrameBuffers()) {
 									m_Loaded = true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	if (!m_Loaded)
 	{
 		Unit();
@@ -437,6 +446,7 @@ bool VRBackend::UpdateUniforms(UniformVariantPtr vUniPtr)
 {
 	if (vUniPtr)
 	{
+        auto& vrActionsRef = VRBackend::Instance()->GetXRActionsRef();
 		if (vUniPtr->widget == "vr:use")
 		{
 			if (m_InRendering)
@@ -491,7 +501,7 @@ bool VRBackend::UpdateUniforms(UniformVariantPtr vUniPtr)
 			{
 				if (m_InRendering)
 				{
-					const auto& xr_controllerDatas = VRBackend::Instance()->GetXRActions().GetOpenXRControllerDatas();
+                const auto& xr_controllerDatas = vrActionsRef.GetOpenXRControllerDatas();
 					if (!xr_controllerDatas.empty())
 					{
 						vUniPtr->x = xr_controllerDatas[0].triggerValue.currentState;
@@ -504,7 +514,7 @@ bool VRBackend::UpdateUniforms(UniformVariantPtr vUniPtr)
 			{
 				if (m_InRendering)
 				{
-					const auto& xr_controllerDatas = VRBackend::Instance()->GetXRActions().GetOpenXRControllerDatas();
+					const auto& xr_controllerDatas = vrActionsRef.GetOpenXRControllerDatas();
 					if (xr_controllerDatas.size() > 1U)
 					{
 						vUniPtr->x = xr_controllerDatas[1].triggerValue.currentState;
@@ -517,7 +527,7 @@ bool VRBackend::UpdateUniforms(UniformVariantPtr vUniPtr)
 			{
 				if (m_InRendering)
 				{
-					const auto& xr_controllerDatas = VRBackend::Instance()->GetXRActions().GetOpenXRControllerDatas();
+					const auto& xr_controllerDatas = vrActionsRef.GetOpenXRControllerDatas();
 					if (!xr_controllerDatas.empty())
 					{
 						vUniPtr->x = xr_controllerDatas[0].squeezeValue.currentState;
@@ -530,7 +540,7 @@ bool VRBackend::UpdateUniforms(UniformVariantPtr vUniPtr)
 			{
 				if (m_InRendering)
 				{
-					const auto& xr_controllerDatas = VRBackend::Instance()->GetXRActions().GetOpenXRControllerDatas();
+					const auto& xr_controllerDatas = vrActionsRef.GetOpenXRControllerDatas();
 					if (xr_controllerDatas.size() > 1U)
 					{
 						vUniPtr->x = xr_controllerDatas[0].squeezeValue.currentState;
@@ -575,7 +585,7 @@ bool VRBackend::UpdateUniforms(UniformVariantPtr vUniPtr)
 				{
 					if (!IsCameraMoving(0))
 					{
-						const auto& xr_controllerDatas = VRBackend::Instance()->GetXRActions().GetOpenXRControllerDatas();
+						const auto& xr_controllerDatas = vrActionsRef.GetOpenXRControllerDatas();
 						if (!xr_controllerDatas.empty())
 						{
 							vUniPtr->x = xr_controllerDatas[0].thumbstickXValue.currentState * vUniPtr->step.x;
@@ -592,7 +602,7 @@ bool VRBackend::UpdateUniforms(UniformVariantPtr vUniPtr)
 				{
 					if (!IsCameraMoving(1))
 					{
-						const auto& xr_controllerDatas = VRBackend::Instance()->GetXRActions().GetOpenXRControllerDatas();
+						const auto& xr_controllerDatas = vrActionsRef.GetOpenXRControllerDatas();
 						if (xr_controllerDatas.size() > 1U)
 						{
 							vUniPtr->x = xr_controllerDatas[1].thumbstickXValue.currentState * vUniPtr->step.x;
@@ -609,7 +619,7 @@ bool VRBackend::UpdateUniforms(UniformVariantPtr vUniPtr)
 				{
 					if (!IsCameraMoving(0))
 					{
-						const auto& xr_controllerDatas = VRBackend::Instance()->GetXRActions().GetOpenXRControllerDatas();
+						const auto& xr_controllerDatas = vrActionsRef.GetOpenXRControllerDatas();
 						if (!xr_controllerDatas.empty())
 						{
 							vUniPtr->x += xr_controllerDatas[0].thumbstickXValue.currentState * vUniPtr->step.x;
@@ -626,7 +636,7 @@ bool VRBackend::UpdateUniforms(UniformVariantPtr vUniPtr)
 				{
 					if (!IsCameraMoving(1))
 					{
-						const auto& xr_controllerDatas = VRBackend::Instance()->GetXRActions().GetOpenXRControllerDatas();
+                        const auto& xr_controllerDatas = vrActionsRef.GetOpenXRControllerDatas();
 						if (xr_controllerDatas.size() > 1U)
 						{
 							vUniPtr->x += xr_controllerDatas[1].thumbstickXValue.currentState * vUniPtr->step.x;
@@ -733,7 +743,7 @@ const std::vector<XrView>& VRBackend::GetOpenXRViews() const
 	return m_Views;
 }
 
-const VRActions& VRBackend::GetXRActions() const
+VRActions& VRBackend::GetXRActionsRef() 
 {
 	return m_Actions;
 }

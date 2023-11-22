@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 #
 # Copyright (c) 2019 Collabora, Ltd.
+# Copyright (c) 2018-2023, The Khronos Group Inc.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -11,7 +12,7 @@
 import re
 import sys
 from pathlib import Path
-from typing import Set
+from typing import Dict, List, Set, Tuple, Union
 
 from check_spec_links import XREntityDatabase as OrigEntityDatabase
 from reg import Registry
@@ -19,7 +20,7 @@ from spec_tools.algo import longest_common_token_prefix
 from spec_tools.attributes import LengthEntry
 from spec_tools.consistency_tools import XMLChecker
 from spec_tools.util import findNamedElem, getElemName, getElemType
-from xrconventions import OpenXRConventions as APIConventions
+from apiconventions import APIConventions
 
 INVALID_HANDLE = "XR_ERROR_HANDLE_INVALID"
 UNSUPPORTED = "XR_ERROR_FUNCTION_UNSUPPORTED"
@@ -28,7 +29,10 @@ TWO_CALL_STRING_NAME = "buffer"
 CAPACITY_INPUT_RE = re.compile(r'(?P<itemname>[a-z]*)CapacityInput')
 COUNT_OUTPUT_RE = re.compile(r'(?P<itemname>[a-z]*)CountOutput')
 
-_CREATE_PREFIX = "xrCreate"
+_CREATE_PREFIXES = {
+    "xrCreate",
+    "xrTryCreate",
+}
 _DESTROY_PREFIX = "xrDestroy"
 _TYPEENUM = "XrStructureType"
 
@@ -73,6 +77,10 @@ ENUM_NAMING_EXCEPTIONS = set((
     # Legacy mistake (shortened and not caught before release)
     # See https://gitlab.khronos.org/openxr/openxr/issues/1317
     "XrPerfSettingsNotificationLevelEXT",
+
+    # Longest shared prefix is very long, and we want to remain able
+    # to add additional flags with a shorter shared prefix.
+    "XrRenderModelFlagBitsFB",
 ))
 
 SPECIFICATION_DIR = Path(__file__).parent.parent
@@ -92,6 +100,13 @@ def get_extension_source(extname):
     return str(SPECIFICATION_DIR / 'sources' / 'chapters' / 'extensions' / lower_tag / fn)
 
 
+def get_extension_vendor(extname):
+    match = EXT_DECOMPOSE_RE.match(extname)
+    if not match:
+        raise RuntimeError("Could not decompose " + extname)
+    return match.group('tag')
+
+
 def pluralize(s):
     if s.endswith('y'):
         return s[:-1] + 'ies'
@@ -106,10 +121,7 @@ class EntityDatabase(OrigEntityDatabase):
         # and it provides file line info which is useful in messages.
         try:
             import lxml.etree as etree
-            HAS_LXML = True
         except ImportError:
-            HAS_LXML = False
-        if not HAS_LXML:
             return super().makeRegistry()
 
         registryFile = str(SPECIFICATION_DIR / 'registry/xr.xml')
@@ -168,9 +180,15 @@ class Checker(XMLChecker):
         )
 
         # Keys are entity names, values are tuples or lists of message text to suppress.
-        suppressions = {
+        suppressions: Dict[str, Union[Tuple[str, ...], List[str]]] = {
             # path to string can take any path
-            "xrPathToString": ("Missing expected return code(s) XR_ERROR_PATH_UNSUPPORTED implied because of input of type XrPath",)
+            "xrPathToString": ("Missing expected return code(s) XR_ERROR_PATH_UNSUPPORTED implied because of input of type XrPath",),
+            # Just a case error, vendor declined to modify
+            "XR_OCULUS_audio_device_guid": ("Extension-defined name xrGetAudioInputDeviceGuidOculus has wrong or missing vendor tag: expected to end with OCULUS",
+                                            "Extension-defined name xrGetAudioOutputDeviceGuidOculus has wrong or missing vendor tag: expected to end with OCULUS",),
+            # This is warning about compatibility aliases, we already fixed this.
+            "XR_FB_hand_tracking_capsules": ("Extension-defined name XR_FB_HAND_TRACKING_CAPSULE_POINT_COUNT has wrong or missing vendor tag: expected to end with FB",
+                                             "Extension-defined name XR_FB_HAND_TRACKING_CAPSULE_COUNT has wrong or missing vendor tag: expected to end with FB",),
         }
 
         conventions = APIConventions()
@@ -198,8 +216,8 @@ class Checker(XMLChecker):
         super().check()
 
     def check_enum_naming(self, enum_type):
-        stripped_enum_type, tag = self.strip_extension_tag(enum_type)
-        end = "_{}".format(tag) if tag else ""
+        stripped_enum_type, enum_tag = self.strip_extension_tag(enum_type)
+        end = "_{}".format(enum_tag) if enum_tag else ""
         bare_end = None
         if stripped_enum_type.endswith("FlagBits"):
             bare_end = "_BIT"
@@ -220,15 +238,18 @@ class Checker(XMLChecker):
 
             if bare_end:
                 # If bare_end is set, end is always non-empty because it means it's a bitmask.
-                assert(end)
+                assert end
                 if not name.endswith(end) and not stripped_name.endswith(bare_end):
                     self.record_error('Got an enum value whose name does not match the pattern: got', name,
                                       'but expected something that ended with', end, ', or', bare_end,
                                       'plus a vendor/author tag, due to typename being', enum_type)
             elif end:
                 if not name.endswith(end):
-                    self.record_error('Got an enum value whose name does not match the pattern: got', name,
-                                      'but expected something that ended with', end, 'due to typename being', enum_type)
+                    # Allow extension of all enums, provided an appropriate tag is provided.
+                    if tag is None and enum_tag is not None:
+                        self.record_error('Got an enum value whose name does not match the pattern: got', name,
+                                          'but expected an appropriate KHR, EXT or vendor due to typename being',
+                                          enum_type)
 
         # Check that the expected beginning is the longest common prefix (meaning the type is named right)
         if len(value_names) > 1:
@@ -252,7 +273,7 @@ class Checker(XMLChecker):
         codes = super().get_codes_for_command_and_type(cmd_name, type_name)
 
         # Filter out any based on the specific command
-        if cmd_name.startswith(_DESTROY_PREFIX):
+        if codes is not None and cmd_name.startswith(_DESTROY_PREFIX):
             # xrDestroyX should not return XR_ERROR_anything_LOST or XR_anything_LOSS_PENDING
             codes = {x for x in codes if not x.endswith("_LOST")}
             codes = {x for x in codes if not x.endswith("_LOSS_PENDING")}
@@ -263,7 +284,7 @@ class Checker(XMLChecker):
         """Return a set of return codes required due to having a particular name."""
         codes = set()
 
-        if cmd_name.startswith(_CREATE_PREFIX):
+        if any(cmd_name.startswith(prefix) for prefix in _CREATE_PREFIXES):
             codes.update(_CREATE_REQUIRED_CODES)
 
         return codes
@@ -323,7 +344,7 @@ class Checker(XMLChecker):
             self.record_error('Two-call-idiom call has count parameter', param_name,
                               'with type', param_type, 'instead of uint32_t')
         type_elem = param_elem.find('type')
-        assert(type_elem is not None)
+        assert type_elem is not None
 
         tail = type_elem.tail.strip()
         if '*' != tail:
@@ -347,7 +368,7 @@ class Checker(XMLChecker):
                               optional, '- expected "true"')
 
         type_elem = param_elem.find('type')
-        assert(type_elem is not None)
+        assert type_elem is not None
 
         tail = type_elem.tail.strip()
         if '*' not in tail:
@@ -355,6 +376,7 @@ class Checker(XMLChecker):
                               'that is not a pointer:', type_elem.text, type_elem.tail)
 
         length = LengthEntry.parse_len_from_param(param_elem)
+        assert length is not None
         if not length[0].other_param_name:
             self.record_error('Two-call-idiom call has array parameter', param_name,
                               'whose first length is not another parameter:', length[0])
@@ -421,9 +443,11 @@ class Checker(XMLChecker):
         if not array_param_name:
             self.record_error('Apparent two-call-idiom call missing an array output parameter')
 
-        if not capacity_input_param_name or \
-                not count_output_param_name or \
-                not array_param_name:
+        if (capacity_input_param_match is None or
+                count_output_param_match is None or
+                capacity_input_param_name is None or
+                count_output_param_name is None or
+                array_param_name is None):
             # If we're missing at least one, stop checking two-call stuff here.
             return
 
@@ -450,7 +474,7 @@ class Checker(XMLChecker):
         Called from check."""
         t = info.elem.find('proto/type')
         if t is None:
-            self.record_warning("Got a command without a return type?")
+            self.record_error("Got a command without a return type?")
         else:
             return_type = t.text
             if return_type != 'XrResult':
@@ -543,7 +567,7 @@ class Checker(XMLChecker):
                                           "but XML says", ver_from_xml)
                 else:
                     if ver_from_xml == '1':
-                        self.record_warning(
+                        self.record_error(
                             "Cannot find version history in spec text - make sure it has lines starting exactly like '* Revision 1, ....'",
                             filename=fn)
                     else:
@@ -565,6 +589,21 @@ class Checker(XMLChecker):
             if name_val != expected_name:
                 self.record_error("Incorrect name enum: expected", expected_name,
                                   "got", name_val)
+
+        vendor = get_extension_vendor(name)
+        for category in ('enum', 'type', 'command'):
+            items = elem.findall('./require/%s' % category)
+            for item in items:
+                item_name = item.get('name')
+                # print(item.attrib)
+                if not item_name:
+                    continue
+                if item_name in (version_name, name_define):
+                    continue
+                # print(name, item_name)
+                if not item_name.endswith(vendor):
+                    self.record_error("Extension-defined name", item_name,
+                                      "has wrong or missing vendor tag: expected to end with", vendor)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2021, The Khronos Group Inc.
+// Copyright (c) 2017-2023, The Khronos Group Inc.
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -10,10 +10,25 @@
 #include "graphicsplugin.h"
 #include "openxr_program.h"
 
+#if defined(_WIN32)
+// Favor the high performance NVIDIA or AMD GPUs
+extern "C" {
+// http://developer.download.nvidia.com/devzone/devcenter/gamegraphics/files/OptimusRenderingPolicies.pdf
+__declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
+// https://gpuopen.com/learn/amdpowerxpressrequesthighperformance/
+__declspec(dllexport) DWORD AmdPowerXpressRequestHighPerformance = 0x00000001;
+}
+#endif  // defined(_WIN32)
+
 namespace {
 
 #ifdef XR_USE_PLATFORM_ANDROID
-void ShowHelp() { Log::Write(Log::Level::Info, "adb shell setprop debug.xr.graphicsPlugin OpenGLES|Vulkan"); }
+void ShowHelp() {
+    Log::Write(Log::Level::Info, "adb shell setprop debug.xr.graphicsPlugin OpenGLES|Vulkan");
+    Log::Write(Log::Level::Info, "adb shell setprop debug.xr.formFactor Hmd|Handheld");
+    Log::Write(Log::Level::Info, "adb shell setprop debug.xr.viewConfiguration Stereo|Mono");
+    Log::Write(Log::Level::Info, "adb shell setprop debug.xr.blendMode Opaque|Additive|AlphaBlend");
+}
 
 bool UpdateOptionsFromSystemProperties(Options& options) {
 #if defined(DEFAULT_GRAPHICS_PLUGIN_OPENGLES)
@@ -27,13 +42,25 @@ bool UpdateOptionsFromSystemProperties(Options& options) {
         options.GraphicsPlugin = value;
     }
 
-    // Check for required parameters.
-    if (options.GraphicsPlugin.empty()) {
-        Log::Write(Log::Level::Error, "GraphicsPlugin parameter is required");
+    if (__system_property_get("debug.xr.formFactor", value) != 0) {
+        options.FormFactor = value;
+    }
+
+    if (__system_property_get("debug.xr.viewConfiguration", value) != 0) {
+        options.ViewConfiguration = value;
+    }
+
+    if (__system_property_get("debug.xr.blendMode", value) != 0) {
+        options.EnvironmentBlendMode = value;
+    }
+
+    try {
+        options.ParseStrings();
+    } catch (std::invalid_argument& ia) {
+        Log::Write(Log::Level::Error, ia.what());
         ShowHelp();
         return false;
     }
-
     return true;
 }
 #else
@@ -89,6 +116,13 @@ bool UpdateOptionsFromCommandLine(Options& options, int argc, char* argv[]) {
         return false;
     }
 
+    try {
+        options.ParseStrings();
+    } catch (std::invalid_argument& ia) {
+        Log::Write(Log::Level::Error, ia.what());
+        ShowHelp();
+        return false;
+    }
     return true;
 }
 #endif
@@ -193,10 +227,7 @@ void android_main(struct android_app* app) {
         PFN_xrInitializeLoaderKHR initializeLoader = nullptr;
         if (XR_SUCCEEDED(
                 xrGetInstanceProcAddr(XR_NULL_HANDLE, "xrInitializeLoaderKHR", (PFN_xrVoidFunction*)(&initializeLoader)))) {
-            XrLoaderInitInfoAndroidKHR loaderInitInfoAndroid;
-            memset(&loaderInitInfoAndroid, 0, sizeof(loaderInitInfoAndroid));
-            loaderInitInfoAndroid.type = XR_TYPE_LOADER_INIT_INFO_ANDROID_KHR;
-            loaderInitInfoAndroid.next = NULL;
+            XrLoaderInitInfoAndroidKHR loaderInitInfoAndroid = {XR_TYPE_LOADER_INIT_INFO_ANDROID_KHR};
             loaderInitInfoAndroid.applicationVM = app->activity->vm;
             loaderInitInfoAndroid.applicationContext = app->activity->clazz;
             initializeLoader((const XrLoaderInitInfoBaseHeaderKHR*)&loaderInitInfoAndroid);
@@ -204,6 +235,13 @@ void android_main(struct android_app* app) {
 
         program->CreateInstance();
         program->InitializeSystem();
+
+        options->SetEnvironmentBlendMode(program->GetPreferredBlendMode());
+        UpdateOptionsFromSystemProperties(*options);
+        platformPlugin->UpdateOptions(options);
+        graphicsPlugin->UpdateOptions(options);
+
+        program->InitializeDevice();
         program->InitializeSession();
         program->CreateSwapchains();
 
@@ -227,6 +265,11 @@ void android_main(struct android_app* app) {
             }
 
             program->PollEvents(&exitRenderLoop, &requestRestart);
+            if (exitRenderLoop) {
+                ANativeActivity_finish(app->activity);
+                continue;
+            }
+
             if (!program->IsSessionRunning()) {
                 // Throttle loop since xrWaitFrame won't be called.
                 std::this_thread::sleep_for(std::chrono::milliseconds(250));
@@ -277,6 +320,13 @@ int main(int argc, char* argv[]) {
 
             program->CreateInstance();
             program->InitializeSystem();
+
+            options->SetEnvironmentBlendMode(program->GetPreferredBlendMode());
+            UpdateOptionsFromCommandLine(*options, argc, argv);
+            platformPlugin->UpdateOptions(options);
+            graphicsPlugin->UpdateOptions(options);
+
+            program->InitializeDevice();
             program->InitializeSession();
             program->CreateSwapchains();
 

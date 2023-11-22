@@ -1,10 +1,13 @@
-# Copyright (c) 2017-2021, The Khronos Group Inc.
+# Copyright (c) 2017-2023, The Khronos Group Inc.
 #
 # SPDX-License-Identifier: Apache-2.0
 
 /build/
 build*/
 CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+*/CMakeFiles
 *.orig
 .*
 *~
@@ -12,6 +15,10 @@ CMakeLists.txt.user
 *.tar.gz
 *.log
 pregen/
+generated-includes
+cmake_install.cmake
+cmake_uninstall.cmake
+cmake-build-*
 
 # Marker file for a snapshot build
 SNAPSHOT
@@ -35,6 +42,8 @@ out/build/
 # VS misc
 *.sln
 *.pyproj
+*.vcxproj
+*.vcxproj.filters
 CMakeSettings.json
 CppProperties.json
 
@@ -45,6 +54,8 @@ local.properties
 
 # Don't ignore these things
 !.*.license
+!.artifact-bot.md
+!.appveyor.yml
 !.azure-pipelines/
 !.azure-pipelines/nuget/NugetTemplate/build
 !.clang-format
@@ -56,6 +67,7 @@ local.properties
 !.gitattributes
 !.github
 !.gitignore
+!.gitlab
 !.gitlab-ci.yml
 !.mailmap
 !.markdownlint.yaml
@@ -65,3 +77,7 @@ local.properties
 # Output artifact
 *.aar
 *.pom
+clang-format-patches/
+
+# Key stores
+*.jks

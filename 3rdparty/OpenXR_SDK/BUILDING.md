@@ -1,7 +1,7 @@
 # How to Build and Run
 
 <!--
-Copyright (c) 2014-2021, The Khronos Group Inc.
+Copyright (c) 2014-2023, The Khronos Group Inc.
 
 SPDX-License-Identifier: CC-BY-4.0
 -->
@@ -10,7 +10,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ### Python v3.6+ may be required
 
-**If you are building from most repostories:** (specifically, the
+**If you are building from most repositories:** (specifically, the
 OpenXR-SDK-Source repository, the OpenXR-CTS repository, or the internal Khronos
 GitLab OpenXR repository) Certain source files are generated at build time from
 the `xr.xml` file, utilizing Python scripts. The scripts make use of the Python
@@ -51,6 +51,7 @@ number. The following table is provided to help you:
 | Visual Studio 2015   |       14       |
 | Visual Studio 2017   |       15       |
 | Visual Studio 2019   |       16       |
+| Visual Studio 2022   |       17       |
 
 #### Windows 64-bit
 
@@ -139,6 +140,28 @@ mkdir -p build/linux_release
 cd build/linux_release
 cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ../..
 make
+```
+
+### macOS
+
+Building the OpenXR components in this tree on macOS is supported using Xcode
+14.0 and newer. You may need to install Xcode Command Line Tools and cmake.
+
+First, generate the Xcode project file using CMake:
+
+```cmd
+mkdir -p build/macos
+cd build/macos
+cmake -G "Xcode" ../..
+```
+
+Finally, open the build/macos/OPENXR.xcodeproj in Xcode to build the samples.
+
+### Android
+
+```sh
+cd src/conformance
+./gradlew clean && ./gradlew build
 ```
 
 ## Running the HELLO_XR sample

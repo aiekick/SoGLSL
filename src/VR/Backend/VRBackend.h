@@ -146,7 +146,7 @@ public:
 
 	const OpenXRInfoStruct& GetOpenXRInfo() const;
 	const std::vector<XrView>& GetOpenXRViews() const;
-	const VRActions& GetXRActions() const;
+    VRActions& GetXRActionsRef();
 	bool IsCameraMoving(const uint32_t vEye) const;
 
 private:

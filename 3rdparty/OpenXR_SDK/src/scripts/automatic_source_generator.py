@@ -1,6 +1,6 @@
 #!/usr/bin/python3 -i
 #
-# Copyright (c) 2017-2021, The Khronos Group Inc.
+# Copyright (c) 2017-2023, The Khronos Group Inc.
 # Copyright (c) 2017-2019 Valve Corporation
 # Copyright (c) 2017-2019 LunarG, Inc.
 #
@@ -35,10 +35,13 @@ from spec_tools.attributes import LengthEntry, parse_optional_from_param
 from spec_tools.util import getElemName
 
 
+EXTNAME_RE = re.compile("^(?P<api>XR|VK)_(?P<tag>(?P<base_tag>[A-Z]+?)(?P<experimental_suffix>X*[0-9]*))_(?P<ext_name>.*)$")
+
+
 def undecorate(name):
     """Undecorate a name by removing the leading Xr and making it lowercase."""
     lower = name.lower()
-    assert(lower.startswith('xr'))
+    assert lower.startswith('xr')
     return lower[2:]
 
 
@@ -124,7 +127,9 @@ class AutomaticSourceOutputGenerator(OutputGenerator):
                                          # None or a comma-delimited list indicating #define values to use around this handle
                                          'protect_value',
                                          # Empty string or string to use after #if to protect this handle
-                                         'protect_string'])
+                                         'protect_string',
+                                         # Name of extension this handle is associated with (or None)
+                                         'ext_name'])
         # Flag data
         self.FlagBits = namedtuple('FlagBits',
                                    [  # The name of the flag
@@ -446,7 +451,7 @@ class AutomaticSourceOutputGenerator(OutputGenerator):
     # overridden by a derived class.
     #   self            the AutomaticSourceOutputGenerator object
     def outputCopywriteHeader(self):
-        notice = '// Copyright (c) 2017-2021, The Khronos Group Inc.\n'
+        notice = '// Copyright (c) 2017-2023, The Khronos Group Inc.\n'
         notice += '// Copyright (c) 2017-2019 Valve Corporation\n'
         notice += '// Copyright (c) 2017-2019 LunarG, Inc.\n'
         notice += '//\n'
@@ -538,14 +543,12 @@ class AutomaticSourceOutputGenerator(OutputGenerator):
             self.required_exts.append(self.currentExtension)
             # Make sure the extension has the proper vendor tags
             valid_extension_vendor = False
-            for cur_vendor_tag in self.vendor_tags:
-                extension_prefix_with_tag = "XR_"
-                extension_prefix_with_tag += cur_vendor_tag
-                extension_prefix_with_tag += "_"
-                if self.currentExtension.startswith(extension_prefix_with_tag):
-                    valid_extension_vendor = True
-                    # Save the extension tag to check every type, etc with
-                    self.current_vendor_tag = cur_vendor_tag
+            extension_tag = EXTNAME_RE.sub("\\g<tag>", self.currentExtension)
+            extension_base_tag = EXTNAME_RE.sub("\\g<base_tag>", self.currentExtension)
+            if extension_base_tag in self.vendor_tags or extension_tag in self.vendor_tags:
+                valid_extension_vendor = True
+                self.current_vendor_tag = extension_tag
+
             if not valid_extension_vendor:
                 self.printCodeGenErrorMessage('Extension %s does not appear to begin with a'
                                               ' valid vendor tag! (for example XR_KHR_)' % self.currentExtension)
@@ -625,9 +628,10 @@ class AutomaticSourceOutputGenerator(OutputGenerator):
                         self.featureExtraProtect, elem.get('protect'))
                     elem_name = elem.get('name')
                     # TODO this variable is never read
-                    if is_extension and not elem_name.endswith(self.current_vendor_tag):
+                    elem_name_base = re.sub("X[0-9]*$", "", elem_name)
+                    if is_extension and not (elem_name_base.endswith(tuple(self.vendor_tags)) or elem_name.endswith(tuple(self.vendor_tags))):
                         self.printCodeGenErrorMessage('Enum value %s in XML (for extension %s) does'
-                                                      ' not end with the expected vendor tag \"%s\"' % (
+                                                      ' not end with a suitable vendor tag (such as\"%s\")' % (
                                                           elem_name, self.currentExtension, self.current_vendor_tag))
                     extension_to_check = elem.get('extname', self.currentExtension)
                     alias = elem.get('alias')
@@ -778,13 +782,13 @@ class AutomaticSourceOutputGenerator(OutputGenerator):
         type_category = type_elem.get('category')
         protect_value, protect_string = self.genProtectInfo(
             self.featureExtraProtect, type_elem.get('protect'))
+        extension_to_check = self.currentExtension
+        if type_elem.get('extname') is not None:
+            extension_to_check = type_elem.get('extname')
         has_proper_ending = True
         if not self.isCoreExtensionName(self.currentExtension) and not type_name.endswith(self.current_vendor_tag):
             has_proper_ending = False
         if type_category in ('struct', 'union'):
-            if not has_proper_ending:
-                self.printCodeGenErrorMessage('Struct/union %s in XML (for extension %s) does not end with the expected vendor tag \"%s\"' % (
-                    type_name, self.currentExtension, self.current_vendor_tag))
             self.genStructUnion(type_info, type_category, type_name, alias)
         elif type_category == 'handle':
             if not has_proper_ending:
@@ -800,7 +804,8 @@ class AutomaticSourceOutputGenerator(OutputGenerator):
                     parent=self.getHandleParent(type_name),
                     ancestors=self.getHandleAncestors(type_name),
                     protect_value=protect_value,
-                    protect_string=protect_string))
+                    protect_string=protect_string,
+                    ext_name=extension_to_check))
         elif type_category == 'basetype':
             # Save the base type information just so we can convert to the base type when
             # outputting to a file.
@@ -820,16 +825,10 @@ class AutomaticSourceOutputGenerator(OutputGenerator):
                 # The API Header Version (typically used as the patch or build version)
                 self.header_version = noneStr(nameElem.tail).strip()
         elif type_category == 'bitmask':
-            if not has_proper_ending:
-                self.printCodeGenErrorMessage('Bitmask %s in XML (for extension %s) does not end with the expected vendor tag \"%s\"' % (
-                    type_name, self.currentExtension, self.current_vendor_tag))
             mask_info = self.getTypeNameTuple(type_info.elem)
             mask_type = mask_info[0]
             mask_name = mask_info[1]
             bitvalues = type_elem.get('bitvalues')
-            extension_to_check = self.currentExtension
-            if type_elem.get('extname') is not None:
-                extension_to_check = type_elem.get('extname')
             # Record a bitmask and all it's valid flag bit values
             self.api_flags.append(
                 self.FlagBits(
@@ -978,7 +977,7 @@ class AutomaticSourceOutputGenerator(OutputGenerator):
             if lengths is not None:
                 is_array = True
                 is_null_terminated = any(elt.null_terminated for elt in lengths)
-                assert(('null-terminated' in member.get('len')) == is_null_terminated)
+                assert ('null-terminated' in member.get('len')) == is_null_terminated
 
                 # Get the name of the (first) variable to use for the count.
                 for length in lengths:
@@ -1048,8 +1047,8 @@ class AutomaticSourceOutputGenerator(OutputGenerator):
                         frame = currentframe()
                         frameinfo = getframeinfo(frame) if frame is not None else None
                         self.printCodeGenWarningMessage(
-                            frameinfo.filename if frameinfo is not None else None,
-                            (frameinfo.lineno + 1) if frameinfo is not None else None,
+                            frameinfo.filename if frame is not None else None,
+                            (frameinfo.lineno + 1) if frame is not None else None,
                             'Struct \"%s\" has different children than possible parent struct \"%s\".' % (
                                 type_name, generic_struct_name))
         if is_union:
@@ -1105,7 +1104,7 @@ class AutomaticSourceOutputGenerator(OutputGenerator):
             required_exts.append(ext_name)
 
         # Identify this command as either a create or destroy command for later use
-        if 'xrCreate' in name or 'Connect' in name:
+        if any(keyword in name for keyword in ('xrCreate', 'Connect', 'xrTryCreate')):
             is_create_connect = True
         elif 'xrDestroy' in name or 'Disconnect' in name:
             is_destroy_disconnect = True
@@ -1167,7 +1166,7 @@ class AutomaticSourceOutputGenerator(OutputGenerator):
             if lengths:
                 is_array = any(not elt.null_terminated for elt in lengths)
                 is_null_terminated = any(elt.null_terminated for elt in lengths)
-                # assert(is_null_terminated == new_is_null_terminated)
+                # assert is_null_terminated == new_is_null_terminated
                 # Get the name of the (first) variable to use for the count.
                 length_params = tuple(length.other_param_name
                                       for length in lengths
@@ -1535,7 +1534,7 @@ class AutomaticSourceOutputGenerator(OutputGenerator):
         if not self.isHandle(param.type):
             return None
         name = param.name
-        assert(param.pointer_count <= 1)
+        assert param.pointer_count <= 1
         if param.pointer_count == 1:
             if param.pointer_count_var is None:
                 # Just a pointer
@@ -1683,39 +1682,7 @@ class AutomaticSourceOutputGenerator(OutputGenerator):
     #   self            the AutomaticSourceOutputGenerator object
     #   type_name       the name of the type to convert to the XrStructureType enum
     def genXrStructureType(self, type_name):
-        value = type_name.replace('D3D', 'D3d')
-        value = value.replace('OpenGL', 'Opengl')
-        value = value.replace('OpenglES', 'OpenglEs')
-        value = value.replace('iOS', 'Ios')
-        value = value.replace('RGB', 'Rgb')
-        # Find any place where a lowercase letter is followed by an uppercase
-        # letter, and insert an underscore between them
-        value = re.sub('([a-z0-9])([A-Z])', r'\1_\2', value)
-        # Change the whole string to uppercase
-        value = value.upper()
-        # Add "TYPE_" after the XR_ prefix
-        structure_type_name = re.sub('XR_', 'XR_TYPE_', value, 1)
-        # If this structure is part of an extension, and the suffix doesn't have an underscore
-        # in front of it at this point, add one.
-        for cur_vendor_tag in self.vendor_tags:
-            if structure_type_name.endswith(cur_vendor_tag):
-                vendor_tag_len = len(cur_vendor_tag)
-                if structure_type_name[-(vendor_tag_len + 1)].isalpha():
-                    prefix = structure_type_name[:-vendor_tag_len]
-                    suffix = structure_type_name[-vendor_tag_len:]
-                    structure_type_name = prefix + '_' + suffix
-        invalid_type = True
-        if not (type_name in self.structs_with_no_type):
-            for structure_type in self.api_structure_types:
-                if structure_type.name == structure_type_name:
-                    invalid_type = False
-                    break
-            if invalid_type:
-                self.printCodeGenErrorMessage('Generated XrStructureType %s for structure %s does not exist!' % (
-                    structure_type_name, type_name))
-        else:
-            structure_type_name = ''
-        return structure_type_name
+        return self.conventions.generate_structure_type_from_name(type_name)
 
     # Generate a structure typename based on a XrStructureType
     #   self            the AutomaticSourceOutputGenerator object

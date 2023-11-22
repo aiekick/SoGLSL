@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2019 Collabora, Ltd.
+# Copyright (c) 2019-2023 Collabora, Ltd.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -13,7 +13,7 @@ from pathlib import Path
 from pprint import pprint
 
 import attr
-from PyPDF2 import PdfFileReader
+from PyPDF2 import PdfReader
 
 from pdf_diff import command_line as pdf_diff
 
@@ -95,7 +95,7 @@ def add_nested_title(bookmarks):
 
 def outline_to_bookmarks(reader, outline=None, level=1, bookmarks=None):
     if outline is None:
-        outline = reader.getOutlines()
+        outline = reader.outline
     if bookmarks is None:
         bookmarks = []
     for elt in outline:
@@ -103,14 +103,14 @@ def outline_to_bookmarks(reader, outline=None, level=1, bookmarks=None):
             outline_to_bookmarks(reader, outline=elt, level=level+1,
                                  bookmarks=bookmarks)
         else:
-            page_num = reader.getDestinationPageNumber(elt)
+            page_num = reader.get_destination_page_number(elt)
             bookmark = Bookmark(
                 title=elt.title,
                 level=level,
                 page_number=page_num + 1)
-            page = reader.getPage(page_num)
-            _, ul_y = page.bleedBox.upperLeft
-            # print(page.bleedBox.upperLeft, page.bleedBox.lowerRight)
+            page = reader.pages[page_num]
+            _, ul_y = page.bleedbox.upper_left
+            # print(page.bleedbox.upper_left, page.bleedbox.lower_right)
             # Coordinate system is flipped compared to pdf_diff...
             if elt.top:
                 bookmark.top = float(ul_y) - float(elt.top)
@@ -145,7 +145,7 @@ def compute_section_page_map(sections):
 class PdfSpec:
     def __init__(self, fn):
         self.fn = fn
-        self.reader = PdfFileReader(open(str(fn), 'rb'))
+        self.reader = PdfReader(open(str(fn), 'rb'))
         self.bookmark_data = outline_to_bookmarks(self.reader)
 
         self._page_pdfs = None
@@ -382,8 +382,8 @@ def fill_pair_gaps(pairs):
     new_pages = [new_page for _, new_page in pairs
                  if new_page is not None]
 
-    assert(orig_pages == sorted(orig_pages))
-    assert(new_pages == sorted(new_pages))
+    assert orig_pages == sorted(orig_pages)
+    assert new_pages == sorted(new_pages)
 
     fixed_pairs = []
 
@@ -452,9 +452,9 @@ class GranularPdfDiff:
 
 if __name__ == "__main__":
     SPECDIR = Path(__file__).resolve().parent.parent
-    assert(SPECDIR.name == "specification")
+    assert SPECDIR.name == "specification"
     ORIG = SPECDIR / 'compare-base' / 'openxr.pdf'
-    NEW = SPECDIR / 'out' / '1.0' / 'openxr.pdf'
+    NEW = SPECDIR / 'generated' / 'out' / '1.0' / 'openxr.pdf'
     DIFFDIR = SPECDIR / 'diffs'
     DIFFDIR.mkdir(exist_ok=True)
 

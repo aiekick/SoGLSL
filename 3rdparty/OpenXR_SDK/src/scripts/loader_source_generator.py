@@ -1,6 +1,6 @@
 #!/usr/bin/python3 -i
 #
-# Copyright (c) 2017-2021, The Khronos Group Inc.
+# Copyright (c) 2017-2023, The Khronos Group Inc.
 # Copyright (c) 2017-2019 Valve Corporation
 # Copyright (c) 2017-2019 LunarG, Inc.
 #
@@ -81,8 +81,9 @@ class LoaderSourceOutputGenerator(AutomaticSourceOutputGenerator):
     #   self            the LoaderSourceOutputGenerator object
 
     def outputGeneratedHeaderWarning(self):
+        # REUSE-IgnoreStart
         generated_warning = ''
-        generated_warning += '// Copyright (c) 2017-2021, The Khronos Group Inc.\n'
+        generated_warning += '// Copyright (c) 2017-2023, The Khronos Group Inc.\n'
         generated_warning += '// Copyright (c) 2017-2019 Valve Corporation\n'
         generated_warning += '// Copyright (c) 2017-2019 LunarG, Inc.\n'
         # Broken string is to avoid confusing the REUSE tool here.
@@ -90,6 +91,7 @@ class LoaderSourceOutputGenerator(AutomaticSourceOutputGenerator):
         generated_warning += '// *********** THIS FILE IS GENERATED - DO NOT EDIT ***********\n'
         generated_warning += '//     See loader_source_generator.py for modifications\n'
         generated_warning += '// ************************************************************\n'
+        # REUSE-IgnoreEnd
         write(generated_warning, file=self.outFile)
 
     # Call the base class to properly begin the file, and then add
@@ -121,7 +123,7 @@ class LoaderSourceOutputGenerator(AutomaticSourceOutputGenerator):
             preamble += '#include "loader_logger.hpp"\n'
             preamble += '#include "loader_platform.hpp"\n'
             preamble += '#include "runtime_interface.hpp"\n'
-            preamble += '#include "xr_generated_dispatch_table.h"\n\n'
+            preamble += '#include "xr_generated_dispatch_table_core.h"\n\n'
 
             preamble += '#include "xr_dependencies.h"\n'
             preamble += '#include <openxr/openxr.h>\n'
@@ -233,7 +235,7 @@ class LoaderSourceOutputGenerator(AutomaticSourceOutputGenerator):
                         tramp_variable_defines += '    if (XR_SUCCEEDED(result)) {\n'
 
                         # These should be mutually exclusive - verify it.
-                        assert((not cur_cmd.is_destroy_disconnect) or
+                        assert ((not cur_cmd.is_destroy_disconnect) or
                                (pointer_count == 0))
                     else:
                         tramp_variable_defines += self.printCodeGenErrorMessage(

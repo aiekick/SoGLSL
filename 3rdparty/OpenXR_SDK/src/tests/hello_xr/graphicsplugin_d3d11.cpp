@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2021, The Khronos Group Inc.
+// Copyright (c) 2017-2023, The Khronos Group Inc.
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -6,8 +6,9 @@
 #include "common.h"
 #include "geometry.h"
 #include "graphicsplugin.h"
+#include "options.h"
 
-#if defined(XR_USE_GRAPHICS_API_D3D11) && !defined(MISSING_DIRECTX_COLORS)
+#if defined(XR_USE_GRAPHICS_API_D3D11)
 
 #include <common/xr_linear.h>
 #include <DirectXColors.h>
@@ -50,7 +51,8 @@ TryAgain:
 }
 
 struct D3D11GraphicsPlugin : public IGraphicsPlugin {
-    D3D11GraphicsPlugin(const std::shared_ptr<Options>&, std::shared_ptr<IPlatformPlugin>){};
+    D3D11GraphicsPlugin(const std::shared_ptr<Options>& options, std::shared_ptr<IPlatformPlugin>)
+        : m_clearColor(options->GetBackgroundClearColor()) {}
 
     std::vector<std::string> GetInstanceExtensions() const override { return {XR_KHR_D3D11_ENABLE_EXTENSION_NAME}; }
 
@@ -140,10 +142,9 @@ struct D3D11GraphicsPlugin : public IGraphicsPlugin {
         uint32_t capacity, const XrSwapchainCreateInfo& /*swapchainCreateInfo*/) override {
         // Allocate and initialize the buffer of image structs (must be sequential in memory for xrEnumerateSwapchainImages).
         // Return back an array of pointers to each swapchain image struct so the consumer doesn't need to know the type/size.
-        std::vector<XrSwapchainImageD3D11KHR> swapchainImageBuffer(capacity);
+        std::vector<XrSwapchainImageD3D11KHR> swapchainImageBuffer(capacity, {XR_TYPE_SWAPCHAIN_IMAGE_D3D11_KHR});
         std::vector<XrSwapchainImageBaseHeader*> swapchainImageBase;
         for (XrSwapchainImageD3D11KHR& image : swapchainImageBuffer) {
-            image.type = XR_TYPE_SWAPCHAIN_IMAGE_D3D11_KHR;
             swapchainImageBase.push_back(reinterpret_cast<XrSwapchainImageBaseHeader*>(&image));
         }
 
@@ -204,8 +205,7 @@ struct D3D11GraphicsPlugin : public IGraphicsPlugin {
         const ComPtr<ID3D11DepthStencilView> depthStencilView = GetDepthStencilView(colorTexture);
 
         // Clear swapchain and depth buffer. NOTE: This will clear the entire render target view, not just the specified view.
-        // TODO: Do not clear to a color when using a pass-through view configuration.
-        m_deviceContext->ClearRenderTargetView(renderTargetView.Get(), DirectX::Colors::DarkSlateGray);
+        m_deviceContext->ClearRenderTargetView(renderTargetView.Get(), static_cast<const FLOAT*>(m_clearColor.data()));
         m_deviceContext->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
         ID3D11RenderTargetView* renderTargets[] = {renderTargetView.Get()};
@@ -249,6 +249,8 @@ struct D3D11GraphicsPlugin : public IGraphicsPlugin {
 
     uint32_t GetSupportedSwapchainSampleCount(const XrViewConfigurationView&) override { return 1; }
 
+    void UpdateOptions(const std::shared_ptr<Options>& options) override { m_clearColor = options->GetBackgroundClearColor(); }
+
    private:
     ComPtr<ID3D11Device> m_device;
     ComPtr<ID3D11DeviceContext> m_deviceContext;
@@ -264,6 +266,7 @@ struct D3D11GraphicsPlugin : public IGraphicsPlugin {
 
     // Map color buffer to associated depth buffer. This map is populated on demand.
     std::map<ID3D11Texture2D*, ComPtr<ID3D11DepthStencilView>> m_colorToDepthMap;
+    std::array<float, 4> m_clearColor;
 };
 }  // namespace
 

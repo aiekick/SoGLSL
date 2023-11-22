@@ -1,4 +1,4 @@
-# Copyright (c) 2019-2021 The Khronos Group Inc.
+# Copyright (c) 2019-2023, The Khronos Group Inc.
 # SPDX-License-Identifier: Apache-2.0
 
 parameters:
@@ -26,7 +26,8 @@ jobs:
           presentationBackend: wayland
     pool:
       vmImage: "ubuntu-latest"
-    container: khronosgroup/docker-images:openxr-sdk.202102
+    container: khronosgroup/docker-images:openxr-sdk.20230323
+    # container: khronosgroup/docker-images@sha256:20edadbaa6cdec4fed7417c24b18dfb4b93eec940fdf1a27b5f97272dec47032
     steps:
       # First build as debug
       - template: build_linux.yml
@@ -53,6 +54,7 @@ jobs:
           scriptPath: $(System.DefaultWorkingDirectory)/.azure-pipelines/shared/generate_windows_matrix_build.py
           # argument sets the variable name defined by python script
           arguments: winbuild
+          pythonInterpreter: /usr/bin/python3
 
   # Build the loader, API layers, and samples on Windows
   - job: windows_build
@@ -97,7 +99,9 @@ jobs:
   #         useVulkan: 'true'
 
   - job: combine_artifacts
-    dependsOn: windows_build
+    dependsOn:
+      - generator
+      - windows_build
     condition: ${{ eq(parameters.isSdkSourceRepo, true) }}
     displayName: "Organize artifacts"
     pool:
@@ -127,7 +131,7 @@ jobs:
       # Use the specified version of Python from the tool cache
       - task: UsePythonVersion@0
         inputs:
-          versionSpec: "3.9"
+          versionSpec: "3.10"
       - task: PythonScript@0
         displayName: Move artifact contents
         inputs:
@@ -140,6 +144,11 @@ jobs:
           path: $(System.DefaultWorkingDirectory)/openxr_loader
           artifact: openxr_loader_windows
 
+      # NuGet stuff
+      # See:
+      # https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/tool/nuget?view=azure-devops
+      # https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/package/nuget?view=azure-devops
+
       - task: PowerShell@2
         displayName: Stage loader and headers for NuGet
         inputs:
@@ -147,6 +156,9 @@ jobs:
           arguments: $(System.DefaultWorkingDirectory)/openxr_loader `
             $(Build.SourcesDirectory)/specification/Makefile `
             $(System.DefaultWorkingDirectory)/openxr_loader_staging
+      - task: NuGetToolInstaller@1
+        inputs:
+          versionSpec: ">=5.0.0"
       - task: NuGetCommand@2
         displayName: Package for NuGet
         inputs:

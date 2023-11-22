@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2021, The Khronos Group Inc.
+// Copyright (c) 2017-2023, The Khronos Group Inc.
 // Copyright (c) 2017-2019 Valve Corporation
 // Copyright (c) 2017-2019 LunarG, Inc.
 //
@@ -20,16 +20,12 @@
 // Author: Dave Houlton <daveh@lunarg.com>
 //
 
-#ifdef XR_USE_GRAPHICS_API_OPENGL
-#include "gfxwrapper_opengl.h"  // for GL Extensions
-#endif
-
 #include "loader_test_utils.hpp"
 #include "xr_dependencies.h"
 #include <openxr/openxr.h>
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 
 #if defined(XR_OS_WINDOWS)
 

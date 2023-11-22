@@ -22,7 +22,20 @@ from spec_tools.shared import MessageId
 ###
 # "Configuration" constants
 
-EXTRA_DEFINES = ('XRAPI_ATTR', 'XRAPI_CALL', 'XRAPI_PTR', 'XR_NO_STDINT_H')
+FREEFORM_CATEGORY = 'freeform'
+REFLINK_MACRO = 'reflink'
+
+EXTRA_DEFINES = (
+    'XRAPI_ATTR',
+    'XRAPI_CALL',
+    'XRAPI_PTR',
+    'XR_NO_STDINT_H',
+)
+
+# TODO move permissions into XML eventually
+EXTRA_REFPAGES = (
+    'org.khronos.openxr.permission.ext.HAND_TRACKING',
+)
 
 # These are marked with the code: macro
 SYSTEM_TYPES = set(('void', 'char', 'float', 'size_t',
@@ -58,17 +71,20 @@ class XREntityDatabase(EntityDatabase):
         return SYSTEM_TYPES
 
     def populateMacros(self):
-        # TODO: Where should flags actually go?
-        # #Not mentioned in the style guide.
         # TODO: What about flag wildcards? There are a few such uses...
-
+        self.addMacro('elink', ('enums', 'flags',), link=True)
         self.addMacro('basetype', ('basetypes',), link=True)
+        self.addMacro(REFLINK_MACRO, (FREEFORM_CATEGORY,), link=True)
+
 
     def populateEntities(self):
         # These are not mentioned in the XML
         for name in EXTRA_DEFINES:
-            self.addEntity(name, 'dlink', category='configdefines',
-                           generates=False)
+            self.addEntity(name, 'dlink',
+                           category=FREEFORM_CATEGORY, generates=False)
+        for name in EXTRA_REFPAGES:
+            self.addEntity(name, REFLINK_MACRO,
+                           category=FREEFORM_CATEGORY, generates=False)
 
     def handleType(self, name, info, requires):
         """Extend superclass implementation for OpenXR bitmasks."""
@@ -120,23 +136,20 @@ class XRMacroCheckerFile(MacroCheckerFile):
         super().processBlockOpen(block_type, context=context,
                                  delimiter=delimiter)
 
-    def handleIncludeMissingRefPage(self, entity, generated_type):
-        """Report a message about an include outside of a ref-page block."""
-        # TODO is it reasonable that we just stuck all the Flags includes in
-        # the appendix?
-        if entity.endswith('Flags'):
-            # OK, it's a flag, no worries.
-            return
+    def perform_entity_check(self, t):
+        """Returns True if an entity check should be performed on this
+           refpage type.
 
-        super().handleIncludeMissingRefPage(entity, generated_type)
+           May override."""
 
-    def computeExpectedRefPageFromInclude(self, entity):
-        """Compute the expected ref page entity based on an include entity name."""
-        # TODO use registry associations between FlagBits and Flags to do this
-        # better?
-        if entity.endswith('FlagBits'):
-            return entity.replace('FlagBits', 'Flags')
-        return entity
+        return t != FREEFORM_CATEGORY
+
+    @property
+    def allowEnumXrefs(self):
+        """Returns True if enums can be specified in the 'xrefs' attribute
+        of a refpage.
+        """
+        return True
 
 
 def makeMacroChecker(enabled_messages):

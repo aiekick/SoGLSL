@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copyright (c) 2019-2021, The Khronos Group Inc.
+# Copyright (c) 2019-2023, The Khronos Group Inc.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -53,22 +53,27 @@ makeSubset "$TARNAME" $(getSDKFilenames)
     cd sdk
     # Add the SDK-specific README
     add_to_tar "$TARNAME" README.md
+    # Add the pull request template
+    add_to_tar "$TARNAME" .github/pull_request_template.md
 )
 
-for header in openxr.h openxr_platform.h openxr_reflection.h; do
-    generate_spec include/openxr $header "$TARNAME"
-done
+# Read the list of headers we should generate, and generate them.
+while read -r header; do
+    generate_spec include/openxr "$header" "$TARNAME"
+done < include/generated_header_list.txt
 
 # These go just in SDK
+generate_src src xr_generated_dispatch_table_core.c  "$TARNAME"
+generate_src src xr_generated_dispatch_table_core.h  "$TARNAME"
 generate_src src xr_generated_dispatch_table.c  "$TARNAME"
 generate_src src xr_generated_dispatch_table.h  "$TARNAME"
 generate_src src/loader xr_generated_loader.cpp  "$TARNAME"
 generate_src src/loader xr_generated_loader.hpp  "$TARNAME"
 
 # If the loader doc has been generated, include it too.
-if [ -f specification/out/1.0/loader.html ]; then
+if [ -f specification/generated/out/1.0/loader.html ]; then
     mkdir -p doc/loader
-    cp specification/out/1.0/loader.html doc/loader/OpenXR_loader_design.html
+    cp specification/generated/out/1.0/loader.html doc/loader/OpenXR_loader_design.html
     add_to_tar "$TARNAME" doc/loader/OpenXR_loader_design.html
 fi
 

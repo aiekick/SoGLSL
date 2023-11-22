@@ -1,35 +1,33 @@
+// Copyright (c) 2017-2023, The Khronos Group Inc.
+// Copyright (c) 2016, Oculus VR, LLC.
+// Portions of macOS, iOS, functionality copyright (c) 2016, The Brenwill Workshop Ltd.
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+/* REUSE-IgnoreStart */
+/* The following has copyright notices that duplicate the header above */
+
 /*
 ================================================================================================
 
-Description	:	Convenient wrapper for the OpenGL API.
-Author		:	J.M.P. van Waveren
-Date		:	12/21/2014
-Language	:	C99
-Format		:	Real tabs with the tab size equal to 4 spaces.
-Copyright	:	Copyright (c) 2016 Oculus VR, LLC. All Rights reserved.
-                        :	Portions copyright (c) 2016 The Brenwill Workshop Ltd. All Rights reserved.
-
-
-LICENSE
-=======
-
-Copyright (c) 2016 Oculus VR, LLC.
-Portions of macOS, iOS, functionality copyright (c) 2016 The Brenwill Workshop Ltd.
-
-SPDX-License-Identifier: Apache-2.0
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-     http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
+Description  : Convenient wrapper for the OpenGL API.
+Orig. Author : J.M.P. van Waveren
+Orig. Date   : 12/21/2014
+Language     : C99
+Copyright    : Copyright (c) 2016 Oculus VR, LLC. All Rights reserved.
+             : Portions copyright (c) 2016 The Brenwill Workshop Ltd. All Rights reserved.
 
 IMPLEMENTATION
 ==============
@@ -124,9 +122,9 @@ extern "C" {
 #elif defined(__APPLE__)
 #define OS_APPLE
 #include <Availability.h>
-#if __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && __IPHONE_OS_VERSION_MAX_ALLOWED
 #define OS_APPLE_IOS
-#elif __MAC_OS_X_VERSION_MAX_ALLOWED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED) && __MAC_OS_X_VERSION_MAX_ALLOWED
 #define OS_APPLE_MACOS
 #endif
 #elif defined(__linux__)
@@ -183,8 +181,6 @@ Platform headers / declarations
 #define GRAPHICS_API_OPENGL 1
 #define OUTPUT_PATH ""
 
-#define __thread __declspec(thread)
-
 #elif defined(OS_LINUX)
 
 #define OPENGL_VERSION_MAJOR 4
@@ -194,7 +190,7 @@ Platform headers / declarations
 #define USE_SYNC_OBJECT 0  // 0 = GLsync, 1 = EGLSyncKHR, 2 = storage buffer
 
 #if !defined(_XOPEN_SOURCE)
-#if __STDC_VERSION__ >= 199901L
+#if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
 #define _XOPEN_SOURCE 600
 #else
 #define _XOPEN_SOURCE 500
@@ -217,6 +213,18 @@ Platform headers / declarations
 #include <X11/extensions/Xrandr.h>     // for resolution changes
 #include <GL/glx.h>
 
+#ifdef Success
+#undef Success
+#endif  // Success
+
+#ifdef Always
+#undef Always
+#endif  // Always
+
+#ifdef None
+#undef None
+#endif  // None
+
 #elif defined(OS_LINUX_XCB) || defined(OS_LINUX_XCB_GLX)
 #define XR_USE_PLATFORM_XCB 1
 
@@ -228,6 +236,18 @@ Platform headers / declarations
 #include <xcb/glx.h>
 #include <xcb/dri2.h>
 #include <GL/glx.h>
+
+#ifdef Success
+#undef Success
+#endif  // Success
+
+#ifdef Always
+#undef Always
+#endif  // Always
+
+#ifdef None
+#undef None
+#endif  // None
 
 #elif defined(OS_LINUX_WAYLAND)
 #define XR_USE_PLATFORM_WAYLAND 1
@@ -250,14 +270,6 @@ Platform headers / declarations
 #define GRAPHICS_API_OPENGL 1
 #define OUTPUT_PATH ""
 
-#if !defined(__USE_GNU)
-// These prototypes are only included when __USE_GNU is defined but that causes other compile errors.
-extern int pthread_setname_np(pthread_t __target_thread, __const char *__name);
-extern int pthread_setaffinity_np(pthread_t thread, size_t cpusetsize, const cpu_set_t *cpuset);
-#endif  // !__USE_GNU
-
-#pragma GCC diagnostic ignored "-Wunused-function"
-
 #elif defined(OS_APPLE_MACOS)
 
 // Apple is still at OpenGL 4.1
@@ -272,7 +284,11 @@ extern int pthread_setaffinity_np(pthread_t thread, size_t cpusetsize, const cpu
 #include <sys/sysctl.h>
 #include <sys/time.h>
 #include <pthread.h>
-#include <Cocoa/Cocoa.h>
+#include <ApplicationServices/ApplicationServices.h>
+#if defined(__OBJC__)
+#import <Cocoa/Cocoa.h>
+#endif
+
 #define GL_DO_NOT_WARN_IF_MULTI_GL_VERSION_HEADERS_INCLUDED
 #include <OpenGL/OpenGL.h>
 #include <OpenGL/gl3.h>
@@ -293,9 +309,6 @@ typedef int CGSSurfaceID;
 CGLError CGLSetSurface(CGLContextObj ctx, CGSConnectionID cid, CGSWindowID wid, CGSSurfaceID sid);
 CGLError CGLGetSurface(CGLContextObj ctx, CGSConnectionID *cid, CGSWindowID *wid, CGSSurfaceID *sid);
 CGLError CGLUpdateContext(CGLContextObj ctx);
-
-#pragma clang diagnostic ignored "-Wunused-function"
-#pragma clang diagnostic ignored "-Wunused-const-variable"
 
 #elif defined(OS_APPLE_IOS)
 
@@ -337,7 +350,6 @@ CGLError CGLUpdateContext(CGLContextObj ctx);
 #include <android/input.h>              // for AKEYCODE_ etc.
 #include <android/window.h>             // for AWINDOW_FLAG_KEEP_SCREEN_ON
 #include <android/native_window_jni.h>  // for native window JNI
-#include <android_native_app_glue.h>
 #include <EGL/egl.h>
 #include <EGL/eglext.h>
 #include <GLES2/gl2.h>
@@ -355,8 +367,6 @@ CGLError CGLUpdateContext(CGLContextObj ctx);
 
 #define GRAPHICS_API_OPENGL_ES 1
 #define OUTPUT_PATH "/sdcard/"
-
-#pragma GCC diagnostic ignored "-Wunused-function"
 
 typedef struct {
     JavaVM *vm;        // Java Virtual Machine
@@ -382,11 +392,6 @@ Common headers
 #include <string.h>  // for memset
 #include <errno.h>   // for EBUSY, ETIMEDOUT etc.
 #include <ctype.h>   // for isspace, isdigit
-
-#include <utils/sysinfo.h>
-#include <utils/nanoseconds.h>
-#include <utils/threading.h>
-#include <utils/algebra.h>
 
 /*
 ================================
@@ -425,7 +430,7 @@ Common defines
 #define ES_HIGHP ""  // GLSL "430" disallows a precision qualifier on a image2D
 #endif
 
-void GlInitExtensions();
+void GlInitExtensions(void);
 
 /*
 ================================================================================================================================
@@ -508,6 +513,7 @@ extern PFNGLGENVERTEXARRAYSPROC glGenVertexArrays;
 extern PFNGLDELETEVERTEXARRAYSPROC glDeleteVertexArrays;
 extern PFNGLBINDVERTEXARRAYPROC glBindVertexArray;
 extern PFNGLVERTEXATTRIBPOINTERPROC glVertexAttribPointer;
+extern PFNGLVERTEXATTRIBIPOINTERPROC glVertexAttribIPointer;
 extern PFNGLVERTEXATTRIBDIVISORPROC glVertexAttribDivisor;
 extern PFNGLDISABLEVERTEXATTRIBARRAYPROC glDisableVertexAttribArray;
 extern PFNGLENABLEVERTEXATTRIBARRAYPROC glEnableVertexAttribArray;
@@ -610,12 +616,29 @@ extern PFNGLXSWAPINTERVALEXTPROC glXSwapIntervalEXT;
 extern PFNGLXDELAYBEFORESWAPNVPROC glXDelayBeforeSwapNV;
 #endif
 
+extern PFNGLBINDSAMPLERPROC glBindSampler;
+extern PFNGLDELETESAMPLERSPROC glDeleteSamplers;
+extern PFNGLGENSAMPLERSPROC glGenSamplers;
+extern PFNGLGETSAMPLERPARAMETERIIVPROC glGetSamplerParameterIiv;
+extern PFNGLGETSAMPLERPARAMETERIUIVPROC glGetSamplerParameterIuiv;
+extern PFNGLGETSAMPLERPARAMETERFVPROC glGetSamplerParameterfv;
+extern PFNGLGETSAMPLERPARAMETERIVPROC glGetSamplerParameteriv;
+extern PFNGLISSAMPLERPROC glIsSampler;
+extern PFNGLSAMPLERPARAMETERIIVPROC glSamplerParameterIiv;
+extern PFNGLSAMPLERPARAMETERIUIVPROC glSamplerParameterIuiv;
+extern PFNGLSAMPLERPARAMETERFPROC glSamplerParameterf;
+extern PFNGLSAMPLERPARAMETERFVPROC glSamplerParameterfv;
+extern PFNGLSAMPLERPARAMETERIPROC glSamplerParameteri;
+extern PFNGLSAMPLERPARAMETERIVPROC glSamplerParameteriv;
+
 #elif defined(OS_APPLE_MACOS)
 
+#ifdef GL_GLEXT_FUNCTION_POINTERS
 extern PFNGLFRAMEBUFFERTEXTUREMULTIVIEWOVRPROC glFramebufferTextureMultiviewOVR;
 extern PFNGLFRAMEBUFFERTEXTUREMULTISAMPLEMULTIVIEWOVRPROC glFramebufferTextureMultisampleMultiviewOVR;
 extern PFNGLFRAMEBUFFERTEXTURE2DMULTISAMPLEEXTPROC glFramebufferTexture2DMultisampleEXT;
 extern PFNGLRENDERBUFFERSTORAGEMULTISAMPLEEXTPROC glRenderbufferStorageMultisampleEXT;
+#endif  // def GL_GLEXT_FUNCTION_POINTERS
 
 #elif defined(OS_ANDROID)
 
@@ -785,7 +808,6 @@ ksGpuSampleCount
 
 bool ksGpuContext_CreateShared( ksGpuContext * context, const ksGpuContext * other, const int queueIndex );
 void ksGpuContext_Destroy( ksGpuContext * context );
-void ksGpuContext_WaitIdle( ksGpuContext * context );
 void ksGpuContext_SetCurrent( ksGpuContext * context );
 void ksGpuContext_UnsetCurrent( ksGpuContext * context );
 bool ksGpuContext_CheckCurrent( ksGpuContext * context );
@@ -855,7 +877,11 @@ typedef struct {
     EGLConfig config;
     EGLSurface mainSurface;
 #elif defined(OS_APPLE_MACOS)
+#if defined(__OBJC__)
     NSOpenGLContext *nsContext;
+#else
+    void *nsContext;
+#endif  // defined(__OBJC__)
     CGLContextObj cglContext;
 #elif defined(OS_ANDROID)
     EGLDisplay display;
@@ -877,7 +903,6 @@ typedef struct {
 
 bool ksGpuContext_CreateShared(ksGpuContext *context, const ksGpuContext *other, int queueIndex);
 void ksGpuContext_Destroy(ksGpuContext *context);
-void ksGpuContext_WaitIdle(ksGpuContext *context);
 void ksGpuContext_SetCurrent(ksGpuContext *context);
 void ksGpuContext_UnsetCurrent(ksGpuContext *context);
 bool ksGpuContext_CheckCurrent(ksGpuContext *context);
@@ -905,12 +930,6 @@ depthFormat,
                                                 const ksGpuSampleCount sampleCount, const int width, const int height, const bool
 fullscreen );
 void ksGpuWindow_Destroy( ksGpuWindow * window );
-void ksGpuWindow_Exit( ksGpuWindow * window );
-ksGpuWindowEvent ksGpuWindow_ProcessEvents( ksGpuWindow * window );
-void ksGpuWindow_SwapInterval( ksGpuWindow * window, const int swapInterval );
-void ksGpuWindow_SwapBuffers( ksGpuWindow * window );
-ksNanoseconds ksGpuWindow_GetNextSwapTimeNanoseconds( ksGpuWindow * window );
-ksNanoseconds ksGpuWindow_GetFrameTimeNanoseconds( ksGpuWindow * window );
 
 ================================================================================================================================
 */
@@ -943,7 +962,6 @@ typedef struct {
     bool windowActive;
     bool windowExit;
     ksGpuWindowInput input;
-    ksNanoseconds lastSwapTime;
 
 #if defined(OS_WINDOWS)
     HINSTANCE hInstance;
@@ -988,8 +1006,13 @@ typedef struct {
 #elif defined(OS_APPLE_MACOS)
     CGDirectDisplayID display;
     CGDisplayModeRef desktopDisplayMode;
+#if defined(__OBJC__)
     NSWindow *nsWindow;
     NSView *nsView;
+#else
+    void *nsWindow;
+    void *nsView;
+#endif  // defined(__OBJC__)
 #elif defined(OS_APPLE_IOS)
     UIWindow *uiWindow;
     UIView *uiView;
@@ -997,10 +1020,7 @@ typedef struct {
     EGLDisplay display;
     EGLint majorVersion;
     EGLint minorVersion;
-    struct android_app *app;
     Java_t java;
-    ANativeWindow *nativeWindow;
-    bool resumed;
 #endif
 } ksGpuWindow;
 
@@ -1008,45 +1028,6 @@ bool ksGpuWindow_Create(ksGpuWindow *window, ksDriverInstance *instance, const k
                         ksGpuSurfaceColorFormat colorFormat, ksGpuSurfaceDepthFormat depthFormat, ksGpuSampleCount sampleCount,
                         int width, int height, bool fullscreen);
 void ksGpuWindow_Destroy(ksGpuWindow *window);
-void ksGpuWindow_Exit(ksGpuWindow *window);
-ksGpuWindowEvent ksGpuWindow_ProcessEvents(ksGpuWindow *window);
-void ksGpuWindow_SwapInterval(ksGpuWindow *window, int swapInterval);
-void ksGpuWindow_SwapBuffers(ksGpuWindow *window);
-ksNanoseconds ksGpuWindow_GetNextSwapTimeNanoseconds(ksGpuWindow *window);
-ksNanoseconds ksGpuWindow_GetFrameTimeNanoseconds(ksGpuWindow *window);
-
-/*
-================================================================================================================================
-
-GPU timer.
-
-A timer is used to measure the amount of time it takes to complete GPU commands.
-For optimal performance a timer should only be created at load time, not at runtime.
-To avoid synchronization, ksGpuTimer_GetNanoseconds() reports the time from KS_GPU_TIMER_FRAMES_DELAYED frames ago.
-Timer queries are allowed to overlap and can be nested.
-Timer queries that are issued inside a render pass may not produce accurate times on tiling GPUs.
-
-ksGpuTimer
-
-static void ksGpuTimer_Create( ksGpuContext * context, ksGpuTimer * timer );
-static void ksGpuTimer_Destroy( ksGpuContext * context, ksGpuTimer * timer );
-static ksNanoseconds ksGpuTimer_GetNanoseconds( ksGpuTimer * timer );
-
-================================================================================================================================
-*/
-
-#define KS_GPU_TIMER_FRAMES_DELAYED 2
-
-typedef struct {
-    GLuint beginQueries[KS_GPU_TIMER_FRAMES_DELAYED];
-    GLuint endQueries[KS_GPU_TIMER_FRAMES_DELAYED];
-    int queryIndex;
-    ksNanoseconds gpuTime;
-} ksGpuTimer;
-
-void ksGpuTimer_Create(ksGpuContext *context, ksGpuTimer *timer);
-void ksGpuTimer_Destroy(ksGpuContext *context, ksGpuTimer *timer);
-ksNanoseconds ksGpuTimer_GetNanoseconds(ksGpuTimer *timer);
 
 #ifdef __cplusplus
 }

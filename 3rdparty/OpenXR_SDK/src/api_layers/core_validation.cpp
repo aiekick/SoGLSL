@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2021, The Khronos Group Inc.
+// Copyright (c) 2017-2023, The Khronos Group Inc.
 // Copyright (c) 2017-2019 Valve Corporation
 // Copyright (c) 2017-2019 LunarG, Inc.
 //
@@ -211,6 +211,17 @@ bool CoreValidationWriteHtmlFooter() {
     }
 }
 
+// For routing platform_utils.hpp messages.
+void LogPlatformUtilsError(const std::string &message) {
+    (void)message;
+#if !defined(NDEBUG)
+    std::cerr << message << std::endl;
+#if defined(XR_OS_WINDOWS)
+    OutputDebugStringA((message + "\n").c_str());
+#endif
+#endif
+}
+
 // Function to record all the core validation information
 void CoreValidLogMessage(GenValidUsageXrInstanceInfo *instance_info, const std::string &message_id,
                          GenValidUsageDebugSeverity message_severity, const std::string &command_name,
@@ -247,21 +258,23 @@ void CoreValidLogMessage(GenValidUsageXrInstanceInfo *instance_info, const std::
         // If we have instance information, see if we need to log this information out to a debug messenger
         // callback.
         if (nullptr != instance_info) {
-            if (!instance_info->debug_data.Empty() && !instance_info->debug_messengers.empty()) {
+            if (!instance_info->debug_messengers.empty()) {
                 std::vector<XrSdkLogObjectInfo> objects;
                 objects.reserve(objects_info.size());
                 std::transform(objects_info.begin(), objects_info.end(), std::back_inserter(objects),
                                [](GenValidUsageXrObjectInfo const &info) {
                                    return XrSdkLogObjectInfo{info.handle, info.type};
                                });
-                names_and_labels = instance_info->debug_data.PopulateNamesAndLabels(std::move(objects));
+
                 // Setup our callback data once
-                XrDebugUtilsMessengerCallbackDataEXT callback_data = {};
-                callback_data.type = XR_TYPE_DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT;
+                XrDebugUtilsMessengerCallbackDataEXT callback_data = {XR_TYPE_DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT};
                 callback_data.messageId = message_id.c_str();
                 callback_data.functionName = command_name.c_str();
                 callback_data.message = message.c_str();
-                names_and_labels.PopulateCallbackData(callback_data);
+                if (!instance_info->debug_data.Empty()) {
+                    names_and_labels = instance_info->debug_data.PopulateNamesAndLabels(std::move(objects));
+                    names_and_labels.PopulateCallbackData(callback_data);
+                }
 
                 // Loop through all active messengers and give each a chance to output information
                 for (const auto &debug_messenger : instance_info->debug_messengers) {
@@ -648,10 +661,6 @@ XRAPI_ATTR XrResult XRAPI_CALL CoreValidationXrCreateSession(XrInstance instance
         auto const &enabled_extensions = gen_instance_info->enabled_extensions;
         has_headless |= (enabled_extensions.end() !=
                          std::find(enabled_extensions.begin(), enabled_extensions.end(), XR_MND_HEADLESS_EXTENSION_NAME));
-#ifdef XR_KHR_headless
-        has_headless |= (enabled_extensions.end() !=
-                         std::find(enabled_extensions.begin(), enabled_extensions.end(), XR_KHR_HEADLESS_EXTENSION_NAME));
-#endif  // XR_KHR_headless
 
         bool got_right_graphics_binding_count = (num_graphics_bindings_found == 1);
         if (!got_right_graphics_binding_count && has_headless) {
@@ -780,11 +789,13 @@ XRAPI_ATTR XrResult XRAPI_CALL CoreValidationXrSessionBeginDebugUtilsLabelRegion
     if (XR_SUCCESS != test_result) {
         return test_result;
     }
-    auto info_with_lock = g_session_info.getWithLock(session);
-    if (info_with_lock.second != nullptr) {
-        GenValidUsageXrInstanceInfo *gen_instance_info = info_with_lock.second->instance_info;
-        if (nullptr != gen_instance_info) {
-            gen_instance_info->debug_data.BeginLabelRegion(session, *labelInfo);
+    {
+        auto info_with_lock = g_session_info.getWithLock(session);
+        if (info_with_lock.second != nullptr) {
+            GenValidUsageXrInstanceInfo *gen_instance_info = info_with_lock.second->instance_info;
+            if (nullptr != gen_instance_info) {
+                gen_instance_info->debug_data.BeginLabelRegion(session, *labelInfo);
+            }
         }
     }
     return GenValidUsageNextXrSessionBeginDebugUtilsLabelRegionEXT(session, labelInfo);
@@ -795,11 +806,13 @@ XRAPI_ATTR XrResult XRAPI_CALL CoreValidationXrSessionEndDebugUtilsLabelRegionEX
     if (XR_SUCCESS != test_result) {
         return test_result;
     }
-    auto info_with_lock = g_session_info.getWithLock(session);
-    if (info_with_lock.second != nullptr) {
-        GenValidUsageXrInstanceInfo *gen_instance_info = info_with_lock.second->instance_info;
-        if (nullptr != gen_instance_info) {
-            gen_instance_info->debug_data.EndLabelRegion(session);
+    {
+        auto info_with_lock = g_session_info.getWithLock(session);
+        if (info_with_lock.second != nullptr) {
+            GenValidUsageXrInstanceInfo *gen_instance_info = info_with_lock.second->instance_info;
+            if (nullptr != gen_instance_info) {
+                gen_instance_info->debug_data.EndLabelRegion(session);
+            }
         }
     }
     return GenValidUsageNextXrSessionEndDebugUtilsLabelRegionEXT(session);
@@ -811,11 +824,13 @@ XRAPI_ATTR XrResult XRAPI_CALL CoreValidationXrSessionInsertDebugUtilsLabelEXT(X
     if (XR_SUCCESS != test_result) {
         return test_result;
     }
-    auto info_with_lock = g_session_info.getWithLock(session);
-    if (info_with_lock.second != nullptr) {
-        GenValidUsageXrInstanceInfo *gen_instance_info = info_with_lock.second->instance_info;
-        if (nullptr != gen_instance_info) {
-            gen_instance_info->debug_data.InsertLabel(session, *labelInfo);
+    {
+        auto info_with_lock = g_session_info.getWithLock(session);
+        if (info_with_lock.second != nullptr) {
+            GenValidUsageXrInstanceInfo *gen_instance_info = info_with_lock.second->instance_info;
+            if (nullptr != gen_instance_info) {
+                gen_instance_info->debug_data.InsertLabel(session, *labelInfo);
+            }
         }
     }
     return GenValidUsageNextXrSessionInsertDebugUtilsLabelEXT(session, labelInfo);
@@ -825,31 +840,38 @@ XRAPI_ATTR XrResult XRAPI_CALL CoreValidationXrSessionInsertDebugUtilsLabelEXT(X
 // NOTE: Add new validation checking above this comment block
 // ############################################################
 
-extern "C" {
-
 // Function used to negotiate an interface betewen the loader and an API layer.  Each library exposing one or
 // more API layers needs to expose at least this function.
-LAYER_EXPORT XrResult xrNegotiateLoaderApiLayerInterface(const XrNegotiateLoaderInfo *loaderInfo, const char * /*apiLayerName*/,
-                                                         XrNegotiateApiLayerRequest *apiLayerRequest) {
-    if (nullptr == loaderInfo || nullptr == apiLayerRequest || loaderInfo->structType != XR_LOADER_INTERFACE_STRUCT_LOADER_INFO ||
-        loaderInfo->structVersion != XR_LOADER_INFO_STRUCT_VERSION || loaderInfo->structSize != sizeof(XrNegotiateLoaderInfo) ||
-        apiLayerRequest->structType != XR_LOADER_INTERFACE_STRUCT_API_LAYER_REQUEST ||
+extern "C" LAYER_EXPORT XRAPI_ATTR XrResult XRAPI_CALL xrNegotiateLoaderApiLayerInterface(
+    const XrNegotiateLoaderInfo *loaderInfo, const char * /*apiLayerName*/, XrNegotiateApiLayerRequest *apiLayerRequest) {
+    if (loaderInfo == nullptr || loaderInfo->structType != XR_LOADER_INTERFACE_STRUCT_LOADER_INFO ||
+        loaderInfo->structVersion != XR_LOADER_INFO_STRUCT_VERSION || loaderInfo->structSize != sizeof(XrNegotiateLoaderInfo)) {
+        LogPlatformUtilsError("loaderInfo struct is not valid");
+        return XR_ERROR_INITIALIZATION_FAILED;
+    }
+
+    if (loaderInfo->minInterfaceVersion > XR_CURRENT_LOADER_API_LAYER_VERSION ||
+        loaderInfo->maxInterfaceVersion < XR_CURRENT_LOADER_API_LAYER_VERSION) {
+        LogPlatformUtilsError("loader interface version is not in the range [minInterfaceVersion, maxInterfaceVersion]");
+        return XR_ERROR_INITIALIZATION_FAILED;
+    }
+
+    if (loaderInfo->minApiVersion > XR_CURRENT_API_VERSION || loaderInfo->maxApiVersion < XR_CURRENT_API_VERSION) {
+        LogPlatformUtilsError("loader api version is not in the range [minApiVersion, maxApiVersion]");
+        return XR_ERROR_INITIALIZATION_FAILED;
+    }
+
+    if (apiLayerRequest == nullptr || apiLayerRequest->structType != XR_LOADER_INTERFACE_STRUCT_API_LAYER_REQUEST ||
         apiLayerRequest->structVersion != XR_API_LAYER_INFO_STRUCT_VERSION ||
-        apiLayerRequest->structSize != sizeof(XrNegotiateApiLayerRequest) ||
-        loaderInfo->minInterfaceVersion > XR_CURRENT_LOADER_API_LAYER_VERSION ||
-        loaderInfo->maxInterfaceVersion < XR_CURRENT_LOADER_API_LAYER_VERSION ||
-        loaderInfo->maxInterfaceVersion > XR_CURRENT_LOADER_API_LAYER_VERSION ||
-        loaderInfo->maxApiVersion < XR_CORE_VALIDATION_API_VERSION || loaderInfo->minApiVersion > XR_CORE_VALIDATION_API_VERSION) {
+        apiLayerRequest->structSize != sizeof(XrNegotiateApiLayerRequest)) {
+        LogPlatformUtilsError("apiLayerRequest is not valid");
         return XR_ERROR_INITIALIZATION_FAILED;
     }
 
     apiLayerRequest->layerInterfaceVersion = XR_CURRENT_LOADER_API_LAYER_VERSION;
-    apiLayerRequest->layerApiVersion = XR_CORE_VALIDATION_API_VERSION;
-    apiLayerRequest->getInstanceProcAddr = reinterpret_cast<PFN_xrGetInstanceProcAddr>(GenValidUsageXrGetInstanceProcAddr);
-    apiLayerRequest->createApiLayerInstance =
-        reinterpret_cast<PFN_xrCreateApiLayerInstance>(CoreValidationXrCreateApiLayerInstance);
+    apiLayerRequest->layerApiVersion = XR_CURRENT_API_VERSION;
+    apiLayerRequest->getInstanceProcAddr = GenValidUsageXrGetInstanceProcAddr;
+    apiLayerRequest->createApiLayerInstance = CoreValidationXrCreateApiLayerInstance;
 
     return XR_SUCCESS;
 }
-
-}  // extern "C"

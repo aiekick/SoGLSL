@@ -1,10 +1,11 @@
-// Copyright (c) 2017-2021, The Khronos Group Inc.
+// Copyright (c) 2017-2023, The Khronos Group Inc.
 //
 // SPDX-License-Identifier: Apache-2.0
 
 #pragma once
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <cstdarg>
 #include <cstdio>
@@ -92,6 +93,10 @@
 #ifdef XR_USE_GRAPHICS_API_OPENGL_ES
 #include <EGL/egl.h>
 #endif
+
+#ifdef XR_USE_PLATFORM_EGL
+#include <EGL/egl.h>
+#endif  // XR_USE_PLATFORM_EGL
 
 #ifdef XR_USE_GRAPHICS_API_VULKAN
 #ifdef XR_USE_PLATFORM_WIN32

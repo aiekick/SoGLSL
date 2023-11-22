@@ -1,6 +1,7 @@
 #!/usr/bin/python3 -i
 #
 # Copyright (c) 2019 Collabora, Ltd.
+# Copyright (c) 2018-2023, The Khronos Group Inc.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -151,7 +152,13 @@ class XMLChecker:
 
         Returns the stripped name and the tag, or the input and None if there was no tag.
         """
+        # Author tag can be suffixed with experimental version
+        name_no_experimental = re.sub("X[0-9]*$", "", name)
+
         for t in self.tags:
+            if name_no_experimental.endswith(t):
+                name = name_no_experimental
+
             if name.endswith(t):
                 name = name[:-(len(t))]
                 if name[-1] == "_":
@@ -221,9 +228,17 @@ class XMLChecker:
 
         self.ext_numbers = set()
         for name, info in self.reg.extdict.items():
-            supported = (info.elem.get('supported') == self.conventions.xml_api_name)
             self.set_error_context(entity=name, elem=info.elem)
+
+            # Determine if this extension is supported by the API we're
+            # testing, and pass that flag to check_extension.
+            # For Vulkan, multiple APIs can be specified in the 'supported'
+            # attribute.
+            supported_apis = info.elem.get('supported', '').split(',')
+            supported = self.conventions.xml_api_name in supported_apis
             self.check_extension(name, info, supported)
+
+        self.check_format()
 
         entities_with_messages = set(
             self.errors.keys()).union(self.warnings.keys())
@@ -346,7 +361,9 @@ class XMLChecker:
                                           expected, "got", val)
 
             # Check structextends attribute, if present.
-            self.check_referenced_type("'structextends' attribute", info.elem.get("structextends"))
+            # For Vulkan, this may be a comma-separated list of multiple types
+            for type in info.elem.get("structextends", '').split(','):
+                self.check_referenced_type("'structextends' attribute", type)
 
             # Check parentstruct attribute, if present.
             self.check_referenced_type("'parentstruct' attribute", info.elem.get("parentstruct"))
@@ -364,6 +381,7 @@ class XMLChecker:
         Called from check.
 
         May extend."""
+
         # Verify that each extension has a unique number
         extension_number = info.elem.get('number')
         if extension_number is not None and extension_number != '0':
@@ -371,6 +389,14 @@ class XMLChecker:
                 self.record_error('Duplicate extension number ' + extension_number)
             else:
                 self.ext_numbers.add(extension_number)
+
+    def check_format(self):
+        """Check an extension's XML data for consistency.
+
+        Called from check.
+
+        May extend."""
+        pass
 
     def check_command(self, name, info):
         """Check a command's XML data for consistency.

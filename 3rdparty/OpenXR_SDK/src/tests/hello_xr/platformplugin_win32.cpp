@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2021, The Khronos Group Inc.
+// Copyright (c) 2017-2023, The Khronos Group Inc.
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -11,11 +11,13 @@ namespace {
 struct Win32PlatformPlugin : public IPlatformPlugin {
     Win32PlatformPlugin(const std::shared_ptr<Options>&) { CHECK_HRCMD(CoInitializeEx(nullptr, COINIT_MULTITHREADED)); }
 
-    virtual ~Win32PlatformPlugin() { CoUninitialize(); }
+    virtual ~Win32PlatformPlugin() override { CoUninitialize(); }
 
     std::vector<std::string> GetInstanceExtensions() const override { return {}; }
 
     XrBaseInStructure* GetInstanceCreateExtension() const override { return nullptr; }
+
+    void UpdateOptions(const std::shared_ptr<struct Options>& /*unused*/) override {}
 };
 }  // namespace
 

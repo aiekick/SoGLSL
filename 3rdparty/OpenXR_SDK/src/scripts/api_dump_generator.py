@@ -1,6 +1,6 @@
 #!/usr/bin/python3 -i
 #
-# Copyright (c) 2017-2021, The Khronos Group Inc.
+# Copyright (c) 2017-2023, The Khronos Group Inc.
 # Copyright (c) 2017-2019 Valve Corporation
 # Copyright (c) 2017-2019 LunarG, Inc.
 #
@@ -98,7 +98,7 @@ class ApiDumpOutputGenerator(AutomaticSourceOutputGenerator):
         AutomaticSourceOutputGenerator.endFile(self)
 
     # Output the externs required by the manual code to work with the API Dump
-    # gnerated code.
+    # generated code.
     #   self            the ApiDumpOutputGenerator object
     def outputApiDumpExterns(self):
         externs = '\n// Externs for API dump\n'
@@ -1069,7 +1069,7 @@ class ApiDumpOutputGenerator(AutomaticSourceOutputGenerator):
                 is_destroy = False
                 has_return = False
 
-                if ('xrCreate' in cur_cmd.name or 'xrConnect' in cur_cmd.name) and cur_cmd.params[-1].is_handle:
+                if any(prefix in cur_cmd.name for prefix in ('xrCreate', 'xrTryCreate', 'xrConnect')) and cur_cmd.params[-1].is_handle:
                     is_create = True
                     has_return = True
                 elif ('xrDestroy' in cur_cmd.name or 'xrDisconnect' in cur_cmd.name) and cur_cmd.params[-1].is_handle:

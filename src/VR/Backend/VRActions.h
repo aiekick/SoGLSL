@@ -74,7 +74,6 @@ class VRActions
 {
 private:
 	XrResult m_result = XR_SUCCESS;
-	std::vector<XrActiveActionSet> m_ActiveActionSets;
 	XrActionSet m_GamePlayActionSet;
 	std::vector<XrPath> m_ControllerBasePaths;
 

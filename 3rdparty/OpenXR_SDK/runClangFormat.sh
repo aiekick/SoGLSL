@@ -1,5 +1,5 @@
-#!/bin/bash
-# Copyright (c) 2017-2021, The Khronos Group Inc.
+#!/usr/bin/env bash
+# Copyright (c) 2017-2023, The Khronos Group Inc.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -17,12 +17,12 @@
 
 set -e
 (
-    PREFERRED_CLANG_FORMAT=clang-format-6.0
-    ACCEPTABLE_CLANG_FORMATS="${PREFERRED_CLANG_FORMAT} clang-format-7 clang-format-8 clang-format-8 clang-format"
-    cd "$(dirname $0)"
+    PREFERRED_CLANG_FORMAT=clang-format-10
+    ACCEPTABLE_CLANG_FORMATS="${PREFERRED_CLANG_FORMAT} clang-format-11 clang-format-12 clang-format-13 clang-format-14 clang-format-15 clang-format-16 clang-format"
+    cd "$(dirname "$0")"
     if [ ! "${CLANGFORMAT}" ]; then
         for tool in ${ACCEPTABLE_CLANG_FORMATS}; do
-            if which $tool > /dev/null 2> /dev/null; then
+            if which "$tool" > /dev/null 2> /dev/null; then
                 CLANGFORMAT=$tool
                 break
             fi
@@ -42,6 +42,6 @@ set -e
         -and -not \( -wholename ./src/external/\* \) \
         -and -not \( -wholename ./src/scripts/\* \) \
         -and \( -name \*.hpp -or -name \*.h -or -name \*.cpp -or -name \*.c \) \
-        -exec ${CLANGFORMAT} -i -style=file {} +
+        -exec "${CLANGFORMAT}" -i -style=file {} +
 
 )

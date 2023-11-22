@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2021, The Khronos Group Inc.
+// Copyright (c) 2017-2023, The Khronos Group Inc.
 // Copyright (c) 2017-2019 Valve Corporation
 // Copyright (c) 2017-2019 LunarG, Inc.
 //
@@ -31,6 +31,8 @@ class Value;
 //! Initialize loader, where required.
 XrResult InitializeLoader(const XrLoaderInitInfoBaseHeaderKHR* loaderInitInfo);
 XrResult GetPlatformRuntimeVirtualManifest(Json::Value& out_manifest);
+std::string GetAndroidNativeLibraryDir();
+void* Android_Get_Asset_Manager();
 #endif
 
 class RuntimeManifestFile;

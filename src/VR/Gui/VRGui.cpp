@@ -110,7 +110,7 @@ void VRGui::Draw()
 
 			if (ImGui::BeginFramedGroup("Controllers Actions"))
 			{
-				const auto& xr_controllerDatas = VRBackend::Instance()->GetXRActions().GetOpenXRControllerDatas();
+				const auto& xr_controllerDatas = VRBackend::Instance()->GetXRActionsRef().GetOpenXRControllerDatas();
 				size_t idx = 0U;
 				for (auto& controllerData : xr_controllerDatas)
 				{

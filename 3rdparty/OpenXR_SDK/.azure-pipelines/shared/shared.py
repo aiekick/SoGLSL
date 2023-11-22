@@ -1,10 +1,10 @@
-# Copyright (c) 2019 The Khronos Group Inc.
+# Copyright (c) 2019-2023, The Khronos Group Inc.
 # SPDX-License-Identifier: Apache-2.0
 
 import json
 import sys
 
-VS_VERSION = 'Visual Studio 16 2019'
+VS_VERSION = 'Visual Studio 17 2022'
 
 PLATFORMS = ('Win32', 'x64', 'ARM', 'ARM64')
 

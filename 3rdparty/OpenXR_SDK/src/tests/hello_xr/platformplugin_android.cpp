@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2021, The Khronos Group Inc.
+// Copyright (c) 2017-2023, The Khronos Group Inc.
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -20,6 +20,8 @@ struct AndroidPlatformPlugin : public IPlatformPlugin {
     std::vector<std::string> GetInstanceExtensions() const override { return {XR_KHR_ANDROID_CREATE_INSTANCE_EXTENSION_NAME}; }
 
     XrBaseInStructure* GetInstanceCreateExtension() const override { return (XrBaseInStructure*)&instanceCreateInfoAndroid; }
+
+    void UpdateOptions(const std::shared_ptr<struct Options>& /*unused*/) override {}
 
     XrInstanceCreateInfoAndroidKHR instanceCreateInfoAndroid;
 };

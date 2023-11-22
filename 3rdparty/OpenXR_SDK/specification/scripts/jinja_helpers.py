@@ -1,6 +1,6 @@
 #!/usr/bin/python3 -i
 #
-# Copyright (c) 2019-2021, The Khronos Group Inc.
+# Copyright (c) 2019-2023, The Khronos Group Inc.
 # Copyright (c) 2019 Collabora, Ltd.
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -31,7 +31,7 @@ _WHITESPACE = re.compile(r"[\s\n]+")
 def _undecorate(name):
     """Undecorate a name by removing the leading Xr and making it lowercase."""
     lower = name.lower()
-    assert(lower.startswith('xr'))
+    assert lower.startswith('xr')
     return lower[2:]
 
 

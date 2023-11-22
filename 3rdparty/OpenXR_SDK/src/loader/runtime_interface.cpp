@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2021, The Khronos Group Inc.
+// Copyright (c) 2017-2023, The Khronos Group Inc.
 // Copyright (c) 2017-2019 Valve Corporation
 // Copyright (c) 2017-2019 LunarG, Inc.
 //
@@ -13,7 +13,7 @@
 #include "loader_interfaces.h"
 #include "loader_logger.hpp"
 #include "loader_platform.hpp"
-#include "xr_generated_dispatch_table.h"
+#include "xr_generated_dispatch_table_core.h"
 
 #include <openxr/openxr.h>
 
@@ -27,7 +27,12 @@
 
 #ifdef XR_USE_PLATFORM_ANDROID
 #include "android_utilities.h"
+#include <android/asset_manager_jni.h>
 #include <json/value.h>
+
+// Needed for the loader init struct
+#include <xr_dependencies.h>
+#include <openxr/openxr_platform.h>
 #endif  // XR_USE_PLATFORM_ANDROID
 
 #ifdef XR_KHR_LOADER_INIT_SUPPORT
@@ -50,6 +55,14 @@ class LoaderInitData {
      * Type alias for the platform-specific structure type.
      */
     using StructType = XrLoaderInitInfoAndroidKHR;
+    /*!
+     * Native library path.
+     */
+    std::string _native_library_path;
+    /*!
+     * Android asset manager.
+     */
+    AAssetManager* _android_asset_manager;
 #endif
 
     /*!
@@ -96,9 +109,22 @@ XrResult LoaderInitData::initialize(const XrLoaderInitInfoBaseHeaderKHR* info) {
     if (cast_info->applicationContext == nullptr) {
         return XR_ERROR_VALIDATION_FAILURE;
     }
+
+    // Copy and store the JVM pointer and Android Context, ensuring the JVM is initialised.
     _data = *cast_info;
-    jni::init((jni::JavaVM*)_data.applicationVM);
     _data.next = nullptr;
+    jni::init(static_cast<jni::JavaVM*>(_data.applicationVM));
+    const jni::Object context = jni::Object{static_cast<jni::jobject>(_data.applicationContext)};
+
+    // Retrieve a reference to the Android AssetManager.
+    const auto assetManager = context.call<jni::Object>("getAssets()Landroid/content/res/AssetManager;");
+    _android_asset_manager = AAssetManager_fromJava(jni::env(), assetManager.getHandle());
+
+    // Retrieve the path to the native libraries.
+    const auto applicationContext = context.call<jni::Object>("getApplicationContext()Landroid/content/Context;");
+    const auto applicationInfo = context.call<jni::Object>("getApplicationInfo()Landroid/content/pm/ApplicationInfo;");
+    _native_library_path = applicationInfo.get<std::string>("nativeLibraryDir");
+
     _initialized = true;
     return XR_SUCCESS;
 }
@@ -108,6 +134,10 @@ XrResult LoaderInitData::initialize(const XrLoaderInitInfoBaseHeaderKHR* info) {
 XrResult InitializeLoader(const XrLoaderInitInfoBaseHeaderKHR* loaderInitInfo) {
     return LoaderInitData::instance().initialize(loaderInitInfo);
 }
+
+std::string GetAndroidNativeLibraryDir() { return LoaderInitData::instance()._native_library_path; }
+
+void* Android_Get_Asset_Manager() { return LoaderInitData::instance()._android_asset_manager; }
 
 #endif  // XR_KHR_LOADER_INIT_SUPPORT
 
@@ -393,12 +423,10 @@ void RuntimeInterface::GetInstanceExtensionProperties(std::vector<XrExtensionPro
     // Get the count from the runtime
     rt_xrEnumerateInstanceExtensionProperties(nullptr, count, &count_output, nullptr);
     if (count_output > 0) {
-        runtime_extension_properties.resize(count_output);
+        XrExtensionProperties example_properties{};
+        example_properties.type = XR_TYPE_EXTENSION_PROPERTIES;
+        runtime_extension_properties.resize(count_output, example_properties);
         count = count_output;
-        for (XrExtensionProperties& ext_prop : runtime_extension_properties) {
-            ext_prop.type = XR_TYPE_EXTENSION_PROPERTIES;
-            ext_prop.next = nullptr;
-        }
         rt_xrEnumerateInstanceExtensionProperties(nullptr, count, &count_output, runtime_extension_properties.data());
     }
     size_t ext_count = runtime_extension_properties.size();

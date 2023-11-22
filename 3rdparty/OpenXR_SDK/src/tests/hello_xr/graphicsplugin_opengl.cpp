@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2021, The Khronos Group Inc.
+// Copyright (c) 2017-2023, The Khronos Group Inc.
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -6,6 +6,7 @@
 #include "common.h"
 #include "geometry.h"
 #include "graphicsplugin.h"
+#include "options.h"
 
 #ifdef XR_USE_GRAPHICS_API_OPENGL
 
@@ -13,7 +14,6 @@
 #include <common/xr_linear.h>
 
 namespace {
-constexpr float DarkSlateGray[] = {0.184313729f, 0.309803933f, 0.309803933f, 1.0f};
 
 static const char* VertexShaderGlsl = R"_(
     #version 410
@@ -43,7 +43,8 @@ static const char* FragmentShaderGlsl = R"_(
     )_";
 
 struct OpenGLGraphicsPlugin : public IGraphicsPlugin {
-    OpenGLGraphicsPlugin(const std::shared_ptr<Options>& /*unused*/, const std::shared_ptr<IPlatformPlugin> /*unused*/&){};
+    OpenGLGraphicsPlugin(const std::shared_ptr<Options>& options, const std::shared_ptr<IPlatformPlugin> /*unused*/&)
+        : m_clearColor(options->GetBackgroundClearColor()) {}
 
     OpenGLGraphicsPlugin(const OpenGLGraphicsPlugin&) = delete;
     OpenGLGraphicsPlugin& operator=(const OpenGLGraphicsPlugin&) = delete;
@@ -72,12 +73,15 @@ struct OpenGLGraphicsPlugin : public IGraphicsPlugin {
                 glDeleteTextures(1, &colorToDepth.second);
             }
         }
+
+        ksGpuWindow_Destroy(&window);
     }
 
     std::vector<std::string> GetInstanceExtensions() const override { return {XR_KHR_OPENGL_ENABLE_EXTENSION_NAME}; }
 
     ksGpuWindow window{};
 
+#if !defined(XR_USE_PLATFORM_MACOS)
     void DebugMessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message) {
         (void)source;
         (void)type;
@@ -85,6 +89,7 @@ struct OpenGLGraphicsPlugin : public IGraphicsPlugin {
         (void)severity;
         Log::Write(Log::Level::Info, "GL Debug: " + std::string(message, 0, length));
     }
+#endif  // !defined(XR_USE_PLATFORM_MACOS)
 
     void InitializeDevice(XrInstance instance, XrSystemId systemId) override {
         // Extension function must be loaded by name
@@ -136,8 +141,13 @@ struct OpenGLGraphicsPlugin : public IGraphicsPlugin {
         // TODO: Just need something other than NULL here for now (for validation).  Eventually need
         //       to correctly put in a valid pointer to an wl_display
         m_graphicsBinding.display = reinterpret_cast<wl_display*>(0xFFFFFFFF);
+#elif defined(XR_USE_PLATFORM_MACOS)
+#error OpenGL bindings for Mac have not been implemented
+#else
+#error Platform not supported
 #endif
 
+#if !defined(XR_USE_PLATFORM_MACOS)
         glEnable(GL_DEBUG_OUTPUT);
         glDebugMessageCallback(
             [](GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message,
@@ -145,6 +155,7 @@ struct OpenGLGraphicsPlugin : public IGraphicsPlugin {
                 ((OpenGLGraphicsPlugin*)userParam)->DebugMessageCallback(source, type, id, severity, length, message);
             },
             this);
+#endif  // !defined(XR_USE_PLATFORM_MACOS)
 
         InitializeResources();
     }
@@ -246,10 +257,9 @@ struct OpenGLGraphicsPlugin : public IGraphicsPlugin {
         uint32_t capacity, const XrSwapchainCreateInfo& /*swapchainCreateInfo*/) override {
         // Allocate and initialize the buffer of image structs (must be sequential in memory for xrEnumerateSwapchainImages).
         // Return back an array of pointers to each swapchain image struct so the consumer doesn't need to know the type/size.
-        std::vector<XrSwapchainImageOpenGLKHR> swapchainImageBuffer(capacity);
+        std::vector<XrSwapchainImageOpenGLKHR> swapchainImageBuffer(capacity, {XR_TYPE_SWAPCHAIN_IMAGE_OPENGL_KHR});
         std::vector<XrSwapchainImageBaseHeader*> swapchainImageBase;
         for (XrSwapchainImageOpenGLKHR& image : swapchainImageBuffer) {
-            image.type = XR_TYPE_SWAPCHAIN_IMAGE_OPENGL_KHR;
             swapchainImageBase.push_back(reinterpret_cast<XrSwapchainImageBaseHeader*>(&image));
         }
 
@@ -313,7 +323,7 @@ struct OpenGLGraphicsPlugin : public IGraphicsPlugin {
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
 
         // Clear swapchain and depth buffer.
-        glClearColor(DarkSlateGray[0], DarkSlateGray[1], DarkSlateGray[2], DarkSlateGray[3]);
+        glClearColor(m_clearColor[0], m_clearColor[1], m_clearColor[2], m_clearColor[3]);
         glClearDepth(1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
@@ -350,15 +360,11 @@ struct OpenGLGraphicsPlugin : public IGraphicsPlugin {
         glBindVertexArray(0);
         glUseProgram(0);
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-        // Swap our window every other eye for RenderDoc
-        static int everyOther = 0;
-        if ((everyOther++ & 1) != 0) {
-            ksGpuWindow_SwapBuffers(&window);
-        }
     }
 
     uint32_t GetSupportedSwapchainSampleCount(const XrViewConfigurationView&) override { return 1; }
+
+    void UpdateOptions(const std::shared_ptr<Options>& options) override { m_clearColor = options->GetBackgroundClearColor(); }
 
    private:
 #ifdef XR_USE_PLATFORM_WIN32
@@ -369,6 +375,10 @@ struct OpenGLGraphicsPlugin : public IGraphicsPlugin {
     XrGraphicsBindingOpenGLXcbKHR m_graphicsBinding{XR_TYPE_GRAPHICS_BINDING_OPENGL_XCB_KHR};
 #elif defined(XR_USE_PLATFORM_WAYLAND)
     XrGraphicsBindingOpenGLWaylandKHR m_graphicsBinding{XR_TYPE_GRAPHICS_BINDING_OPENGL_WAYLAND_KHR};
+#elif defined(XR_USE_PLATFORM_MACOS)
+#error OpenGL bindings for Mac have not been implemented
+#else
+#error Platform not supported
 #endif
 
     std::list<std::vector<XrSwapchainImageOpenGLKHR>> m_swapchainImageBuffers;
@@ -383,6 +393,7 @@ struct OpenGLGraphicsPlugin : public IGraphicsPlugin {
 
     // Map color buffer to associated depth buffer. This map is populated on demand.
     std::map<uint32_t, uint32_t> m_colorToDepthMap;
+    std::array<float, 4> m_clearColor;
 };
 }  // namespace
 

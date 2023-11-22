@@ -1,6 +1,6 @@
 #!/usr/bin/python3 -i
 #
-# Copyright (c) 2013-2021, The Khronos Group Inc.
+# Copyright (c) 2013-2023, The Khronos Group Inc.
 #
 # SPDX-License-Identifier: Apache-2.0
 
@@ -96,7 +96,7 @@ class DocIndexOutputGenerator(OutputGenerator):
         elif category == 'bitmask':
             requiredEnum = typeElem.get('bitvalues')
             if requiredEnum is not None:
-                self.record_name(self.flags, name, "See elink:{}".format(requiredEnum))
+                self.record_name(self.flags, name, "See also elink:{}".format(requiredEnum))
         elif category == 'enum':
             self.record_name(self.enums, name)
         elif category == 'funcpointer':
