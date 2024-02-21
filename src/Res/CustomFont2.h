@@ -2,25 +2,10 @@
 //Based on https://github.com/juliettef/IconFontCppHeaders
 //for Language c++
 
-// NoodlesPlate Copyright (C) 2017-2023 Stephane Cuillerdier aka Aiekick
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
 #pragma once
 
 #define FONT_ICON_BUFFER_NAME_NDP2 NDP2_compressed_data_base85
-#define FONT_ICON_BUFFER_SIZE_NDP2 0xaebf
+#define FONT_ICON_BUFFER_SIZE_NDP2 0xaf23
 
 #define ICON_MIN_NDP2 0xf01d
 #define ICON_MAX_NDP2 0xfffb
@@ -164,6 +149,7 @@
 #define ICON_NDP2_DEBUG u8"\uff96"
 #define ICON_NDP2_DELETE u8"\uff57"
 #define ICON_NDP2_DESKTOP_MAC u8"\uff56"
+#define ICON_NDP2_DOWNLOADS u8"\uf72d"
 #define ICON_NDP2_EMAIL_CHECK u8"\ufab0"
 #define ICON_NDP2_EMAIL_CHECK_OUTLINE u8"\ufab1"
 #define ICON_NDP2_EQUAL_BOX u8"\uff50"
@@ -278,6 +264,7 @@
 #define ICON_NDP2_HEXAGON_SLICE_4 u8"\ufe36"
 #define ICON_NDP2_HEXAGON_SLICE_5 u8"\ufe35"
 #define ICON_NDP2_HEXAGON_SLICE_6 u8"\ufe34"
+#define ICON_NDP2_HOME u8"\uf2dc"
 #define ICON_NDP2_IMAGE_FILTER_BLACK_WHITE u8"\uff26"
 #define ICON_NDP2_IMAGE_FILTER_CENTER_FOCUS u8"\uff25"
 #define ICON_NDP2_IMAGE_FILTER_CENTER_FOCUS_STRONG u8"\uff1c"

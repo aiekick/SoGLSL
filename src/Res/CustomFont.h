@@ -2,25 +2,10 @@
 //Based on https://github.com/juliettef/IconFontCppHeaders
 //for Language c++
 
-// NoodlesPlate Copyright (C) 2017-2023 Stephane Cuillerdier aka Aiekick
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
 #pragma once
 
 #define FONT_ICON_BUFFER_NAME_NDP NDP_compressed_data_base85
-#define FONT_ICON_BUFFER_SIZE_NDP 0x4592
+#define FONT_ICON_BUFFER_SIZE_NDP 0x460f
 
 #define ICON_MIN_NDP 0xf00a
 #define ICON_MAX_NDP 0xfffa
@@ -139,6 +124,7 @@
 #define ICON_NDP_TIMES_CIRCLE_O u8"\uffc1"
 #define ICON_NDP_TRASH_O u8"\ufff1"
 #define ICON_NDP_UNDO u8"\uff97"
+#define ICON_NDP_VIDEO u8"\uf03d"
 #define ICON_NDP_WINDOW_CLOSE u8"\uff2a"
 #define ICON_NDP_WINDOW_CLOSE_O u8"\uff29"
 #define ICON_NDP_WINDOW_MAXIMIZE u8"\uff2f"

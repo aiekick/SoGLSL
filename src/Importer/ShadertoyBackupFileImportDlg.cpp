@@ -359,20 +359,24 @@ void ShadertoyBackupFileImportDlg::DrawButtonsPane()
 
 	ImGui::SameLine();
 
-	if (ImGui::ContrastedButton("Import Selected Shaders"))
-	{
-		ImGuiFileDialog::Instance()->OpenDialog(
-			"ImportSelectedShaders", "Where create shader files (if exsiting files will be overwritten)",
-			nullptr, ".", "", 1, nullptr, ImGuiFileDialogFlags_Modal);
+	if (ImGui::ContrastedButton("Import Selected Shaders")) {
+        IGFD::FileDialogConfig config;
+        config.path = ".";
+        config.countSelectionMax = 1;
+        config.flags = ImGuiFileDialogFlags_Modal;
+        ImGuiFileDialog::Instance()->OpenDialog("ImportSelectedShaders", "Where create shader files (if exsiting files will be overwritten)", nullptr,
+                                                config);
 	}
 
 	ImGui::SameLine();
 
-	if (ImGui::ContrastedButton("Import All Shaders"))
-	{
-		ImGuiFileDialog::Instance()->OpenDialog(
-			"ImportAllShaders", "Where create shader files (if exsiting files will be overwritten)",
-			nullptr, ".", "", 1, nullptr, ImGuiFileDialogFlags_Modal);
+	if (ImGui::ContrastedButton("Import All Shaders")) {
+        IGFD::FileDialogConfig config;
+        config.path = ".";
+        config.countSelectionMax = 1;
+        config.flags = ImGuiFileDialogFlags_Modal;
+        ImGuiFileDialog::Instance()->OpenDialog("ImportAllShaders", "Where create shader files (if exsiting files will be overwritten)", nullptr,
+                                                config);
 	}
 
 	ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);

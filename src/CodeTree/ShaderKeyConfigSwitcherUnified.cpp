@@ -502,8 +502,13 @@ bool ConfigSwitcherUnit::DrawConfigSwitcher(const float& vWidth, const float& vH
                             if (!puRenderingPath.empty()) {
                                 puRendering         = true;
                             } else {
-                                ImGuiFileDialog::Instance()->OpenDialog("ConfigSwitcherExportPath", "Choose a path for export all your configs",  //
-                                                                        nullptr, puRenderingPath, 1, (IGFD::UserDatas)this, ImGuiFileDialogFlags_Modal);          //
+                                IGFD::FileDialogConfig config;
+                                config.path = puRenderingPath;
+                                config.userDatas = (IGFD::UserDatas)this;
+                                config.countSelectionMax = 1;
+                                config.flags = ImGuiFileDialogFlags_Modal;
+                                ImGuiFileDialog::Instance()->OpenDialog("ConfigSwitcherExportPath", "Choose a path for export all your configs",
+                                                                        nullptr, config);
                             }
                             puRenderingFileName = conf.confName;
                             SelectConfigByName(conf.confName);
@@ -670,8 +675,12 @@ bool ShaderKeyConfigSwitcherUnified::DrawConfigSwitcher(CodeTreePtr vCodeTree, R
             if (ImGui::BeginMenuBar()) {
                 if (ImGui::BeginMenu("Export")) {
                     if (ImGui::MenuItem("Set export path")) {
-                        ImGuiFileDialog::Instance()->OpenDialog("ConfigSwitcherExportPath", "Choose a path for export all your configs",  //
-                                                                nullptr, puRenderingPath, 1, nullptr, ImGuiFileDialogFlags_Modal);        //
+                        IGFD::FileDialogConfig config;
+                        config.path = puRenderingPath;
+                        config.countSelectionMax = 1;
+                        config.flags = ImGuiFileDialogFlags_Modal;
+                        ImGuiFileDialog::Instance()->OpenDialog("ConfigSwitcherExportPath", "Choose a path for export all your configs", nullptr,
+                                                                config);       
                     }
 
                     ImGui::EndMenu();

@@ -22,6 +22,8 @@
 #include <Renderer/RenderPack.h>
 #include <ImGuiPack.h>
 
+using namespace std::placeholders;
+
 #define fileSeek fseek
 #define fileTell ftell
 
@@ -796,10 +798,15 @@ void MeshSaver::OpenDialog()
 	{
 		puFilePath = FileHelper::Instance()->GetRegisteredPath(
 			(int)FILE_LOCATION_Enum::FILE_LOCATION_EXPORT);
-	}
-	ImGuiFileDialog::Instance()->OpenDialogWithPane("SaveMeshFileDialog", "Save Mesh File", "Stanford Ply (*.ply){.ply},UE4 VectorField (*.fga){.fga}", puFilePath, puFilePathName,
-		std::bind(&InfosPane, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3), 350,
-		1, nullptr, ImGuiFileDialogFlags_DisableThumbnailMode | ImGuiFileDialogFlags_Modal);
+    }
+    IGFD::FileDialogConfig config;
+    config.path = puFilePath;
+    config.filePathName = puFilePathName;
+    config.countSelectionMax = 1;
+    config.sidePane = std::bind(&InfosPane, _1, _2, _3);
+    config.sidePaneWidth = 350.0f;
+    config.flags = ImGuiFileDialogFlags_DisableThumbnailMode | ImGuiFileDialogFlags_Modal;
+	ImGuiFileDialog::Instance()->OpenDialog("SaveMeshFileDialog", "Save Mesh File", "Stanford Ply (*.ply){.ply},UE4 VectorField (*.fga){.fga}", config);
 }
 
 void MeshSaver::ShowDialog(ct::ivec2 vScreenSize)

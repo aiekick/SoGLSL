@@ -45,6 +45,8 @@
 #include <CodeTree/Parsing/UniformParsing.h>
 #include <CodeTree/ShaderKeyConfigSwitcherUnified.h>
 
+using namespace std::placeholders;
+
 // #define VERBOSE
 
 #ifdef _DEBUG
@@ -1093,9 +1095,14 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                         if (ImGui::TextureButton(tex, (vMaxWidth - vFirstColumnWidth) * 0.5f, ImGui::GetUniformLocColor(v->loc), 10)) {
                             puBufferFilePath = FileHelper::Instance()->GetAbsolutePathForFileLocation("", (int)FILE_LOCATION_Enum::FILE_LOCATION_IMPORT);
                             if (puBufferFilePathName.find(".glsl") == std::string::npos) puBufferFilePathName.clear();
-                            ImGuiFileDialog::Instance()->OpenDialogWithPane("BufferDialog", "Open Buffer File", ".glsl", puBufferFilePath, puBufferFilePathName,
-                                                                    std::bind(&CodeTree::DrawBufferOptions, m_This, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3), 250.0f, 1, nullptr,
-                                                                    ImGuiFileDialogFlags_DisableThumbnailMode | ImGuiFileDialogFlags_Modal);
+                            IGFD::FileDialogConfig config;
+                            config.path = puBufferFilePath;
+                            config.filePathName = puBufferFilePathName;
+                            config.sidePane = std::bind(&CodeTree::DrawBufferOptions, m_This, _1, _2, _3);
+                            config.sidePaneWidth = 250.0f;
+                            config.countSelectionMax = 1;
+                            config.flags = ImGuiFileDialogFlags_DisableThumbnailMode | ImGuiFileDialogFlags_Modal;
+                            ImGuiFileDialog::Instance()->OpenDialog("BufferDialog", "Open Buffer File", ".glsl", config);
                             InitBufferChooseDialogWithUniform(v);
                         }
                         change |= BufferPopupCheck(v);
@@ -1159,8 +1166,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                             if (!FileHelper::Instance()->IsFileExist(puPictureFilePathName, true))
                                 puPictureFilePathName = FileHelper::Instance()->GetAbsolutePathForFileLocation(puPictureFilePathName, (int)FILE_LOCATION_Enum::FILE_LOCATION_ASSET_TEXTURE_2D);
                         }
-                        ImGuiFileDialog::Instance()->OpenDialog("PictureDialog", "Open Picture File", "Image files (*.png *.jpg *.jpeg *.tga *.hdr){.png,.jpg,.jpeg,.tga,.hdr},.png,.jpg,.jpeg,.tga,.hdr", puPictureFilePathName, 1, nullptr,
-                                                                ImGuiFileDialogFlags_Modal);  // std::bind(&CodeTree::DrawTextureOptions, m_This, std::placeholders::_1));
+                        IGFD::FileDialogConfig config;
+                        config.filePathName = puPictureFilePathName;
+                        config.countSelectionMax = 1;
+                        config.flags = ImGuiFileDialogFlags_Modal;
+                        ImGuiFileDialog::Instance()->OpenDialog(
+                            "PictureDialog", "Open Picture File",
+                            "Image files (*.png *.jpg *.jpeg *.tga *.hdr){.png,.jpg,.jpeg,.tga,.hdr},.png,.jpg,.jpeg,.tga,.hdr", config);
                         InitTextureChooseDialogWithUniform(v);
                     }
                     change |= TexturePopupCheck(v);

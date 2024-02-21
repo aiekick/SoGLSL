@@ -381,10 +381,14 @@ void MeshLoader::OpenDialog(RenderPackWeak vRenderpack)
 			(int)FILE_LOCATION_Enum::FILE_LOCATION_ASSET_MESH);
 	}
 	puRenderPack = vRenderpack;
-	puLastModel = rpPtr->GetModel();
-	ImGuiFileDialog::Instance()->OpenDialog(
-		"OpenMeshFileDialog", "Open Mesh File", "3D Files {.obj,.ply,.gltf,.fbx,.stl,.3ds,.dae,.lwo,.blend}",
-		puFilePath, puFilePathName, 1, nullptr, ImGuiFileDialogFlags_DisableThumbnailMode | ImGuiFileDialogFlags_Modal);
+    puLastModel = rpPtr->GetModel();
+    IGFD::FileDialogConfig config;
+    config.path = puFilePath;
+    config.filePathName = puFilePathName;
+    config.countSelectionMax = 1;
+    config.flags = ImGuiFileDialogFlags_DisableThumbnailMode | ImGuiFileDialogFlags_Modal;
+    ImGuiFileDialog::Instance()->OpenDialog("OpenMeshFileDialog", "Open Mesh File", "3D Files {.obj,.ply,.gltf,.fbx,.stl,.3ds,.dae,.lwo,.blend}",
+                                            config);
 }
 
 void MeshLoader::ShowDialog(ct::ivec2 vScreenSize)

@@ -1306,7 +1306,11 @@ bool TimeLineSystem::DrawBar(ShaderKeyPtr vKey, ct::ivec2 vScreenSize) {
 
         if (ImGui::BeginMenu("Export")) {
             if (ImGui::MenuItem("To Pictures")) {
-                ImGuiFileDialog::Instance()->OpenDialog("TimeLineRenderingToPictures", puRenderingPrefix.c_str(), ".png", puRenderingPath, 1, nullptr, ImGuiFileDialogFlags_Modal);
+                IGFD::FileDialogConfig config;
+                config.path = puRenderingPath;
+                config.countSelectionMax = 1;
+                config.flags = ImGuiFileDialogFlags_Modal;
+                ImGuiFileDialog::Instance()->OpenDialog("TimeLineRenderingToPictures", puRenderingPrefix.c_str(), ".png", config);
             }
 
             /*
