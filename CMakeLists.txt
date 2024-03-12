@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 cmake_policy(SET CMP0091 NEW) ## for CMAKE_MSVC_RUNTIME_LIBRARY
+cmake_policy(SET CMP0079 NEW) # for have linking between libs
 
 set(PROJECT SoGLSL)
 
@@ -68,7 +69,7 @@ endif()
 endif()
 
 ## some defines for debug mode
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /W4 -D_DEBUG")
 add_definitions(-DPROJECT_PATH="${CMAKE_CURRENT_SOURCE_DIR}")
 
 if(UNIX)
@@ -117,8 +118,8 @@ file(GLOB_RECURSE PROJECT_SRC_RECURSE
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src PREFIX src FILES ${PROJECT_SRC_RECURSE})
 
 file(GLOB IMGUI_MISC_SRC 
-	${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/imgui/misc/cpp/imgui_stdlib.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/imgui/misc/cpp/imgui_stdlib.h)
+	${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ImGuiPack/imgui_docking/misc/cpp/imgui_stdlib.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ImGuiPack/imgui_docking/misc/cpp/imgui_stdlib.h)
 source_group(src/Imgui_Misc FILES ${IMGUI_MISC_SRC})
 
 file(GLOB_RECURSE CMAKE_RECURSE ${CMAKE_CURRENT_SOURCE_DIR}/cmake/*.cmake)
@@ -133,8 +134,8 @@ add_library(${PROJECT} STATIC
 if (USE_IMPLOT)
 	target_compile_definitions(${PROJECT} PUBLIC USE_IMPLOT)
 endif()
-if (USE_IMCOOL_BAR)
-	target_compile_definitions(${PROJECT} PUBLIC USE_IMCOOL_BAR)
+if (USE_IM_COOL_BAR)
+	target_compile_definitions(${PROJECT} PUBLIC USE_IM_COOL_BAR)
 endif()
 if (USE_IM_GRADIENT_HDR)
 	target_compile_definitions(${PROJECT} PUBLIC USE_IM_GRADIENT_HDR)
@@ -157,9 +158,6 @@ endif()
 if (USE_IMGUI_COLOR_TEXT_EDIT)
 	target_compile_definitions(${PROJECT} PUBLIC USE_IMGUI_COLOR_TEXT_EDIT)
 endif()
-if (USE_IN_APP_GPU_PROFILER)
-	target_compile_definitions(${PROJECT} PUBLIC USE_IN_APP_GPU_PROFILER)
-endif()
  
 set(SOGSL_INCLUDE_DIRS
 	${SDL_INCLUDE_DIR}
@@ -169,6 +167,7 @@ set(SOGSL_INCLUDE_DIRS
 	${CURL_INCLUDE_DIR}
 	${EFSW_INCLUDE_DIR}
 	${PLOG_INCLUDE_DIR}
+	${IAGP_INCLUDE_DIRS}
 	${ASSIMP_INCLUDE_DIR}
 	${GLSLANG_INCLUDE_DIR}
 	${OPENGL_INCLUDE_DIRS}
@@ -192,6 +191,7 @@ target_link_libraries(${PROJECT} PRIVATE
 	${GLFW_LIBRARIES}
 	${EFSW_LIBRARIES}
 	${CURL_LIBRARIES}
+	${IAGP_LIBRARIES}
 	${TRACY_LIBRARIES}
 	${OPENGL_LIBRARIES}
 	${CTOOLS_LIBRARIES}

@@ -21,6 +21,7 @@
 #include <cassert>
 #include <ctools/Logger.h>
 #include <ImGuiPack.h>
+#include <InAppGpuProfiler/InAppGpuProfiler.h>
 #include <Profiler/TracyProfiler.h>
 #include <Mesh/Utils/VertexStruct.h>
 

@@ -6,3 +6,7 @@
 	path = 3rdparty/ctools
 	url = https://github.com/aiekick/cTools.git
 	branch = master
+[submodule "3rdparty/InAppGpuProfiler"]
+	path = 3rdparty/InAppGpuProfiler
+	url = https://github.com/aiekick/InAppGpuProfiler.git
+	branch = master

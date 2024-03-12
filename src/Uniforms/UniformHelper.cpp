@@ -34,6 +34,7 @@
 #include <ctools/Logger.h>
 #include <Profiler/TracyProfiler.h>
 #include <ImGuiPack.h>
+#include <InAppGpuProfiler/InAppGpuProfiler.h>
 #include <VR/Backend/VRBackend.h>
 
 ct::fvec2 UniformHelper::FBOSizeForMouseUniformNormalization = 0.0f;

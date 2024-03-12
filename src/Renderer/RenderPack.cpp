@@ -50,6 +50,7 @@
 #include <Mesh/Model/PNCModel.h>
 
 #include <ImGuiPack.h>
+#include <InAppGpuProfiler/InAppGpuProfiler.h>
 
 #include <chrono>
 #include <ctime>

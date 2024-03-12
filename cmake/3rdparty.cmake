@@ -29,5 +29,8 @@ include(cmake/assimp.cmake)
 include(cmake/rtmidi.cmake)
 include(cmake/kissfft.cmake)
 include(cmake/miniaudio.cmake)
+
+# order is importantS
 include(cmake/imguipack.cmake)
+include(cmake/iagp.cmake)
 
