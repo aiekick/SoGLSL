@@ -16,10 +16,11 @@
 #pragma once
 
 #include <string>
+#include <cstdint>
 
 namespace uType
 {
-	enum class uTypeEnum : uint8_t
+	enum class uTypeEnum
 	{
 		U_VOID = 0,
 		U_FLOAT,

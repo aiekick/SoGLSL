@@ -69,7 +69,7 @@ endif()
 endif()
 
 ## some defines for debug mode
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /W4 -D_DEBUG")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG")
 add_definitions(-DPROJECT_PATH="${CMAKE_CURRENT_SOURCE_DIR}")
 
 if(UNIX)
@@ -88,7 +88,8 @@ elseif(WIN32)
     include_directories(${DIRENT_INCLUDE_DIR})
 endif()
 
-if(MSVC)	
+if(MSVC)
+	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /W4")
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
     add_definitions(-D_USE_MATH_DEFINES)
     add_definitions(-DMSVC)
