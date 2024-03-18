@@ -21,7 +21,7 @@
 #include <Uniforms/UniformVariant.h>
 #include <Uniforms/UniformsMultiLoc.h>
 #include <ctools/FileHelper.h>
-#include <ImGuiFileDialog.h>
+#include <ImGuiPack/ImGuiPack.h>
 
 #include <functional>
 #include <string>

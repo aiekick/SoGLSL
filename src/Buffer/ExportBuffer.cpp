@@ -186,11 +186,12 @@ size_t ExportBuffer::GetCountPoints()
 
 void ExportBuffer::Capture(BaseModelWeak vModel, const GLuint& vRenderMode)
 {
-    if (!vModel.expired())
+	if (!vModel.expired()) {
         return;
+	}
 
 	auto modelPtr = vModel.lock();
-	if (modelPtr)
+	if (modelPtr != nullptr)
 	{
 		// bind
 		glBindVertexArray(modelPtr->GetVaoID()); // select first VAO

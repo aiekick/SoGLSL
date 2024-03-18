@@ -23,11 +23,11 @@
 
 #pragma warning(push)
 #pragma warning(disable:4201)   // suppress even more warnings about nameless structs
-#include <glm/glm/glm.hpp>
-#include <glm/glm/vec3.hpp> // glm::vec3
-#include <glm/glm/vec4.hpp> // glm::vec4
-#include <glm/glm/gtc/type_ptr.hpp>
-#include <glm/glm/gtc/quaternion.hpp>
+#include <glm/glm.hpp>
+#include <glm/vec3.hpp> // glm::vec3
+#include <glm/vec4.hpp> // glm::vec4
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/quaternion.hpp>
 #pragma warning(pop)
 
 class VRUtils

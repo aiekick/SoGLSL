@@ -15,6 +15,7 @@
 
 #pragma once
 
+#include <ImGuiPack/ImGuiPack.h>
 #include <ctools/cTools.h>
 #include <ctools/ConfigAbstract.h>
 #include <Uniforms/UniformVariant.h>
@@ -308,8 +309,8 @@ public: // load save
 	TimeLineInfos LoadTimeLineConfig(std::string vConfigFile);
 	bool SaveTimeLineConfig(std::string vConfigFile, TimeLineInfos vTimeLineInfos);
 	
-	std::string getXml(const std::string& vOffset, const std::string& vUserDatas);
-	bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas);
+	std::string getXml(const std::string& vOffset, const std::string& vUserDatas) override;
+    bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas) override;
 
 public: // Rendering flag
     std::string GetRenderingFilePathNameForCurrentFrame() override;

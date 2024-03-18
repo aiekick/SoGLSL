@@ -28,12 +28,12 @@
 
 #pragma warning(push)
 #pragma warning(disable:4201)   // suppress even more warnings about nameless structs
-#include <glm/glm/gtc/type_ptr.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #pragma warning(pop)
 
-#include <miniaudio/miniaudio.h>
-#include <kissfft/kiss_fft.h>
-#include <kissfft/kiss_fftr.h>
+#include <miniaudio.h>
+#include <kiss_fft.h>
+#include <kiss_fftr.h>
 
 class TextureSound
 {

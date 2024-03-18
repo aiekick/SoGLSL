@@ -18,7 +18,7 @@
 
 #include <ctools/ConfigAbstract.h>
 #include <ctools/cTools.h>
-#include <tinyxml2/tinyxml2.h>
+#include <tinyxml2.h>
 #include <curl/curl.h>
 
 #include <Headers/RenderPackHeaders.h>
@@ -122,7 +122,7 @@ public:
 	void FinishIfRequired();
 
 public:
-	std::string getXml(const std::string& vOffset, const std::string& vUserDatas);
-	bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas);
+	std::string getXml(const std::string& vOffset, const std::string& vUserDatas) override;
+	bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas) override;
 };
 #endif // #ifdef USE_NETWORK

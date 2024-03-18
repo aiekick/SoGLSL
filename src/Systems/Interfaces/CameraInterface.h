@@ -17,7 +17,7 @@
 
 #pragma warning(push)
 #pragma warning(disable:4201)   // suppress even more warnings about nameless structs
-#include <glm/glm/mat4x4.hpp>
+#include <glm/mat4x4.hpp>
 #pragma warning(pop)
 
 class CameraInterface

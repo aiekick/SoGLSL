@@ -20,7 +20,7 @@
 #include <Headers/RenderPackHeaders.h>
 #include <Systems/Interfaces/WidgetInterface.h>
 
-#include <ImGuizmo.h>
+#include <ImGuiPack/ImGuiPack.h>
 
 enum GizmoCullingPimitiveEnum {
     GIZMO_CULLING_PRIMITIVE_CUBE = 0,
@@ -93,8 +93,8 @@ public:
     void ResetToDefault(CodeTreePtr vCodeTree, RenderPackWeak vRenderPack);
 
 public:
-    std::string getXml(const std::string& vOffset, const std::string& vUserDatas);
-    bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas);
+    std::string getXml(const std::string& vOffset, const std::string& vUserDatas) override;
+    bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas) override;
 
 public:
     bool DrawGizmoTransformDialog(UniformVariantPtr vUniPtr, CameraSystem* vCamera);

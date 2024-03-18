@@ -873,44 +873,44 @@ bool SectionCode::ParseFragColorLayouts(const std::string& codeToParse)
 					if (endLinePos != std::string::npos)
 					{
 						endLinePos += 1U;
-						std::string code = codeToParse.substr(nextPos, endLinePos - nextPos);
-						ct::replaceString(code, "\t", "");
-						ct::replaceString(code, "\r", ""); // unix
-						ct::replaceString(code, "\n", "");
+						std::string _code = codeToParse.substr(nextPos, endLinePos - nextPos);
+						ct::replaceString(_code, "\t", "");
+						ct::replaceString(_code, "\r", ""); // unix
+						ct::replaceString(_code, "\n", "");
 
-						size_t locationPos = code.find("location");
+						size_t locationPos = _code.find("location");
 						if (locationPos != std::string::npos)
 						{
-							size_t equalPos = code.find("=", locationPos);
+							size_t equalPos = _code.find("=", locationPos);
 							if (equalPos != std::string::npos)
 							{
 								equalPos += 1U;
-								size_t endParPos = code.find(")", equalPos);
+								size_t endParPos = _code.find(")", equalPos);
 								if (endParPos != std::string::npos)
 								{
-									size_t outPos = code.find("out", endParPos);
+                                    size_t outPos = _code.find("out", endParPos);
 									if (outPos != std::string::npos)
 									{
-										size_t vec4Pos = code.find("vec4", outPos);
+                                        size_t vec4Pos = _code.find("vec4", outPos);
 										if (vec4Pos != std::string::npos)
 										{
 											vec4Pos += 4U;
 
-											size_t firstChar = code.find_first_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", vec4Pos);
+											size_t firstChar = _code.find_first_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", vec4Pos);
 											if (firstChar != std::string::npos)
 											{
-												size_t endSpaceOrSemiColon = code.find_first_of(" ;", firstChar);
+                                                size_t endSpaceOrSemiColon = _code.find_first_of(" ;", firstChar);
 												if (endSpaceOrSemiColon != std::string::npos)
 												{
 													layoutFound = true;
 
-													auto number = code.substr(equalPos, endParPos - equalPos);
-													ct::replaceString(number, " ", "");
-													uint8_t locationID = (uint8_t)ct::StringToNumber<int>(number); // en utilisant ct::StringToNumber<uint8_t> il m'a renvoyé des char avec un '0' valant 48... CONNARD !!!
+													auto _number = _code.substr(equalPos, endParPos - equalPos);
+													ct::replaceString(_number, " ", "");
+													uint8_t locationID = (uint8_t)ct::StringToNumber<int>(_number); // en utilisant ct::StringToNumber<uint8_t> il m'a renvoyé des char avec un '0' valant 48... CONNARD !!!
 
-													auto name = code.substr(firstChar, endSpaceOrSemiColon - firstChar);
+													auto _name = _code.substr(firstChar, endSpaceOrSemiColon - firstChar);
 
-													pkeyPtr->AddFragColorName(locationID, name);
+													pkeyPtr->AddFragColorName(locationID, _name);
 												}
 											}
 										}

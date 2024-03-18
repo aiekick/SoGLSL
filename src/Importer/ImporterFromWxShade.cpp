@@ -20,13 +20,6 @@
 
 #include <ctools/Logger.h>
 
-std::list<ShaderInfos> ImporterFromWxShade::ParseBuffer(
-	const std::string& vBuffer,
-	const std::string& vId,
-	const bool& vImportInOneFile)
-{
-	std::list<ShaderInfos> shaders;
-
-	
-	return shaders;
+std::list<ShaderInfos> ImporterFromWxShade::ParseBuffer(const std::string& /*vBuffer*/, const std::string& /*vId*/, const bool& /*vImportInOneFile*/) {
+	return {};
 }

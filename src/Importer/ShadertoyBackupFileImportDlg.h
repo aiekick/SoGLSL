@@ -22,8 +22,8 @@
 #include <future>
 #include <functional>
 #include <imgui.h>
-#include <picojson/picojson.h>
-#include <tinyxml2/tinyxml2.h>
+#include <picojson.h>
+#include <tinyxml2.h>
 #include <ctools/ConfigAbstract.h>
 #include <Importer/ImporterFromShadertoy.h>
 

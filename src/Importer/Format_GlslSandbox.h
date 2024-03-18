@@ -17,7 +17,7 @@
 
 #include <string>
 
-#include <picojson/picojson.h>
+#include <picojson.h>
 
 namespace GlslSandboxFormat
 {

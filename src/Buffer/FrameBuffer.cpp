@@ -23,9 +23,9 @@
 #include <Profiler/TracyProfiler.h>
 
 //#define STB_IMAGE_WRITE_IMPLEMENTATION
-#include <stb/stb_image_write.h>
+#include <stb_image_write.h>
 //#define STB_IMAGE_RESIZE_IMPLEMENTATION
-#include <stb/stb_image_resize.h>
+#include <stb_image_resize2.h>
 
 #define USE_GET_TEX_IMAGE
 
@@ -850,9 +850,7 @@ uint8_t* FrameBuffer::GetRGBBytesFromFrameBuffer(
 	return nullptr;
 }
 
-void FrameBuffer::FillRGBBytesBufferWithFrameBuffer(
-	const int& vWidth, const int& vHeight, uint8_t* vBytesBuffer, const int& vAttachmentId)
-{
+void FrameBuffer::FillRGBBytesBufferWithFrameBuffer(const int& vWidth, const int& vHeight, uint8_t* vBytesBuffer, const int& vAttachmentId) {
 	if (vBytesBuffer)
 	{
 		GuiBackend::MakeContextCurrent(puWindow);
@@ -860,6 +858,8 @@ void FrameBuffer::FillRGBBytesBufferWithFrameBuffer(
 		TracyGpuZone("FrameBuffer::FillRGBBytesBufferWithFrameBuffer");
 
 #ifdef USE_GET_TEX_IMAGE
+        UNUSED(vWidth);
+        UNUSED(vHeight);
 		auto at = puTextures2D[vAttachmentId];
 		if (at)
 		{
@@ -959,9 +959,7 @@ uint8_t* FrameBuffer::GetRGBABytesFromFrameBuffer(int *vWidth, int *vHeight, int
 	return nullptr;
 }
 
-void FrameBuffer::FillRGBABytesBufferWithFrameBuffer(
-	const int& vWidth, const int& vHeight, uint8_t* vBytesBuffer, const int& vAttachmentId)
-{
+void FrameBuffer::FillRGBABytesBufferWithFrameBuffer(const int& vWidth, const int& vHeight, uint8_t* vBytesBuffer, const int& vAttachmentId) {
 	if (vBytesBuffer)
 	{
 		GuiBackend::MakeContextCurrent(puWindow);
@@ -969,6 +967,8 @@ void FrameBuffer::FillRGBABytesBufferWithFrameBuffer(
 		TracyGpuZone("FrameBuffer::FillRGBABytesBufferWithFrameBuffer");
 
 #ifdef USE_GET_TEX_IMAGE
+        UNUSED(vWidth);
+        UNUSED(vHeight);
 		auto at = puTextures2D[vAttachmentId];
 		if (at)
 		{
@@ -1151,9 +1151,10 @@ bool FrameBuffer::SaveToPng(
 		const unsigned int newBufSize = newWidth * newHeight * bytesPerPixel;
 		uint8_t* resizedData = new uint8_t[newBufSize];
 
-		const int resizeRes = stbir_resize_uint8(bmBytesRGBA, width, height, width * bytesPerPixel,
+		const uint8_t* resizeRes =
+            stbir_resize_uint8_linear(bmBytesRGBA, width, height, width * bytesPerPixel,
 		                                         resizedData, newWidth, newHeight, newWidth * bytesPerPixel,
-		                                         bytesPerPixel);
+		                                         (stbir_pixel_layout)bytesPerPixel);
 
 		if (resizeRes)
 		{
@@ -1256,10 +1257,11 @@ bool FrameBuffer::SaveToBmp(
 		const int newHeight = vNewSize.y;
 		const unsigned int newBufSize = newWidth * newHeight * bytesPerPixel;
 		uint8_t* resizedData = new uint8_t[newBufSize];
-
-		const int resizeRes = stbir_resize_uint8(bmBytesRGB, width, height, width * bytesPerPixel,
-		                                         resizedData, newWidth, newHeight, newWidth * bytesPerPixel,
-		                                         bytesPerPixel);
+		
+		const uint8_t* resizeRes = stbir_resize_uint8_linear(           //
+            bmBytesRGB, width, height, width * bytesPerPixel,           //
+		    resizedData, newWidth, newHeight, newWidth * bytesPerPixel, //
+		    (stbir_pixel_layout)bytesPerPixel);                         //
 
 		if (resizeRes)
 		{
@@ -1360,10 +1362,12 @@ bool FrameBuffer::SaveToJpg(
 		const int newHeight = vNewSize.y;
 		const unsigned int newBufSize = newWidth * newHeight * bytesPerPixel;
 		uint8_t* resizedData = new uint8_t[newBufSize];
+		
+		const uint8_t* resizeRes = stbir_resize_uint8_linear(           //
+            bmBytesRGB, width, height, width * bytesPerPixel,           //
+		    resizedData, newWidth, newHeight, newWidth * bytesPerPixel, //
+		    (stbir_pixel_layout)bytesPerPixel);                         //
 
-		const int resizeRes = stbir_resize_uint8(bmBytesRGB, width, height, width * bytesPerPixel,
-		                                         resizedData, newWidth, newHeight, newWidth * bytesPerPixel,
-		                                         bytesPerPixel);
 
 		if (resizeRes)
 		{
@@ -1473,10 +1477,11 @@ bool FrameBuffer::SaveToHdr(
 			const int newHeight = vNewSize.y;
 			const unsigned int newBufSize = newWidth * newHeight * bytesPerPixel;
 			float* resizedData = new float[newBufSize];
-
-			const int resizeRes = stbir_resize_float(bmFloatRGBA->buf, width, height, width * bytesPerPixel,
-			                                         resizedData, newWidth, newHeight, newWidth * bytesPerPixel,
-			                                         bytesPerPixel);
+		
+			const float* resizeRes = stbir_resize_float_linear(             //
+				bmFloatRGBA->buf, width, height, width * bytesPerPixel,     //
+				resizedData, newWidth, newHeight, newWidth * bytesPerPixel, //
+				(stbir_pixel_layout)bytesPerPixel);                         //
 
 			if (resizeRes)
 			{
@@ -1580,10 +1585,11 @@ bool FrameBuffer::SaveToTga(
 		const int newHeight = vNewSize.y;
 		const unsigned int newBufSize = newWidth * newHeight * bytesPerPixel;
 		uint8_t* resizedData = new uint8_t[newBufSize];
-
-		const int resizeRes = stbir_resize_uint8(bmBytesRGBA, width, height, width * bytesPerPixel,
-		                                         resizedData, newWidth, newHeight, newWidth * bytesPerPixel,
-		                                         bytesPerPixel);
+		
+		const uint8_t* resizeRes = stbir_resize_uint8_linear(           //
+            bmBytesRGBA, width, height, width * bytesPerPixel,          //
+		    resizedData, newWidth, newHeight, newWidth * bytesPerPixel, //
+		    (stbir_pixel_layout)bytesPerPixel);                         //
 
 		if (resizeRes)
 		{

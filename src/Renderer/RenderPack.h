@@ -414,8 +414,8 @@ public:
 	void GetTexParameters(TextureParamsStruct *vTexParams);
 	void ConfigureBufferParams(std::string vFormat = "float", bool vMipMap = false, int vMaxMipMaplvl = 1000, std::string vWrap = "clamp", std::string vFilter = "linear", bool vReloadFBO = true);
 
-	std::string getXml(const std::string& vOffset, const std::string& vUserDatas);
-	bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas);
+	std::string getXml(const std::string& vOffset, const std::string& vUserDatas) override;
+	bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas) override;
 
 	void DisplayMessageOfRenderPack(bool vHideWarnings);
 

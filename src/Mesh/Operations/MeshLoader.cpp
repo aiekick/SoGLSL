@@ -25,7 +25,7 @@
 #include <assimp/postprocess.h>
 #include <assimp/Exceptional.h>
 #include <assimp/ProgressHandler.hpp>
-#include <assimp/code/Common/ScenePrivate.h>
+#include <../code/Common/ScenePrivate.h>
 
 #include <imgui.h>
 #include <ctools/Logger.h>
@@ -131,7 +131,7 @@ inline static void sLoadMesh(
 
 				if (scene->HasMeshes())
 				{
-					size_t _last_index_offset = 0U;
+					//size_t _last_index_offset = 0U;
 
 					MeshLoader::workerThread_Mutex.lock();
 					MeshLoader::Instance()->puLayouts = layouts;

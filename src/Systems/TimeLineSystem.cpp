@@ -783,7 +783,7 @@ void TimeLineSystem::SelectIfContainedInMouseSelectionRect(std::shared_ptr<Uploa
         ct::fAABB rc(1e5f, -1e5f);
         rc.Combine(puStartMouseClick);
         rc.Combine(puEndMouseClick);
-        if (rc.ContainsPoint(vPoint)) {
+        if (rc.ContainsPoint(ct::fvec2(vPoint.x, vPoint.y))) {
             AddKeyToSelection(vStruct);
         } else {
             RemoveKeyFromSelection(vStruct);
@@ -1215,10 +1215,12 @@ std::string TimeLineSystem::getXml(const std::string& vOffset, const std::string
 
     str += vOffset + "<timelinesystem>\n";
 
-    str += vOffset + "\t<FrameBgColor>" + ct::fvariant(puFrameBg).GetS() + "</FrameBgColor>\n";
-    str += vOffset + "\t<RangeFrameColor>" + ct::fvariant(puRangeFrame).GetS() + "</RangeFrameColor>\n";
-    str += vOffset + "\t<ThickLinesDarkColor>" + ct::fvariant(puThickLinesDark).GetS() + "</ThickLinesDarkColor>\n";
-    str += vOffset + "\t<ThickLinesLightColor>" + ct::fvariant(puThickLinesLight).GetS() + "</ThickLinesLightColor>\n";
+    str += vOffset + "\t<FrameBgColor>" + ct::fvariant(ct::fvec4(puFrameBg.x,puFrameBg.y, puFrameBg.z, puFrameBg.w)).GetS() + "</FrameBgColor>\n";
+    str += vOffset + "\t<RangeFrameColor>" + ct::fvariant(ct::fvec4(puRangeFrame.x, puRangeFrame.y, puRangeFrame.z, puRangeFrame.w)).GetS() + "</RangeFrameColor>\n";
+    str += vOffset + "\t<ThickLinesDarkColor>" + ct::fvariant(ct::fvec4(puThickLinesDark.x, puThickLinesDark.y, puThickLinesDark.z, puThickLinesDark.w)).GetS() +
+        "</ThickLinesDarkColor>\n";
+    str += vOffset + "\t<ThickLinesLightColor>" + ct::fvariant(ct::fvec4(puThickLinesLight.x, puThickLinesLight.y, puThickLinesLight.z, puThickLinesLight.w)).GetS() +
+        "</ThickLinesLightColor>\n";
 
     str += vOffset + "</timelinesystem>\n";
 
@@ -1240,10 +1242,22 @@ bool TimeLineSystem::setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElemen
     if (vParent != nullptr) strParentName = vParent->Value();
 
     if (strParentName == "timelinesystem") {
-        if (strName == "FrameBgColor") puFrameBg = ct::fvariant(strValue).GetColor().ToImVec4();
-        if (strName == "RangeFrameColor") puRangeFrame = ct::fvariant(strValue).GetColor().ToImVec4();
-        if (strName == "ThickLinesDarkColor") puThickLinesDark = ct::fvariant(strValue).GetColor().ToImVec4();
-        if (strName == "ThickLinesLightColor") puThickLinesLight = ct::fvariant(strValue).GetColor().ToImVec4();
+        if (strName == "FrameBgColor") {
+            auto c = ct::fvariant(strValue).GetColor();
+            puFrameBg = ImVec4(c.r, c.g, c.b, c.a);
+        }
+        if (strName == "RangeFrameColor") {
+            auto c = ct::fvariant(strValue).GetColor();
+            puRangeFrame = ImVec4(c.r, c.g, c.b, c.a);
+        }
+        if (strName == "ThickLinesDarkColor") {
+            auto c = ct::fvariant(strValue).GetColor();
+            puThickLinesDark = ImVec4(c.r, c.g, c.b, c.a);
+        }
+        if (strName == "ThickLinesLightColor") {
+            auto c = ct::fvariant(strValue).GetColor();
+            puThickLinesLight = ImVec4(c.r, c.g, c.b, c.a);
+        }
     }
 
     return false;
@@ -2180,25 +2194,23 @@ bool TimeLineSystem::DrawTimeLine(const char* label, ShaderKeyPtr vKey) {
     if (hovered) {
         // mouse wheel
         if (IS_FLOAT_DIFFERENT(g.IO.MouseWheel, 0.0f)) {
-            if (g.IO.MousePos.x < frame_bb.Min.x + puPaneWidth)  // mouvement vertical sur le pan des noms d'uniforms
-            {
+            if (g.IO.MousePos.x < frame_bb.Min.x + puPaneWidth) {  // mouvement vertical sur le pan des noms d'uniforms
                 puUniformsPaneOffsetY = ct::maxi(0.0f, puUniformsPaneOffsetY - g.IO.MouseWheel);
-            } else  // mouvement sur les barres
-            {
+            } else {  // mouvement sur les barres
                 if (timeBarRc.Contains(g.IO.MousePos)) {
                     ScaleViewForFrames(countFrames, g.IO.MouseWheel);
                 } else if (valueBarRc.Contains(g.IO.MousePos) && showGraph) {
                     ScaleViewForValues(frame_bb, g.IO.MouseWheel);
-                } else  // les deux a la fois
-                {
+                } else {  // les deux a la fois
                     ScaleViewForFrames(countFrames, g.IO.MouseWheel);
-                    if (showGraph) ScaleViewForValues(frame_bb, g.IO.MouseWheel);
+                    if (showGraph)
+                        ScaleViewForValues(frame_bb, g.IO.MouseWheel);
                 }
             }
         }
 
         if (viewRc.Contains(g.IO.MousePos)) {
-            ShowMouseInfos(vKey, frame_bb, g.IO.MousePos);
+            ShowMouseInfos(vKey, frame_bb, ct::fvec2(g.IO.MousePos.x, g.IO.MousePos.y));
         }
 
         // SetTooltip("ox : %.1f \noy : %.1f\nsx : %.i\nsy : %.1f", puPaneOffsetX, puPaneOffsetY, puStepScale, pucurveStepScale);
@@ -2917,7 +2929,7 @@ bool TimeLineSystem::ImGui_DrawGraphSplinePointButton(UniformTimeKey* vKeyStruct
                         c = ImVec4(1, 0, 1, 1);
 
                         const ImVec2 cPos   = g.IO.MousePos;
-                        const ct::fvec2 vec = cPos - vBasePoint;
+                        const ImVec2 vec = cPos - vBasePoint;
 
                         // float nFrames = (float)vCountFrames;
 
@@ -2947,7 +2959,7 @@ bool TimeLineSystem::ImGui_DrawGraphSplinePointButton(UniformTimeKey* vKeyStruct
                         c = ImVec4(1, 0, 1, 1);
 
                         const ImVec2 cPos   = g.IO.MousePos;
-                        const ct::fvec2 vec = vBasePoint - cPos;
+                        const ImVec2 vec = vBasePoint - cPos;
 
                         // float nFrames = (float)vCountFrames;
 
@@ -3402,7 +3414,7 @@ bool TimeLineSystem::IsSelectionExist() {
     return puSelectedKeys.size();
 }
 
-bool TimeLineSystem::DoSelection(ShaderKeyPtr vKey, ImGuiID vId, ImRect vWidgetZone, ImRect vViewZone, ImRect vTimebarZone, ImRect /*vValueBarZone*/) {
+bool TimeLineSystem::DoSelection(ShaderKeyPtr vKey, ImGuiID /*vId*/, ImRect vWidgetZone, ImRect vViewZone, ImRect vTimebarZone, ImRect /*vValueBarZone*/) {
     ZoneScoped;
 
     bool value_changed = false;

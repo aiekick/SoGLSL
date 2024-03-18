@@ -1094,7 +1094,7 @@ void ShaderKey::SerializeUniformsAsConstToClipBoard(const GuiBackend_Window& vHa
 void ShaderKey::ResetUniformsToTheirDefaultValue() {
     if (puParentCodeTree) {
         for (const auto& itSection : puUniformSectionDataBase) {
-            const auto& section = itSection.first;
+            //const auto& section = itSection.first;
 
             for (auto uniPtr : itSection.second) {
                 puParentCodeTree->ResetUniformWidgetToTheirDefaultValue(uniPtr);
@@ -2297,7 +2297,7 @@ UniformVariantPtr ShaderKey::CreateUniform(RenderPackWeak vRenderPack, const Uni
 
     const auto& sectionParams    = vUniformParsed.sectionParams;
     const auto& uniformType      = vUniformParsed.type;
-    const auto& uniformParams    = vUniformParsed.params;
+    //const auto& uniformParams    = vUniformParsed.params;
     const auto& uniformName      = vUniformParsed.name;
     const auto& uniformArray     = vUniformParsed.array;
     auto uniformComment          = vUniformParsed.comment;
@@ -2975,11 +2975,11 @@ void ShaderKey::Complete_Uniform_SamplerCube_Array(RenderPackWeak /*vRenderPack*
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ShaderKey::Complete_Uniform_VR(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
+void ShaderKey::Complete_Uniform_VR(RenderPackWeak vRenderPack, const UniformParsedStruct& /*vUniformParsed*/, UniformVariantPtr vUniform) {
     if (vRenderPack.expired() || !vUniform) return;
 }
 
-void ShaderKey::Complete_Uniform_Vertex(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
+void ShaderKey::Complete_Uniform_Vertex(RenderPackWeak vRenderPack, const UniformParsedStruct& /*vUniformParsed*/, UniformVariantPtr vUniform) {
     if (vRenderPack.expired() || !vUniform) return;
 
     if (vUniform->widgetType == "maxpoints")  // checkbox
@@ -3009,7 +3009,7 @@ void ShaderKey::Complete_Uniform_Vertex(RenderPackWeak vRenderPack, const Unifor
         }
     }
 }
-void ShaderKey::Complete_Uniform_Geometry(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
+void ShaderKey::Complete_Uniform_Geometry(RenderPackWeak vRenderPack, const UniformParsedStruct& /*vUniformParsed*/, UniformVariantPtr vUniform) {
     if (vRenderPack.expired() || !vUniform) return;
 
     if (vUniform->widgetType == "usegeometry")  // use geometry
@@ -3018,7 +3018,7 @@ void ShaderKey::Complete_Uniform_Geometry(RenderPackWeak vRenderPack, const Unif
         vUniform->bx     = puShaderGlobalSettings.useGeometryShaderIfPresent && puIsGeometryShaderPresent;
     }
 }
-void ShaderKey::Complete_Uniform_Tesselation(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
+void ShaderKey::Complete_Uniform_Tesselation(RenderPackWeak vRenderPack, const UniformParsedStruct& /*vUniformParsed*/, UniformVariantPtr vUniform) {
     if (vRenderPack.expired() || !vUniform) return;
 
     if (vUniform->widgetType == "usetesscontrol")  // use tesselation control
@@ -3958,7 +3958,7 @@ void ShaderKey::Complete_Uniform_TextureVideo(RenderPackWeak vRenderPack, const 
     UNUSED(vUniform);
 }
 
-void ShaderKey::Complete_Uniform_Sound_With_Sound(const GuiBackend_Window& /*vWindow*/, UniformVariantPtr vUniform, bool vSoundConfigExist) {
+void ShaderKey::Complete_Uniform_Sound_With_Sound(const GuiBackend_Window& /*vWindow*/, UniformVariantPtr /*vUniform*/, bool /*vSoundConfigExist*/) {
     CTOOL_DEBUG_BREAK;
 
     /*if (vUniform->filePathNames.size() == 1U)

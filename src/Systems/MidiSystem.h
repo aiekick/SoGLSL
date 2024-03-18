@@ -24,7 +24,7 @@
 #include <CodeTree/Parsing/SectionCode.h>
 #include <Headers/RenderPackHeaders.h>
 #include <CodeTree/Parsing/UniformParsing.h>
-#include <rtmidi/RtMidi.h>
+#include <RtMidi.h>
 #include <imgui.h>
 #include <string>
 #include <memory>
@@ -69,8 +69,8 @@ public:
 	//// CONFIGURATION ////////////////////////////////////
 	///////////////////////////////////////////////////////
 
-	std::string getXml(const std::string& vOffset, const std::string& vUserDatas);
-	bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas);
+	std::string getXml(const std::string& vOffset, const std::string& vUserDatas) override;
+	bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas) override;
 
 	///////////////////////////////////////////////////////
 	//// SETTINGS /////////////////////////////////////////
@@ -84,7 +84,7 @@ private:
 	void DisplayConfigPane(GuiBackend_Window vWin);
 
 public: // overide
-	std::vector<MidiMessage> GetMidiMessages();
+    std::vector<MidiMessage> GetMidiMessages() override;
 	MidiMessage GetMidiMessage(const uint32_t& vPort) override;
 	MidiMessage GetAndClearMidiMessage(const uint32_t& vPort) override;
 	MidiMessage ClearMidiMessage(const uint32_t& vPort) override;

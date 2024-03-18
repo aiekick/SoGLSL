@@ -18,7 +18,7 @@
 
 #include "NaturalSort.h"
 
-#include "alphanum/alphanum.hpp" // natural sorting
+#include <alphanum.hpp> // natural sorting
 #include <algorithm>
 
 NaturalSort::NaturalSort()

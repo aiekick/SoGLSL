@@ -19,7 +19,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 
-// comme la focntion est statique ca force la visite de ce cpp
+// comme la fonction est statique ca force la visite de ce cpp
 static void InitImplementation()
 {
 	

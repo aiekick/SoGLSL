@@ -28,8 +28,7 @@ ImVec4 ImGui::GetUniformLocColor(int vLoc)
 	return ImVec4(0.4f, 0.2f, 0.2f, 1.00f); // bad loc	
 }
 
-void ImGui::Texture(ctTexturePtr vTex, float vWidth, ImVec4 vColor, float vBorderThick)
-{
+void ImGui::Texture(ctTexturePtr vTex, float vWidth, ImVec4 vColor, float /*vBorderThick*/) {
 	if (vTex == nullptr)
 		return;
 
@@ -86,8 +85,7 @@ void ImGui::Texture(ctTexturePtr vTex, float vWidth, ImVec4 vColor, float vBorde
 #endif
 }
 
-void ImGui::Texture(ctTexturePtr vTex, float vWidth, float vHeight, ImVec4 vColor, float vBorderThick)
-{
+void ImGui::Texture(ctTexturePtr vTex, float vWidth, float vHeight, ImVec4 vColor, float /*vBorderThick*/) {
 	if (vTex == nullptr)
 		return;
 
@@ -170,10 +168,6 @@ bool ImGui::TextureButton(ctTexturePtr vTex, float vWidth, ImVec4 /*vColor*/, fl
 		const ImVec4 bg_col = ImVec4(1, 1, 1, 1);
 		const ImTextureID texid = (ImTextureID)(size_t)vTex->glTex;
 
-		ImGuiWindow* window = GetCurrentWindow();
-		if (window->SkipItems)
-			return false;
-
 		ImGuiContext& g = *GImGui;
 		const ImGuiStyle& style = g.Style;
 
@@ -186,7 +180,7 @@ bool ImGui::TextureButton(ctTexturePtr vTex, float vWidth, ImVec4 /*vColor*/, fl
 		PopID();
 
 		const ImVec2 padding = style.FramePadding;
-		const ImRect bb(window->DC.CursorPos, window->DC.CursorPos + size + padding * 2);
+        const ImRect bb(window->DC.CursorPos, window->DC.CursorPos + size + padding * 2);
 		const ImRect image_bb(window->DC.CursorPos + padding, window->DC.CursorPos + padding + size);
 		ItemSize(bb);
 		if (!ItemAdd(bb, id))
@@ -260,11 +254,7 @@ bool ImGui::TextureButton(ctTexturePtr vTex, float vWidth, ImVec4 /*vColor*/, Im
 
 	if (vTex)
 	{
-		ImTextureID texid = (ImTextureID)(size_t)vTex->glTex;
-
-		ImGuiWindow* window = GetCurrentWindow();
-		if (window->SkipItems)
-			return false;
+		//ImTextureID texid = (ImTextureID)(size_t)vTex->glTex;
 
 		ImGuiContext& g = *GImGui;
 		const ImGuiStyle& style = g.Style;

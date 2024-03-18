@@ -189,9 +189,7 @@ bool BaseModel::ReLoadModel()
 	return false;
 }
 
-void BaseModel::DrawModel(const std::string& vName, const GLenum& vRenderMode, const bool& vUseTesselation)
-{
-	assert(nullptr);
-
+void BaseModel::DrawModel(const std::string& /*vName*/, const GLenum& /*vRenderMode*/, const bool& /*vUseTesselation*/) {
+	assert(nullptr); // why are we here ? not normal
 	return;
 }

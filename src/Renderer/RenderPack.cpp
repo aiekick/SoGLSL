@@ -1996,7 +1996,7 @@ bool RenderPack::ParseAndCompilShader(const std::string& vInFileBufferName, cons
                 }
 
                 puFragColorNames.clear();
-                for (int i = 0; i <= puZeroBasedMaxSliceBufferId; ++i) {
+                for (uint8_t i = 0; i <= puZeroBasedMaxSliceBufferId; ++i) {
                     puFragColorNames.push_back(puShaderKey->GetFragColorName(i));
                 }
             }
@@ -3463,7 +3463,7 @@ std::shared_ptr<FloatBuffer> RenderPack::GetFloatBuffer(int vAttachmentId, bool 
     return nullptr;
 }
 
-void RenderPack::UploadMesh(VertexStruct::P3_N3_T2_C4* vPoints, int vCountPoints, VertexStruct::I1* vIndices, int vCountIndices) {
+void RenderPack::UploadMesh(VertexStruct::P3_N3_T2_C4* /*vPoints*/, int /*vCountPoints*/, VertexStruct::I1* /*vIndices*/, int /*vCountIndices*/) {
     ZoneScoped;
 
     /*if (puModel_Render && puModel_Render->GetMeshType() == BaseMeshEnum::PRIMITIVE_TYPE_MESH)

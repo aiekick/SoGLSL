@@ -22,7 +22,7 @@
 #include <Renderer/RenderPack.h>
 
 #include <miniaudio.h>
-#include <kissfft/kiss_fftr.h>
+#include <kiss_fftr.h>
 
 class CameraSystem;
 class CodeTree;
@@ -108,8 +108,8 @@ public:
 	void ResetTime();
 
 public:
-	std::string getXml(const std::string& vOffset, const std::string& vUserDatas);
-	bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas);
+	std::string getXml(const std::string& vOffset, const std::string& vUserDatas) override;
+	bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas) override;
 
 public:
 	std::string InitRenderPack(const GuiBackend_Window& vWin, CodeTreePtr vCodeTree);

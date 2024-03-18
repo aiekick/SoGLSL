@@ -274,7 +274,6 @@ void InterfacePanes::DisplayCodeTree(std::string vSectionNameForErrorsLines, Ren
 			ImGuiTableFlags_Hideable | 
 			ImGuiTableFlags_ScrollY | 
 			ImGuiTableFlags_NoHostExtendY;
-		auto listViewID = ImGui::GetID("##DisplayCodeTree");
 		if (ImGui::BeginTable("##DisplayCodeTree", 7, flags, ImVec2(0, 500)))
 		{
 			ImGui::TableSetupScrollFreeze(0, 1); // Make header always visible

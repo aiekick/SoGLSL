@@ -20,7 +20,7 @@
 
 #include <ctools/cTools.h>
 
-#include <picojson/picojson.h>
+#include <picojson.h>
 #include <fstream>
 
 namespace VertexShaderArtFormat

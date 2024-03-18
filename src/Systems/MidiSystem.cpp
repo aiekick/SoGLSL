@@ -257,9 +257,9 @@ bool MidiSystem::DrawWidget(
 	const float& vMaxWidth, 
 	const float& vFirstColumnWidth, 
 	RenderPackWeak vRenderPack,
-	const bool& vShowUnUsed, 
-	const bool& vShowCustom, 
-	const bool& vForNodes, 
+    const bool& /*vShowUnUsed*/, 
+	const bool& /*vShowCustom*/, 
+	const bool& /*vForNodes*/, 
 	bool* vChange)
 {
 	bool catched = false;
@@ -311,8 +311,7 @@ void MidiSystem::ResetChange()
 //// SERIALIZATION / STATIC ///////////////////////////
 ///////////////////////////////////////////////////////
 
-bool MidiSystem::SerializeUniform(UniformVariantPtr vUniform, std::string* vStr)
-{
+bool MidiSystem::SerializeUniform(UniformVariantPtr /*vUniform*/, std::string* vStr) {
 	bool catched = false;
 
 	if (vStr)
@@ -337,8 +336,7 @@ bool MidiSystem::SerializeUniform(UniformVariantPtr vUniform, std::string* vStr)
 	return catched;
 }
 
-bool MidiSystem::DeSerializeUniform(ShaderKeyPtr  /*vShaderKey*/, UniformVariantPtr vUniform, const std::vector<std::string>& vParams)
-{
+bool MidiSystem::DeSerializeUniform(ShaderKeyPtr /*vShaderKey*/, UniformVariantPtr /*vUniform*/, const std::vector<std::string>& /*vParams*/) {
 	bool catched = false;
 
 	/*
@@ -370,7 +368,7 @@ void MidiSystem::Complete_Uniform(ShaderKeyPtr vParentKey, RenderPackWeak vRende
 	vUniform->canWeSave = true;
 	vUniform->timeLineSupported = true;
 
-	size_t idx_numbers = 0U;
+	//size_t idx_numbers = 0U;
 
 	vUniform->inf = 0.0f;
 	vUniform->sup = 0.0f;
@@ -637,8 +635,7 @@ std::string MidiSystem::GetMidiDeviceName(const uint32_t& vPort)
 //// CONFIGURATION ////////////////////////////////////
 ///////////////////////////////////////////////////////
 
-std::string MidiSystem::getXml(const std::string& vOffset, const std::string& vUserDatas)
-{
+std::string MidiSystem::getXml(const std::string& vOffset, const std::string& /*vUserDatas*/) {
 	std::string str;
 
 	str += vOffset + "<MidiSystem>\n";

@@ -80,8 +80,7 @@ bool SoundSystem::DrawMenu()
 	return change;
 }
 
-bool SoundSystem::DrawTooltips(RenderPackWeak vRenderPack, float /*vDisplayQuality*/, CameraSystem* vCamera, ct::ivec2 vScreenSize)
-{
+bool SoundSystem::DrawTooltips(RenderPackWeak /*vRenderPack*/, float /*vDisplayQuality*/, CameraSystem* /*vCamera*/, ct::ivec2 /*vScreenSize*/) {
 	bool change = false;
 
 	if ((puActivated || puNeedOneUniformUpdate))
@@ -92,9 +91,7 @@ bool SoundSystem::DrawTooltips(RenderPackWeak vRenderPack, float /*vDisplayQuali
 	return change;
 }
 
-static inline ImPlotPoint fft_points(int idx, void* user_data)
-{
-	double* datas = (double*)user_data;
+static inline ImPlotPoint fft_points(int idx, void* /*user_data*/) {
 	if (ImPlot::IsPlotHovered())
 	{
 		auto pi = (int)ImPlot::PixelsToPlot(ImGui::GetMousePos()).x;
@@ -109,8 +106,7 @@ static inline ImPlotPoint fft_points(int idx, void* user_data)
 	return ImPlotPoint((double)idx, 0.0);
 }
 
-bool SoundSystem::DrawPane(CodeTreePtr vCodeTree, RenderPackWeak vRenderPack, float vDisplayQuality, CameraSystem* vCamera)
-{
+bool SoundSystem::DrawPane(CodeTreePtr vCodeTree, RenderPackWeak vRenderPack, float vDisplayQuality, CameraSystem* /*vCamera*/) {
 	UNUSED(vDisplayQuality);
 
 	bool change = false;
@@ -339,8 +335,7 @@ bool SoundSystem::UpdateUniforms(UniformVariantPtr vUniPtr)
 	return change;
 }
 
-int SoundSystem::UploadUniformForGlslType(const GuiBackend_Window& vWin, UniformVariantPtr vUniPtr, int vTextureSlotId, bool vIsCompute)
-{
+int SoundSystem::UploadUniformForGlslType(const GuiBackend_Window& /*vWin*/, UniformVariantPtr vUniPtr, int vTextureSlotId, bool /*vIsCompute*/) {
 	if (vUniPtr)
 	{
 		if (vUniPtr->widgetType == "sound")
@@ -388,8 +383,8 @@ int SoundSystem::UploadUniformForGlslType(const GuiBackend_Window& vWin, Uniform
 }
 
 bool SoundSystem::DrawWidget(CodeTreePtr vCodeTree, UniformVariantPtr vUniPtr,
-	const float& vMaxWidth, const float& vFirstColumnWidth, RenderPackWeak vRenderPack,
-	const bool& vShowUnUsed, const bool& vShowCustom, const bool& vForNodes, bool* vChange)
+	const float& /*vMaxWidth*/, const float& vFirstColumnWidth, RenderPackWeak vRenderPack,
+	const bool& /*vShowUnUsed*/, const bool& /*vShowCustom*/, const bool& /**/, bool* vChange)
 {
 	bool catched = false;
 
@@ -455,8 +450,7 @@ bool SoundSystem::SerializeUniform(UniformVariantPtr vUniform, std::string* vStr
 	return catched;
 }
 
-bool SoundSystem::DeSerializeUniform(ShaderKeyPtr  vShaderKey, UniformVariantPtr vUniform, const std::vector<std::string>& vParams)
-{
+bool SoundSystem::DeSerializeUniform(ShaderKeyPtr /*vShaderKey*/, UniformVariantPtr vUniform, const std::vector<std::string>& /*vParams*/) {
 	bool catched = false;
 
 	if (vUniform->widget == "sound")
@@ -570,8 +564,7 @@ void SoundSystem::Complete_Uniform(ShaderKeyPtr vParentKey, RenderPackWeak vRend
 	}
 }
 
-void SoundSystem::Complete_Uniform_Sound_With_Sound(ShaderKeyPtr vParentKeyPtr, RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform)
-{
+void SoundSystem::Complete_Uniform_Sound_With_Sound(ShaderKeyPtr vParentKeyPtr, RenderPackWeak vRenderPack, const UniformParsedStruct& /*vUniformParsed*/, UniformVariantPtr vUniform) {
     if (!vRenderPack.expired() || !vParentKeyPtr)
 		return;
 
@@ -725,8 +718,7 @@ void main()
 //// PUBLIC / AUDIO ////////////////////////////////
 ////////////////////////////////////////////////////
 
-void SoundSystem::NewNotification(const ma_device_notification* pNotification)
-{
+void SoundSystem::NewNotification(const ma_device_notification* /*pNotification*/) {
 	if (Use() && 
 		m_IsAudioCaptureReady)
 	{
@@ -916,8 +908,11 @@ void SoundSystem::ResetTime()
 	memset(m_AverageFFTValues, 0, sizeof(float) * SoundSystem::scFftSize);
 }
 
-void SoundSystem::UpdateHistoRenderPackUniforms(RenderPackWeak vRenderPack, UniformVariantPtr vUniPtr, DisplayQualityType vDisplayQuality, MouseInterface* vMouse, CameraInterface* vCamera)
-{
+void SoundSystem::UpdateHistoRenderPackUniforms(RenderPackWeak /*vRenderPack*/,
+                                                UniformVariantPtr vUniPtr,
+                                                DisplayQualityType /*vDisplayQuality*/,
+                                                MouseInterface* /*vMouse*/,
+                                                CameraInterface* /*vCamera*/) {
 	if (vUniPtr)
 	{
 		if (vUniPtr->widgetType == "sound")
@@ -1018,8 +1013,7 @@ void SoundSystem::EnumerateAudioDevices()
 	}
 }
 
-static void sCaptureFrames(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount)
-{
+static void sCaptureFrames(ma_device* pDevice, void* /*pOutput*/, const void* pInput, ma_uint32 frameCount) {
 	SoundSystem* sound_ptr = reinterpret_cast<SoundSystem*>(pDevice->pUserData);
 	if (sound_ptr)
 	{
@@ -1063,7 +1057,7 @@ void SoundSystem::SelectAudioDevice(const size_t& vDeviceIndex)
 		m_AudioDeviceConfig.notificationCallback = sNewNotification;
 		m_AudioDeviceConfig.pUserData = this;
 
-		auto frame_size_ = ma_get_bytes_per_frame(ma_format_f32, 2);
+		//auto frame_size_ = ma_get_bytes_per_frame(ma_format_f32, 2);
 
 		if (ma_device_is_started(&m_AudioCaptureDevice)) {
 			ma_device_stop(&m_AudioCaptureDevice);

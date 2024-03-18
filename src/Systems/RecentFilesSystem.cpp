@@ -24,6 +24,8 @@
 #include <chrono>
 #include <ctime>
 
+#include <ImGuiPack/ImGuiPack.h>
+
 RecentFilesSystem::RecentFilesSystem() = default;
 RecentFilesSystem::~RecentFilesSystem() = default;
 

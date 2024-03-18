@@ -56,18 +56,6 @@ set(USE_MSVC_RUNTIME_LIBRARY_DLL OFF CACHE BOOL "" FORCE)
 
 include(cmake/3rdparty.cmake)
 
-include(cmake/tracy.cmake)
-if (USE_PROFILER_TRACY)
-	option(USE_CALIBRATED_CONTEXT "Enable Calibrated Context in Tracy for sync cpu/gpu timestamps" OFF)
-if (USE_CALIBRATED_CONTEXT)
-	add_definitions(-DENABLE_CALIBRATED_CONTEXT)
-endif()
-	add_definitions(-DTRACY_ENABLE)
-	add_definitions(-DTRACY_ON_DEMAND)
-	add_definitions(-DTRACY_NO_BROADCAST)
-	add_definitions(-DTRACY_ONLY_LOCALHOST=1)
-endif()
-
 ## some defines for debug mode
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG")
 add_definitions(-DPROJECT_PATH="${CMAKE_CURRENT_SOURCE_DIR}")
@@ -132,6 +120,10 @@ add_library(${PROJECT} STATIC
 	${PROJECT_SRC_RECURSE}
 )
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+	target_compile_options(${PROJECT} PRIVATE -Wno-unused-function) # its a lib, so a unused fucntion for an app can be used for an other app
+endif()
+
 if (USE_IMPLOT)
 	target_compile_definitions(${PROJECT} PUBLIC USE_IMPLOT)
 endif()
@@ -161,33 +153,43 @@ if (USE_IMGUI_COLOR_TEXT_EDIT)
 endif()
  
 set(SOGSL_INCLUDE_DIRS
+	${STB_INCLUDE_DIR}
 	${SDL_INCLUDE_DIR}
+	${GLM_INCLUDE_DIR}
 	${GLFW_INCLUDE_DIR}
-	${TRACY_INCLUDE_DIR}
 	${GLAD_INCLUDE_DIR}
 	${CURL_INCLUDE_DIR}
 	${EFSW_INCLUDE_DIR}
 	${PLOG_INCLUDE_DIR}
+	${TRACY_INCLUDE_DIR}
 	${IAGP_INCLUDE_DIRS}
+	${RTMIDI_INCLUDE_DIR}
 	${ASSIMP_INCLUDE_DIR}
 	${GLSLANG_INCLUDE_DIR}
 	${OPENGL_INCLUDE_DIRS}
 	${OPENXR_INCLUDE_DIRS}
+	${KISSFFT_INCLUDE_DIR}
+	${PICOJSON_INCLUDE_DIR}
+	${ALPHANUM_INCLUDE_DIR}
 	${TINYXML2_INCLUDE_DIR}
 	${MINIAUDIO_INCLUDE_DIR}
 	${IMGUIPACK_INCLUDE_DIRS}
 	${CMAKE_CURRENT_SOURCE_DIR}/src
+	${IN_APP_GPU_PROFILER_INCLUDE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}/3rdparty
 	${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/tracy/public
 )
 
 set(SOGSL_INCLUDE_DIRS ${SOGSL_INCLUDE_DIRS} PARENT_SCOPE) ## set this var in the parent scope
+
+
 set(SOGLSL_LIBRARIES SoGLSL PARENT_SCOPE) ## set this var in the parent scope
 
 include_directories(${SOGSL_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT} PRIVATE
 	${SDL_LIBRARIES}
+	${GLM_LIBRARIES}
 	${GLAD_LIBRARIES}
 	${GLFW_LIBRARIES}
 	${EFSW_LIBRARIES}
@@ -204,6 +206,7 @@ target_link_libraries(${PROJECT} PRIVATE
 	${TINYXML2_LIBRARIES}
 	${MINIAUDIO_LIBRARIES}
 	${IMGUIPACK_LIBRARIES}
+	${IN_APP_GPU_PROFILER_LIBRARIES}
 )
 
 set(CTOOLS_LIBRARIES ${CTOOLS_LIBRARIES} PARENT_SCOPE)

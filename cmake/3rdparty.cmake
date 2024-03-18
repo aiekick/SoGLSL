@@ -1,36 +1,10 @@
-if (CMAKE_SYSTEM_NAME STREQUAL Linux)
-  find_package(X11 REQUIRED)
-  if (NOT X11_Xi_FOUND)
-    message(FATAL_ERROR "X11 Xi library is required")
-  endif ()
-endif ()
+set(OpenGL_GL_PREFERENCE GLVND)
+find_package(OpenGL REQUIRED)
 
-if(USE_SDL)
-	include(cmake/sdl.cmake)
-else()
-	include(cmake/glfw.cmake)
-endif()
+# we will fetch the library
+# we are not maintening
+include(cmake/NotMaintained/notmaintained.cmake)
 
-if(USE_VR)
-	include(cmake/openxr.cmake)
-endif()
-
-# order is important
-include(cmake/glad.cmake)
-include(cmake/tinyxml2.cmake)
-include(cmake/ctools.cmake)
-
-# order is not important
-include(cmake/glm.cmake)
-include(cmake/stb.cmake)
-include(cmake/efsw.cmake)
-include(cmake/curl.cmake)
-include(cmake/assimp.cmake)
-include(cmake/rtmidi.cmake)
-include(cmake/kissfft.cmake)
-include(cmake/miniaudio.cmake)
-
-# order is importantS
-include(cmake/imguipack.cmake)
-include(cmake/iagp.cmake)
-
+## libe we are maintening
+## order is important here
+include(cmake/Maintained/maintained.cmake)

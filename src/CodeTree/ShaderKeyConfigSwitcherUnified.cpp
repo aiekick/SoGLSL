@@ -29,7 +29,7 @@
 #include <Gui/CustomGuiWidgets.h>
 #include <Res/CustomFontToolBar.h>
 #include <Uniforms/UniformHelper.h>
-#include <alphanum/alphanum.hpp>  // natural sorting
+#include <alphanum.hpp>  // natural sorting
 
 inline std::set<std::string> inConfigSwitchertScanDirectory(const std::string& vPath) {
     std::set<std::string> res;
@@ -367,7 +367,7 @@ bool ConfigSwitcherUnit::prToggleButton(const char* vLabelOn, const char* vLabel
     }
 
     if (vHelp && ImGui::IsItemHovered()) {
-        ImGui::SetTooltip(vHelp);
+        ImGui::SetTooltip("%s", vHelp);
     }
 
     if (pressed) *vToggled = !*vToggled;
@@ -399,14 +399,14 @@ void ConfigSwitcherUnit::SelectConfigByName(const std::string& vName) {
     prCodeTree->ReScaleMouseUniforms(UniformHelper::FBOSize);
 }
 
-bool ConfigSwitcherUnit::DrawConfigSwitcher(const float& vWidth, const float& vHeight, ImFont* vImFontSymbol, bool vHideLabel) {
+bool ConfigSwitcherUnit::DrawConfigSwitcher(const float& vWidth, const float& /*vHeight*/, ImFont* vImFontSymbol, bool vHideLabel) {
     bool change = false;
 
     // on desactive l'export
     puRendering = false;
 
     if (prCodeTree && prShaderKey && vImFontSymbol) {
-        float posy = ImGui::GetCursorPosY();
+        //float posy = ImGui::GetCursorPosY();
 
         ImGui::PushID(prShaderKey.get());
 

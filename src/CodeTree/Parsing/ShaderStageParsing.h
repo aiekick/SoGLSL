@@ -77,19 +77,20 @@ static inline ModelRenderModeEnum GetModelRenderModeEnumFromString(const std::st
 	return ModelRenderModeEnum::MODEL_RENDER_MODE_NONE;
 }
 
-static inline const char* GetModelRenderModeEnumString(ModelRenderModeEnum vModelRenderModeEnum)
-{
-	switch (vModelRenderModeEnum)
-	{
-	case ModelRenderModeEnum::MODEL_RENDER_MODE_POINTS:			return "POINTS";
-	case ModelRenderModeEnum::MODEL_RENDER_MODE_LINE_STRIP:		return "LINE_STRIP";
-	case ModelRenderModeEnum::MODEL_RENDER_MODE_LINES:			return "LINES";
-	case ModelRenderModeEnum::MODEL_RENDER_MODE_TRIANGLE_STRIP:	return "TRIANGLE_STRIP";
-	case ModelRenderModeEnum::MODEL_RENDER_MODE_TRIANGLE_FAN:	return "TRIANGLE_FAN";
-	case ModelRenderModeEnum::MODEL_RENDER_MODE_TRIANGLES:		return "TRIANGLES";
-	case ModelRenderModeEnum::MODEL_RENDER_MODE_PATCHES:		return "PATCHES";
-	}
-	return "";
+static inline const char* GetModelRenderModeEnumString(ModelRenderModeEnum vModelRenderModeEnum) {
+    switch (vModelRenderModeEnum) {
+        case ModelRenderModeEnum::MODEL_RENDER_MODE_POINTS: return "POINTS";
+        case ModelRenderModeEnum::MODEL_RENDER_MODE_LINE_STRIP: return "LINE_STRIP";
+        case ModelRenderModeEnum::MODEL_RENDER_MODE_LINES: return "LINES";
+        case ModelRenderModeEnum::MODEL_RENDER_MODE_TRIANGLE_STRIP: return "TRIANGLE_STRIP";
+        case ModelRenderModeEnum::MODEL_RENDER_MODE_TRIANGLE_FAN: return "TRIANGLE_FAN";
+        case ModelRenderModeEnum::MODEL_RENDER_MODE_TRIANGLES: return "TRIANGLES";
+        case ModelRenderModeEnum::MODEL_RENDER_MODE_PATCHES: return "PATCHES";
+        case ModelRenderModeEnum::MODEL_RENDER_MODE_NONE:
+        case ModelRenderModeEnum::MODEL_RENDER_MODE_Count:
+        default: break;
+    }
+    return "";
 }
 
 enum class BaseMeshEnum : uint8_t
@@ -101,15 +102,16 @@ enum class BaseMeshEnum : uint8_t
 	PRIMITIVE_TYPE_Count
 };
 
-static inline const char* GetModelTypeEnumString(BaseMeshEnum vBaseMeshEnum)
-{
-	switch (vBaseMeshEnum)
-	{
-	case BaseMeshEnum::PRIMITIVE_TYPE_QUAD:		return "QUAD";
-	case BaseMeshEnum::PRIMITIVE_TYPE_POINTS:	return "POINTS";
-	case BaseMeshEnum::PRIMITIVE_TYPE_MESH:		return "MESH";
-	}
-	return "";
+static inline const char* GetModelTypeEnumString(BaseMeshEnum vBaseMeshEnum) {
+    switch (vBaseMeshEnum) {
+        case BaseMeshEnum::PRIMITIVE_TYPE_QUAD: return "QUAD";
+        case BaseMeshEnum::PRIMITIVE_TYPE_POINTS: return "POINTS";
+        case BaseMeshEnum::PRIMITIVE_TYPE_MESH: return "MESH";
+        case BaseMeshEnum::PRIMITIVE_TYPE_NONE:
+        case BaseMeshEnum::PRIMITIVE_TYPE_Count:
+        default: break;
+    }
+    return "";
 }
 
 static inline BaseMeshEnum GetModelTypeEnumFromString(const std::string& vString)

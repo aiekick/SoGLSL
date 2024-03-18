@@ -21,13 +21,13 @@
 
 #pragma warning(push)
 #pragma warning(disable:4201)   // suppress even more warnings about nameless structs
-#include <glm/glm/glm.hpp>
-#include <glm/glm/vec3.hpp> // glm::vec3
-#include <glm/glm/vec4.hpp> // glm::vec4
-#include <glm/glm/gtc/type_ptr.hpp>
-#include <glm/glm/gtc/quaternion.hpp>
-#include <glm/glm/gtx/intersect.hpp>
-#include <glm/glm/gtx/transform.hpp>
+#include <glm/glm.hpp>
+#include <glm/vec3.hpp> // glm::vec3
+#include <glm/vec4.hpp> // glm::vec4
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/intersect.hpp>
+#include <glm/gtx/transform.hpp>
 #pragma warning(pop)
 
 enum class CAMERA_TYPE_Enum : uint8_t
@@ -158,8 +158,8 @@ public:
 	//// CONFIGURATION ////////////////////////////////////
 	///////////////////////////////////////////////////////
 
-	std::string getXml(const std::string& vOffset, const std::string& vUserDatas);
-	bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas);
+	std::string getXml(const std::string& vOffset, const std::string& vUserDatas) override;
+	bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas) override;
 
 private:
 	bool ComputeCameras(const ct::uvec2& vScreenSize);

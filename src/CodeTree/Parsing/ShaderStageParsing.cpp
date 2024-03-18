@@ -310,7 +310,6 @@ std::string ShaderStageParsing::GetTagIfFound(const std::string& vCode, size_t v
 	std::string tagFound;
 
 	size_t tagPos = std::string::npos;
-	size_t lastTagPos = tagPos;
 
 	if (!vCode.empty())
 	{

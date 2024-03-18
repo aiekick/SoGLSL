@@ -361,7 +361,7 @@ bool CodeTree::AddOrUpdateFromFile(ShaderKeyPtr vKey, bool vResetConfigs, bool v
 bool CodeTree::AddOrUpdateFromString(const std::string& vKey, const std::string& vFileString,
                                      const std::string& vOriginalFilePathName,  // like the oriignal file from where the current code (vFileString) come form
                                      const std::string& vInFileBufferName,      // like MAIN or CHILD_A, CHILD_B
-                                     bool vResetConfigs, bool vResetReplaceCodes, bool vIsInclude) {
+                                     bool vResetConfigs, bool /*vResetReplaceCodes*/, bool vIsInclude) {
     bool res = false;
 
     ShaderKeyPtr key = nullptr;
@@ -378,7 +378,7 @@ bool CodeTree::AddOrUpdateFromString(const std::string& vKey, const std::string&
     return res;
 }
 
-bool CodeTree::AddOrUpdateFromFile(const std::string& vFilePathName, bool vResetConfigs, bool vResetReplaceCodes, bool vIsInclude) {
+bool CodeTree::AddOrUpdateFromFile(const std::string& vFilePathName, bool vResetConfigs, bool /*vResetReplaceCodes*/, bool vIsInclude) {
     bool res = false;
 
     ShaderKeyPtr key = nullptr;
@@ -1741,8 +1741,6 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
 }
 
 void CodeTree::ResetUniformWidgetToTheirDefaultValue(UniformVariantPtr vUniPtr) {
-    bool change = false;
-
     if (vUniPtr && vUniPtr->loc) {
         UniformVariantPtr v = vUniPtr;
 

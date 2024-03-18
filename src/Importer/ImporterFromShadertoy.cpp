@@ -22,8 +22,8 @@
 #include <Renderer/RenderPack.h>
 #include <CodeTree/CodeTree.h>
 #include <CodeTree/Parsing/ShaderStageParsing.h>
-#include <stb/stb_image.h>
-#include <stb/stb_image_write.h>
+#include <stb_image.h>
+#include <stb_image_write.h>
 
 #include "Format_ShaderToy.h"
 #include "Format_GlslSandbox.h"
@@ -33,8 +33,7 @@
 #define SHADERTOY_IMAGE_ID "IMAGE_SHADERTOY_ID"
 
 std::list<ShaderInfos> ImporterFromShadertoy::ParseBuffer(
-	const std::string& vBuffer,
-	const std::string& vId,
+	const std::string& vBuffer, const std::string& /*vId*/,
 	const bool& vImportInOneFile)
 {
 	std::list<ShaderInfos> shaders;

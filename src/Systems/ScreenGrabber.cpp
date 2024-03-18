@@ -17,9 +17,9 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb/stb_image_write.h"
+#include "stb_image_write.h"
 #define STB_IMAGE_RESIZE_IMPLEMENTATION
-#include "stb/stb_image_resize.h"
+#include "stb_image_resize2.h"
 
 #include "ScreenGrabber.h"
 #include <ctools/Logger.h>
@@ -192,9 +192,10 @@ bool ScreenGrabber::SaveToBmp(const GuiBackend_Window& vWin, const std::string& 
 		const unsigned int newBufSize = newWidth * newHeight * bytesPerPixel;
 		uint8_t* resizedData = new uint8_t[newBufSize];
 
-		const int resizeRes = stbir_resize_uint8(bmBytesRGB, width, height, width * bytesPerPixel,
-		                                         resizedData, newWidth, newHeight, newWidth * bytesPerPixel,
-		                                         bytesPerPixel);
+		const auto* resizeRes =
+            stbir_resize_uint8_linear(bmBytesRGB, width, height, width * bytesPerPixel,
+		        resizedData, newWidth, newHeight, newWidth * bytesPerPixel,
+		        (stbir_pixel_layout)bytesPerPixel);
 
 		if (resizeRes)
 		{
@@ -286,9 +287,10 @@ bool ScreenGrabber::SaveToJpg(const GuiBackend_Window& vWin, const std::string& 
 		const unsigned int newBufSize = newWidth * newHeight * bytesPerPixel;
 		uint8_t* resizedData = new uint8_t[newBufSize];
 
-		const int resizeRes = stbir_resize_uint8(bmBytesRGB, width, height, width * bytesPerPixel,
-		                                         resizedData, newWidth, newHeight, newWidth * bytesPerPixel,
-		                                         bytesPerPixel);
+		const auto* resizeRes =
+            stbir_resize_uint8_linear(bmBytesRGB, width, height, width * bytesPerPixel,
+		        resizedData, newWidth, newHeight, newWidth * bytesPerPixel,
+		        (stbir_pixel_layout)bytesPerPixel);
 
 		if (resizeRes)
 		{
@@ -385,9 +387,10 @@ bool ScreenGrabber::SaveToTga(const GuiBackend_Window& vWin, const std::string& 
 		const unsigned int newBufSize = newWidth * newHeight * bytesPerPixel;
 		uint8_t* resizedData = new uint8_t[newBufSize];
 
-		const int resizeRes = stbir_resize_uint8(bmBytesRGBA, width, height, width * bytesPerPixel,
-		                                         resizedData, newWidth, newHeight, newWidth * bytesPerPixel,
-		                                         bytesPerPixel);
+		const auto* resizeRes =
+            stbir_resize_uint8_linear(bmBytesRGBA, width, height, width * bytesPerPixel,
+		        resizedData, newWidth, newHeight, newWidth * bytesPerPixel,
+		        (stbir_pixel_layout)bytesPerPixel);
 
 		if (resizeRes)
 		{

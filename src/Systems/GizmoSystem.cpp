@@ -644,7 +644,7 @@ bool GizmoSystem::DrawGizmoTransformDialog(UniformVariantPtr vUniPtr, CameraSyst
 
 bool GizmoSystem::DrawWidget(CodeTreePtr vCodeTree, UniformVariantPtr vUniPtr,
 	const float& vMaxWidth, const float& vFirstColumnWidth, RenderPackWeak vRenderPack,
-	const bool& vShowUnUsed, const bool& vShowCustom, const bool& vForNodes, bool* vChange)
+	const bool& /*vShowUnUsed*/, const bool& /*vShowCustom*/, const bool& vForNodes, bool* vChange)
 {
 	bool catched = false;
 

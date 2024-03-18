@@ -24,7 +24,7 @@
 #include <CodeTree/CodeTree.h>
 #include <CodeTree/Parsing/ShaderStageParsing.h>
 #include <stb/stb_image.h>
-#include <stb/stb_image_write.h>
+#include <stb_image_write.h>
 
 #include "NetCodeRetriever.h"
 #include "Format_ShaderToy.h"

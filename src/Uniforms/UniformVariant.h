@@ -26,7 +26,7 @@
 
 #pragma warning(push)
 #pragma warning(disable:4201)   // suppress even more warnings about nameless structs
-#include <glm/glm/gtc/type_ptr.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #pragma warning(pop)
 
 /////////////////////////////////////////////////////////////
