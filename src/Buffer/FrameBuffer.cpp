@@ -19,6 +19,8 @@
 #include "FrameBuffer.h"
 #include "FrameBufferAttachment.h"
 
+#include <cstring> // memcpy
+
 #include <ctools/Logger.h>
 #include <Profiler/TracyProfiler.h>
 

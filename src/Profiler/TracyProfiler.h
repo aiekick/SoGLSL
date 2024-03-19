@@ -16,9 +16,16 @@
 #pragma once
 
 #include <glad/glad.h>
+#ifdef TRACY_ENABLE
 #include <tracy/Tracy.hpp>
 #include <tracy/TracyOpenGL.hpp>
-
+#else
+#define TracyGpuZone
+#define ZoneScoped
+#define FrameMark
+#define TracyGpuCollect
+#define ZoneScopedN
+#endif
 /* code a inserer dans le main pour tracer la memoire dans tracy
 #include <Profiler/TracyProfiler.h>
 void* operator new(std::size_t count)

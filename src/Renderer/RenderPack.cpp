@@ -1025,7 +1025,9 @@ bool RenderPack::BindFBO(FrameBuffersPipeLinePtr vPipe, const bool& vDontUseAnyF
 bool RenderPack::RenderShader(GLenum* vRenderMode, FrameBuffersPipeLinePtr vPipe) {
     GuiBackend::Instance()->MakeContextCurrent(puWindow);
 
+#ifdef TRACY_ENABLE
     TracyGpuZoneTransient(___tracy_gpu_zone, puTracyRenderShaderName.c_str(), true);
+#endif // TRACY_ENABLE
     AIGPScoped(puName, "Render Shader %s", puName.c_str());
 
     if (vRenderMode)
