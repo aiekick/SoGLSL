@@ -60,6 +60,7 @@ struct ShaderGlobalSettings
 	size_t countVertices = 1U; // value
 	bool showUnUsedUniforms = false;
 	bool showCustomUniforms = false;
+    std::string searchUniformName; // foe search input
 	std::string displayMode = "triangles";
 	float lineWidth = 1.0f;
 	bool showFlag = true;

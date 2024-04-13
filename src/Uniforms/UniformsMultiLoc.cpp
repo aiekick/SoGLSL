@@ -31,6 +31,7 @@ UniformsMultiLoc::UniformsMultiLoc(UniformVariantPtr vUniform)
 		name = vUniform->name;
 		uniform->copyValues(vUniform);
 		uniform->name = vUniform->name;
+        uniform->nameForSearch = vUniform->nameForSearch;
 		uniform->constant = vUniform->constant;
 		uniform->glslType = vUniform->glslType;
 		uniform->widget = vUniform->widget;

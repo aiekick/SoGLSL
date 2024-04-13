@@ -55,7 +55,11 @@ private:
 public:
 	bool puDontSaveConfigFiles = false;
 	bool puShowUnUsedUniforms = false;
-	bool puShowCustomUniforms = false;
+    bool puShowCustomUniforms = false;
+    bool m_ShowCustomCheckBox = false; // show/hide custom checkbox for puShowCustomUniforms
+
+private:
+    ImWidgets::InputText m_SearchInputText;
 
 public:
 	static ShaderKeyPtr puShaderKeyToEditPopup;
@@ -217,6 +221,8 @@ public:
 	void ReScaleMouseUniforms(ShaderKeyPtr vKey, ct::fvec2 vNewSize);
 	void ReScaleMouseUniforms(ct::fvec2 vNewSize);
 	void ReScaleUniformOfTimeLine(ShaderKeyPtr vKey, const std::string& vUniformName, ct::fvec2 vScale);
+
+	void ShowCustomCheckbox(const bool& vFlag);
 
 	// code replacement
 	//void SetCodeToReplaceInShadertype(const std::string& vKey, const std::string& vKeyInCode, const std::string& vCodeToReplace, const std::string& vShaderType, bool vForceReParse);

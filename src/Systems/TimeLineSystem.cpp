@@ -2038,7 +2038,7 @@ bool TimeLineSystem::ImGui_DrawTrashButton(bool /*vHovered*/, const ImVec2& pos)
     window->DrawList->AddRectFilled(bb.Min, bb.Max, col, 2);
 
     const float cross_extent = g.FontSize * 0.5f * 0.7071f - 1.0f;
-    const bool pushed        = ImGui::PushStyleColorWithContrast(ImGuiCol_Button, ImGuiCol_Text, CustomStyle::puContrastedTextColor, CustomStyle::puContrastRatio);
+    const bool pushed        = ImGui::PushStyleColorWithContrast1(ImGuiCol_Button, ImGuiCol_Text, CustomStyle::puContrastedTextColor, CustomStyle::puContrastRatio);
     window->DrawList->AddLine(center + ImVec2(+cross_extent, +cross_extent), center + ImVec2(-cross_extent, -cross_extent), ImGui::GetColorU32(ImGuiCol_Text), 2.5f);
     window->DrawList->AddLine(center + ImVec2(+cross_extent, -cross_extent), center + ImVec2(-cross_extent, +cross_extent), ImGui::GetColorU32(ImGuiCol_Text), 2.5f);
     if (pushed) ImGui::PopStyleColor();
@@ -3194,7 +3194,8 @@ bool TimeLineSystem::ImGui_AbortButton(const char* vName) {
     ImGui::RenderFrame(bb.Min, bb.Max, col, true, g.Style.FrameRounding);
 
     ImVec2 center     = bb.GetCenter();
-    const bool pushed = ImGui::PushStyleColorWithContrast(ImGuiCol_Button, ImGuiCol_Text, ImGui::CustomStyle::puContrastedTextColor, ImGui::CustomStyle::puContrastRatio);
+    const bool pushed =
+        ImGui::PushStyleColorWithContrast1(ImGuiCol_Button, ImGuiCol_Text, ImGui::CustomStyle::puContrastedTextColor, ImGui::CustomStyle::puContrastRatio);
     window->DrawList->AddRectFilled(bb.Min + sz * 0.25f, bb.Max - sz * 0.25f, ImGui::GetColorU32(ImGuiCol_Text));
     if (pushed) ImGui::PopStyleColor();
 

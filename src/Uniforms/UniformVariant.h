@@ -84,6 +84,7 @@ public:
 	int id[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 	int loc = -1;
 	int slot = -1;
+    std::string nameForSearch;
 	std::string name;
 	std::string widget;
 	std::string widgetType;

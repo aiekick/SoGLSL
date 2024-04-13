@@ -47,7 +47,8 @@ UniformVariantPtr UniformVariant::create(void *vParentPtr, const std::string& vN
 	UniformVariant::counter++;
 	res->m_This = res;
 	res->owner = vParentPtr;
-	res->name = vName;
+    res->name = vName;
+    res->nameForSearch = ct::toLower(vName);
 	res->ownerString = vDebug;
 	save.emplace_back(res->ownerString + "_" + vName);
 	return res;
@@ -62,6 +63,7 @@ UniformVariantPtr UniformVariant::create(ShaderKeyPtr vParentPtr, const std::str
 	res->m_This = res;
 	res->owner = vParentPtr;
 	res->name = vName;
+    res->nameForSearch = ct::toLower(vName);
 	return res;
 }
 #endif

@@ -456,15 +456,21 @@ bool CodeTree::DrawImGuiUniformWidget(ShaderKeyPtr vKey, float vFirstColumnWidth
                 static bool _existingUniforms = false;
                 _existingUniforms             = false;
 
+                // if sone search, we hide section widget
                 for (auto itLst = uniforms->begin(); itLst != uniforms->end(); ++itLst) {
                     UniformVariantPtr v = *itLst;
+
+                    if (!vKey->puShaderGlobalSettings.searchUniformName.empty()) {
+                        if (v->nameForSearch.find(vKey->puShaderGlobalSettings.searchUniformName) == std::string::npos) {
+                            continue;
+                        }
+                    }
 
                     // on a remplie ce map avec tout les noms d'uniforms des includes
                     // donc pas besoin d'ietrer chaque include, juste de tester si le nom existe pas dans cette liste
                     // s'il existe pas alors on l'affiche car ici on affiche que les uniforms des sahder or includes
                     // if (vKey->puUsedUniformsInCode.find(v->name) == vKey->puUsedUniformsInCode.end()) // non trouve
-                    if (puIncludeUniformNames.find(v->name) == puIncludeUniformNames.end())  // non trouve
-                    {
+                    if (puIncludeUniformNames.find(v->name) == puIncludeUniformNames.end()) {  // non trouve
                         if ((!vShowUnUsed && v->loc > -1) || vShowUnUsed) {
                             _existingUniforms = true;  // permet d'eviter d'afficher une section mais pas un seul uniform de cette section
                             break;
@@ -480,6 +486,12 @@ bool CodeTree::DrawImGuiUniformWidget(ShaderKeyPtr vKey, float vFirstColumnWidth
                     if (ImGui::CollapsingHeader_SmallHeight(nodeTitle, 0.8f, -1, true, opened)) {
                         for (auto itLst = uniforms->begin(); itLst != uniforms->end(); ++itLst) {
                             UniformVariantPtr v = *itLst;
+
+                            if (!vKey->puShaderGlobalSettings.searchUniformName.empty()) {
+                                if (v->nameForSearch.find(vKey->puShaderGlobalSettings.searchUniformName) == std::string::npos) {
+                                    continue;
+                                }
+                            }
 
                             // on a remplie ce map avec tout les noms d'uniforms des includes
                             // donc pas besoin d'ietrer chaque include, juste de tester si le nom existe pas dans cette liste
@@ -2235,12 +2247,17 @@ bool CodeTree::DrawImGuiIncludesUniformWidget(RenderPackWeak vMainRenderPack, fl
 
     ImGui::PushID(ImGui::IncPUSHID());
     ImGui::Checkbox("Show UnUsed", &puShowUnUsedUniforms);
-    ImGui::PopID();
+    if (m_ShowCustomCheckBox) {
+        ImGui::SameLine();
+        ImGui::Checkbox("Show Custom", &puShowCustomUniforms);
+    }
     ImGui::SameLine();
-    ImGui::PushID(ImGui::IncPUSHID());
-    ImGui::Checkbox("Show Custom", &puShowCustomUniforms);
+    if (ImGui::ContrastedButton(ICON_NDP_RESET, "Reset Search")) {
+        m_SearchInputText.Clear();
+    }
+    ImGui::SameLine();
+    m_SearchInputText.DisplayInputText(200.0f, ICON_NDP_SEARCH, "");
     ImGui::PopID();
-
     ImGui::Separator();
 
     char nodeTitle[256] = "";
@@ -2254,9 +2271,9 @@ bool CodeTree::DrawImGuiIncludesUniformWidget(RenderPackWeak vMainRenderPack, fl
 
         auto rpPtr = vMainRenderPack.lock();
         if (rpPtr) {
-            headerOpened = rpPtr->CollapsingHeader(includeFileName.c_str(), true, true, &editCatched);
+            headerOpened = rpPtr->CollapsingHeader(includeFileName.c_str(), false, true, &editCatched);
         } else {
-            headerOpened = ImGui::CollapsingHeader_Button(includeFileName.c_str(), -1, true, ICON_NDP_PENCIL_SQUARE_O, true, &editCatched);
+            headerOpened = ImGui::CollapsingHeader_Button(includeFileName.c_str(), -1, false, ICON_NDP_PENCIL_SQUARE_O, true, &editCatched);
         }
 
         if (headerOpened) {
@@ -2308,6 +2325,13 @@ bool CodeTree::DrawImGuiIncludesUniformWidget(UniformsMultiLoc* vUniLoc, float v
         const float PaneWidth = ImGui::GetContentRegionAvail().x;
 
         UniformVariantPtr v = vUniLoc->uniform;
+
+        const auto& searchText = m_SearchInputText.GetText();
+        if (!searchText.empty()) {
+            if (v->nameForSearch.find(searchText) == std::string::npos) {
+                return false;
+            }
+        }
 
         if (DrawImGuiUniformWidgetForPanes(v, PaneWidth, vFirstColumnWidth, vMainRenderPack, vShowUnUsed, vShowCustom)) {
             change = true;
@@ -2404,6 +2428,10 @@ void CodeTree::ReScaleUniformOfTimeLine(ShaderKeyPtr vKey, const std::string& vU
             }
         }
     }
+}
+
+void CodeTree::ShowCustomCheckbox(const bool& vFlag) {
+    m_ShowCustomCheckBox = vFlag;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
