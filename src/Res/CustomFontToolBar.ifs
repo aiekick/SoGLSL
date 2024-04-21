@@ -1,0 +1,716 @@
+<config>
+	<project>
+		<font name="materialdesignicons.ttf">
+			<glyphs>
+				<glyph orgId="61464" newId="61464" orgName="orbit" newName="orbit" trans="0;0" scale="1;1"/>
+				<glyph orgId="61466" newId="61466" orgName="adjust" newName="adjust" trans="0;0" scale="1;1"/>
+				<glyph orgId="61483" newId="61483" orgName="alpha" newName="alpha" trans="0;0" scale="1;1"/>
+				<glyph orgId="61484" newId="61484" orgName="alphabetical" newName="alphabetical" trans="0;0" scale="1;1"/>
+				<glyph orgId="61499" newId="61499" orgName="apps" newName="apps" trans="0;0" scale="1;1"/>
+				<glyph orgId="61513" newId="61513" orgName="arrow-down-bold-hexagon-outline" newName="arrow-down-bold-hexagon-outline" trans="0;0" scale="1;1"/>
+				<glyph orgId="61521" newId="61521" orgName="arrow-left-bold-hexagon-outline" newName="arrow-left-bold-hexagon-outline" trans="0;0" scale="1;1"/>
+				<glyph orgId="61528" newId="61528" orgName="arrow-right-bold-hexagon-outline" newName="arrow-right-bold-hexagon-outline" trans="0;0" scale="1;1"/>
+				<glyph orgId="61537" newId="61537" orgName="arrow-up-bold-hexagon-outline" newName="arrow-up-bold-hexagon-outline" trans="0;0" scale="1;1"/>
+				<glyph orgId="61668" newId="61668" orgName="bug" newName="bug" trans="0;0" scale="1;1"/>
+				<glyph orgId="61692" newId="61692" orgName="camcorder" newName="camcorder" trans="0;0" scale="1;1"/>
+				<glyph orgId="61821" newId="61821" orgName="comment-alert" newName="comment-alert" trans="0;0" scale="1;1"/>
+				<glyph orgId="61823" newId="61823" orgName="comment-check" newName="comment-check" trans="0;0" scale="1;1"/>
+				<glyph orgId="61828" newId="61828" orgName="comment-processing" newName="comment-processing" trans="0;0" scale="1;1"/>
+				<glyph orgId="61832" newId="61832" orgName="comment-text" newName="comment-text" trans="0;0" scale="1;1"/>
+				<glyph orgId="61863" newId="61863" orgName="cube-outline" newName="cube-outline" trans="0;0" scale="1;1"/>
+				<glyph orgId="61977" newId="61977" orgName="file-document" newName="file-document" trans="0;0" scale="1;1"/>
+				<glyph orgId="62031" newId="62031" orgName="folder-image" newName="folder-image" trans="0;0" scale="1;1"/>
+				<glyph orgId="62101" newId="62101" orgName="function" newName="function" trans="0;0" scale="1;1"/>
+				<glyph orgId="62126" newId="62126" orgName="google-cardboard" newName="google-cardboard" trans="0;0" scale="1;1"/>
+				<glyph orgId="62132" newId="62132" orgName="google-controller" newName="google-controller" trans="0;0" scale="1;1"/>
+				<glyph orgId="62145" newId="62145" orgName="grid" newName="grid" trans="0;0" scale="1;1"/>
+				<glyph orgId="62168" newId="62168" orgName="hexagon" newName="hexagon" trans="0;0" scale="1;1"/>
+				<glyph orgId="62169" newId="62169" orgName="hexagon-outline" newName="hexagon-outline" trans="0;0" scale="1;1"/>
+				<glyph orgId="62220" newId="62220" orgName="keyboard" newName="keyboard" trans="0;0" scale="1;1"/>
+				<glyph orgId="62227" newId="62227" orgName="keyboard-variant" newName="keyboard-variant" trans="0;0" scale="1;1"/>
+				<glyph orgId="62248" newId="62248" orgName="layers" newName="layers" trans="0;0" scale="1;1"/>
+				<glyph orgId="62333" newId="62333" orgName="mouse" newName="mouse" trans="0;0" scale="1;1"/>
+				<glyph orgId="62343" newId="62343" orgName="music-note" newName="music-note" trans="0;0" scale="1;1"/>
+				<glyph orgId="62501" newId="62501" orgName="power" newName="power" trans="0;0" scale="1;1"/>
+				<glyph orgId="62662" newId="62662" orgName="spellcheck" newName="spellcheck" trans="0;0" scale="1;1"/>
+				<glyph orgId="62735" newId="62735" orgName="thermometer" newName="thermometer" trans="0;0" scale="1;1"/>
+				<glyph orgId="62809" newId="62809" orgName="vector-curve" newName="vector-curve" trans="0;0" scale="1;1"/>
+				<glyph orgId="62832" newId="62832" orgName="view-grid" newName="view-grid" trans="0;0" scale="1;1"/>
+				<glyph orgId="62833" newId="62833" orgName="view-headline" newName="view-headline" trans="0;0" scale="1;1"/>
+				<glyph orgId="62834" newId="62834" orgName="view-list" newName="view-list" trans="0;0" scale="1;1"/>
+				<glyph orgId="62847" newId="62847" orgName="volume-low" newName="volume-low" trans="0;0" scale="1;1"/>
+				<glyph orgId="62942" newId="62942" orgName="comment-remove" newName="comment-remove" trans="0;0" scale="1;1"/>
+				<glyph orgId="63016" newId="63016" orgName="matrix" newName="matrix" trans="0;0" scale="1;1"/>
+				<glyph orgId="63022" newId="63022" orgName="tune" newName="tune" trans="0;0" scale="1;1"/>
+				<glyph orgId="63051" newId="63051" orgName="human-handsdown" newName="human-handsdown" trans="0;0" scale="1;1"/>
+				<glyph orgId="63510" newId="63510" orgName="comment-question" newName="comment-question" trans="0;0" scale="1;1"/>
+				<glyph orgId="63580" newId="63580" orgName="clipboard-pulse" newName="clipboard-pulse" trans="0;0" scale="1;1"/>
+				<glyph orgId="63583" newId="63583" orgName="comment-text-multiple" newName="comment-text-multiple" trans="0;0" scale="1;1"/>
+				<glyph orgId="63604" newId="63604" orgName="gauge-low" newName="gauge-low" trans="0;0" scale="1;1"/>
+				<glyph orgId="63728" newId="63728" orgName="midi" newName="midi" trans="0;0" scale="1;1"/>
+				<glyph orgId="63968" newId="63968" orgName="comment-arrow-left" newName="comment-arrow-left" trans="0;0" scale="1;1"/>
+				<glyph orgId="63970" newId="63970" orgName="comment-arrow-right" newName="comment-arrow-right" trans="0;0" scale="1;1"/>
+				<glyph orgId="63972" newId="63972" orgName="comment-plus" newName="comment-plus" trans="0;0" scale="1;1"/>
+				<glyph orgId="63997" newId="63997" orgName="layers-outline" newName="layers-outline" trans="0;0" scale="1;1"/>
+				<glyph orgId="64057" newId="64057" orgName="comment-eye" newName="comment-eye" trans="0;0" scale="1;1"/>
+				<glyph orgId="64059" newId="64059" orgName="comment-search" newName="comment-search" trans="0;0" scale="1;1"/>
+				<glyph orgId="64194" newId="64194" orgName="hexagon-slice-1" newName="hexagon-slice-1" trans="0;0" scale="1;1"/>
+				<glyph orgId="64195" newId="64195" orgName="hexagon-slice-2" newName="hexagon-slice-2" trans="0;0" scale="1;1"/>
+				<glyph orgId="64196" newId="64196" orgName="hexagon-slice-3" newName="hexagon-slice-3" trans="0;0" scale="1;1"/>
+				<glyph orgId="64197" newId="64197" orgName="hexagon-slice-4" newName="hexagon-slice-4" trans="0;0" scale="1;1"/>
+				<glyph orgId="64198" newId="64198" orgName="hexagon-slice-5" newName="hexagon-slice-5" trans="0;0" scale="1;1"/>
+				<glyph orgId="64199" newId="64199" orgName="hexagon-slice-6" newName="hexagon-slice-6" trans="0;0" scale="1;1"/>
+				<glyph orgId="64265" newId="64265" orgName="calendar-export" newName="calendar-export" trans="0;0" scale="1;1"/>
+				<glyph orgId="64805" newId="64805" orgName="axis-arrow" newName="axis-arrow" trans="0;0" scale="1;1"/>
+				<glyph orgId="64932" newId="64932" orgName="file-document-edit" newName="file-document-edit" trans="0;0" scale="1;1"/>
+				<glyph orgId="65072" newId="65072" orgName="layers-plus" newName="layers-plus" trans="0;0" scale="1;1"/>
+				<glyph orgId="65073" newId="65073" orgName="layers-remove" newName="layers-remove" trans="0;0" scale="1;1"/>
+				<glyph orgId="65086" newId="65086" orgName="printer-3d-nozzle" newName="printer-3d-nozzle" trans="0;0" scale="1;1"/>
+				<glyph orgId="65165" newId="65165" orgName="layers-minus" newName="layers-minus" trans="0;0" scale="1;1"/>
+				<glyph orgId="65397" newId="65397" orgName="layers-triple" newName="layers-triple" trans="0;0" scale="1;1"/>
+				<glyph orgId="65398" newId="65398" orgName="layers-triple-outline" newName="layers-triple-outline" trans="0;0" scale="1;1"/>
+				<glyph orgId="65518" newId="65518" orgName="movie-open" newName="movie-open" trans="0;0" scale="1;1"/>
+			</glyphs>
+			<prefix>NDPTB</prefix>
+			<genmodeflags>1035</genmodeflags>
+			<pathfilename>fonts\materialdesignicons.ttf</pathfilename>
+			<oversample>2</oversample>
+			<fontsize>50</fontsize>
+			<generatedfilename>CustomFontToolBar</generatedfilename>
+			<cardglyhpheight>40</cardglyhpheight>
+			<cardcountrowsmax>20</cardcountrowsmax>
+			<rasterizer>1</rasterizer>
+			<freetypeflag>259</freetypeflag>
+			<freetypemultiply>1</freetypemultiply>
+			<padding>1</padding>
+			<filtering>1</filtering>
+			<enabled>true</enabled>
+			<collapsed>false</collapsed>
+		</font>
+		<rangecoloring show="false" hash="10;15;35;0.5"/>
+		<previewglyphcount>21</previewglyphcount>
+		<previewglyphwidth>68.619</previewglyphwidth>
+		<mergedfontprefix>NDP</mergedfontprefix>
+		<mergedcardglyhpheight>40</mergedcardglyhpheight>
+		<mergedcardcountrowsmax>20</mergedcardcountrowsmax>
+		<curglyphtooltip>false</curglyphtooltip>
+		<srcglyphtooltip>true</srcglyphtooltip>
+		<dstglyphtooltip>true</dstglyphtooltip>
+		<glyphpreviewscale>0.333</glyphpreviewscale>
+		<glyphdrawingflags>1535</glyphdrawingflags>
+		<glyphpreviewquadbeziercounsegment>0</glyphpreviewquadbeziercounsegment>
+		<glyphpreviewzoomprecision>20</glyphpreviewzoomprecision>
+		<genmodeflags>1051</genmodeflags>
+		<fonttomergein>materialdesignicons.ttf</fonttomergein>
+		<glyphdisplaytuningmode>1</glyphdisplaytuningmode>
+		<sourcefontpaneflags>1</sourcefontpaneflags>
+		<lastgeneratedpath>C:\Gamedev\github\NoodlesPlate\3rdparty\SoGLSL\src\Res</lastgeneratedpath>
+		<lastgeneratedfilename>CustomFontToolBar.cpp</lastgeneratedfilename>
+		<zoomglyphs>false</zoomglyphs>
+		<showbaseline>false</showbaseline>
+		<showadvancex>false</showadvancex>
+		<glyphdrawingflags>1535</glyphdrawingflags>
+		<finalselection>
+			<selection orgId="61441" font="forkawesome.ttf"/>
+			<selection orgId="61441" font="materialdesignicons.ttf"/>
+			<selection orgId="61442" font="forkawesome.ttf"/>
+			<selection orgId="61445" font="forkawesome.ttf"/>
+			<selection orgId="61446" font="forkawesome.ttf"/>
+			<selection orgId="61450" font="forkawesome.ttf"/>
+			<selection orgId="61451" font="forkawesome.ttf"/>
+			<selection orgId="61452" font="forkawesome.ttf"/>
+			<selection orgId="61453" font="forkawesome.ttf"/>
+			<selection orgId="61454" font="forkawesome.ttf"/>
+			<selection orgId="61456" font="forkawesome.ttf"/>
+			<selection orgId="61459" font="forkawesome.ttf"/>
+			<selection orgId="61460" font="forkawesome.ttf"/>
+			<selection orgId="61462" font="forkawesome.ttf"/>
+			<selection orgId="61463" font="forkawesome.ttf"/>
+			<selection orgId="61464" font="materialdesignicons.ttf"/>
+			<selection orgId="61466" font="materialdesignicons.ttf"/>
+			<selection orgId="61469" font="materialdesignicons.ttf"/>
+			<selection orgId="61470" font="forkawesome.ttf"/>
+			<selection orgId="61470" font="materialdesignicons.ttf"/>
+			<selection orgId="61473" font="forkawesome.ttf"/>
+			<selection orgId="61478" font="materialdesignicons.ttf"/>
+			<selection orgId="61479" font="materialdesignicons.ttf"/>
+			<selection orgId="61480" font="materialdesignicons.ttf"/>
+			<selection orgId="61481" font="materialdesignicons.ttf"/>
+			<selection orgId="61483" font="materialdesignicons.ttf"/>
+			<selection orgId="61484" font="materialdesignicons.ttf"/>
+			<selection orgId="61485" font="forkawesome.ttf"/>
+			<selection orgId="61486" font="forkawesome.ttf"/>
+			<selection orgId="61489" font="forkawesome.ttf"/>
+			<selection orgId="61499" font="materialdesignicons.ttf"/>
+			<selection orgId="61501" font="forkawesome.ttf"/>
+			<selection orgId="61501" font="materialdesignicons.ttf"/>
+			<selection orgId="61502" font="forkawesome.ttf"/>
+			<selection orgId="61502" font="materialdesignicons.ttf"/>
+			<selection orgId="61503" font="materialdesignicons.ttf"/>
+			<selection orgId="61504" font="materialdesignicons.ttf"/>
+			<selection orgId="61505" font="materialdesignicons.ttf"/>
+			<selection orgId="61508" font="forkawesome.ttf"/>
+			<selection orgId="61508" font="materialdesignicons.ttf"/>
+			<selection orgId="61509" font="forkawesome.ttf"/>
+			<selection orgId="61510" font="forkawesome.ttf"/>
+			<selection orgId="61511" font="forkawesome.ttf"/>
+			<selection orgId="61511" font="materialdesignicons.ttf"/>
+			<selection orgId="61512" font="forkawesome.ttf"/>
+			<selection orgId="61513" font="forkawesome.ttf"/>
+			<selection orgId="61513" font="materialdesignicons.ttf"/>
+			<selection orgId="61514" font="forkawesome.ttf"/>
+			<selection orgId="61514" font="materialdesignicons.ttf"/>
+			<selection orgId="61515" font="forkawesome.ttf"/>
+			<selection orgId="61516" font="forkawesome.ttf"/>
+			<selection orgId="61516" font="materialdesignicons.ttf"/>
+			<selection orgId="61517" font="forkawesome.ttf"/>
+			<selection orgId="61518" font="forkawesome.ttf"/>
+			<selection orgId="61519" font="materialdesignicons.ttf"/>
+			<selection orgId="61520" font="forkawesome.ttf"/>
+			<selection orgId="61521" font="forkawesome.ttf"/>
+			<selection orgId="61521" font="materialdesignicons.ttf"/>
+			<selection orgId="61522" font="forkawesome.ttf"/>
+			<selection orgId="61522" font="materialdesignicons.ttf"/>
+			<selection orgId="61525" font="forkawesome.ttf"/>
+			<selection orgId="61526" font="forkawesome.ttf"/>
+			<selection orgId="61526" font="materialdesignicons.ttf"/>
+			<selection orgId="61527" font="forkawesome.ttf"/>
+			<selection orgId="61528" font="forkawesome.ttf"/>
+			<selection orgId="61528" font="materialdesignicons.ttf"/>
+			<selection orgId="61529" font="forkawesome.ttf"/>
+			<selection orgId="61529" font="materialdesignicons.ttf"/>
+			<selection orgId="61530" font="forkawesome.ttf"/>
+			<selection orgId="61531" font="forkawesome.ttf"/>
+			<selection orgId="61532" font="forkawesome.ttf"/>
+			<selection orgId="61533" font="forkawesome.ttf"/>
+			<selection orgId="61534" font="forkawesome.ttf"/>
+			<selection orgId="61535" font="materialdesignicons.ttf"/>
+			<selection orgId="61536" font="forkawesome.ttf"/>
+			<selection orgId="61537" font="forkawesome.ttf"/>
+			<selection orgId="61537" font="materialdesignicons.ttf"/>
+			<selection orgId="61538" font="forkawesome.ttf"/>
+			<selection orgId="61538" font="materialdesignicons.ttf"/>
+			<selection orgId="61539" font="forkawesome.ttf"/>
+			<selection orgId="61540" font="forkawesome.ttf"/>
+			<selection orgId="61543" font="forkawesome.ttf"/>
+			<selection orgId="61544" font="forkawesome.ttf"/>
+			<selection orgId="61546" font="forkawesome.ttf"/>
+			<selection orgId="61550" font="forkawesome.ttf"/>
+			<selection orgId="61552" font="forkawesome.ttf"/>
+			<selection orgId="61553" font="forkawesome.ttf"/>
+			<selection orgId="61559" font="forkawesome.ttf"/>
+			<selection orgId="61560" font="forkawesome.ttf"/>
+			<selection orgId="61564" font="forkawesome.ttf"/>
+			<selection orgId="61569" font="materialdesignicons.ttf"/>
+			<selection orgId="61573" font="forkawesome.ttf"/>
+			<selection orgId="61578" font="forkawesome.ttf"/>
+			<selection orgId="61584" font="materialdesignicons.ttf"/>
+			<selection orgId="61608" font="forkawesome.ttf"/>
+			<selection orgId="61609" font="forkawesome.ttf"/>
+			<selection orgId="61610" font="forkawesome.ttf"/>
+			<selection orgId="61611" font="forkawesome.ttf"/>
+			<selection orgId="61614" font="forkawesome.ttf"/>
+			<selection orgId="61618" font="forkawesome.ttf"/>
+			<selection orgId="61618" font="materialdesignicons.ttf"/>
+			<selection orgId="61633" font="forkawesome.ttf"/>
+			<selection orgId="61636" font="forkawesome.ttf"/>
+			<selection orgId="61637" font="forkawesome.ttf"/>
+			<selection orgId="61638" font="forkawesome.ttf"/>
+			<selection orgId="61639" font="forkawesome.ttf"/>
+			<selection orgId="61641" font="forkawesome.ttf"/>
+			<selection orgId="61655" font="forkawesome.ttf"/>
+			<selection orgId="61656" font="forkawesome.ttf"/>
+			<selection orgId="61656" font="materialdesignicons.ttf"/>
+			<selection orgId="61657" font="forkawesome.ttf"/>
+			<selection orgId="61658" font="forkawesome.ttf"/>
+			<selection orgId="61660" font="forkawesome.ttf"/>
+			<selection orgId="61661" font="forkawesome.ttf"/>
+			<selection orgId="61662" font="forkawesome.ttf"/>
+			<selection orgId="61664" font="materialdesignicons.ttf"/>
+			<selection orgId="61666" font="forkawesome.ttf"/>
+			<selection orgId="61668" font="materialdesignicons.ttf"/>
+			<selection orgId="61672" font="forkawesome.ttf"/>
+			<selection orgId="61686" font="forkawesome.ttf"/>
+			<selection orgId="61692" font="materialdesignicons.ttf"/>
+			<selection orgId="61695" font="materialdesignicons.ttf"/>
+			<selection orgId="61700" font="forkawesome.ttf"/>
+			<selection orgId="61700" font="materialdesignicons.ttf"/>
+			<selection orgId="61701" font="forkawesome.ttf"/>
+			<selection orgId="61702" font="forkawesome.ttf"/>
+			<selection orgId="61703" font="forkawesome.ttf"/>
+			<selection orgId="61714" font="forkawesome.ttf"/>
+			<selection orgId="61723" font="forkawesome.ttf"/>
+			<selection orgId="61724" font="forkawesome.ttf"/>
+			<selection orgId="61734" font="forkawesome.ttf"/>
+			<selection orgId="61736" font="forkawesome.ttf"/>
+			<selection orgId="61737" font="forkawesome.ttf"/>
+			<selection orgId="61738" font="materialdesignicons.ttf"/>
+			<selection orgId="61742" font="materialdesignicons.ttf"/>
+			<selection orgId="61743" font="materialdesignicons.ttf"/>
+			<selection orgId="61744" font="forkawesome.ttf"/>
+			<selection orgId="61745" font="forkawesome.ttf"/>
+			<selection orgId="61746" font="materialdesignicons.ttf"/>
+			<selection orgId="61754" font="materialdesignicons.ttf"/>
+			<selection orgId="61760" font="materialdesignicons.ttf"/>
+			<selection orgId="61761" font="materialdesignicons.ttf"/>
+			<selection orgId="61762" font="materialdesignicons.ttf"/>
+			<selection orgId="61763" font="materialdesignicons.ttf"/>
+			<selection orgId="61766" font="forkawesome.ttf"/>
+			<selection orgId="61770" font="forkawesome.ttf"/>
+			<selection orgId="61771" font="forkawesome.ttf"/>
+			<selection orgId="61772" font="forkawesome.ttf"/>
+			<selection orgId="61773" font="forkawesome.ttf"/>
+			<selection orgId="61776" font="forkawesome.ttf"/>
+			<selection orgId="61777" font="forkawesome.ttf"/>
+			<selection orgId="61778" font="forkawesome.ttf"/>
+			<selection orgId="61778" font="materialdesignicons.ttf"/>
+			<selection orgId="61783" font="materialdesignicons.ttf"/>
+			<selection orgId="61788" font="forkawesome.ttf"/>
+			<selection orgId="61794" font="materialdesignicons.ttf"/>
+			<selection orgId="61799" font="materialdesignicons.ttf"/>
+			<selection orgId="61803" font="materialdesignicons.ttf"/>
+			<selection orgId="61804" font="materialdesignicons.ttf"/>
+			<selection orgId="61805" font="materialdesignicons.ttf"/>
+			<selection orgId="61806" font="materialdesignicons.ttf"/>
+			<selection orgId="61807" font="materialdesignicons.ttf"/>
+			<selection orgId="61808" font="materialdesignicons.ttf"/>
+			<selection orgId="61809" font="materialdesignicons.ttf"/>
+			<selection orgId="61818" font="materialdesignicons.ttf"/>
+			<selection orgId="61821" font="materialdesignicons.ttf"/>
+			<selection orgId="61823" font="materialdesignicons.ttf"/>
+			<selection orgId="61828" font="materialdesignicons.ttf"/>
+			<selection orgId="61832" font="materialdesignicons.ttf"/>
+			<selection orgId="61838" font="forkawesome.ttf"/>
+			<selection orgId="61840" font="forkawesome.ttf"/>
+			<selection orgId="61841" font="forkawesome.ttf"/>
+			<selection orgId="61842" font="forkawesome.ttf"/>
+			<selection orgId="61843" font="materialdesignicons.ttf"/>
+			<selection orgId="61846" font="materialdesignicons.ttf"/>
+			<selection orgId="61854" font="materialdesignicons.ttf"/>
+			<selection orgId="61855" font="materialdesignicons.ttf"/>
+			<selection orgId="61859" font="materialdesignicons.ttf"/>
+			<selection orgId="61860" font="materialdesignicons.ttf"/>
+			<selection orgId="61862" font="materialdesignicons.ttf"/>
+			<selection orgId="61863" font="materialdesignicons.ttf"/>
+			<selection orgId="61864" font="materialdesignicons.ttf"/>
+			<selection orgId="61865" font="materialdesignicons.ttf"/>
+			<selection orgId="61888" font="materialdesignicons.ttf"/>
+			<selection orgId="61892" font="materialdesignicons.ttf"/>
+			<selection orgId="61893" font="forkawesome.ttf"/>
+			<selection orgId="61894" font="forkawesome.ttf"/>
+			<selection orgId="61895" font="forkawesome.ttf"/>
+			<selection orgId="61896" font="forkawesome.ttf"/>
+			<selection orgId="61897" font="forkawesome.ttf"/>
+			<selection orgId="61918" font="forkawesome.ttf"/>
+			<selection orgId="61949" font="materialdesignicons.ttf"/>
+			<selection orgId="61961" font="materialdesignicons.ttf"/>
+			<selection orgId="61972" font="materialdesignicons.ttf"/>
+			<selection orgId="61973" font="materialdesignicons.ttf"/>
+			<selection orgId="61974" font="materialdesignicons.ttf"/>
+			<selection orgId="61975" font="materialdesignicons.ttf"/>
+			<selection orgId="61976" font="materialdesignicons.ttf"/>
+			<selection orgId="61977" font="materialdesignicons.ttf"/>
+			<selection orgId="61978" font="materialdesignicons.ttf"/>
+			<selection orgId="61981" font="materialdesignicons.ttf"/>
+			<selection orgId="61982" font="materialdesignicons.ttf"/>
+			<selection orgId="61983" font="materialdesignicons.ttf"/>
+			<selection orgId="61984" font="materialdesignicons.ttf"/>
+			<selection orgId="61987" font="materialdesignicons.ttf"/>
+			<selection orgId="61988" font="materialdesignicons.ttf"/>
+			<selection orgId="61994" font="materialdesignicons.ttf"/>
+			<selection orgId="61995" font="materialdesignicons.ttf"/>
+			<selection orgId="62003" font="forkawesome.ttf"/>
+			<selection orgId="62027" font="materialdesignicons.ttf"/>
+			<selection orgId="62029" font="materialdesignicons.ttf"/>
+			<selection orgId="62031" font="materialdesignicons.ttf"/>
+			<selection orgId="62034" font="materialdesignicons.ttf"/>
+			<selection orgId="62036" font="materialdesignicons.ttf"/>
+			<selection orgId="62039" font="materialdesignicons.ttf"/>
+			<selection orgId="62040" font="materialdesignicons.ttf"/>
+			<selection orgId="62041" font="materialdesignicons.ttf"/>
+			<selection orgId="62071" font="forkawesome.ttf"/>
+			<selection orgId="62101" font="materialdesignicons.ttf"/>
+			<selection orgId="62106" font="materialdesignicons.ttf"/>
+			<selection orgId="62112" font="materialdesignicons.ttf"/>
+			<selection orgId="62126" font="materialdesignicons.ttf"/>
+			<selection orgId="62132" font="materialdesignicons.ttf"/>
+			<selection orgId="62133" font="materialdesignicons.ttf"/>
+			<selection orgId="62145" font="materialdesignicons.ttf"/>
+			<selection orgId="62146" font="materialdesignicons.ttf"/>
+			<selection orgId="62147" font="materialdesignicons.ttf"/>
+			<selection orgId="62160" font="forkawesome.ttf"/>
+			<selection orgId="62161" font="forkawesome.ttf"/>
+			<selection orgId="62161" font="materialdesignicons.ttf"/>
+			<selection orgId="62162" font="forkawesome.ttf"/>
+			<selection orgId="62162" font="materialdesignicons.ttf"/>
+			<selection orgId="62163" font="forkawesome.ttf"/>
+			<selection orgId="62164" font="forkawesome.ttf"/>
+			<selection orgId="62168" font="materialdesignicons.ttf"/>
+			<selection orgId="62169" font="materialdesignicons.ttf"/>
+			<selection orgId="62172" font="materialdesignicons.ttf"/>
+			<selection orgId="62192" font="materialdesignicons.ttf"/>
+			<selection orgId="62193" font="materialdesignicons.ttf"/>
+			<selection orgId="62194" font="materialdesignicons.ttf"/>
+			<selection orgId="62199" font="materialdesignicons.ttf"/>
+			<selection orgId="62220" font="materialdesignicons.ttf"/>
+			<selection orgId="62224" font="materialdesignicons.ttf"/>
+			<selection orgId="62227" font="materialdesignicons.ttf"/>
+			<selection orgId="62242" font="materialdesignicons.ttf"/>
+			<selection orgId="62248" font="materialdesignicons.ttf"/>
+			<selection orgId="62249" font="materialdesignicons.ttf"/>
+			<selection orgId="62253" font="materialdesignicons.ttf"/>
+			<selection orgId="62254" font="materialdesignicons.ttf"/>
+			<selection orgId="62261" font="materialdesignicons.ttf"/>
+			<selection orgId="62262" font="materialdesignicons.ttf"/>
+			<selection orgId="62263" font="materialdesignicons.ttf"/>
+			<selection orgId="62264" font="materialdesignicons.ttf"/>
+			<selection orgId="62270" font="materialdesignicons.ttf"/>
+			<selection orgId="62271" font="materialdesignicons.ttf"/>
+			<selection orgId="62274" font="materialdesignicons.ttf"/>
+			<selection orgId="62275" font="materialdesignicons.ttf"/>
+			<selection orgId="62281" font="materialdesignicons.ttf"/>
+			<selection orgId="62282" font="materialdesignicons.ttf"/>
+			<selection orgId="62283" font="materialdesignicons.ttf"/>
+			<selection orgId="62316" font="materialdesignicons.ttf"/>
+			<selection orgId="62317" font="materialdesignicons.ttf"/>
+			<selection orgId="62325" font="materialdesignicons.ttf"/>
+			<selection orgId="62333" font="materialdesignicons.ttf"/>
+			<selection orgId="62334" font="materialdesignicons.ttf"/>
+			<selection orgId="62343" font="materialdesignicons.ttf"/>
+			<selection orgId="62344" font="materialdesignicons.ttf"/>
+			<selection orgId="62346" font="materialdesignicons.ttf"/>
+			<selection orgId="62362" font="materialdesignicons.ttf"/>
+			<selection orgId="62364" font="materialdesignicons.ttf"/>
+			<selection orgId="62366" font="materialdesignicons.ttf"/>
+			<selection orgId="62419" font="materialdesignicons.ttf"/>
+			<selection orgId="62420" font="materialdesignicons.ttf"/>
+			<selection orgId="62421" font="materialdesignicons.ttf"/>
+			<selection orgId="62428" font="materialdesignicons.ttf"/>
+			<selection orgId="62429" font="materialdesignicons.ttf"/>
+			<selection orgId="62430" font="materialdesignicons.ttf"/>
+			<selection orgId="62431" font="materialdesignicons.ttf"/>
+			<selection orgId="62432" font="materialdesignicons.ttf"/>
+			<selection orgId="62443" font="materialdesignicons.ttf"/>
+			<selection orgId="62444" font="materialdesignicons.ttf"/>
+			<selection orgId="62447" font="materialdesignicons.ttf"/>
+			<selection orgId="62467" font="materialdesignicons.ttf"/>
+			<selection orgId="62468" font="materialdesignicons.ttf"/>
+			<selection orgId="62486" font="materialdesignicons.ttf"/>
+			<selection orgId="62496" font="materialdesignicons.ttf"/>
+			<selection orgId="62501" font="materialdesignicons.ttf"/>
+			<selection orgId="62525" font="materialdesignicons.ttf"/>
+			<selection orgId="62526" font="materialdesignicons.ttf"/>
+			<selection orgId="62528" font="materialdesignicons.ttf"/>
+			<selection orgId="62529" font="materialdesignicons.ttf"/>
+			<selection orgId="62530" font="materialdesignicons.ttf"/>
+			<selection orgId="62531" font="materialdesignicons.ttf"/>
+			<selection orgId="62532" font="materialdesignicons.ttf"/>
+			<selection orgId="62533" font="materialdesignicons.ttf"/>
+			<selection orgId="62549" font="materialdesignicons.ttf"/>
+			<selection orgId="62551" font="materialdesignicons.ttf"/>
+			<selection orgId="62552" font="materialdesignicons.ttf"/>
+			<selection orgId="62555" font="materialdesignicons.ttf"/>
+			<selection orgId="62559" font="materialdesignicons.ttf"/>
+			<selection orgId="62597" font="materialdesignicons.ttf"/>
+			<selection orgId="62598" font="materialdesignicons.ttf"/>
+			<selection orgId="62599" font="materialdesignicons.ttf"/>
+			<selection orgId="62600" font="materialdesignicons.ttf"/>
+			<selection orgId="62601" font="materialdesignicons.ttf"/>
+			<selection orgId="62605" font="materialdesignicons.ttf"/>
+			<selection orgId="62606" font="materialdesignicons.ttf"/>
+			<selection orgId="62611" font="materialdesignicons.ttf"/>
+			<selection orgId="62612" font="materialdesignicons.ttf"/>
+			<selection orgId="62615" font="materialdesignicons.ttf"/>
+			<selection orgId="62616" font="materialdesignicons.ttf"/>
+			<selection orgId="62617" font="materialdesignicons.ttf"/>
+			<selection orgId="62635" font="materialdesignicons.ttf"/>
+			<selection orgId="62636" font="materialdesignicons.ttf"/>
+			<selection orgId="62637" font="materialdesignicons.ttf"/>
+			<selection orgId="62638" font="materialdesignicons.ttf"/>
+			<selection orgId="62657" font="materialdesignicons.ttf"/>
+			<selection orgId="62658" font="materialdesignicons.ttf"/>
+			<selection orgId="62661" font="materialdesignicons.ttf"/>
+			<selection orgId="62662" font="materialdesignicons.ttf"/>
+			<selection orgId="62665" font="materialdesignicons.ttf"/>
+			<selection orgId="62672" font="materialdesignicons.ttf"/>
+			<selection orgId="62673" font="materialdesignicons.ttf"/>
+			<selection orgId="62674" font="materialdesignicons.ttf"/>
+			<selection orgId="62676" font="materialdesignicons.ttf"/>
+			<selection orgId="62678" font="materialdesignicons.ttf"/>
+			<selection orgId="62680" font="materialdesignicons.ttf"/>
+			<selection orgId="62694" font="materialdesignicons.ttf"/>
+			<selection orgId="62695" font="materialdesignicons.ttf"/>
+			<selection orgId="62696" font="materialdesignicons.ttf"/>
+			<selection orgId="62697" font="materialdesignicons.ttf"/>
+			<selection orgId="62698" font="materialdesignicons.ttf"/>
+			<selection orgId="62699" font="materialdesignicons.ttf"/>
+			<selection orgId="62704" font="materialdesignicons.ttf"/>
+			<selection orgId="62713" font="materialdesignicons.ttf"/>
+			<selection orgId="62715" font="materialdesignicons.ttf"/>
+			<selection orgId="62722" font="materialdesignicons.ttf"/>
+			<selection orgId="62723" font="materialdesignicons.ttf"/>
+			<selection orgId="62735" font="materialdesignicons.ttf"/>
+			<selection orgId="62736" font="materialdesignicons.ttf"/>
+			<selection orgId="62753" font="materialdesignicons.ttf"/>
+			<selection orgId="62754" font="materialdesignicons.ttf"/>
+			<selection orgId="62755" font="materialdesignicons.ttf"/>
+			<selection orgId="62756" font="materialdesignicons.ttf"/>
+			<selection orgId="62757" font="materialdesignicons.ttf"/>
+			<selection orgId="62760" font="materialdesignicons.ttf"/>
+			<selection orgId="62805" font="materialdesignicons.ttf"/>
+			<selection orgId="62806" font="materialdesignicons.ttf"/>
+			<selection orgId="62807" font="materialdesignicons.ttf"/>
+			<selection orgId="62808" font="materialdesignicons.ttf"/>
+			<selection orgId="62809" font="materialdesignicons.ttf"/>
+			<selection orgId="62810" font="materialdesignicons.ttf"/>
+			<selection orgId="62811" font="materialdesignicons.ttf"/>
+			<selection orgId="62812" font="materialdesignicons.ttf"/>
+			<selection orgId="62813" font="materialdesignicons.ttf"/>
+			<selection orgId="62814" font="materialdesignicons.ttf"/>
+			<selection orgId="62815" font="materialdesignicons.ttf"/>
+			<selection orgId="62816" font="materialdesignicons.ttf"/>
+			<selection orgId="62817" font="materialdesignicons.ttf"/>
+			<selection orgId="62818" font="materialdesignicons.ttf"/>
+			<selection orgId="62819" font="materialdesignicons.ttf"/>
+			<selection orgId="62820" font="materialdesignicons.ttf"/>
+			<selection orgId="62830" font="materialdesignicons.ttf"/>
+			<selection orgId="62831" font="materialdesignicons.ttf"/>
+			<selection orgId="62832" font="materialdesignicons.ttf"/>
+			<selection orgId="62833" font="materialdesignicons.ttf"/>
+			<selection orgId="62834" font="materialdesignicons.ttf"/>
+			<selection orgId="62835" font="materialdesignicons.ttf"/>
+			<selection orgId="62836" font="materialdesignicons.ttf"/>
+			<selection orgId="62837" font="materialdesignicons.ttf"/>
+			<selection orgId="62838" font="materialdesignicons.ttf"/>
+			<selection orgId="62846" font="materialdesignicons.ttf"/>
+			<selection orgId="62847" font="materialdesignicons.ttf"/>
+			<selection orgId="62849" font="materialdesignicons.ttf"/>
+			<selection orgId="62860" font="materialdesignicons.ttf"/>
+			<selection orgId="62861" font="materialdesignicons.ttf"/>
+			<selection orgId="62886" font="materialdesignicons.ttf"/>
+			<selection orgId="62887" font="materialdesignicons.ttf"/>
+			<selection orgId="62888" font="materialdesignicons.ttf"/>
+			<selection orgId="62935" font="materialdesignicons.ttf"/>
+			<selection orgId="62942" font="materialdesignicons.ttf"/>
+			<selection orgId="62945" font="materialdesignicons.ttf"/>
+			<selection orgId="63001" font="materialdesignicons.ttf"/>
+			<selection orgId="63006" font="materialdesignicons.ttf"/>
+			<selection orgId="63007" font="materialdesignicons.ttf"/>
+			<selection orgId="63008" font="materialdesignicons.ttf"/>
+			<selection orgId="63009" font="materialdesignicons.ttf"/>
+			<selection orgId="63010" font="materialdesignicons.ttf"/>
+			<selection orgId="63011" font="materialdesignicons.ttf"/>
+			<selection orgId="63016" font="materialdesignicons.ttf"/>
+			<selection orgId="63020" font="materialdesignicons.ttf"/>
+			<selection orgId="63021" font="materialdesignicons.ttf"/>
+			<selection orgId="63022" font="materialdesignicons.ttf"/>
+			<selection orgId="63032" font="materialdesignicons.ttf"/>
+			<selection orgId="63033" font="materialdesignicons.ttf"/>
+			<selection orgId="63034" font="materialdesignicons.ttf"/>
+			<selection orgId="63051" font="materialdesignicons.ttf"/>
+			<selection orgId="63069" font="materialdesignicons.ttf"/>
+			<selection orgId="63070" font="materialdesignicons.ttf"/>
+			<selection orgId="63071" font="materialdesignicons.ttf"/>
+			<selection orgId="63072" font="materialdesignicons.ttf"/>
+			<selection orgId="63183" font="materialdesignicons.ttf"/>
+			<selection orgId="63184" font="materialdesignicons.ttf"/>
+			<selection orgId="63207" font="materialdesignicons.ttf"/>
+			<selection orgId="63208" font="materialdesignicons.ttf"/>
+			<selection orgId="63274" font="materialdesignicons.ttf"/>
+			<selection orgId="63277" font="materialdesignicons.ttf"/>
+			<selection orgId="63278" font="materialdesignicons.ttf"/>
+			<selection orgId="63281" font="materialdesignicons.ttf"/>
+			<selection orgId="63284" font="materialdesignicons.ttf"/>
+			<selection orgId="63287" font="materialdesignicons.ttf"/>
+			<selection orgId="63370" font="materialdesignicons.ttf"/>
+			<selection orgId="63510" font="materialdesignicons.ttf"/>
+			<selection orgId="63580" font="materialdesignicons.ttf"/>
+			<selection orgId="63581" font="materialdesignicons.ttf"/>
+			<selection orgId="63582" font="materialdesignicons.ttf"/>
+			<selection orgId="63583" font="materialdesignicons.ttf"/>
+			<selection orgId="63594" font="materialdesignicons.ttf"/>
+			<selection orgId="63595" font="materialdesignicons.ttf"/>
+			<selection orgId="63596" font="materialdesignicons.ttf"/>
+			<selection orgId="63597" font="materialdesignicons.ttf"/>
+			<selection orgId="63602" font="materialdesignicons.ttf"/>
+			<selection orgId="63603" font="materialdesignicons.ttf"/>
+			<selection orgId="63604" font="materialdesignicons.ttf"/>
+			<selection orgId="63728" font="materialdesignicons.ttf"/>
+			<selection orgId="63836" font="materialdesignicons.ttf"/>
+			<selection orgId="63837" font="materialdesignicons.ttf"/>
+			<selection orgId="63847" font="materialdesignicons.ttf"/>
+			<selection orgId="63848" font="materialdesignicons.ttf"/>
+			<selection orgId="63849" font="materialdesignicons.ttf"/>
+			<selection orgId="63861" font="materialdesignicons.ttf"/>
+			<selection orgId="63862" font="materialdesignicons.ttf"/>
+			<selection orgId="63863" font="materialdesignicons.ttf"/>
+			<selection orgId="63866" font="materialdesignicons.ttf"/>
+			<selection orgId="63930" font="materialdesignicons.ttf"/>
+			<selection orgId="63931" font="materialdesignicons.ttf"/>
+			<selection orgId="63932" font="materialdesignicons.ttf"/>
+			<selection orgId="63933" font="materialdesignicons.ttf"/>
+			<selection orgId="63934" font="materialdesignicons.ttf"/>
+			<selection orgId="63935" font="materialdesignicons.ttf"/>
+			<selection orgId="63936" font="materialdesignicons.ttf"/>
+			<selection orgId="63937" font="materialdesignicons.ttf"/>
+			<selection orgId="63938" font="materialdesignicons.ttf"/>
+			<selection orgId="63939" font="materialdesignicons.ttf"/>
+			<selection orgId="63940" font="materialdesignicons.ttf"/>
+			<selection orgId="63941" font="materialdesignicons.ttf"/>
+			<selection orgId="63942" font="materialdesignicons.ttf"/>
+			<selection orgId="63943" font="materialdesignicons.ttf"/>
+			<selection orgId="63944" font="materialdesignicons.ttf"/>
+			<selection orgId="63945" font="materialdesignicons.ttf"/>
+			<selection orgId="63949" font="materialdesignicons.ttf"/>
+			<selection orgId="63950" font="materialdesignicons.ttf"/>
+			<selection orgId="63957" font="materialdesignicons.ttf"/>
+			<selection orgId="63959" font="materialdesignicons.ttf"/>
+			<selection orgId="63961" font="materialdesignicons.ttf"/>
+			<selection orgId="63963" font="materialdesignicons.ttf"/>
+			<selection orgId="63968" font="materialdesignicons.ttf"/>
+			<selection orgId="63970" font="materialdesignicons.ttf"/>
+			<selection orgId="63972" font="materialdesignicons.ttf"/>
+			<selection orgId="63997" font="materialdesignicons.ttf"/>
+			<selection orgId="64024" font="materialdesignicons.ttf"/>
+			<selection orgId="64025" font="materialdesignicons.ttf"/>
+			<selection orgId="64057" font="materialdesignicons.ttf"/>
+			<selection orgId="64059" font="materialdesignicons.ttf"/>
+			<selection orgId="64072" font="materialdesignicons.ttf"/>
+			<selection orgId="64073" font="materialdesignicons.ttf"/>
+			<selection orgId="64074" font="materialdesignicons.ttf"/>
+			<selection orgId="64075" font="materialdesignicons.ttf"/>
+			<selection orgId="64076" font="materialdesignicons.ttf"/>
+			<selection orgId="64077" font="materialdesignicons.ttf"/>
+			<selection orgId="64114" font="materialdesignicons.ttf"/>
+			<selection orgId="64142" font="materialdesignicons.ttf"/>
+			<selection orgId="64143" font="materialdesignicons.ttf"/>
+			<selection orgId="64153" font="materialdesignicons.ttf"/>
+			<selection orgId="64157" font="materialdesignicons.ttf"/>
+			<selection orgId="64158" font="materialdesignicons.ttf"/>
+			<selection orgId="64159" font="materialdesignicons.ttf"/>
+			<selection orgId="64160" font="materialdesignicons.ttf"/>
+			<selection orgId="64161" font="materialdesignicons.ttf"/>
+			<selection orgId="64162" font="materialdesignicons.ttf"/>
+			<selection orgId="64163" font="materialdesignicons.ttf"/>
+			<selection orgId="64164" font="materialdesignicons.ttf"/>
+			<selection orgId="64165" font="materialdesignicons.ttf"/>
+			<selection orgId="64166" font="materialdesignicons.ttf"/>
+			<selection orgId="64176" font="materialdesignicons.ttf"/>
+			<selection orgId="64177" font="materialdesignicons.ttf"/>
+			<selection orgId="64188" font="materialdesignicons.ttf"/>
+			<selection orgId="64189" font="materialdesignicons.ttf"/>
+			<selection orgId="64190" font="materialdesignicons.ttf"/>
+			<selection orgId="64191" font="materialdesignicons.ttf"/>
+			<selection orgId="64194" font="materialdesignicons.ttf"/>
+			<selection orgId="64195" font="materialdesignicons.ttf"/>
+			<selection orgId="64196" font="materialdesignicons.ttf"/>
+			<selection orgId="64197" font="materialdesignicons.ttf"/>
+			<selection orgId="64198" font="materialdesignicons.ttf"/>
+			<selection orgId="64199" font="materialdesignicons.ttf"/>
+			<selection orgId="64265" font="materialdesignicons.ttf"/>
+			<selection orgId="64325" font="materialdesignicons.ttf"/>
+			<selection orgId="64350" font="materialdesignicons.ttf"/>
+			<selection orgId="64351" font="materialdesignicons.ttf"/>
+			<selection orgId="64352" font="materialdesignicons.ttf"/>
+			<selection orgId="64371" font="materialdesignicons.ttf"/>
+			<selection orgId="64372" font="materialdesignicons.ttf"/>
+			<selection orgId="64376" font="materialdesignicons.ttf"/>
+			<selection orgId="64377" font="materialdesignicons.ttf"/>
+			<selection orgId="64378" font="materialdesignicons.ttf"/>
+			<selection orgId="64379" font="materialdesignicons.ttf"/>
+			<selection orgId="64400" font="materialdesignicons.ttf"/>
+			<selection orgId="64401" font="materialdesignicons.ttf"/>
+			<selection orgId="64402" font="materialdesignicons.ttf"/>
+			<selection orgId="64403" font="materialdesignicons.ttf"/>
+			<selection orgId="64404" font="materialdesignicons.ttf"/>
+			<selection orgId="64405" font="materialdesignicons.ttf"/>
+			<selection orgId="64406" font="materialdesignicons.ttf"/>
+			<selection orgId="64407" font="materialdesignicons.ttf"/>
+			<selection orgId="64408" font="materialdesignicons.ttf"/>
+			<selection orgId="64409" font="materialdesignicons.ttf"/>
+			<selection orgId="64410" font="materialdesignicons.ttf"/>
+			<selection orgId="64600" font="materialdesignicons.ttf"/>
+			<selection orgId="64601" font="materialdesignicons.ttf"/>
+			<selection orgId="64602" font="materialdesignicons.ttf"/>
+			<selection orgId="64603" font="materialdesignicons.ttf"/>
+			<selection orgId="64683" font="materialdesignicons.ttf"/>
+			<selection orgId="64684" font="materialdesignicons.ttf"/>
+			<selection orgId="64741" font="materialdesignicons.ttf"/>
+			<selection orgId="64742" font="materialdesignicons.ttf"/>
+			<selection orgId="64743" font="materialdesignicons.ttf"/>
+			<selection orgId="64744" font="materialdesignicons.ttf"/>
+			<selection orgId="64792" font="materialdesignicons.ttf"/>
+			<selection orgId="64793" font="materialdesignicons.ttf"/>
+			<selection orgId="64805" font="materialdesignicons.ttf"/>
+			<selection orgId="64806" font="materialdesignicons.ttf"/>
+			<selection orgId="64810" font="materialdesignicons.ttf"/>
+			<selection orgId="64811" font="materialdesignicons.ttf"/>
+			<selection orgId="64819" font="materialdesignicons.ttf"/>
+			<selection orgId="64820" font="materialdesignicons.ttf"/>
+			<selection orgId="64846" font="materialdesignicons.ttf"/>
+			<selection orgId="64932" font="materialdesignicons.ttf"/>
+			<selection orgId="64933" font="materialdesignicons.ttf"/>
+			<selection orgId="64934" font="materialdesignicons.ttf"/>
+			<selection orgId="64935" font="materialdesignicons.ttf"/>
+			<selection orgId="64936" font="materialdesignicons.ttf"/>
+			<selection orgId="64937" font="materialdesignicons.ttf"/>
+			<selection orgId="65072" font="materialdesignicons.ttf"/>
+			<selection orgId="65073" font="materialdesignicons.ttf"/>
+			<selection orgId="65074" font="materialdesignicons.ttf"/>
+			<selection orgId="65075" font="materialdesignicons.ttf"/>
+			<selection orgId="65086" font="materialdesignicons.ttf"/>
+			<selection orgId="65087" font="materialdesignicons.ttf"/>
+			<selection orgId="65121" font="materialdesignicons.ttf"/>
+			<selection orgId="65122" font="materialdesignicons.ttf"/>
+			<selection orgId="65123" font="materialdesignicons.ttf"/>
+			<selection orgId="65124" font="materialdesignicons.ttf"/>
+			<selection orgId="65125" font="materialdesignicons.ttf"/>
+			<selection orgId="65147" font="materialdesignicons.ttf"/>
+			<selection orgId="65148" font="materialdesignicons.ttf"/>
+			<selection orgId="65150" font="materialdesignicons.ttf"/>
+			<selection orgId="65151" font="materialdesignicons.ttf"/>
+			<selection orgId="65152" font="materialdesignicons.ttf"/>
+			<selection orgId="65153" font="materialdesignicons.ttf"/>
+			<selection orgId="65154" font="materialdesignicons.ttf"/>
+			<selection orgId="65155" font="materialdesignicons.ttf"/>
+			<selection orgId="65165" font="materialdesignicons.ttf"/>
+			<selection orgId="65176" font="materialdesignicons.ttf"/>
+			<selection orgId="65179" font="materialdesignicons.ttf"/>
+			<selection orgId="65180" font="materialdesignicons.ttf"/>
+			<selection orgId="65202" font="materialdesignicons.ttf"/>
+			<selection orgId="65203" font="materialdesignicons.ttf"/>
+			<selection orgId="65219" font="materialdesignicons.ttf"/>
+			<selection orgId="65220" font="materialdesignicons.ttf"/>
+			<selection orgId="65221" font="materialdesignicons.ttf"/>
+			<selection orgId="65222" font="materialdesignicons.ttf"/>
+			<selection orgId="65223" font="materialdesignicons.ttf"/>
+			<selection orgId="65224" font="materialdesignicons.ttf"/>
+			<selection orgId="65225" font="materialdesignicons.ttf"/>
+			<selection orgId="65226" font="materialdesignicons.ttf"/>
+			<selection orgId="65227" font="materialdesignicons.ttf"/>
+			<selection orgId="65228" font="materialdesignicons.ttf"/>
+			<selection orgId="65247" font="materialdesignicons.ttf"/>
+			<selection orgId="65248" font="materialdesignicons.ttf"/>
+			<selection orgId="65259" font="materialdesignicons.ttf"/>
+			<selection orgId="65298" font="materialdesignicons.ttf"/>
+			<selection orgId="65299" font="materialdesignicons.ttf"/>
+			<selection orgId="65308" font="materialdesignicons.ttf"/>
+			<selection orgId="65309" font="materialdesignicons.ttf"/>
+			<selection orgId="65352" font="materialdesignicons.ttf"/>
+			<selection orgId="65353" font="materialdesignicons.ttf"/>
+			<selection orgId="65397" font="materialdesignicons.ttf"/>
+			<selection orgId="65398" font="materialdesignicons.ttf"/>
+			<selection orgId="65508" font="materialdesignicons.ttf"/>
+			<selection orgId="65509" font="materialdesignicons.ttf"/>
+			<selection orgId="65518" font="materialdesignicons.ttf"/>
+		</finalselection>
+		<fonttest>
+			<fontsize>100</fontsize>
+			<showbaseline>true</showbaseline>
+			<fontname></fontname>
+			<teststring></teststring>
+			<insertedglyphs>
+			</insertedglyphs>
+		</fonttest>
+	</project>
+</config>
