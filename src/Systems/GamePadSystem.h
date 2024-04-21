@@ -21,7 +21,7 @@
 #include <CodeTree/Parsing/SectionCode.h>
 #include <Headers/RenderPackHeaders.h>
 #include <CodeTree/Parsing/UniformParsing.h>
-#include <Systems/Interfaces/WidgetInterface.h>
+#include <Interfaces/WidgetInterface.h>
 
 #include <string>
 

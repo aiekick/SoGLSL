@@ -18,8 +18,8 @@
 #include <Headers/RenderPackHeaders.h>
 #include <ctools/cTools.h>
 #include <ctools/ConfigAbstract.h>
-#include <Systems/Interfaces/MidiInterface.h>
-#include <Systems/Interfaces/WidgetInterface.h>
+#include <Interfaces/MidiInterface.h>
+#include <Interfaces/WidgetInterface.h>
 #include <Uniforms/UniformVariant.h>
 #include <CodeTree/Parsing/SectionCode.h>
 #include <Headers/RenderPackHeaders.h>

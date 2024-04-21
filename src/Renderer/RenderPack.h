@@ -30,8 +30,8 @@
 
 #include <string>
 
-#include <Systems/Interfaces/CameraInterface.h>
-#include <Systems/Interfaces/MouseInterface.h>
+#include <Interfaces/CameraInterface.h>
+#include <Interfaces/MouseInterface.h>
 
 #include <CodeTree/CodeTree.h>
 

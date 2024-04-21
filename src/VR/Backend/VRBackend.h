@@ -21,9 +21,9 @@
 #include <Gui/GuiBackend.h>
 #include <Renderer/RenderPack.h>
 #include <ctools/ConfigAbstract.h>
-#include <Systems/Interfaces/MouseInterface.h>
-#include <Systems/Interfaces/CameraInterface.h>
-#include <Systems/Interfaces/WidgetInterface.h>
+#include <Interfaces/MouseInterface.h>
+#include <Interfaces/CameraInterface.h>
+#include <Interfaces/WidgetInterface.h>
 #include <VR/Backend/VRActions.h>
 
 #include <unordered_set>

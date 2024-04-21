@@ -17,7 +17,7 @@
 
 #include <ctools/cTools.h>
 #include <ctools/ConfigAbstract.h>
-#include "Interfaces/CameraInterface.h"
+#include <Interfaces/CameraInterface.h>
 
 #pragma warning(push)
 #pragma warning(disable:4201)   // suppress even more warnings about nameless structs

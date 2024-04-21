@@ -18,7 +18,7 @@
 #include <ctools/cTools.h>
 #include <ctools/ConfigAbstract.h>
 #include <Headers/RenderPackHeaders.h>
-#include <Systems/Interfaces/WidgetInterface.h>
+#include <Interfaces/WidgetInterface.h>
 #include <Renderer/RenderPack.h>
 
 #include <miniaudio.h>
