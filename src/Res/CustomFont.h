@@ -5,7 +5,7 @@
 #pragma once
 
 #define FONT_ICON_BUFFER_NAME_NDP NDP_compressed_data_base85
-#define FONT_ICON_BUFFER_SIZE_NDP 0x460f
+#define FONT_ICON_BUFFER_SIZE_NDP 0x4619
 
 #define ICON_MIN_NDP 0xf00a
 #define ICON_MAX_NDP 0xfffa
@@ -75,13 +75,13 @@
 #define ICON_NDP_FILE_VIDEO_O u8"\uff52"
 #define ICON_NDP_FLOPPY_O u8"\uffa1"
 #define ICON_NDP_FOLDER_OPEN u8"\uffaf"
+#define ICON_NDP_FONT u8"\uf031"
 #define ICON_NDP_FORWARD u8"\uffd0"
 #define ICON_NDP_GAMEPAD u8"\uff8c"
 #define ICON_NDP_HEART_O u8"\uffac"
 #define ICON_NDP_INFO u8"\uff88"
 #define ICON_NDP_INFO_CIRCLE u8"\uffc3"
 #define ICON_NDP_KEYBOARD_O u8"\uff8b"
-#define ICON_NDP_LINK u8"\uffa5"
 #define ICON_NDP_MAP_SIGNS u8"\uff34"
 #define ICON_NDP_MICROPHONE u8"\uff84"
 #define ICON_NDP_MICROPHONE_SLASH u8"\uff83"
