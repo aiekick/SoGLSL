@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,21 +18,32 @@
 #include <ctools/cTools.h>
 #include <Headers/RenderPackHeaders.h>
 
-class PingPong
-{
+class PingPong {
 public:
-	ctTexturePtr puFrontTex = nullptr;
-	ctTexturePtr puBackTex = nullptr;
+    ctTexturePtr puFrontTex = nullptr;
+    ctTexturePtr puBackTex = nullptr;
 
 public:
-	ctTexturePtr getFront() { if (puFrontTex) return puFrontTex; return ctTexturePtr(); }
-	ctTexturePtr getBack() { if (puBackTex) return puBackTex; return ctTexturePtr(); }
-	std::string getFilePathName() { if (puBackTex) return puBackTex->relativPath; return ""; }
+    ctTexturePtr getFront() {
+        if (puFrontTex)
+            return puFrontTex;
+        return ctTexturePtr();
+    }
+    ctTexturePtr getBack() {
+        if (puBackTex)
+            return puBackTex;
+        return ctTexturePtr();
+    }
+    std::string getFilePathName() {
+        if (puBackTex)
+            return puBackTex->relativPath;
+        return "";
+    }
 
 public:
-	PingPong();
-	virtual ~PingPong();
+    PingPong();
+    virtual ~PingPong();
 
-	void clean();
-	void Swap(); // seulement pour le compute
+    void clean();
+    void Swap();  // seulement pour le compute
 };

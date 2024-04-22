@@ -248,13 +248,7 @@ static inline ShaderTypeEnum GetShaderTypeEnumFromString(const std::string& vStr
     return ShaderTypeEnum::SHADER_TYPE_NONE;
 }
 
-enum class ShaderVaryingDirection {
-    SHADER_NOT_VARYING = 0,
-    SHADER_VARYING_IN,
-    SHADER_VARYING_OUT,
-    SHADER_LAYOUT_IN,
-    SHADER_LAYOUT_OUT
-};
+enum class ShaderVaryingDirection { SHADER_NOT_VARYING = 0, SHADER_VARYING_IN, SHADER_VARYING_OUT, SHADER_LAYOUT_IN, SHADER_LAYOUT_OUT };
 
 enum class UniformRequestServiceEnum {
     UNIFORM_REQUEST_SERVICE_NONE = 0,

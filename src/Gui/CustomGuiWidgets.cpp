@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -20,337 +20,308 @@
 #include <Texture/TextureCube.h>
 #include <Texture/Texture2D.h>
 
-ImVec4 ImGui::GetUniformLocColor(int vLoc)
-{
-	if (vLoc >= 0)
-		return ImVec4(0.2f, 0.4f, 0.2f, 1.00f); // good loc
+ImVec4 ImGui::GetUniformLocColor(int vLoc) {
+    if (vLoc >= 0)
+        return ImVec4(0.2f, 0.4f, 0.2f, 1.00f);  // good loc
 
-	return ImVec4(0.4f, 0.2f, 0.2f, 1.00f); // bad loc	
+    return ImVec4(0.4f, 0.2f, 0.2f, 1.00f);  // bad loc
 }
 
 void ImGui::Texture(ctTexturePtr vTex, float vWidth, ImVec4 vColor, float /*vBorderThick*/) {
-	if (vTex == nullptr)
-		return;
+    if (vTex == nullptr)
+        return;
 
-	ImGuiWindow* window = ImGui::GetCurrentWindow();
-	if (window->SkipItems)
-		return;
+    ImGuiWindow* window = ImGui::GetCurrentWindow();
+    if (window->SkipItems)
+        return;
 
-	if (!window->ScrollbarY)
-	{
-		vWidth -= ImGui::GetStyle().ScrollbarSize;
-	}
+    if (!window->ScrollbarY) {
+        vWidth -= ImGui::GetStyle().ScrollbarSize;
+    }
 
-	const ImVec2 uv0 = ImVec2(0, 0);
-	const ImVec2 uv1 = ImVec2(1, 1);
+    const ImVec2 uv0 = ImVec2(0, 0);
+    const ImVec2 uv1 = ImVec2(1, 1);
 
-	ImVec2 size = ImVec2(vWidth, vWidth);
+    ImVec2 size = ImVec2(vWidth, vWidth);
 
-	const float ratioX = (float)vTex->h / (float)vTex->w;
-	const float y = size.x * ratioX;
-	if (y > size.y)
-		size.x = size.y / ratioX;
-	else
-		size.y = y;
+    const float ratioX = (float)vTex->h / (float)vTex->w;
+    const float y = size.x * ratioX;
+    if (y > size.y)
+        size.x = size.y / ratioX;
+    else
+        size.y = y;
 
-	size.x = ct::clamp(size.x, 1.0f, vWidth);
-	size.y = ct::clamp(size.y, 1.0f, vWidth);
+    size.x = ct::clamp(size.x, 1.0f, vWidth);
+    size.y = ct::clamp(size.y, 1.0f, vWidth);
 
-	ImRect bb(window->DC.CursorPos, window->DC.CursorPos + size);
-	if (vColor.w > 0.0f)
-		bb.Max += ImVec2(2, 2);
-	ImGui::ItemSize(bb);
-	if (!ImGui::ItemAdd(bb, 0))
-		return;
+    ImRect bb(window->DC.CursorPos, window->DC.CursorPos + size);
+    if (vColor.w > 0.0f)
+        bb.Max += ImVec2(2, 2);
+    ImGui::ItemSize(bb);
+    if (!ImGui::ItemAdd(bb, 0))
+        return;
 
-	if (vColor.w > 0.0f)
-	{
-		window->DrawList->AddRect(bb.Min, bb.Max, ImGui::GetColorU32(vColor), 0.0f);
-		window->DrawList->AddImage((ImTextureID)(size_t)vTex->glTex, bb.Min + ImVec2(1, 1), bb.Max - ImVec2(1, 1), uv0, uv1, ImGui::GetColorU32(ImVec4(1, 1, 1, 1)));
-	}
-	else
-	{
-		window->DrawList->AddImage((ImTextureID)(size_t)vTex->glTex, bb.Min, bb.Max, uv0, uv1, ImGui::GetColorU32(ImVec4(1, 1, 1, 1)));
-	}
+    if (vColor.w > 0.0f) {
+        window->DrawList->AddRect(bb.Min, bb.Max, ImGui::GetColorU32(vColor), 0.0f);
+        window->DrawList->AddImage((ImTextureID)(size_t)vTex->glTex, bb.Min + ImVec2(1, 1), bb.Max - ImVec2(1, 1), uv0, uv1, ImGui::GetColorU32(ImVec4(1, 1, 1, 1)));
+    } else {
+        window->DrawList->AddImage((ImTextureID)(size_t)vTex->glTex, bb.Min, bb.Max, uv0, uv1, ImGui::GetColorU32(ImVec4(1, 1, 1, 1)));
+    }
 
 #ifdef _DEBUG
-	if (ImGui::IsItemHovered())
-	{
-		char arr[3];
-		if (snprintf(arr, 3, "%i", (int)vTex->glTex))
-		{
-			ImGui::SetTooltip(arr);
-		}
-	}
+    if (ImGui::IsItemHovered()) {
+        char arr[3];
+        if (snprintf(arr, 3, "%i", (int)vTex->glTex)) {
+            ImGui::SetTooltip(arr);
+        }
+    }
 #endif
 }
 
 void ImGui::Texture(ctTexturePtr vTex, float vWidth, float vHeight, ImVec4 vColor, float /*vBorderThick*/) {
-	if (vTex == nullptr)
-		return;
+    if (vTex == nullptr)
+        return;
 
-	ImGuiWindow* window = ImGui::GetCurrentWindow();
-	if (window->SkipItems)
-		return;
+    ImGuiWindow* window = ImGui::GetCurrentWindow();
+    if (window->SkipItems)
+        return;
 
-	if (!window->ScrollbarY)
-	{
-		vWidth -= ImGui::GetStyle().ScrollbarSize;
-	}
+    if (!window->ScrollbarY) {
+        vWidth -= ImGui::GetStyle().ScrollbarSize;
+    }
 
-	const ImVec2 uv0 = ImVec2(0, 0);
-	const ImVec2 uv1 = ImVec2(1, 1);
+    const ImVec2 uv0 = ImVec2(0, 0);
+    const ImVec2 uv1 = ImVec2(1, 1);
 
-	ImVec2 size = ImVec2(vWidth, vHeight);
+    ImVec2 size = ImVec2(vWidth, vHeight);
 
-	ImRect bb(window->DC.CursorPos, window->DC.CursorPos + size);
-	if (vColor.w > 0.0f)
-		bb.Max += ImVec2(2, 2);
-	ImGui::ItemSize(bb);
-	if (!ImGui::ItemAdd(bb, 0))
-		return;
+    ImRect bb(window->DC.CursorPos, window->DC.CursorPos + size);
+    if (vColor.w > 0.0f)
+        bb.Max += ImVec2(2, 2);
+    ImGui::ItemSize(bb);
+    if (!ImGui::ItemAdd(bb, 0))
+        return;
 
-	if (vColor.w > 0.0f)
-	{
-		window->DrawList->AddRect(bb.Min, bb.Max, ImGui::GetColorU32(vColor), 0.0f);
-		window->DrawList->AddImage((ImTextureID)(size_t)vTex->glTex, bb.Min + ImVec2(1, 1), bb.Max - ImVec2(1, 1), uv0, uv1, ImGui::GetColorU32(ImVec4(1, 1, 1, 1)));
-	}
-	else
-	{
-		window->DrawList->AddImage((ImTextureID)(size_t)vTex->glTex, bb.Min, bb.Max, uv0, uv1, ImGui::GetColorU32(ImVec4(1, 1, 1, 1)));
-	}
+    if (vColor.w > 0.0f) {
+        window->DrawList->AddRect(bb.Min, bb.Max, ImGui::GetColorU32(vColor), 0.0f);
+        window->DrawList->AddImage((ImTextureID)(size_t)vTex->glTex, bb.Min + ImVec2(1, 1), bb.Max - ImVec2(1, 1), uv0, uv1, ImGui::GetColorU32(ImVec4(1, 1, 1, 1)));
+    } else {
+        window->DrawList->AddImage((ImTextureID)(size_t)vTex->glTex, bb.Min, bb.Max, uv0, uv1, ImGui::GetColorU32(ImVec4(1, 1, 1, 1)));
+    }
 
 #ifdef _DEBUG
-	if (ImGui::IsItemHovered())
-	{
-		char arr[3];
-		if (snprintf(arr, 3, "%i", (int)vTex->glTex))
-		{
-			ImGui::SetTooltip(arr);
-		}
-	}
+    if (ImGui::IsItemHovered()) {
+        char arr[3];
+        if (snprintf(arr, 3, "%i", (int)vTex->glTex)) {
+            ImGui::SetTooltip(arr);
+        }
+    }
 #endif
 }
 
-bool ImGui::TextureButton(ctTexturePtr vTex, float vWidth, ImVec4 /*vColor*/, float /*vBorderThick*/)
-{
-	ImGuiWindow* window = GetCurrentWindow();
-	if (window->SkipItems)
-		return false;
+bool ImGui::TextureButton(ctTexturePtr vTex, float vWidth, ImVec4 /*vColor*/, float /*vBorderThick*/) {
+    ImGuiWindow* window = GetCurrentWindow();
+    if (window->SkipItems)
+        return false;
 
-	if (!window->ScrollbarY)
-	{
-		vWidth -= GetStyle().ScrollbarSize;
-	}
+    if (!window->ScrollbarY) {
+        vWidth -= GetStyle().ScrollbarSize;
+    }
 
-	const ImVec2 uv0 = ImVec2(0, 0);
-	const ImVec2 uv1 = ImVec2(1, 1);
+    const ImVec2 uv0 = ImVec2(0, 0);
+    const ImVec2 uv1 = ImVec2(1, 1);
 
-	ImVec2 size = ImVec2(vWidth, vWidth);
+    ImVec2 size = ImVec2(vWidth, vWidth);
 
-	if (vTex)
-	{
-		const float ratioX = (float)vTex->h / (float)vTex->w;
-		const float y = size.x * ratioX;
-		if (y > size.y)
-			size.x = size.y / ratioX;
-		else
-			size.y = y;
+    if (vTex) {
+        const float ratioX = (float)vTex->h / (float)vTex->w;
+        const float y = size.x * ratioX;
+        if (y > size.y)
+            size.x = size.y / ratioX;
+        else
+            size.y = y;
 
-		size.x = ct::clamp(size.x, 1.0f, vWidth);
-		size.y = ct::clamp(size.y, 1.0f, vWidth);
-	}
+        size.x = ct::clamp(size.x, 1.0f, vWidth);
+        size.y = ct::clamp(size.y, 1.0f, vWidth);
+    }
 
-	bool pressed = false;
+    bool pressed = false;
 
-	if (vTex)
-	{
-		const ImVec4 bg_col = ImVec4(1, 1, 1, 1);
-		const ImTextureID texid = (ImTextureID)(size_t)vTex->glTex;
+    if (vTex) {
+        const ImVec4 bg_col = ImVec4(1, 1, 1, 1);
+        const ImTextureID texid = (ImTextureID)(size_t)vTex->glTex;
 
-		ImGuiContext& g = *GImGui;
-		const ImGuiStyle& style = g.Style;
+        ImGuiContext& g = *GImGui;
+        const ImGuiStyle& style = g.Style;
 
-		// Default to using texture ID as ID. User can still push string/integer prefixes.
-		// We could hash the size/uv to create a unique ID but that would prevent the user from animating UV.
-		PushID(ImGui::IncPUSHID());
+        // Default to using texture ID as ID. User can still push string/integer prefixes.
+        // We could hash the size/uv to create a unique ID but that would prevent the user from animating UV.
+        PushID(ImGui::IncPUSHID());
 
-		const ImGuiID id = window->GetID("#image");
+        const ImGuiID id = window->GetID("#image");
 
-		PopID();
+        PopID();
 
-		const ImVec2 padding = style.FramePadding;
+        const ImVec2 padding = style.FramePadding;
         const ImRect bb(window->DC.CursorPos, window->DC.CursorPos + size + padding * 2);
-		const ImRect image_bb(window->DC.CursorPos + padding, window->DC.CursorPos + padding + size);
-		ItemSize(bb);
-		if (!ItemAdd(bb, id))
-			return false;
+        const ImRect image_bb(window->DC.CursorPos + padding, window->DC.CursorPos + padding + size);
+        ItemSize(bb);
+        if (!ItemAdd(bb, id))
+            return false;
 
-		bool hovered, held;
-		pressed = ButtonBehavior(bb, id, &hovered, &held, ImGuiButtonFlags_PressedOnClick);
+        bool hovered, held;
+        pressed = ButtonBehavior(bb, id, &hovered, &held, ImGuiButtonFlags_PressedOnClick);
 
-		// Render
-		const ImU32 col = GetColorU32((held && hovered) ? ImGuiCol_ButtonActive : hovered ? ImGuiCol_ButtonHovered : ImGuiCol_Button);
-		RenderNavHighlight(bb, id);
-		RenderFrame(bb.Min, bb.Max, col, true, ImClamp((float)ImMin(padding.x, padding.y), 0.0f, style.FrameRounding));
-		if (bg_col.w > 0.0f)
-			window->DrawList->AddRectFilled(image_bb.Min, image_bb.Max, GetColorU32(bg_col));
-		window->DrawList->AddImage(texid, image_bb.Min, image_bb.Max, uv0, uv1, GetColorU32(bg_col));
+        // Render
+        const ImU32 col = GetColorU32((held && hovered) ? ImGuiCol_ButtonActive : hovered ? ImGuiCol_ButtonHovered : ImGuiCol_Button);
+        RenderNavHighlight(bb, id);
+        RenderFrame(bb.Min, bb.Max, col, true, ImClamp((float)ImMin(padding.x, padding.y), 0.0f, style.FrameRounding));
+        if (bg_col.w > 0.0f)
+            window->DrawList->AddRectFilled(image_bb.Min, image_bb.Max, GetColorU32(bg_col));
+        window->DrawList->AddImage(texid, image_bb.Min, image_bb.Max, uv0, uv1, GetColorU32(bg_col));
 
-	}
-	else
-	{
-		PushID(ImGui::IncPUSHID());
+    } else {
+        PushID(ImGui::IncPUSHID());
 
-		pressed = Button("+", size);
+        pressed = Button("+", size);
 
-		PopID();
-	}
+        PopID();
+    }
 
 #ifdef _DEBUG
-	if (IsItemHovered())
-	{
-		char arr[5];
-		if (snprintf(arr, 5, "%i", (int)ImGui::GetPUSHID()))
-		{
-			SetTooltip(arr);
-		}
-	}
+    if (IsItemHovered()) {
+        char arr[5];
+        if (snprintf(arr, 5, "%i", (int)ImGui::GetPUSHID())) {
+            SetTooltip(arr);
+        }
+    }
 #endif
 
-	return pressed;
+    return pressed;
 }
 
-bool ImGui::TextureButton(ctTexturePtr vTex, float vWidth, ImVec4 /*vColor*/, ImVec4 vBorderColor)
-{
-	ImGuiWindow* window = GetCurrentWindow();
-	if (window->SkipItems)
-		return false;
+bool ImGui::TextureButton(ctTexturePtr vTex, float vWidth, ImVec4 /*vColor*/, ImVec4 vBorderColor) {
+    ImGuiWindow* window = GetCurrentWindow();
+    if (window->SkipItems)
+        return false;
 
-	if (!window->ScrollbarY)
-	{
-		vWidth -= GetStyle().ScrollbarSize;
-	}
+    if (!window->ScrollbarY) {
+        vWidth -= GetStyle().ScrollbarSize;
+    }
 
-	const ImVec2 uv0 = ImVec2(0, 0);
-	const ImVec2 uv1 = ImVec2(1, 1);
+    const ImVec2 uv0 = ImVec2(0, 0);
+    const ImVec2 uv1 = ImVec2(1, 1);
 
-	ImVec2 size = ImVec2(vWidth, vWidth);
+    ImVec2 size = ImVec2(vWidth, vWidth);
 
-	if (vTex)
-	{
-		const float ratioX = (float)vTex->h / (float)vTex->w;
-		const float y = size.x * ratioX;
-		if (y > size.y)
-			size.x = size.y / ratioX;
-		else
-			size.y = y;
+    if (vTex) {
+        const float ratioX = (float)vTex->h / (float)vTex->w;
+        const float y = size.x * ratioX;
+        if (y > size.y)
+            size.x = size.y / ratioX;
+        else
+            size.y = y;
 
-		size.x = ct::clamp(size.x, 1.0f, vWidth);
-		size.y = ct::clamp(size.y, 1.0f, vWidth);
-	}
+        size.x = ct::clamp(size.x, 1.0f, vWidth);
+        size.y = ct::clamp(size.y, 1.0f, vWidth);
+    }
 
-	bool pressed = false;
+    bool pressed = false;
 
-	if (vTex)
-	{
-		//ImTextureID texid = (ImTextureID)(size_t)vTex->glTex;
+    if (vTex) {
+        // ImTextureID texid = (ImTextureID)(size_t)vTex->glTex;
 
-		ImGuiContext& g = *GImGui;
-		const ImGuiStyle& style = g.Style;
+        ImGuiContext& g = *GImGui;
+        const ImGuiStyle& style = g.Style;
 
-		// Default to using texture ID as ID. User can still push string/integer prefixes.
-		// We could hash the size/uv to create a unique ID but that would prevent the user from animating UV.
-		PushID(ImGui::IncPUSHID());
+        // Default to using texture ID as ID. User can still push string/integer prefixes.
+        // We could hash the size/uv to create a unique ID but that would prevent the user from animating UV.
+        PushID(ImGui::IncPUSHID());
 
-		const ImGuiID id = window->GetID("#image");
+        const ImGuiID id = window->GetID("#image");
 
-		PopID();
+        PopID();
 
-		const ImVec2 padding = style.FramePadding;
-		const ImRect bb(window->DC.CursorPos, window->DC.CursorPos + size + padding * 2);
-		//const ImRect image_bb(window->DC.CursorPos + padding, window->DC.CursorPos + padding + size);
-		ItemSize(bb);
-		if (!ItemAdd(bb, id))
-			return false;
+        const ImVec2 padding = style.FramePadding;
+        const ImRect bb(window->DC.CursorPos, window->DC.CursorPos + size + padding * 2);
+        // const ImRect image_bb(window->DC.CursorPos + padding, window->DC.CursorPos + padding + size);
+        ItemSize(bb);
+        if (!ItemAdd(bb, id))
+            return false;
 
-		bool hovered, held;
-		pressed = ButtonBehavior(bb, id, &hovered, &held, ImGuiButtonFlags_PressedOnClick);
+        bool hovered, held;
+        pressed = ButtonBehavior(bb, id, &hovered, &held, ImGuiButtonFlags_PressedOnClick);
 
-		// Render
-		//const ImU32 col = GetColorU32((held && hovered) ? ImVec4(1.0f,1.0f,1.0f,1.0f) : hovered ? ImVec4(0.5f, 0.5f, 0.5f, 0.5f) : ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
-		RenderNavHighlight(bb, id);
-		//RenderFrame(bb.Min, bb.Max, col, true, ImClamp((float)ImMin(padding.x, padding.y), 0.0f, style.FrameRounding));
-		//if (bg_col.w > 0.0f)
-		//	window->DrawList->AddRectFilled(image_bb.Min, image_bb.Max, GetColorU32(bg_col));
+        // Render
+        // const ImU32 col = GetColorU32((held && hovered) ? ImVec4(1.0f,1.0f,1.0f,1.0f) : hovered ? ImVec4(0.5f, 0.5f, 0.5f, 0.5f) : ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
+        RenderNavHighlight(bb, id);
+        // RenderFrame(bb.Min, bb.Max, col, true, ImClamp((float)ImMin(padding.x, padding.y), 0.0f, style.FrameRounding));
+        // if (bg_col.w > 0.0f)
+        //	window->DrawList->AddRectFilled(image_bb.Min, image_bb.Max, GetColorU32(bg_col));
 
-		if (vBorderColor.w > 0.0f)
-		{
-			window->DrawList->AddRect(bb.Min, bb.Max, GetColorU32(vBorderColor), 0.0f, ImDrawFlags_RoundCornersAll, vBorderColor.w);
-			window->DrawList->AddImage((ImTextureID)(size_t)vTex->glTex, bb.Min + ImVec2(1, 1), bb.Max - ImVec2(1, 1), uv0, uv1, GetColorU32(ImVec4(1, 1, 1, 1)));
-		}
-		else
-		{
-			window->DrawList->AddImage((ImTextureID)(size_t)vTex->glTex, bb.Min, bb.Max, uv0, uv1, GetColorU32(ImVec4(1, 1, 1, 1)));
-		}
-		//window->DrawList->AddImage(texid, image_bb.Min, image_bb.Max, uv0, uv1, GetColorU32(bg_col));
+        if (vBorderColor.w > 0.0f) {
+            window->DrawList->AddRect(bb.Min, bb.Max, GetColorU32(vBorderColor), 0.0f, ImDrawFlags_RoundCornersAll, vBorderColor.w);
+            window->DrawList->AddImage((ImTextureID)(size_t)vTex->glTex, bb.Min + ImVec2(1, 1), bb.Max - ImVec2(1, 1), uv0, uv1, GetColorU32(ImVec4(1, 1, 1, 1)));
+        } else {
+            window->DrawList->AddImage((ImTextureID)(size_t)vTex->glTex, bb.Min, bb.Max, uv0, uv1, GetColorU32(ImVec4(1, 1, 1, 1)));
+        }
+        // window->DrawList->AddImage(texid, image_bb.Min, image_bb.Max, uv0, uv1, GetColorU32(bg_col));
 
-		if (hovered)
-		{
-			window->DrawList->AddRectFilled(bb.Min, bb.Max, GetColorU32(ImVec4(0.5f, 0.5f, 0.5f, 0.5f)));
-		}
-	}
-	else
-	{
-		PushID(ImGui::IncPUSHID());
+        if (hovered) {
+            window->DrawList->AddRectFilled(bb.Min, bb.Max, GetColorU32(ImVec4(0.5f, 0.5f, 0.5f, 0.5f)));
+        }
+    } else {
+        PushID(ImGui::IncPUSHID());
 
-		pressed = Button("+", size);
+        pressed = Button("+", size);
 
-		PopID();
-	}
+        PopID();
+    }
 
 #ifdef _DEBUG
-	if (IsItemHovered())
-	{
-		char arr[5];
-		if (snprintf(arr, 5, "%i", (int)ImGui::GetPUSHID()))
-		{
-			SetTooltip(arr);
-		}
-	}
+    if (IsItemHovered()) {
+        char arr[5];
+        if (snprintf(arr, 5, "%i", (int)ImGui::GetPUSHID())) {
+            SetTooltip(arr);
+        }
+    }
 #endif
 
-	return pressed;
+    return pressed;
 }
 
-void ImGui::Texture(float vWidth, const char* /*vName*/, TextureCubePtr vCubeMap, GLuint vLoc)
-{
-	if (vCubeMap != nullptr)
-	{
-		ImGui::BeginGroup();
+void ImGui::Texture(float vWidth, const char* /*vName*/, TextureCubePtr vCubeMap, GLuint vLoc) {
+    if (vCubeMap != nullptr) {
+        ImGui::BeginGroup();
 
-		const ImVec4 col = GetUniformLocColor(vLoc);
+        const ImVec4 col = GetUniformLocColor(vLoc);
 
-		const float w = vWidth / 3.0f;
+        const float w = vWidth / 3.0f;
 
-		TextureOverLay(w, vCubeMap->GetTexture2D(0)->getBack().get(), col, "X+", ImVec4(0.0f, 0.0f, 0.0f, 1.0f), ImVec4(0.7f, 0.7f, 0.7f, 0.7f));
-		ImGui::SameLine();
+        TextureOverLay(w, vCubeMap->GetTexture2D(0)->getBack().get(), col, "X+", ImVec4(0.0f, 0.0f, 0.0f, 1.0f), ImVec4(0.7f, 0.7f, 0.7f, 0.7f));
+        ImGui::SameLine();
         TextureOverLay(w, vCubeMap->GetTexture2D(2)->getBack().get(), col, "Y+", ImVec4(0.0f, 0.0f, 0.0f, 1.0f), ImVec4(0.7f, 0.7f, 0.7f, 0.7f));
-		ImGui::SameLine();
+        ImGui::SameLine();
         TextureOverLay(w, vCubeMap->GetTexture2D(4)->getBack().get(), col, "Z+", ImVec4(0.0f, 0.0f, 0.0f, 1.0f), ImVec4(0.7f, 0.7f, 0.7f, 0.7f));
 
-		TextureOverLay(w, vCubeMap->GetTexture2D(1)->getBack().get(), col, "X-", ImVec4(0.0f, 0.0f, 0.0f, 1.0f), ImVec4(0.7f, 0.7f, 0.7f, 0.7f));
-		ImGui::SameLine();
+        TextureOverLay(w, vCubeMap->GetTexture2D(1)->getBack().get(), col, "X-", ImVec4(0.0f, 0.0f, 0.0f, 1.0f), ImVec4(0.7f, 0.7f, 0.7f, 0.7f));
+        ImGui::SameLine();
         TextureOverLay(w, vCubeMap->GetTexture2D(3)->getBack().get(), col, "Y-", ImVec4(0.0f, 0.0f, 0.0f, 1.0f), ImVec4(0.7f, 0.7f, 0.7f, 0.7f));
-		ImGui::SameLine();
+        ImGui::SameLine();
         TextureOverLay(w, vCubeMap->GetTexture2D(5)->getBack().get(), col, "Z-", ImVec4(0.0f, 0.0f, 0.0f, 1.0f), ImVec4(0.7f, 0.7f, 0.7f, 0.7f));
 
-		ImGui::EndGroup();
-	}
+        ImGui::EndGroup();
+    }
 }
 
-void ImGui::PlotFVec4Histo(const char* vLabel, ct::fvec4* vDatas, int vDataCount, bool* vShowChannel, ImVec2 frame_size, ct::fvec4 scale_min,
-                           ct::fvec4 scale_max, int* vHoveredIdx) {
+void ImGui::PlotFVec4Histo(const char* vLabel,
+                           ct::fvec4* vDatas,
+                           int vDataCount,
+                           bool* vShowChannel,
+                           ImVec2 frame_size,
+                           ct::fvec4 scale_min,
+                           ct::fvec4 scale_max,
+                           int* vHoveredIdx) {
     ImGuiWindow* window = ImGui::GetCurrentWindow();
     if (window->SkipItems)
         return;
@@ -447,14 +418,14 @@ void ImGui::PlotFVec4Histo(const char* vLabel, ct::fvec4* vDatas, int vDataCount
         float xt0 = 0.0f;
 
         ct::fvec4 histogram_zero_line_t;
-        histogram_zero_line_t.x = (scale_min.x * scale_max.x < 0.0f) ? (-scale_min.x * inv_scale.x)
-                                                                     : (scale_min.x < 0.0f ? 0.0f : 1.0f);  // Where does the zero line stands
-        histogram_zero_line_t.y = (scale_min.y * scale_max.y < 0.0f) ? (-scale_min.y * inv_scale.y)
-                                                                     : (scale_min.y < 0.0f ? 0.0f : 1.0f);  // Where does the zero line stands
-        histogram_zero_line_t.z = (scale_min.z * scale_max.z < 0.0f) ? (-scale_min.z * inv_scale.z)
-                                                                     : (scale_min.z < 0.0f ? 0.0f : 1.0f);  // Where does the zero line stands
-        histogram_zero_line_t.w = (scale_min.w * scale_max.w < 0.0f) ? (-scale_min.w * inv_scale.w)
-                                                                     : (scale_min.w < 0.0f ? 0.0f : 1.0f);  // Where does the zero line stands
+        histogram_zero_line_t.x =
+            (scale_min.x * scale_max.x < 0.0f) ? (-scale_min.x * inv_scale.x) : (scale_min.x < 0.0f ? 0.0f : 1.0f);  // Where does the zero line stands
+        histogram_zero_line_t.y =
+            (scale_min.y * scale_max.y < 0.0f) ? (-scale_min.y * inv_scale.y) : (scale_min.y < 0.0f ? 0.0f : 1.0f);  // Where does the zero line stands
+        histogram_zero_line_t.z =
+            (scale_min.z * scale_max.z < 0.0f) ? (-scale_min.z * inv_scale.z) : (scale_min.z < 0.0f ? 0.0f : 1.0f);  // Where does the zero line stands
+        histogram_zero_line_t.w =
+            (scale_min.w * scale_max.w < 0.0f) ? (-scale_min.w * inv_scale.w) : (scale_min.w < 0.0f ? 0.0f : 1.0f);  // Where does the zero line stands
 
         for (int n = 0; n < res_w; n++) {
             float xt1 = xt0 + t_step;
@@ -499,32 +470,28 @@ void ImGui::PlotFVec4Histo(const char* vLabel, ct::fvec4* vDatas, int vDataCount
             float y = ImLerp(inner_bb.Min.y, inner_bb.Max.y, yt0.x);
             char buf[20];
             snprintf(buf, 20, "r %.3f", yt0.x);
-            window->DrawList->AddText(ImVec2(inner_bb.Max.x + style.FramePadding.x, y + style.FramePadding.y), ImGui::GetColorU32(ImVec4(1, 0, 0, 1)),
-                                      buf);
+            window->DrawList->AddText(ImVec2(inner_bb.Max.x + style.FramePadding.x, y + style.FramePadding.y), ImGui::GetColorU32(ImVec4(1, 0, 0, 1)), buf);
         }
 
         if (!vShowChannel || vShowChannel[1]) {
             float y = ImLerp(inner_bb.Min.y, inner_bb.Max.y, yt0.y);
             char buf[20];
             snprintf(buf, 20, "g %.3f", yt0.y);
-            window->DrawList->AddText(ImVec2(inner_bb.Max.x + style.FramePadding.x, y + style.FramePadding.y), ImGui::GetColorU32(ImVec4(0, 1, 0, 1)),
-                                      buf);
+            window->DrawList->AddText(ImVec2(inner_bb.Max.x + style.FramePadding.x, y + style.FramePadding.y), ImGui::GetColorU32(ImVec4(0, 1, 0, 1)), buf);
         }
 
         if (!vShowChannel || vShowChannel[2]) {
             float y = ImLerp(inner_bb.Min.y, inner_bb.Max.y, yt0.z);
             char buf[20];
             snprintf(buf, 20, "b %.3f", yt0.z);
-            window->DrawList->AddText(ImVec2(inner_bb.Max.x + style.FramePadding.x, y + style.FramePadding.y), ImGui::GetColorU32(ImVec4(0, 0, 1, 1)),
-                                      buf);
+            window->DrawList->AddText(ImVec2(inner_bb.Max.x + style.FramePadding.x, y + style.FramePadding.y), ImGui::GetColorU32(ImVec4(0, 0, 1, 1)), buf);
         }
 
         if (!vShowChannel || vShowChannel[3]) {
             float y = ImLerp(inner_bb.Min.y, inner_bb.Max.y, yt0.w);
             char buf[20];
             snprintf(buf, 20, "a %.3f", yt0.w);
-            window->DrawList->AddText(ImVec2(inner_bb.Max.x + style.FramePadding.x, y + style.FramePadding.y), ImGui::GetColorU32(ImVec4(1, 1, 1, 1)),
-                                      buf);
+            window->DrawList->AddText(ImVec2(inner_bb.Max.x + style.FramePadding.x, y + style.FramePadding.y), ImGui::GetColorU32(ImVec4(1, 1, 1, 1)), buf);
         }
     }
 

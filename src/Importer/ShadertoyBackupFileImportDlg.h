@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -27,74 +27,73 @@
 #include <ctools/ConfigAbstract.h>
 #include <Importer/ImporterFromShadertoy.h>
 
-class ShadertoyBackupFileInfo
-{
+class ShadertoyBackupFileInfo {
 public:
-	bool selected = false;
-	std::string id;
-	std::string id_for_search; // lower case for search
-	std::string date;
-	std::string viewed;
-	std::string name;
-	std::string username;
-	std::string description;
-	std::string description_for_search; // lower case for search
-	std::string likes;
-	std::string published;
-	std::string flags;
-	std::string tags;
-	std::string tags_for_search; // lower case for search
-	size_t count_renderpasses;
-	std::string hasliked;
-	std::string shader_code;
+    bool selected = false;
+    std::string id;
+    std::string id_for_search;  // lower case for search
+    std::string date;
+    std::string viewed;
+    std::string name;
+    std::string username;
+    std::string description;
+    std::string description_for_search;  // lower case for search
+    std::string likes;
+    std::string published;
+    std::string flags;
+    std::string tags;
+    std::string tags_for_search;  // lower case for search
+    size_t count_renderpasses;
+    std::string hasliked;
+    std::string shader_code;
 };
 
-class ShadertoyBackupFileImportDlg : public conf::ConfigAbstract
-{
+class ShadertoyBackupFileImportDlg : public conf::ConfigAbstract {
 private:
-	bool puShowDialog = false;
-	bool m_CreateOneFileShader = true;
-	std::string m_FilePathName; 
-	std::vector<ShadertoyBackupFileInfo> m_Shaders;
-	std::vector<ShadertoyBackupFileInfo> m_FilteredShaders;
-	ImGuiListClipper m_VirtualClipper;
-	std::function<std::string(std::string, std::list<ShaderInfos>)> m_CreateManyFilesShaderFunc = nullptr;
-	std::function<std::string(std::string, std::list<ShaderInfos>)> m_CreateOneFileShaderFunc = nullptr;
-	char m_SearchBuffer[1024 + 1] = "";
+    bool puShowDialog = false;
+    bool m_CreateOneFileShader = true;
+    std::string m_FilePathName;
+    std::vector<ShadertoyBackupFileInfo> m_Shaders;
+    std::vector<ShadertoyBackupFileInfo> m_FilteredShaders;
+    ImGuiListClipper m_VirtualClipper;
+    std::function<std::string(std::string, std::list<ShaderInfos>)> m_CreateManyFilesShaderFunc = nullptr;
+    std::function<std::string(std::string, std::list<ShaderInfos>)> m_CreateOneFileShaderFunc = nullptr;
+    char m_SearchBuffer[1024 + 1] = "";
 
 public:
-	void OpenDialog(const std::string& vFilePathName);
-	void CloseDialog();
-	bool DrawDialog();
+    void OpenDialog(const std::string& vFilePathName);
+    void CloseDialog();
+    bool DrawDialog();
 
-	void SetFunction_For_CreateManyFilesShader(std::function<std::string(std::string, std::list<ShaderInfos>)> vCreateManyFilesShaderFunc);
-	void SetFunction_For_CreateOneFileShader(std::function<std::string(std::string, std::list<ShaderInfos>)> vCreateOneFileShaderFunc);
-
-private:
-	void Init(const std::string& vFilePathName);
-	void DrawContentPane();
-	void DrawButtonsPane();
-
-public:
-	std::string getXml(const std::string& vOffset, const std::string& vUserDatas = "")override;
-	bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas = "") override;
+    void SetFunction_For_CreateManyFilesShader(std::function<std::string(std::string, std::list<ShaderInfos>)> vCreateManyFilesShaderFunc);
+    void SetFunction_For_CreateOneFileShader(std::function<std::string(std::string, std::list<ShaderInfos>)> vCreateOneFileShaderFunc);
 
 private:
-	void ParseJsonArray(const picojson::array& vJsonArray);
-	void prImportSelectedShaders(const std::string& vPath);
-	void prImportAllShaders(const std::string& vPath);
-	void prApplyFiltering(const std::string& vSearchPattern);
+    void Init(const std::string& vFilePathName);
+    void DrawContentPane();
+    void DrawButtonsPane();
 
 public:
-	static ShadertoyBackupFileImportDlg* Instance()
-	{
-		static ShadertoyBackupFileImportDlg _instance;
-		return &_instance;
-	}
+    std::string getXml(const std::string& vOffset, const std::string& vUserDatas = "") override;
+    bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas = "") override;
+
+private:
+    void ParseJsonArray(const picojson::array& vJsonArray);
+    void prImportSelectedShaders(const std::string& vPath);
+    void prImportAllShaders(const std::string& vPath);
+    void prApplyFiltering(const std::string& vSearchPattern);
+
+public:
+    static ShadertoyBackupFileImportDlg* Instance() {
+        static ShadertoyBackupFileImportDlg _instance;
+        return &_instance;
+    }
 
 protected:
-	ShadertoyBackupFileImportDlg(); // Prevent construction
-	ShadertoyBackupFileImportDlg(const ShadertoyBackupFileImportDlg&) {}; // Prevent construction by copying
-	ShadertoyBackupFileImportDlg& operator =(const ShadertoyBackupFileImportDlg&) { return *this; }; // Prevent assignment
-	~ShadertoyBackupFileImportDlg(); // Prevent unwanted destruction
+    ShadertoyBackupFileImportDlg();                                       // Prevent construction
+    ShadertoyBackupFileImportDlg(const ShadertoyBackupFileImportDlg&){};  // Prevent construction by copying
+    ShadertoyBackupFileImportDlg& operator=(const ShadertoyBackupFileImportDlg&) {
+        return *this;
+    };                                // Prevent assignment
+    ~ShadertoyBackupFileImportDlg();  // Prevent unwanted destruction
 };

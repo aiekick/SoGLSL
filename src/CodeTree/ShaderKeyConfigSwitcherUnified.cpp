@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -40,7 +40,7 @@ inline std::set<std::string> inConfigSwitchertScanDirectory(const std::string& v
         for (const auto& file : dir_iter) {
             if (file.is_regular_file()) {
                 const auto file_name = file.path().filename().string();
-                const auto ps        = FileHelper::Instance()->ParsePathFileName(file_name);
+                const auto ps = FileHelper::Instance()->ParsePathFileName(file_name);
                 if (ps.isOk) {
                     if (ps.ext == "conf") {
                         res.emplace(file_name);
@@ -68,7 +68,8 @@ void ConfigSwitcherUnit::Clear(const std::string& vKey) {
 }
 
 void ConfigSwitcherUnit::Sort() {
-    std::sort(puOrderedStrings.begin(), puOrderedStrings.end(),                  //
+    std::sort(puOrderedStrings.begin(),
+              puOrderedStrings.end(),                                            //
               [](const ConfInfos& left, const ConfInfos& right) {                //
                   return doj::alphanum_comp(left.confName, right.confName) < 0;  //
               }                                                                  //
@@ -77,8 +78,8 @@ void ConfigSwitcherUnit::Sort() {
 
 void ConfigSwitcherUnit::AddConfigName(const std::string& vName, const uint32_t& vCountUniforms) {
     ConfInfos ci;
-    ci.confName              = vName;
-    ci.countUniforms         = vCountUniforms;
+    ci.confName = vName;
+    ci.countUniforms = vCountUniforms;
     puUniformSettings[vName] = ci;
     puOrderedStrings.emplace_back(ci);
 }
@@ -156,11 +157,11 @@ bool ConfigSwitcherUnit::LoadUniformConfigSummaryFile(const std::string& vKey) {
                     for (std::vector<std::string>::iterator it = lines.begin(); it != lines.end(); ++it) {
                         std::string configRow = *it;
 
-                        std::string name       = configRow;
+                        std::string name = configRow;
                         uint32_t countUniforms = 0U;
-                        size_t pos             = configRow.find(':');
+                        size_t pos = configRow.find(':');
                         if (pos != std::string::npos) {
-                            name          = configRow.substr(0, pos);
+                            name = configRow.substr(0, pos);
                             countUniforms = ct::uvariant(configRow.substr(pos + 1)).GetU();
                         }
                         if (!name.empty()) {
@@ -186,16 +187,16 @@ bool ConfigSwitcherUnit::ReGenerateConfigSummaryFileByDirectoryScanning() {
         std::unordered_map<std::string, ConfInfos> finalFilesToSave;
 
         auto filePathName = prShaderKey->puKey;
-        auto ps           = FileHelper::Instance()->ParsePathFileName(filePathName);
+        auto ps = FileHelper::Instance()->ParsePathFileName(filePathName);
         if (ps.isOk) {
             auto fileName = ps.name;
-            auto path     = prShaderKey->puPath;
-            auto files    = inConfigSwitchertScanDirectory(path);
+            auto path = prShaderKey->puPath;
+            auto files = inConfigSwitchertScanDirectory(path);
             for (auto file : files) {
                 if (file.find(fileName) != std::string::npos) {
                     uint32_t countUniforms = 0U;
-                    auto file_content      = FileHelper::Instance()->LoadFileToString(path + FileHelper::Instance()->puSlashType + file);
-                    const auto& arr        = ct::splitStringToVector(file_content, '\n');
+                    auto file_content = FileHelper::Instance()->LoadFileToString(path + FileHelper::Instance()->puSlashType + file);
+                    const auto& arr = ct::splitStringToVector(file_content, '\n');
                     for (const auto& a : arr) {
                         if (a.find("UniformSection") == std::string::npos) {
                             ++countUniforms;
@@ -206,8 +207,8 @@ bool ConfigSwitcherUnit::ReGenerateConfigSummaryFileByDirectoryScanning() {
                     ct::replaceString(file, ".conf", "");
                     if (!file.empty()) {
                         ConfInfos ci;
-                        ci.confName            = file;
-                        ci.countUniforms       = countUniforms;
+                        ci.confName = file;
+                        ci.countUniforms = countUniforms;
                         finalFilesToSave[file] = ci;
                     }
                 }
@@ -224,7 +225,7 @@ bool ConfigSwitcherUnit::ReGenerateConfigSummaryFileByDirectoryScanning() {
 bool ConfigSwitcherUnit::Prepare(CodeTreePtr vCodeTree, ShaderKeyPtr vShaderKey) {
     bool res = false;
 
-    prCodeTree  = vCodeTree;
+    prCodeTree = vCodeTree;
     prShaderKey = vShaderKey;
 
     if (prCodeTree && prShaderKey) {
@@ -248,7 +249,7 @@ bool ConfigSwitcherUnit::prNewConfigField(const float& /*aw*/) {
         ImGui::PushID("##new");
 
         const std::string configName = prNewConfigNameBuffer;
-        const bool isOk              = (puUniformSettings.find(configName) == puUniformSettings.end()) && (!configName.empty());
+        const bool isOk = (puUniformSettings.find(configName) == puUniformSettings.end()) && (!configName.empty());
         ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(isOk ? 1 : -1));
         ImGui::InputText("#ConfigName", prNewConfigNameBuffer, 1023);
         ImGui::PopStyleColor();
@@ -370,7 +371,8 @@ bool ConfigSwitcherUnit::prToggleButton(const char* vLabelOn, const char* vLabel
         ImGui::SetTooltip("%s", vHelp);
     }
 
-    if (pressed) *vToggled = !*vToggled;
+    if (pressed)
+        *vToggled = !*vToggled;
 
     return pressed;
 }
@@ -406,19 +408,24 @@ bool ConfigSwitcherUnit::DrawConfigSwitcher(const float& vWidth, const float& /*
     puRendering = false;
 
     if (prCodeTree && prShaderKey && vImFontSymbol) {
-        //float posy = ImGui::GetCursorPosY();
+        // float posy = ImGui::GetCursorPosY();
 
         ImGui::PushID(prShaderKey.get());
 
-        if (!vHideLabel) ImGui::FramedGroupText("%s", puShaderName.c_str());
+        if (!vHideLabel)
+            ImGui::FramedGroupText("%s", puShaderName.c_str());
 
-        prToggleButton(ICON_NDPTB_HEXAGON_SLICE_6 "##ResetNCWidgetsON", ICON_NDPTB_HEXAGON_OUTLINE "##ResetNCWidgetsOFF", "Reset Not Concerned Widgets (Available but not saved in a config)", &prResetNotConcernedUniforms, vImFontSymbol);
+        prToggleButton(ICON_NDPTB_HEXAGON_SLICE_6 "##ResetNCWidgetsON",
+                       ICON_NDPTB_HEXAGON_OUTLINE "##ResetNCWidgetsOFF",
+                       "Reset Not Concerned Widgets (Available but not saved in a config)",
+                       &prResetNotConcernedUniforms,
+                       vImFontSymbol);
 
         ImGui::SameLine();
 
         // TOOLBAR
         if (ImGui::ContrastedButton(ICON_NDPTB_LAYERS_PLUS "##NewConfig", "New", vImFontSymbol)) {
-            change         = true;
+            change = true;
             prShowNewField = true;
             ct::ResetBuffer(prNewConfigNameBuffer);
             ct::AppendToBuffer(prNewConfigNameBuffer, 1023, prShaderKey->puConfigSwitcherSelectedConfig);
@@ -438,7 +445,8 @@ bool ConfigSwitcherUnit::DrawConfigSwitcher(const float& vWidth, const float& /*
 
                 if (prShaderKey->puIsInclude) {
                     if (prCodeTree->puIncludeUniformsList.find(prShaderKey->puKey) != prCodeTree->puIncludeUniformsList.end()) {
-                        prCodeTree->SaveConfigIncludeFile(prShaderKey->puKey, &prCodeTree->puIncludeUniformsList[prShaderKey->puKey], prShaderKey->puConfigSwitcherSelectedConfig);
+                        prCodeTree->SaveConfigIncludeFile(
+                            prShaderKey->puKey, &prCodeTree->puIncludeUniformsList[prShaderKey->puKey], prShaderKey->puConfigSwitcherSelectedConfig);
                     }
                 } else {
                     prShaderKey->SaveConfigShaderFile(prShaderKey->puKey, CONFIG_TYPE_Enum::CONFIG_TYPE_UNIFORM, prShaderKey->puConfigSwitcherSelectedConfig);
@@ -500,15 +508,14 @@ bool ConfigSwitcherUnit::DrawConfigSwitcher(const float& vWidth, const float& /*
                         ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2());
                         if (ImGui::ContrastedButton(ICON_NDPTB_FOLDER_IMAGE "##Savepicture", "Save Picture", vImFontSymbol)) {
                             if (!puRenderingPath.empty()) {
-                                puRendering         = true;
+                                puRendering = true;
                             } else {
                                 IGFD::FileDialogConfig config;
                                 config.path = puRenderingPath;
                                 config.userDatas = (IGFD::UserDatas)this;
                                 config.countSelectionMax = 1;
                                 config.flags = ImGuiFileDialogFlags_Modal;
-                                ImGuiFileDialog::Instance()->OpenDialog("ConfigSwitcherExportPath", "Choose a path for export all your configs",
-                                                                        nullptr, config);
+                                ImGuiFileDialog::Instance()->OpenDialog("ConfigSwitcherExportPath", "Choose a path for export all your configs", nullptr, config);
                             }
                             puRenderingFileName = conf.confName;
                             SelectConfigByName(conf.confName);
@@ -618,7 +625,8 @@ void ShaderKeyConfigSwitcherUnified::Prepare(CodeTreePtr vCodeTree, RenderPackWe
                 auto subKey = bufPtr->GetShaderKey();
                 if (subKey) {
                     ConfigSwitcherUnit csu;
-                    if (csu.Prepare(vCodeTree, subKey)) prOneConfigExistAtleast = true;
+                    if (csu.Prepare(vCodeTree, subKey))
+                        prOneConfigExistAtleast = true;
 
                     // pour le moment ajout toujours dans prSwitchers,
                     // car il faut pouvoir montrer les widget de creation meme si c'est vide
@@ -679,8 +687,7 @@ bool ShaderKeyConfigSwitcherUnified::DrawConfigSwitcher(CodeTreePtr vCodeTree, R
                         config.path = puRenderingPath;
                         config.countSelectionMax = 1;
                         config.flags = ImGuiFileDialogFlags_Modal;
-                        ImGuiFileDialog::Instance()->OpenDialog("ConfigSwitcherExportPath", "Choose a path for export all your configs", nullptr,
-                                                                config);       
+                        ImGuiFileDialog::Instance()->OpenDialog("ConfigSwitcherExportPath", "Choose a path for export all your configs", nullptr, config);
                     }
 
                     ImGui::EndMenu();
@@ -695,8 +702,10 @@ bool ShaderKeyConfigSwitcherUnified::DrawConfigSwitcher(CodeTreePtr vCodeTree, R
                 }
 
                 if (ImGui::BeginMenu("Layouts")) {
-                    if (ImGui::MenuItem("Horizontal Table", nullptr, prUnifiedSwitcherLayoutEnum == UnifiedSwitcherLayoutEnum::HORIZONTAL_LAYOUT)) prUnifiedSwitcherLayoutEnum = UnifiedSwitcherLayoutEnum::HORIZONTAL_LAYOUT;
-                    if (ImGui::MenuItem("Vertical Collapsing Headers", nullptr, prUnifiedSwitcherLayoutEnum == UnifiedSwitcherLayoutEnum::VERTICAL_LAYOUT)) prUnifiedSwitcherLayoutEnum = UnifiedSwitcherLayoutEnum::VERTICAL_LAYOUT;
+                    if (ImGui::MenuItem("Horizontal Table", nullptr, prUnifiedSwitcherLayoutEnum == UnifiedSwitcherLayoutEnum::HORIZONTAL_LAYOUT))
+                        prUnifiedSwitcherLayoutEnum = UnifiedSwitcherLayoutEnum::HORIZONTAL_LAYOUT;
+                    if (ImGui::MenuItem("Vertical Collapsing Headers", nullptr, prUnifiedSwitcherLayoutEnum == UnifiedSwitcherLayoutEnum::VERTICAL_LAYOUT))
+                        prUnifiedSwitcherLayoutEnum = UnifiedSwitcherLayoutEnum::VERTICAL_LAYOUT;
 
                     ImGui::EndMenu();
                 }
@@ -734,11 +743,13 @@ bool ShaderKeyConfigSwitcherUnified::DrawConfigSwitcher(CodeTreePtr vCodeTree, R
 
             int count = 0;
             for (auto& sw : prSwitchers) {
-                if (sw.puIsVisible) count++;
+                if (sw.puIsVisible)
+                    count++;
             }
 
             if (count) {
-                static ImGuiTableFlags tableFlags = ImGuiTableFlags_SizingFixedFit | ImGuiTableColumnFlags_NoSort | ImGuiTableColumnFlags_NoReorder | ImGuiTableColumnFlags_NoHide;
+                static ImGuiTableFlags tableFlags =
+                    ImGuiTableFlags_SizingFixedFit | ImGuiTableColumnFlags_NoSort | ImGuiTableColumnFlags_NoReorder | ImGuiTableColumnFlags_NoHide;
                 if (ImGui::BeginTable("##ConfigSwitcherPanes", count, tableFlags, aw)) {
                     ImGui::TableSetupScrollFreeze(0, 1);  // Make header always visible
 
@@ -764,12 +775,12 @@ bool ShaderKeyConfigSwitcherUnified::DrawConfigSwitcher(CodeTreePtr vCodeTree, R
                 }
             }
         } else if (prUnifiedSwitcherLayoutEnum == UnifiedSwitcherLayoutEnum::VERTICAL_LAYOUT) {
-            ImGuiContext& g          = *GImGui;
-            const ImGuiStyle& style  = g.Style;
-            const ImVec2 label_size  = ImGui::CalcTextSize("TOTO");
+            ImGuiContext& g = *GImGui;
+            const ImGuiStyle& style = g.Style;
+            const ImVec2 label_size = ImGui::CalcTextSize("TOTO");
             const float frame_height = ImMax(g.FontSize, label_size.y) + style.FramePadding.y * 2 + style.ItemSpacing.y;
-            float listBoxHeight      = ImGui::GetContentRegionAvail().y;
-            int count                = 0;
+            float listBoxHeight = ImGui::GetContentRegionAvail().y;
+            int count = 0;
             for (auto& sw : prSwitchers) {
                 if (sw.puIsVisible) {
                     listBoxHeight -= frame_height;
@@ -855,13 +866,15 @@ bool ShaderKeyConfigSwitcherUnified::setFromXml(tinyxml2::XMLElement* vElem, tin
     UNUSED(vUserDatas);
 
     // The value of this child identifies the name of this element
-    std::string strName       = "";
-    std::string strValue      = "";
+    std::string strName = "";
+    std::string strValue = "";
     std::string strParentName = "";
 
     strName = vElem->Value();
-    if (vElem->GetText()) strValue = vElem->GetText();
-    if (vParent != nullptr) strParentName = vParent->Value();
+    if (vElem->GetText())
+        strValue = vElem->GetText();
+    if (vParent != nullptr)
+        strParentName = vParent->Value();
 
     if (strParentName == "SwitcherUnified") {
         if (strName == "layout") {

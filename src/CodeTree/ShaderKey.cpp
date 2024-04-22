@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -63,7 +63,7 @@ void ConfigGuiStruct::PrepareConfigsComboBox(ShaderKeyPtr vParentKey, const std:
 
         auto verts = vParentKey->GetConfigNames(sectionType, vInFileBufferName, vSelectedSectionName);
         if (verts) {
-            puConfigArrayIndex   = -1;
+            puConfigArrayIndex = -1;
             std::string selected = vParentKey->GetSelectedConfigName(sectionType, vInFileBufferName);
             if (verts->find(selected) == verts->end())  // non trouve
             {
@@ -98,7 +98,7 @@ bool ConfigGuiStruct::DrawConfigComboBox(ShaderKeyPtr vParentKey, const std::str
     if (!puConfigArray.empty() && vParentKey && !sectionType.empty() && vSectionType == sectionType) {
         if (puConfigArrayIndex < 0) {
             const std::string name = vParentKey->GetSelectedConfigName(vSectionType, vInFileBufferName);
-            puConfigArrayIndex     = 0;
+            puConfigArrayIndex = 0;
             for (size_t i = 0; i < puConfigArray.size(); i++) {
                 if (name == puConfigArray[i]) {
                     puConfigArrayIndex = (int)i;
@@ -121,37 +121,37 @@ bool ConfigGuiStruct::DrawConfigComboBox(ShaderKeyPtr vParentKey, const std::str
 //////////////////////////////////////////////////////////////////////////////
 
 ShaderKeyPtr ShaderKey::Create() {
-    auto res    = std::make_shared<ShaderKey>();
+    auto res = std::make_shared<ShaderKey>();
     res->m_This = res;
     return res;
 }
 
 ShaderKey::ShaderKey() {
-    puMainSection            = SectionCode::Create();
+    puMainSection = SectionCode::Create();
     puMainSection->parentKey = m_This;
-    puParentCodeTree         = nullptr;
+    puParentCodeTree = nullptr;
 
-    puIsInclude   = false;
+    puIsInclude = false;
     puCodeUpdated = true;  // pour le demarrage
 
     puCompilationSuccess = ShaderMsg::SHADER_MSG_OK;
-    puParseSuccess       = ShaderMsg::SHADER_MSG_OK;
+    puParseSuccess = ShaderMsg::SHADER_MSG_OK;
 
     puGeometryOutputRenderMode = 0;
-    puGeometryInputRenderMode  = 0;
-    puIsGeometryShaderPresent  = false;
+    puGeometryInputRenderMode = 0;
+    puIsGeometryShaderPresent = false;
 
     puIsTesselationControlShaderPresent = false;
-    puIsTesselationEvalShaderPresent    = false;
+    puIsTesselationEvalShaderPresent = false;
 
     // puUniformConfigGuiStruct;
-    puVertexConfigGuiStruct             = ConfigGuiStruct("VERTEX");
-    puGeometryConfigGuiStruct           = ConfigGuiStruct("GEOMETRY");
+    puVertexConfigGuiStruct = ConfigGuiStruct("VERTEX");
+    puGeometryConfigGuiStruct = ConfigGuiStruct("GEOMETRY");
     puTesselationControlConfigGuiStruct = ConfigGuiStruct("TESSCONTROL");
-    puTesselationEvalConfigGuiStruct    = ConfigGuiStruct("TESSEVAL");
-    puFragmentConfigGuiStruct           = ConfigGuiStruct("FRAGMENT");
-    puComputeConfigGuiStruct            = ConfigGuiStruct("COMPUTE");
-    puSectionConfigGuiStruct            = ConfigGuiStruct("SECTION");
+    puTesselationEvalConfigGuiStruct = ConfigGuiStruct("TESSEVAL");
+    puFragmentConfigGuiStruct = ConfigGuiStruct("FRAGMENT");
+    puComputeConfigGuiStruct = ConfigGuiStruct("COMPUTE");
+    puSectionConfigGuiStruct = ConfigGuiStruct("SECTION");
 }
 
 ShaderKey::~ShaderKey() {
@@ -160,7 +160,7 @@ ShaderKey::~ShaderKey() {
 
 void ShaderKey::Clear() {
     puCompilationSuccess = ShaderMsg::SHADER_MSG_OK;
-    puParseSuccess       = ShaderMsg::SHADER_MSG_OK;
+    puParseSuccess = ShaderMsg::SHADER_MSG_OK;
     puCustomWidgets.clear();
     puConfigNames.clear();
     puUniformParsedDataBase.clear();
@@ -251,11 +251,12 @@ bool ShaderKey::UpdateIfChange(bool vForce, bool vIsInclude, bool vResetConfigs)
 
             // vu qu'on va redeclencher la compilation et qu'on flag cette valleur que quand ca merde
             // on les mets par defaut a true
-            puParseSuccess       = ShaderMsg::SHADER_MSG_OK;
+            puParseSuccess = ShaderMsg::SHADER_MSG_OK;
             puCompilationSuccess = ShaderMsg::SHADER_MSG_OK;
 
             std::string keyId = puKey;
-            if (!puInFileBufferFromKey.empty()) keyId = puInFileBufferFromKey;
+            if (!puInFileBufferFromKey.empty())
+                keyId = puInFileBufferFromKey;
             puMainSection = SectionCode::Create(m_This, nullptr, keyId, code, "NONE", "FULL", "", "", 0, 0, 0, false);
 
             if (vIsInclude) {
@@ -294,7 +295,11 @@ bool ShaderKey::UpdateIfChange(bool vForce, bool vIsInclude, bool vResetConfigs)
 /// @param vConfigName config used for the stage
 /// @param vGLVersion opengl struct
 /// @return
-ShaderParsedCodeStruct ShaderKey::GetShaderSection(const std::string& vInFileBufferName, const std::string& vShaderStageName, const std::string& vSectionName, const std::string& vConfigName, OpenGlVersionStruct* vGLVersion) {
+ShaderParsedCodeStruct ShaderKey::GetShaderSection(const std::string& vInFileBufferName,
+                                                   const std::string& vShaderStageName,
+                                                   const std::string& vSectionName,
+                                                   const std::string& vConfigName,
+                                                   OpenGlVersionStruct* vGLVersion) {
     ShaderParsedCodeStruct res;
 
     if (!vShaderStageName.empty()) {
@@ -306,8 +311,8 @@ ShaderParsedCodeStruct ShaderKey::GetShaderSection(const std::string& vInFileBuf
         */
 
         std::string infileBufferName = vInFileBufferName;
-        std::string sectionName      = vSectionName;
-        std::string configName       = vConfigName;
+        std::string sectionName = vSectionName;
+        std::string configName = vConfigName;
 
         puMainSection->ResetFinalLineMarks(vShaderStageName);
 
@@ -317,14 +322,16 @@ ShaderParsedCodeStruct ShaderKey::GetShaderSection(const std::string& vInFileBuf
         {
             auto sections = GetSectionNames();
             if (sections)
-                if (sections->size() > 0) sectionName = *sections->begin();
+                if (sections->size() > 0)
+                    sectionName = *sections->begin();
         }
 
         if (configName.empty())  // si pas de config selectionnée on prend la 1ere de la liste
         {
             auto configs = GetConfigNames(vShaderStageName, infileBufferName, sectionName);
             if (configs)
-                if (configs->size() > 0) configName = *configs->begin();
+                if (configs->size() > 0)
+                    configName = *configs->begin();
         }
 
         if (vGLVersion) {
@@ -373,11 +380,12 @@ ShaderParsedCodeStruct ShaderKey::GetShaderSection(const std::string& vInFileBuf
         // et pourtant il va falloir trouver un moyen.
         // car la section UNIFORMS defini un ubo commun à tous les stages,
         // la ou les uniforms definis dans chaque stages seront specifique a ces stages
-        std::string uniformPart = puMainSection->GetSectionPart(vShaderStageName, finalLine, res.shaderCodePart, "UNIFORMS", infileBufferName, sectionName, configName, &puUsedFileNames);
+        std::string uniformPart =
+            puMainSection->GetSectionPart(vShaderStageName, finalLine, res.shaderCodePart, "UNIFORMS", infileBufferName, sectionName, configName, &puUsedFileNames);
         if (!uniformPart.empty()) {
             FileHelper::Instance()->SaveToFile(uniformPart, "parsed_uniforpunames.txt", (int)FILE_LOCATION_Enum::FILE_LOCATION_DEBUG);
 
-            uniformPart  = getFinalUniformsCode(uniformPart, vShaderStageName);
+            uniformPart = getFinalUniformsCode(uniformPart, vShaderStageName);
             res.uniforms = uniformPart;
             finalLine += ct::GetCountOccurence(uniformPart, "\n");
 
@@ -391,7 +399,8 @@ ShaderParsedCodeStruct ShaderKey::GetShaderSection(const std::string& vInFileBuf
         if (res.shaderCodePart != "NONE" && !res.shaderCodePart.empty()) {
             // res.uniforms = CreateUniformBuffer(vShaderStageName);
             // finalLine += ct::GetCountOccurence(res.uniforms, "\n");
-            res.code = puMainSection->GetSectionPart(vShaderStageName, finalLine, res.shaderCodePart, res.shaderCodePart, infileBufferName, sectionName, configName, &puUsedFileNames);
+            res.code = puMainSection->GetSectionPart(
+                vShaderStageName, finalLine, res.shaderCodePart, res.shaderCodePart, infileBufferName, sectionName, configName, &puUsedFileNames);
             finalLine += ct::GetCountOccurence(res.code, "\n");
         }
 
@@ -491,20 +500,22 @@ std::string ShaderKey::GetNoteSection(const std::string& vInFileBufferName, cons
     apres il suffit de sortir et de recommencer
     */
     std::string sectionName = vSectionName;
-    std::string configName  = vConfigName;
+    std::string configName = vConfigName;
 
     if (sectionName.empty())  // si pas de configs on prend la 1ere de la liste
     {
         auto sections = GetSectionNames();
         if (sections)
-            if (sections->size() > 0) sectionName = *sections->begin();
+            if (sections->size() > 0)
+                sectionName = *sections->begin();
     }
 
     if (configName.empty())  // si pas de configs on prend la 1ere de la liste
     {
         auto configs = GetConfigNames("NOTE", puInFileBufferName, sectionName);
         if (configs)
-            if (configs->size() > 0) configName = *configs->begin();
+            if (configs->size() > 0)
+                configName = *configs->begin();
     }
 
     const size_t finalLine = 0;
@@ -542,7 +553,10 @@ ShaderParsedStruct ShaderKey::GetComputeShader(const std::string& vInFileBufferN
     return res;
 }
 
-ShaderParsedStruct ShaderKey::GetFullShader(const std::string& vInFileBufferName, bool vUseGeometryShaderIfPresent, bool vUseTesselationIfPresent, OpenGlVersionStruct* vGLVersion) {
+ShaderParsedStruct ShaderKey::GetFullShader(const std::string& vInFileBufferName,
+                                            bool vUseGeometryShaderIfPresent,
+                                            bool vUseTesselationIfPresent,
+                                            OpenGlVersionStruct* vGLVersion) {
     ShaderParsedStruct res;
 
     const std::string currentSection = GetSelectedSectionName();
@@ -608,7 +622,8 @@ ShaderParsedStruct ShaderKey::GetPartialShader(const std::string& vInFileBufferN
 
     CreateUniformsHeader(vInFileBufferName, vShaderStageName, currentSection, GetSelectedConfigName(vShaderStageName, puInFileBufferName));
 
-    res.shader[vShaderStageName] = GetShaderSection(vInFileBufferName, vShaderStageName, currentSection, GetSelectedConfigName(vShaderStageName, puInFileBufferName), vGLVersion);
+    res.shader[vShaderStageName] =
+        GetShaderSection(vInFileBufferName, vShaderStageName, currentSection, GetSelectedConfigName(vShaderStageName, puInFileBufferName), vGLVersion);
 
     //////////////////////////////////
 
@@ -627,7 +642,7 @@ void ShaderKey::StartParse() {
 
     puSyntaxErrors.clear();
     puCompilationSuccess = ShaderMsg::SHADER_MSG_OK;
-    puParseSuccess       = ShaderMsg::SHADER_MSG_OK;
+    puParseSuccess = ShaderMsg::SHADER_MSG_OK;
 
     ClearShaderStageNames();
     ClearFragColorNames();
@@ -726,7 +741,8 @@ void ShaderKey::ClearUniforms(bool vExceptFinalUniforms) {
     puUniformSectionDataBase.clear();
     puUniformSectionOpened.clear();
 
-    if (!vExceptFinalUniforms) puFinalUniformsCode.clear();
+    if (!vExceptFinalUniforms)
+        puFinalUniformsCode.clear();
 }
 
 void ShaderKey::AddUniformToDataBase(std::shared_ptr<SectionCode> vSectionCode, const UniformParsedStruct& vUniformParsedStruct) {
@@ -748,7 +764,7 @@ void ShaderKey::AddUniformToDataBase(std::shared_ptr<SectionCode> vSectionCode, 
                    vSectionCode->currentType == "UNIFORMS" ||     //
                    vSectionCode->currentType == "COMPUTE") {
             inFileBufferName = vSectionCode->inFileBufferName;
-            sectionName      = vSectionCode->name;
+            sectionName = vSectionCode->name;
         } else {
             // LogVarLightInfo("stageName cleared for %s", stageName.c_str());
             stageName.clear();  // on ne defini pas le stage name, car ces uniforms devront donc apparaitre dans tout les stages (car common, uniforms ou autres)
@@ -912,23 +928,23 @@ void ShaderKey::FinaliseUniformSectionParsing(UniformVariantPtr vUniform) {
             size_t condPos = vUniform->sectionCond.find("==");
             if (condPos == std::string::npos) {
                 condPos = vUniform->sectionCond.find("!=");
-                op      = "neq";
+                op = "neq";
             }
             if (condPos == std::string::npos) {
                 condPos = vUniform->sectionCond.find('>');
-                op      = "sup";
+                op = "sup";
             }
             if (condPos == std::string::npos) {
                 condPos = vUniform->sectionCond.find('<');
-                op      = "inf";
+                op = "inf";
             }
             if (condPos == std::string::npos) {
                 condPos = vUniform->sectionCond.find("<=");
-                op      = "infeq";
+                op = "infeq";
             }
             if (condPos == std::string::npos) {
                 condPos = vUniform->sectionCond.find(">=");
-                op      = "supeq";
+                op = "supeq";
             }
             if (condPos != std::string::npos) {
                 var0 = vUniform->sectionCond.substr(0, condPos);
@@ -947,12 +963,17 @@ void ShaderKey::FinaliseUniformSectionParsing(UniformVariantPtr vUniform) {
                 // else
                 if (!uni0 && !uni1) {
                     std::string fromFile = m_This->puKey;
-                    if (!m_This->puInFileBufferFromKey.empty()) fromFile = m_This->puInFileBufferFromKey;
-                    puSyntaxErrors.SetSyntaxError(m_This, "Parsing error : ", "Uniform Section Error", false,
-                                                  LineFileErrors(vUniform->SourceLinePos, fromFile, "The Condition '" + vUniform->sectionCond + "' is bad, no uniform to compare to a value"));
+                    if (!m_This->puInFileBufferFromKey.empty())
+                        fromFile = m_This->puInFileBufferFromKey;
+                    puSyntaxErrors.SetSyntaxError(
+                        m_This,
+                        "Parsing error : ",
+                        "Uniform Section Error",
+                        false,
+                        LineFileErrors(vUniform->SourceLinePos, fromFile, "The Condition '" + vUniform->sectionCond + "' is bad, no uniform to compare to a value"));
                 } else {
                     UniformVariantPtr uni = uni0;
-                    std::string var       = var1;
+                    std::string var = var1;
 
                     if (uni0 && !uni1) {
                         uni = uni0;
@@ -966,7 +987,7 @@ void ShaderKey::FinaliseUniformSectionParsing(UniformVariantPtr vUniform) {
                         if (uni->widget == "checkbox") {
                             // le bool c'est valable que pour la checkbox
                             if (var == "true") {
-                                vUniform->useVisCheckCond  = true;
+                                vUniform->useVisCheckCond = true;
                                 vUniform->uniCheckCondName = uni->name;
 
                                 if (op == "eq")
@@ -976,7 +997,7 @@ void ShaderKey::FinaliseUniformSectionParsing(UniformVariantPtr vUniform) {
 
                                 vUniform->uniCheckCondPtr = &(uni->x);
                             } else if (var == "false") {
-                                vUniform->useVisCheckCond  = true;
+                                vUniform->useVisCheckCond = true;
                                 vUniform->uniCheckCondName = uni->name;
 
                                 if (op == "eq")
@@ -987,15 +1008,20 @@ void ShaderKey::FinaliseUniformSectionParsing(UniformVariantPtr vUniform) {
                                 vUniform->uniCheckCondPtr = &(uni->x);
                             } else {
                                 std::string fromFile = m_This->puKey;
-                                if (!m_This->puInFileBufferFromKey.empty()) fromFile = m_This->puInFileBufferFromKey;
-                                puSyntaxErrors.SetSyntaxError(m_This, "Parsing error : ", "Uniform Section Error", false,
-                                                              LineFileErrors(vUniform->SourceLinePos, fromFile, "Condition value true or false (boolean) must be used with checbox widget only"));
+                                if (!m_This->puInFileBufferFromKey.empty())
+                                    fromFile = m_This->puInFileBufferFromKey;
+                                puSyntaxErrors.SetSyntaxError(
+                                    m_This,
+                                    "Parsing error : ",
+                                    "Uniform Section Error",
+                                    false,
+                                    LineFileErrors(vUniform->SourceLinePos, fromFile, "Condition value true or false (boolean) must be used with checbox widget only"));
                             }
                         } else if (uni->widget == "combobox") {
                             // sinon on a la combobox
                             // on va voir si on trouve le choix par mi les chocies
                             bool found = false;
-                            int idx    = 0;
+                            int idx = 0;
                             for (auto it = uni->choices.begin(); it != uni->choices.end(); ++it) {
                                 if (*it == var) {
                                     found = true;
@@ -1005,10 +1031,10 @@ void ShaderKey::FinaliseUniformSectionParsing(UniformVariantPtr vUniform) {
                                 idx++;
                             }
                             if (found) {
-                                vUniform->useVisComboCond  = true;
+                                vUniform->useVisComboCond = true;
                                 vUniform->uniComboCondName = var;
-                                vUniform->uniComboCondPtr  = &(uni->ix);
-                                vUniform->uniComboCond     = idx;
+                                vUniform->uniComboCondPtr = &(uni->ix);
+                                vUniform->uniComboCond = idx;
 
                                 if (op == "eq")
                                     vUniform->uniComboCondDir = true;
@@ -1016,9 +1042,16 @@ void ShaderKey::FinaliseUniformSectionParsing(UniformVariantPtr vUniform) {
                                     vUniform->uniComboCondDir = false;
                             } else {
                                 std::string fromFile = m_This->puKey;
-                                if (!m_This->puInFileBufferFromKey.empty()) fromFile = m_This->puInFileBufferFromKey;
-                                puSyntaxErrors.SetSyntaxError(m_This, "Parsing error : ", "Uniform Section Error", false,
-                                                              LineFileErrors(vUniform->SourceLinePos, fromFile, "The Condition '" + vUniform->sectionCond + "' is bad, the combobox choice " + var + " can't be found is the comobobox " + uni->name));
+                                if (!m_This->puInFileBufferFromKey.empty())
+                                    fromFile = m_This->puInFileBufferFromKey;
+                                puSyntaxErrors.SetSyntaxError(m_This,
+                                                              "Parsing error : ",
+                                                              "Uniform Section Error",
+                                                              false,
+                                                              LineFileErrors(vUniform->SourceLinePos,
+                                                                             fromFile,
+                                                                             "The Condition '" + vUniform->sectionCond + "' is bad, the combobox choice " + var +
+                                                                                 " can't be found is the comobobox " + uni->name));
                             }
                         } else if (uni->glslType == uType::uTypeEnum::U_FLOAT) {
                             if (op == "sup")
@@ -1031,19 +1064,31 @@ void ShaderKey::FinaliseUniformSectionParsing(UniformVariantPtr vUniform) {
                                 vUniform->useVisOpCond = 4;
 
                             vUniform->uniOpCondThreshold = ct::fvariant(var).GetF();
-                            vUniform->uniCondPtr         = &(uni->x);
+                            vUniform->uniCondPtr = &(uni->x);
                         } else {
                             std::string fromFile = m_This->puKey;
-                            if (!m_This->puInFileBufferFromKey.empty()) fromFile = m_This->puInFileBufferFromKey;
-                            puSyntaxErrors.SetSyntaxError(m_This, "Parsing error : ", "Uniform Section Error", false,
-                                                          LineFileErrors(vUniform->SourceLinePos, fromFile, "Condition " + var + "for the uniform widget " + uni->name + ", is only supported with checkbox or combobox"));
+                            if (!m_This->puInFileBufferFromKey.empty())
+                                fromFile = m_This->puInFileBufferFromKey;
+                            puSyntaxErrors.SetSyntaxError(
+                                m_This,
+                                "Parsing error : ",
+                                "Uniform Section Error",
+                                false,
+                                LineFileErrors(vUniform->SourceLinePos,
+                                               fromFile,
+                                               "Condition " + var + "for the uniform widget " + uni->name + ", is only supported with checkbox or combobox"));
                         }
                     }
                 }
             } else {
                 std::string fromFile = m_This->puKey;
-                if (!m_This->puInFileBufferFromKey.empty()) fromFile = m_This->puInFileBufferFromKey;
-                puSyntaxErrors.SetSyntaxError(m_This, "Parsing error : ", "Uniform Section Error", false, LineFileErrors(vUniform->SourceLinePos, fromFile, "The Condition '" + vUniform->sectionCond + "' is incomplete"));
+                if (!m_This->puInFileBufferFromKey.empty())
+                    fromFile = m_This->puInFileBufferFromKey;
+                puSyntaxErrors.SetSyntaxError(m_This,
+                                              "Parsing error : ",
+                                              "Uniform Section Error",
+                                              false,
+                                              LineFileErrors(vUniform->SourceLinePos, fromFile, "The Condition '" + vUniform->sectionCond + "' is incomplete"));
             }
         }
     }
@@ -1056,7 +1101,8 @@ void ShaderKey::SerializeUniformsAsConstToClipBoard(const GuiBackend_Window& vHa
         std::string section = itSection->first;
 
         if (!itSection->second.empty()) {
-            if (itSection != puUniformSectionDataBase.begin()) res += "\n";
+            if (itSection != puUniformSectionDataBase.begin())
+                res += "\n";
 
             res += "// " + section + "\n";
         }
@@ -1094,7 +1140,7 @@ void ShaderKey::SerializeUniformsAsConstToClipBoard(const GuiBackend_Window& vHa
 void ShaderKey::ResetUniformsToTheirDefaultValue() {
     if (puParentCodeTree) {
         for (const auto& itSection : puUniformSectionDataBase) {
-            //const auto& section = itSection.first;
+            // const auto& section = itSection.first;
 
             for (auto uniPtr : itSection.second) {
                 puParentCodeTree->ResetUniformWidgetToTheirDefaultValue(uniPtr);
@@ -1110,7 +1156,8 @@ void ShaderKey::SerializeUniformsAsWidgetToClipBoard(const GuiBackend_Window& vH
         const auto& section = itSection.first;
 
         if (!itSection.second.empty()) {
-            if (section != puUniformSectionDataBase.begin()->first) res += "\n";
+            if (section != puUniformSectionDataBase.begin()->first)
+                res += "\n";
 
             res += "// " + section + "\n";
         }
@@ -1150,14 +1197,16 @@ std::string ShaderKey::GetAvailableUniformName(const std::string& vName) {
     return name;
 }
 
-void ShaderKey::CreateUniformsHeaderFromParsedStruct(const std::string& vShaderStageName, const UniformParsedStruct& vUniformParsedStruct, std::map<std::string, std::string>* vTempDico) {
+void ShaderKey::CreateUniformsHeaderFromParsedStruct(const std::string& vShaderStageName,
+                                                     const UniformParsedStruct& vUniformParsedStruct,
+                                                     std::map<std::string, std::string>* vTempDico) {
     UniformParsedStruct uniformParsed = vUniformParsedStruct;
 
     if (uniformParsed.isOk() && vTempDico) {
-        std::string uniformType   = uniformParsed.type;
+        std::string uniformType = uniformParsed.type;
         std::string uniformParams = uniformParsed.params;
-        std::string uniformName   = uniformParsed.name;
-        std::string uniformArray  = uniformParsed.array;
+        std::string uniformName = uniformParsed.name;
+        std::string uniformArray = uniformParsed.array;
 
         if (vTempDico->find(uniformName) == vTempDico->end())  // non found
         {
@@ -1171,8 +1220,9 @@ void ShaderKey::CreateUniformsHeaderFromParsedStruct(const std::string& vShaderS
                 if (!uniformParams.empty()) {
                     std::vector<std::string> arr = ct::splitStringToVector(uniformParams, ':');
 
-                    if (glslType == uType::uTypeEnum::U_SAMPLER2D_ARRAY || glslType == uType::uTypeEnum::U_SAMPLER3D_ARRAY || glslType == uType::uTypeEnum::U_FLOAT_ARRAY || glslType == uType::uTypeEnum::U_VEC2_ARRAY ||
-                        glslType == uType::uTypeEnum::U_VEC3_ARRAY || glslType == uType::uTypeEnum::U_VEC4_ARRAY || glslType == uType::uTypeEnum::U_INT_ARRAY) {
+                    if (glslType == uType::uTypeEnum::U_SAMPLER2D_ARRAY || glslType == uType::uTypeEnum::U_SAMPLER3D_ARRAY ||
+                        glslType == uType::uTypeEnum::U_FLOAT_ARRAY || glslType == uType::uTypeEnum::U_VEC2_ARRAY || glslType == uType::uTypeEnum::U_VEC3_ARRAY ||
+                        glslType == uType::uTypeEnum::U_VEC4_ARRAY || glslType == uType::uTypeEnum::U_INT_ARRAY) {
                         // c'étais utile pour SdfFontDesigner car on pouvait faire des declarations de ce style
                         // uniform int countArr;
                         // uniform vec3 toto[countArr];
@@ -1203,7 +1253,8 @@ void ShaderKey::CreateUniformsHeaderFromParsedStruct(const std::string& vShaderS
             // write uniform
             std::string uniformString;
             std::string typeStr = ConvertUniformsTypeEnumToString(glslType);
-            if (glslType == uType::uTypeEnum::U_FLOAT_ARRAY || glslType == uType::uTypeEnum::U_VEC2_ARRAY || glslType == uType::uTypeEnum::U_VEC3_ARRAY || glslType == uType::uTypeEnum::U_VEC4_ARRAY)
+            if (glslType == uType::uTypeEnum::U_FLOAT_ARRAY || glslType == uType::uTypeEnum::U_VEC2_ARRAY || glslType == uType::uTypeEnum::U_VEC3_ARRAY ||
+                glslType == uType::uTypeEnum::U_VEC4_ARRAY)
                 uniformString = "uniform " + typeStr + " " + uniformName + "[" + ct::toStr(arrayCount) + "];";
             else
                 uniformString = "uniform " + typeStr + " " + uniformName + ";";
@@ -1219,15 +1270,18 @@ void ShaderKey::CreateUniformsHeaderFromParsedStruct(const std::string& vShaderS
 }
 
 // will fill puFinalUniformsCode and will not destroy uniforms
-void ShaderKey::CreateUniformsHeader(const std::string& vInFileBufferName, const std::string& vStageName, const std::string& vSectionName, const std::string& vConfigName) {
+void ShaderKey::CreateUniformsHeader(const std::string& vInFileBufferName,
+                                     const std::string& vStageName,
+                                     const std::string& vSectionName,
+                                     const std::string& vConfigName) {
     std::string emptyBuffer;
     std::string emptySection;
     std::string emptyConfig;
 
-    const std::string& bufferName  = vInFileBufferName;
-    const std::string& stageName   = vStageName;
+    const std::string& bufferName = vInFileBufferName;
+    const std::string& stageName = vStageName;
     const std::string& sectionName = vSectionName;
-    const std::string& configName  = vConfigName;
+    const std::string& configName = vConfigName;
 
     std::map<std::string, std::string> _TempUniformsDataBase;
 
@@ -1236,17 +1290,20 @@ void ShaderKey::CreateUniformsHeader(const std::string& vInFileBufferName, const
         //! itBase->first->forcedSectionName.empty()) // s'il y a un forcedSectionName alors on le prend, peu importe si le nom de section n'est pas le meme)
         {
             for (const auto& itStage : itBuffer.second) {
-                if (itStage.first == stageName || itStage.first == "UNIFORMS" ||  // pour les uniforms qui sont dans la section UNIFORMS et qui sont dont communs a toutes les autres sections
+                if (itStage.first == stageName ||
+                    itStage.first == "UNIFORMS" ||  // pour les uniforms qui sont dans la section UNIFORMS et qui sont dont communs a toutes les autres sections
                     itStage.first == emptyConfig)
                 //! itBase->first->forcedSectionName.empty()) // s'il y a un forcedSectionName alors on le prend, peu importe si le nom de section n'est pas le meme)
                 {
                     for (const auto& itSection : itStage.second) {
                         if (itSection.first == sectionName || itSection.first == emptySection)
-                        //! itBase->first->forcedSectionName.empty()) // s'il y a un forcedSectionName alors on le prend, peu importe si le nom de section n'est pas le meme)
+                        //! itBase->first->forcedSectionName.empty()) // s'il y a un forcedSectionName alors on le prend, peu importe si le nom de section n'est pas le
+                        //! meme)
                         {
                             for (const auto& itConfig : itSection.second) {
                                 if (itConfig.first == configName || itConfig.first == emptyConfig)
-                                //! itBase->first->forcedSectionName.empty()) // s'il y a un forcedSectionName alors on le prend, peu importe si le nom de section n'est pas le meme)
+                                //! itBase->first->forcedSectionName.empty()) // s'il y a un forcedSectionName alors on le prend, peu importe si le nom de section n'est
+                                //! pas le meme)
                                 {
                                     for (const auto& itUni : itConfig.second) {
                                         CreateUniformsHeaderFromParsedStruct(stageName, itUni.second, &_TempUniformsDataBase);
@@ -1454,7 +1511,8 @@ void ShaderKey::RemoveReplaceCode(const std::string& vShaderCodePartEnum, const 
         if (puReplaceCodesByName[vShaderCodePartEnum].find(vName) != puReplaceCodesByName[vShaderCodePartEnum].end())  // trouve
         {
             puReplaceCodesByName[vShaderCodePartEnum].erase(vName);
-            if (puReplaceCodesByName[vShaderCodePartEnum].empty()) puReplaceCodesByName.erase(vShaderCodePartEnum);
+            if (puReplaceCodesByName[vShaderCodePartEnum].empty())
+                puReplaceCodesByName.erase(vShaderCodePartEnum);
         }
     }
 }
@@ -1466,7 +1524,11 @@ void ShaderKey::RemoveReplaceCode(const std::string& vShaderCodePartEnum, const 
 /// @param vFromKey the origin shader key where the new code come from
 /// @param vOnlyIfNotAlreadyDefined will be set only is not altready defined (so must be clear before set again)
 /// @return true if new code can be inserted or if replace code name not found or if shader stage name not found. todo: to explan
-bool ShaderKey::SetNewCodeInReplaceCodes(const std::string& vShaderCodePartEnum, const std::string& vName, const std::string& vCodeToReplace, std::string vNewCodeFromKey, bool vOnlyIfNotAlreadyDefined) {
+bool ShaderKey::SetNewCodeInReplaceCodes(const std::string& vShaderCodePartEnum,
+                                         const std::string& vName,
+                                         const std::string& vCodeToReplace,
+                                         std::string vNewCodeFromKey,
+                                         bool vOnlyIfNotAlreadyDefined) {
     bool res = false;
 
     bool canwedefine = true;
@@ -1491,7 +1553,7 @@ bool ShaderKey::SetNewCodeInReplaceCodes(const std::string& vShaderCodePartEnum,
     }
 
     if (canwedefine) {
-        puReplaceCodesByName[vShaderCodePartEnum][vName].newCode        = vCodeToReplace;
+        puReplaceCodesByName[vShaderCodePartEnum][vName].newCode = vCodeToReplace;
         puReplaceCodesByName[vShaderCodePartEnum][vName].newCodeFromKey = vNewCodeFromKey;
     }
 
@@ -1518,11 +1580,11 @@ std::vector<ct::uvec3> ShaderKey::GetErrorLineNumbersFromErrorLine(const std::st
     // ati : <glShaderSource array index>:line: -> 0:33:
 
     std::string startTag = "0(";
-    std::string endTag   = ")";
+    std::string endTag = ")";
 
     if (vLineToParse.find(startTag, 0) == std::string::npos) {
         startTag = "0:";
-        endTag   = "(:";
+        endTag = "(:";
     }
 
     while ((pos = vLineToParse.find(startTag, pos)) != std::string::npos) {
@@ -1531,7 +1593,7 @@ std::vector<ct::uvec3> ShaderKey::GetErrorLineNumbersFromErrorLine(const std::st
         if (lastPos != std::string::npos) {
             std::string errorLineStr = vLineToParse.substr(pos, lastPos - pos);
 
-            bool success         = false;
+            bool success = false;
             const auto errorLine = ct::uvariant(errorLineStr).GetU(&success);
             if (success) {
                 // ct::uvec3 => x:error line, y:start por in text, z:end pos in text
@@ -1563,8 +1625,8 @@ ErrorLine ShaderKey::ParseErrorLine(const std::string& vSectionName, const std::
 
         errorFileLine.line = ct::maxi<size_t>(errorFileLine.line - 1, 0u);
 
-        frag.file  = errorFileLine.file;
-        frag.line  = errorFileLine.line;
+        frag.file = errorFileLine.file;
+        frag.line = errorFileLine.line;
         frag.error = "(" + ct::toStr(frag.line) + ")";
         // if (!frag.error.empty())
         {
@@ -1582,29 +1644,29 @@ ErrorLine ShaderKey::ParseErrorLine(const std::string& vSectionName, const std::
         }
     } else if (locs.size() == 2) {
         ct::uvec3 loc0 = locs[0];
-        errorFileLine  = ConvertLineFromTargetToSourceForShadertype(vSectionName, loc0.x);
+        errorFileLine = ConvertLineFromTargetToSourceForShadertype(vSectionName, loc0.x);
 
-        frag.file  = errorFileLine.file;
-        frag.line  = errorFileLine.line;
+        frag.file = errorFileLine.file;
+        frag.line = errorFileLine.line;
         frag.error = "(" + ct::toStr(frag.line) + ")";
         if (!frag.error.empty()) {
             res.fragments.push_back(frag);  // le numero de ligne avec un lien de fichier
 
             ct::uvec3 loc1 = locs[1];
-            errorFileLine  = ConvertLineFromTargetToSourceForShadertype(vSectionName, loc1.x);
+            errorFileLine = ConvertLineFromTargetToSourceForShadertype(vSectionName, loc1.x);
 
-            frag       = ErrorLineFragment();
+            frag = ErrorLineFragment();
             frag.error = vErrorLine.substr(loc0.z, loc1.y - loc0.z);
             if (!frag.error.empty()) {
                 res.fragments.push_back(frag);  // l'erreur suivante
 
-                frag.file  = errorFileLine.file;
-                frag.line  = errorFileLine.line;
+                frag.file = errorFileLine.file;
+                frag.line = errorFileLine.line;
                 frag.error = "(" + ct::toStr(frag.line) + ")";
                 if (!frag.error.empty()) {
                     res.fragments.push_back(frag);  // le numero de ligne avec un lien de fichier
 
-                    frag       = ErrorLineFragment();
+                    frag = ErrorLineFragment();
                     frag.error = vErrorLine.substr(loc1.z, vErrorLine.size() - loc1.z);
                     if (!frag.error.empty()) {
                         res.fragments.push_back(frag);  // l'erreur suivante
@@ -1615,9 +1677,9 @@ ErrorLine ShaderKey::ParseErrorLine(const std::string& vSectionName, const std::
     } else  // failed to parse error line
     {
         errorFileLine = ConvertLineFromTargetToSourceForShadertype(vSectionName, 0);
-        frag.file     = errorFileLine.file;
-        frag.line     = errorFileLine.line;
-        frag.error    = vErrorLine;
+        frag.file = errorFileLine.file;
+        frag.line = errorFileLine.line;
+        frag.error = vErrorLine;
         res.fragments.push_back(frag);  // le numero de ligne avec un lien de fichier
     }
 
@@ -1637,12 +1699,18 @@ LineFileErrors ShaderKey::GetShaderErrorWithGoodLineNumbers(ShaderPtr vShader, S
             err = vShader->GetLastShaderWarningsString(vType);
 
         std::string sectionName;
-        if (vType == ShaderTypeEnum::SHADER_TYPE_VERTEX) sectionName = GetShaderTypeEnumString(ShaderTypeEnum::SHADER_TYPE_VERTEX);
-        if (vType == ShaderTypeEnum::SHADER_TYPE_GEOMETRY) sectionName = GetShaderTypeEnumString(ShaderTypeEnum::SHADER_TYPE_GEOMETRY);
-        if (vType == ShaderTypeEnum::SHADER_TYPE_TESSELATION_CONTROL) sectionName = GetShaderTypeEnumString(ShaderTypeEnum::SHADER_TYPE_TESSELATION_CONTROL);
-        if (vType == ShaderTypeEnum::SHADER_TYPE_TESSELATION_EVAL) sectionName = GetShaderTypeEnumString(ShaderTypeEnum::SHADER_TYPE_TESSELATION_EVAL);
-        if (vType == ShaderTypeEnum::SHADER_TYPE_FRAGMENT) sectionName = GetShaderTypeEnumString(ShaderTypeEnum::SHADER_TYPE_FRAGMENT);
-        if (vType == ShaderTypeEnum::SHADER_TYPE_COMPUTE) sectionName = GetShaderTypeEnumString(ShaderTypeEnum::SHADER_TYPE_COMPUTE);
+        if (vType == ShaderTypeEnum::SHADER_TYPE_VERTEX)
+            sectionName = GetShaderTypeEnumString(ShaderTypeEnum::SHADER_TYPE_VERTEX);
+        if (vType == ShaderTypeEnum::SHADER_TYPE_GEOMETRY)
+            sectionName = GetShaderTypeEnumString(ShaderTypeEnum::SHADER_TYPE_GEOMETRY);
+        if (vType == ShaderTypeEnum::SHADER_TYPE_TESSELATION_CONTROL)
+            sectionName = GetShaderTypeEnumString(ShaderTypeEnum::SHADER_TYPE_TESSELATION_CONTROL);
+        if (vType == ShaderTypeEnum::SHADER_TYPE_TESSELATION_EVAL)
+            sectionName = GetShaderTypeEnumString(ShaderTypeEnum::SHADER_TYPE_TESSELATION_EVAL);
+        if (vType == ShaderTypeEnum::SHADER_TYPE_FRAGMENT)
+            sectionName = GetShaderTypeEnumString(ShaderTypeEnum::SHADER_TYPE_FRAGMENT);
+        if (vType == ShaderTypeEnum::SHADER_TYPE_COMPUTE)
+            sectionName = GetShaderTypeEnumString(ShaderTypeEnum::SHADER_TYPE_COMPUTE);
 
         std::unordered_map<std::string, ShaderMsg> puKeyStatus;
 
@@ -1678,14 +1746,15 @@ ErrorLineFragment ShaderKey::ConvertLineFromTargetToSourceForShadertype(const st
     std::shared_ptr<SectionCode> sec = puMainSection->GetSectionCodeForTargetLine(vSectionName, vLine);
     if (sec) {
         const size_t sourceStartLine = sec->sourceCodeStartLine;
-        const size_t finalStartLine  = sec->finalCodeStartLine[vSectionName];
-        const size_t finalEndLine    = sec->finalCodeEndLine[vSectionName];
+        const size_t finalStartLine = sec->finalCodeStartLine[vSectionName];
+        const size_t finalEndLine = sec->finalCodeEndLine[vSectionName];
 
         if (finalEndLine >= finalStartLine) {
             res.line = vLine - finalStartLine + sourceStartLine;
 
             std::string fromFile = sec->relativeFile;
-            if (!m_This->puInFileBufferFromKey.empty()) fromFile = m_This->puInFileBufferFromKey;
+            if (!m_This->puInFileBufferFromKey.empty())
+                fromFile = m_This->puInFileBufferFromKey;
 
             res.file = fromFile;
 
@@ -1716,7 +1785,7 @@ std::set<std::string>* ShaderKey::GetConfigNames(const std::string& vShaderStage
     if (puConfigNames.find(vShaderStageName) != puConfigNames.end())  // found
     {
         std::string inFile = vInFileBufferName;
-        bool existing      = puConfigNames[vShaderStageName].find(inFile) != puConfigNames[vShaderStageName].end();
+        bool existing = puConfigNames[vShaderStageName].find(inFile) != puConfigNames[vShaderStageName].end();
         if (!existing) {
             inFile.clear();
             existing = puConfigNames[vShaderStageName].find(inFile) != puConfigNames[vShaderStageName].end();
@@ -1737,13 +1806,18 @@ std::set<std::string>* ShaderKey::GetConfigNames(const std::string& vShaderStage
     return res;
 }
 
-void ShaderKey::AddConfigName(const std::string& vShaderStageName, const std::string& vInFileBufferName, const std::string& vSectionName, const std::string& vConfigName, bool vPropagateToParents) {
+void ShaderKey::AddConfigName(const std::string& vShaderStageName,
+                              const std::string& vInFileBufferName,
+                              const std::string& vSectionName,
+                              const std::string& vConfigName,
+                              bool vPropagateToParents) {
     puConfigNames[vShaderStageName][vInFileBufferName][vSectionName].emplace(vConfigName);
 
     if (vPropagateToParents) {
         for (auto& usedKey : puUsedByKeys) {
             auto key = puParentCodeTree->GetKey(usedKey);  // .lock();
-            if (key) key->AddConfigName(vShaderStageName, vInFileBufferName, vSectionName, vConfigName, vPropagateToParents);
+            if (key)
+                key->AddConfigName(vShaderStageName, vInFileBufferName, vSectionName, vConfigName, vPropagateToParents);
         }
     }
 }
@@ -1760,8 +1834,9 @@ void ShaderKey::PrepareConfigsComboBox(const std::string& vInFileBufferName) {
 
 bool ShaderKey::IsThereSomeConfigs() {
     return  // on fait les shaders les plus courant en 1er
-        puVertexConfigGuiStruct.IsThereSomeConfigs() || puFragmentConfigGuiStruct.IsThereSomeConfigs() || puComputeConfigGuiStruct.IsThereSomeConfigs() || puSectionConfigGuiStruct.IsThereSomeConfigs() ||
-        puGeometryConfigGuiStruct.IsThereSomeConfigs() || puTesselationControlConfigGuiStruct.IsThereSomeConfigs() || puTesselationEvalConfigGuiStruct.IsThereSomeConfigs();
+        puVertexConfigGuiStruct.IsThereSomeConfigs() || puFragmentConfigGuiStruct.IsThereSomeConfigs() || puComputeConfigGuiStruct.IsThereSomeConfigs() ||
+        puSectionConfigGuiStruct.IsThereSomeConfigs() || puGeometryConfigGuiStruct.IsThereSomeConfigs() || puTesselationControlConfigGuiStruct.IsThereSomeConfigs() ||
+        puTesselationEvalConfigGuiStruct.IsThereSomeConfigs();
 }
 
 bool ShaderKey::DrawConfigComboBox(const std::string& vSectionType, const std::string& vInFileBufferName) {
@@ -1800,9 +1875,9 @@ std::string ShaderKey::GetSelectedConfigName(const std::string& vSectionType, co
         const std::string sectionName = GetSelectedSectionName();
 
         std::string inFile = vInFileBufferName;
-        bool existing      = puShaderConfigSelectedName[vSectionType].find(inFile) != puShaderConfigSelectedName[vSectionType].end();
+        bool existing = puShaderConfigSelectedName[vSectionType].find(inFile) != puShaderConfigSelectedName[vSectionType].end();
         if (!existing) {
-            inFile   = "";
+            inFile = "";
             existing = puShaderConfigSelectedName[vSectionType].find(inFile) != puShaderConfigSelectedName[vSectionType].end();
         }
 
@@ -1870,7 +1945,8 @@ void ShaderKey::AddSectionName(const std::string& vSectionName, bool vPropagateT
     if (vPropagateToParents) {
         for (auto& usedKey : puUsedByKeys) {
             auto key = puParentCodeTree->GetKey(usedKey);  // .lock();
-            if (key) key->AddSectionName(vSectionName, vPropagateToParents);
+            if (key)
+                key->AddSectionName(vSectionName, vPropagateToParents);
         }
     }
 }
@@ -1973,7 +2049,8 @@ void ShaderKey::AddBufferName(const std::string& vBufferName, bool vPropagateToP
     if (vPropagateToParents) {
         for (auto& usedKey : puUsedByKeys) {
             auto key = puParentCodeTree->GetKey(usedKey);  // .lock();
-            if (key) key->AddBufferName(vBufferName, vPropagateToParents);
+            if (key)
+                key->AddBufferName(vBufferName, vPropagateToParents);
         }
     }
 }
@@ -2052,7 +2129,8 @@ void ShaderKey::LoadConfigShaderFile(const std::string& vShaderFileName, const C
                         if (v != nullptr) {
                             UniformHelper::DeSerializeUniform(m_This, v, arr);
 
-                            if (v->sectionName.empty()) CTOOL_DEBUG_BREAK;
+                            if (v->sectionName.empty())
+                                CTOOL_DEBUG_BREAK;
 
                             if (puUniformSectionOpened.find(v->sectionName) == puUniformSectionOpened.end())  // non found
                             {
@@ -2078,15 +2156,22 @@ void ShaderKey::SaveConfigShaderFile(std::string vShaderFileName, CONFIG_TYPE_En
 
             if (vConfigType == CONFIG_TYPE_Enum::CONFIG_TYPE_SHADER || vConfigType == CONFIG_TYPE_Enum::CONFIG_TYPE_ALL) {
                 // sections
-                if (!puSectionArray.empty()) shaderStream += "Section:" + GetSelectedSectionName() + "\n";
+                if (!puSectionArray.empty())
+                    shaderStream += "Section:" + GetSelectedSectionName() + "\n";
 
                 // configs
-                if (puVertexConfigGuiStruct.IsThereSomeConfigs()) shaderStream += "VertexConfig:" + GetSelectedConfigName("VERTEX", puInFileBufferName) + "\n";
-                if (puGeometryConfigGuiStruct.IsThereSomeConfigs()) shaderStream += "GeomConfig:" + GetSelectedConfigName("GEOMETRY", puInFileBufferName) + "\n";
-                if (puTesselationControlConfigGuiStruct.IsThereSomeConfigs()) shaderStream += "TessControlConfig:" + GetSelectedConfigName("TESSCONTROL", puInFileBufferName) + "\n";
-                if (puTesselationEvalConfigGuiStruct.IsThereSomeConfigs()) shaderStream += "TessEvalConfig:" + GetSelectedConfigName("TESSEVAL", puInFileBufferName) + "\n";
-                if (puFragmentConfigGuiStruct.IsThereSomeConfigs()) shaderStream += "FragmentConfig:" + GetSelectedConfigName("FRAGMENT", puInFileBufferName) + "\n";
-                if (puComputeConfigGuiStruct.IsThereSomeConfigs()) shaderStream += "ComputeConfig:" + GetSelectedConfigName("COMPUTE", puInFileBufferName) + "\n";
+                if (puVertexConfigGuiStruct.IsThereSomeConfigs())
+                    shaderStream += "VertexConfig:" + GetSelectedConfigName("VERTEX", puInFileBufferName) + "\n";
+                if (puGeometryConfigGuiStruct.IsThereSomeConfigs())
+                    shaderStream += "GeomConfig:" + GetSelectedConfigName("GEOMETRY", puInFileBufferName) + "\n";
+                if (puTesselationControlConfigGuiStruct.IsThereSomeConfigs())
+                    shaderStream += "TessControlConfig:" + GetSelectedConfigName("TESSCONTROL", puInFileBufferName) + "\n";
+                if (puTesselationEvalConfigGuiStruct.IsThereSomeConfigs())
+                    shaderStream += "TessEvalConfig:" + GetSelectedConfigName("TESSEVAL", puInFileBufferName) + "\n";
+                if (puFragmentConfigGuiStruct.IsThereSomeConfigs())
+                    shaderStream += "FragmentConfig:" + GetSelectedConfigName("FRAGMENT", puInFileBufferName) + "\n";
+                if (puComputeConfigGuiStruct.IsThereSomeConfigs())
+                    shaderStream += "ComputeConfig:" + GetSelectedConfigName("COMPUTE", puInFileBufferName) + "\n";
 
                 // selected config in config switcher
                 shaderStream += "SwitcherSelectedConfig:" + puConfigSwitcherSelectedConfig + "\n";
@@ -2217,17 +2302,23 @@ SectionConfigStruct ShaderKey::GetSectionConfig(const std::string& vInFileBuffer
 void ShaderKey::AddReplacingFuncName(ShaderTypeEnum vType, size_t vStart, size_t vEnd, std::string vOldFuncName, std::string vNewFuncNames) {
     std::string sectionName;
 
-    if (vType == ShaderTypeEnum::SHADER_TYPE_VERTEX) sectionName = "VERTEX";
-    if (vType == ShaderTypeEnum::SHADER_TYPE_GEOMETRY) sectionName = "GEOMETRY";
-    if (vType == ShaderTypeEnum::SHADER_TYPE_TESSELATION_CONTROL) sectionName = "TESSCONTROL";
-    if (vType == ShaderTypeEnum::SHADER_TYPE_TESSELATION_EVAL) sectionName = "TESSEVAL";
-    if (vType == ShaderTypeEnum::SHADER_TYPE_FRAGMENT) sectionName = "FRAGMENT";
-    if (vType == ShaderTypeEnum::SHADER_TYPE_COMPUTE) sectionName = "COMPUTE";
+    if (vType == ShaderTypeEnum::SHADER_TYPE_VERTEX)
+        sectionName = "VERTEX";
+    if (vType == ShaderTypeEnum::SHADER_TYPE_GEOMETRY)
+        sectionName = "GEOMETRY";
+    if (vType == ShaderTypeEnum::SHADER_TYPE_TESSELATION_CONTROL)
+        sectionName = "TESSCONTROL";
+    if (vType == ShaderTypeEnum::SHADER_TYPE_TESSELATION_EVAL)
+        sectionName = "TESSEVAL";
+    if (vType == ShaderTypeEnum::SHADER_TYPE_FRAGMENT)
+        sectionName = "FRAGMENT";
+    if (vType == ShaderTypeEnum::SHADER_TYPE_COMPUTE)
+        sectionName = "COMPUTE";
 
     if (!sectionName.empty()) {
         ReplaceFuncNameStruct res;
-        res.start   = vStart;
-        res.end     = vEnd;
+        res.start = vStart;
+        res.end = vEnd;
         res.oldName = vOldFuncName;
         res.newName = vNewFuncNames;
 
@@ -2238,12 +2329,18 @@ void ShaderKey::AddReplacingFuncName(ShaderTypeEnum vType, size_t vStart, size_t
 void ShaderKey::RemoveReplacingFuncName(ShaderTypeEnum vType, std::string vNewFuncNames) {
     std::string sectionName;
 
-    if (vType == ShaderTypeEnum::SHADER_TYPE_VERTEX) sectionName = "VERTEX";
-    if (vType == ShaderTypeEnum::SHADER_TYPE_GEOMETRY) sectionName = "GEOMETRY";
-    if (vType == ShaderTypeEnum::SHADER_TYPE_TESSELATION_CONTROL) sectionName = "TESSCONTROL";
-    if (vType == ShaderTypeEnum::SHADER_TYPE_TESSELATION_EVAL) sectionName = "TESSEVAL";
-    if (vType == ShaderTypeEnum::SHADER_TYPE_FRAGMENT) sectionName = "FRAGMENT";
-    if (vType == ShaderTypeEnum::SHADER_TYPE_COMPUTE) sectionName = "COMPUTE";
+    if (vType == ShaderTypeEnum::SHADER_TYPE_VERTEX)
+        sectionName = "VERTEX";
+    if (vType == ShaderTypeEnum::SHADER_TYPE_GEOMETRY)
+        sectionName = "GEOMETRY";
+    if (vType == ShaderTypeEnum::SHADER_TYPE_TESSELATION_CONTROL)
+        sectionName = "TESSCONTROL";
+    if (vType == ShaderTypeEnum::SHADER_TYPE_TESSELATION_EVAL)
+        sectionName = "TESSEVAL";
+    if (vType == ShaderTypeEnum::SHADER_TYPE_FRAGMENT)
+        sectionName = "FRAGMENT";
+    if (vType == ShaderTypeEnum::SHADER_TYPE_COMPUTE)
+        sectionName = "COMPUTE";
 
     if (!sectionName.empty()) {
         std::vector<size_t> posToErase;
@@ -2295,12 +2392,12 @@ void ShaderKey::OpenFileKey() {
 UniformVariantPtr ShaderKey::CreateUniform(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed) {
     UniformVariantPtr v = nullptr;
 
-    const auto& sectionParams    = vUniformParsed.sectionParams;
-    const auto& uniformType      = vUniformParsed.type;
-    //const auto& uniformParams    = vUniformParsed.params;
-    const auto& uniformName      = vUniformParsed.name;
-    const auto& uniformArray     = vUniformParsed.array;
-    auto uniformComment          = vUniformParsed.comment;
+    const auto& sectionParams = vUniformParsed.sectionParams;
+    const auto& uniformType = vUniformParsed.type;
+    // const auto& uniformParams    = vUniformParsed.params;
+    const auto& uniformName = vUniformParsed.name;
+    const auto& uniformArray = vUniformParsed.array;
+    auto uniformComment = vUniformParsed.comment;
     const size_t& sourceCodeLine = vUniformParsed.sourceCodeLine;
 
 #ifdef DEBUG_UNIFORMS
@@ -2315,7 +2412,7 @@ UniformVariantPtr ShaderKey::CreateUniform(RenderPackWeak vRenderPack, const Uni
 
     v->noExport = vUniformParsed.noExport;
     v->SourceLinePos = sourceCodeLine;
-    v->glslType      = uType::GetGlslTypeFromString(uniformType, !uniformArray.empty());
+    v->glslType = uType::GetGlslTypeFromString(uniformType, !uniformArray.empty());
 
     if (v->glslType != uType::uTypeEnum::U_VOID) {
         switch (v->glslType) {
@@ -2370,9 +2467,10 @@ UniformVariantPtr ShaderKey::CreateUniform(RenderPackWeak vRenderPack, const Uni
 
 void ShaderKey::Complete_Uniform_Float(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 1;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else if (vUniform->widgetType == "time") {
         Complete_Uniform_Time(vRenderPack, vUniformParsed, vUniform);
@@ -2411,9 +2509,10 @@ void ShaderKey::Complete_Uniform_Float(RenderPackWeak vRenderPack, const Uniform
 
 void ShaderKey::Complete_Uniform_Vec2(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 2;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else if (vUniform->widgetType == "buffer") {
         Complete_Uniform_Buffer(vRenderPack, vUniformParsed, vUniform);
@@ -2444,9 +2543,10 @@ void ShaderKey::Complete_Uniform_Vec2(RenderPackWeak vRenderPack, const UniformP
 
 void ShaderKey::Complete_Uniform_Vec3(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 3;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else if (vUniform->widgetType == "buffer") {
         Complete_Uniform_Buffer(vRenderPack, vUniformParsed, vUniform);
@@ -2481,9 +2581,10 @@ void ShaderKey::Complete_Uniform_Vec3(RenderPackWeak vRenderPack, const UniformP
 
 void ShaderKey::Complete_Uniform_Vec4(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 4;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else if (vUniform->widgetType == "checkbox") {
         Complete_Uniform_Checkbox(vRenderPack, vUniformParsed, vUniform);
@@ -2509,9 +2610,10 @@ void ShaderKey::Complete_Uniform_Vec4(RenderPackWeak vRenderPack, const UniformP
 
 void ShaderKey::Complete_Uniform_Int(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 1;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else if (vUniform->widgetType == "combobox") {
         Complete_Uniform_Combobox(vRenderPack, vUniformParsed, vUniform);
@@ -2533,9 +2635,10 @@ void ShaderKey::Complete_Uniform_Int(RenderPackWeak vRenderPack, const UniformPa
 
 void ShaderKey::Complete_Uniform_IVec2(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 2;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else {
         Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
@@ -2544,9 +2647,10 @@ void ShaderKey::Complete_Uniform_IVec2(RenderPackWeak vRenderPack, const Uniform
 
 void ShaderKey::Complete_Uniform_IVec3(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 3;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else {
         Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
@@ -2555,9 +2659,10 @@ void ShaderKey::Complete_Uniform_IVec3(RenderPackWeak vRenderPack, const Uniform
 
 void ShaderKey::Complete_Uniform_IVec4(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 4;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else {
         Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
@@ -2566,9 +2671,10 @@ void ShaderKey::Complete_Uniform_IVec4(RenderPackWeak vRenderPack, const Uniform
 
 void ShaderKey::Complete_Uniform_UInt(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 1;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     }
 #ifdef USE_VR
@@ -2583,9 +2689,10 @@ void ShaderKey::Complete_Uniform_UInt(RenderPackWeak vRenderPack, const UniformP
 
 void ShaderKey::Complete_Uniform_UVec2(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 2;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else {
         Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
@@ -2594,9 +2701,10 @@ void ShaderKey::Complete_Uniform_UVec2(RenderPackWeak vRenderPack, const Uniform
 
 void ShaderKey::Complete_Uniform_UVec3(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 3;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else {
         Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
@@ -2605,9 +2713,10 @@ void ShaderKey::Complete_Uniform_UVec3(RenderPackWeak vRenderPack, const Uniform
 
 void ShaderKey::Complete_Uniform_UVec4(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 4;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else {
         Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
@@ -2616,9 +2725,10 @@ void ShaderKey::Complete_Uniform_UVec4(RenderPackWeak vRenderPack, const Uniform
 
 void ShaderKey::Complete_Uniform_Bool(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 1;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else if (vUniform->widgetType == "checkbox") {
         Complete_Uniform_Checkbox(vRenderPack, vUniformParsed, vUniform);
@@ -2637,9 +2747,10 @@ void ShaderKey::Complete_Uniform_Bool(RenderPackWeak vRenderPack, const UniformP
 
 void ShaderKey::Complete_Uniform_BVec2(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 2;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else if (vUniform->widgetType == "checkbox") {
         Complete_Uniform_Checkbox(vRenderPack, vUniformParsed, vUniform);
@@ -2654,9 +2765,10 @@ void ShaderKey::Complete_Uniform_BVec2(RenderPackWeak vRenderPack, const Uniform
 
 void ShaderKey::Complete_Uniform_BVec3(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 3;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else if (vUniform->widgetType == "checkbox") {
         Complete_Uniform_Checkbox(vRenderPack, vUniformParsed, vUniform);
@@ -2671,9 +2783,10 @@ void ShaderKey::Complete_Uniform_BVec3(RenderPackWeak vRenderPack, const Uniform
 
 void ShaderKey::Complete_Uniform_BVec4(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 4;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else if (vUniform->widgetType == "checkbox") {
         Complete_Uniform_Checkbox(vRenderPack, vUniformParsed, vUniform);
@@ -2688,9 +2801,10 @@ void ShaderKey::Complete_Uniform_BVec4(RenderPackWeak vRenderPack, const Uniform
 
 void ShaderKey::Complete_Uniform_Mat2(RenderPackWeak /*vRenderPack*/, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 1;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else {
         vUniform->mat2 = glm::mat2(1.0f);
@@ -2699,9 +2813,10 @@ void ShaderKey::Complete_Uniform_Mat2(RenderPackWeak /*vRenderPack*/, const Unif
 
 void ShaderKey::Complete_Uniform_Mat3(RenderPackWeak /*vRenderPack*/, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 1;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else {
         vUniform->mat3 = glm::mat3(1.0f);
@@ -2710,9 +2825,10 @@ void ShaderKey::Complete_Uniform_Mat3(RenderPackWeak /*vRenderPack*/, const Unif
 
 void ShaderKey::Complete_Uniform_Mat4(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     vUniform->count = 1;
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else if (vUniform->widgetType == "gizmo") {
         GizmoSystem::Instance()->Complete_Uniform(m_This, vRenderPack, vUniformParsed, vUniform);
@@ -2726,9 +2842,10 @@ void ShaderKey::Complete_Uniform_Mat4(RenderPackWeak vRenderPack, const UniformP
 }
 
 void ShaderKey::Complete_Uniform_Sampler1D(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else if (vUniform->widgetType == "sound") {
         SoundSystem::Instance()->Complete_Uniform(m_This, vRenderPack, vUniformParsed, vUniform);
@@ -2740,9 +2857,10 @@ void ShaderKey::Complete_Uniform_Sampler1D(RenderPackWeak vRenderPack, const Uni
 }
 
 void ShaderKey::Complete_Uniform_Sampler2D(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else if (!vUniformParsed.paramsArray.empty()) {
         if (vUniform->widgetType == "buffer") {
@@ -2764,9 +2882,10 @@ void ShaderKey::Complete_Uniform_Sampler2D(RenderPackWeak vRenderPack, const Uni
 }
 
 void ShaderKey::Complete_Uniform_Sampler3D(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else if (!vUniformParsed.paramsArray.empty()) {
         if (vUniform->widgetType == "compute") {
@@ -2778,9 +2897,10 @@ void ShaderKey::Complete_Uniform_Sampler3D(RenderPackWeak vRenderPack, const Uni
 }
 
 void ShaderKey::Complete_Uniform_SamplerCube(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
     } else if (vUniform->widgetType == "cubemap") {
         Complete_Uniform_CubeMap(vRenderPack, vUniformParsed, vUniform);
@@ -2792,11 +2912,12 @@ void ShaderKey::Complete_Uniform_SamplerCube(RenderPackWeak vRenderPack, const U
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ShaderKey::Complete_Uniform_Float_Array(RenderPackWeak /*vRenderPack*/, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
-        int count          = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
+        int count = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
         if (count > 0) {
             vUniform->count = count;
         } else {
@@ -2810,11 +2931,12 @@ void ShaderKey::Complete_Uniform_Float_Array(RenderPackWeak /*vRenderPack*/, con
 }
 
 void ShaderKey::Complete_Uniform_Int_Array(RenderPackWeak /*vRenderPack*/, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
-        int count          = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
+        int count = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
         if (count > 0) {
             vUniform->count = count;
         } else {
@@ -2828,11 +2950,12 @@ void ShaderKey::Complete_Uniform_Int_Array(RenderPackWeak /*vRenderPack*/, const
 }
 
 void ShaderKey::Complete_Uniform_Vec2_Array(RenderPackWeak /*vRenderPack*/, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
-        int count          = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
+        int count = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
         if (count > 0) {
             vUniform->count = count;
         } else {
@@ -2846,11 +2969,12 @@ void ShaderKey::Complete_Uniform_Vec2_Array(RenderPackWeak /*vRenderPack*/, cons
 }
 
 void ShaderKey::Complete_Uniform_Vec3_Array(RenderPackWeak /*vRenderPack*/, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
-        int count          = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
+        int count = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
         if (count > 0) {
             vUniform->count = count;
         } else {
@@ -2864,11 +2988,12 @@ void ShaderKey::Complete_Uniform_Vec3_Array(RenderPackWeak /*vRenderPack*/, cons
 }
 
 void ShaderKey::Complete_Uniform_Vec4_Array(RenderPackWeak /*vRenderPack*/, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
-        int count          = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
+        int count = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
         if (count > 0) {
             vUniform->count = count;
         } else {
@@ -2882,11 +3007,12 @@ void ShaderKey::Complete_Uniform_Vec4_Array(RenderPackWeak /*vRenderPack*/, cons
 }
 
 void ShaderKey::Complete_Uniform_Mat4_Array(RenderPackWeak /*vRenderPack*/, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
-        int count          = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
+        int count = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
         if (count > 0) {
             vUniform->count = count;
         } else {
@@ -2900,11 +3026,12 @@ void ShaderKey::Complete_Uniform_Mat4_Array(RenderPackWeak /*vRenderPack*/, cons
 }
 
 void ShaderKey::Complete_Uniform_Sampler1D_Array(RenderPackWeak /*vRenderPack*/, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
-        int count          = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
+        int count = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
         if (count > 0) {
             vUniform->count = count;
         } else {
@@ -2918,11 +3045,12 @@ void ShaderKey::Complete_Uniform_Sampler1D_Array(RenderPackWeak /*vRenderPack*/,
 }
 
 void ShaderKey::Complete_Uniform_Sampler2D_Array(RenderPackWeak /*vRenderPack*/, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
-        int count          = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
+        int count = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
         if (count > 0) {
             vUniform->count = count;
         } else {
@@ -2936,11 +3064,12 @@ void ShaderKey::Complete_Uniform_Sampler2D_Array(RenderPackWeak /*vRenderPack*/,
 }
 
 void ShaderKey::Complete_Uniform_Sampler3D_Array(RenderPackWeak /*vRenderPack*/, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
-        int count          = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
+        int count = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
         if (count > 0) {
             vUniform->count = count;
         } else {
@@ -2954,11 +3083,12 @@ void ShaderKey::Complete_Uniform_Sampler3D_Array(RenderPackWeak /*vRenderPack*/,
 }
 
 void ShaderKey::Complete_Uniform_SamplerCube_Array(RenderPackWeak /*vRenderPack*/, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (!vUniformParsed.paramsArray.empty()) vUniform->widgetType = vUniformParsed.paramsArray[0];
+    if (!vUniformParsed.paramsArray.empty())
+        vUniform->widgetType = vUniformParsed.paramsArray[0];
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
-        vUniform->widget   = vUniformParsed.params;
+        vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
-        int count          = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
+        int count = GetArrayCountOfCustomWidgetName(vUniformParsed.array);
         if (count > 0) {
             vUniform->count = count;
         } else {
@@ -2976,16 +3106,18 @@ void ShaderKey::Complete_Uniform_SamplerCube_Array(RenderPackWeak /*vRenderPack*
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ShaderKey::Complete_Uniform_VR(RenderPackWeak vRenderPack, const UniformParsedStruct& /*vUniformParsed*/, UniformVariantPtr vUniform) {
-    if (vRenderPack.expired() || !vUniform) return;
+    if (vRenderPack.expired() || !vUniform)
+        return;
 }
 
 void ShaderKey::Complete_Uniform_Vertex(RenderPackWeak vRenderPack, const UniformParsedStruct& /*vUniformParsed*/, UniformVariantPtr vUniform) {
-    if (vRenderPack.expired() || !vUniform) return;
+    if (vRenderPack.expired() || !vUniform)
+        return;
 
     if (vUniform->widgetType == "maxpoints")  // checkbox
     {
         vUniform->widget = "maxpoints";
-        vUniform->x      = 0.0f;
+        vUniform->x = 0.0f;
 
         auto rpPtr = vRenderPack.lock();
         if (rpPtr) {
@@ -2999,8 +3131,8 @@ void ShaderKey::Complete_Uniform_Vertex(RenderPackWeak vRenderPack, const Unifor
     } else if (vUniform->widgetType == "maxinstances")  // checkbox
     {
         vUniform->widget = "maxinstances";
-        vUniform->x      = 0.0f;
-        auto rpPtr       = vRenderPack.lock();
+        vUniform->x = 0.0f;
+        auto rpPtr = vRenderPack.lock();
         if (rpPtr) {
             auto modelPtr = rpPtr->GetModel().lock();
             if (modelPtr) {
@@ -3010,52 +3142,56 @@ void ShaderKey::Complete_Uniform_Vertex(RenderPackWeak vRenderPack, const Unifor
     }
 }
 void ShaderKey::Complete_Uniform_Geometry(RenderPackWeak vRenderPack, const UniformParsedStruct& /*vUniformParsed*/, UniformVariantPtr vUniform) {
-    if (vRenderPack.expired() || !vUniform) return;
+    if (vRenderPack.expired() || !vUniform)
+        return;
 
     if (vUniform->widgetType == "usegeometry")  // use geometry
     {
         vUniform->widget = "usegeometry";
-        vUniform->bx     = puShaderGlobalSettings.useGeometryShaderIfPresent && puIsGeometryShaderPresent;
+        vUniform->bx = puShaderGlobalSettings.useGeometryShaderIfPresent && puIsGeometryShaderPresent;
     }
 }
 void ShaderKey::Complete_Uniform_Tesselation(RenderPackWeak vRenderPack, const UniformParsedStruct& /*vUniformParsed*/, UniformVariantPtr vUniform) {
-    if (vRenderPack.expired() || !vUniform) return;
+    if (vRenderPack.expired() || !vUniform)
+        return;
 
     if (vUniform->widgetType == "usetesscontrol")  // use tesselation control
     {
         vUniform->widget = "usetesscontrol";
-        vUniform->bx     = puShaderGlobalSettings.useTesselationShaderIfPresent && puIsTesselationControlShaderPresent;
+        vUniform->bx = puShaderGlobalSettings.useTesselationShaderIfPresent && puIsTesselationControlShaderPresent;
     } else if (vUniform->widgetType == "usetesseval")  // use tesselation eval
     {
         vUniform->widget = "usetesseval";
-        vUniform->bx     = puShaderGlobalSettings.useTesselationShaderIfPresent && puIsTesselationEvalShaderPresent;
+        vUniform->bx = puShaderGlobalSettings.useTesselationShaderIfPresent && puIsTesselationEvalShaderPresent;
     }
 }
 
 void ShaderKey::Complete_Uniform_Shadertoy(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (vRenderPack.expired() || !vUniform) return;
+    if (vRenderPack.expired() || !vUniform)
+        return;
 
     if (vUniform->widgetType == "deltatime")  // widget deltatime
     {
         // evite le listing de cet uniform sauf si un widget dedie est prevu
         vUniform->widget = "deltatime";
-        vUniform->x      = 0.0f;
+        vUniform->x = 0.0f;
     } else if (vUniform->widgetType == "date") {
         vUniform->widget = vUniformParsed.params;
-        vUniform->x      = 0.0f;
-        vUniform->y      = 0.0f;
-        vUniform->z      = 0.0f;
-        vUniform->w      = 0.0f;
+        vUniform->x = 0.0f;
+        vUniform->y = 0.0f;
+        vUniform->z = 0.0f;
+        vUniform->w = 0.0f;
     } else if (vUniform->widgetType == "frame")  // widget deltatime
     {
         // evite le listing de cet uniform sauf si un widget d�di� est pr�vu
         vUniform->widget = vUniform->widgetType;
-        vUniform->ix     = 0;
+        vUniform->ix = 0;
     }
 }
 
 void ShaderKey::Complete_Uniform_Camera(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (vRenderPack.expired() || !vUniform) return;
+    if (vRenderPack.expired() || !vUniform)
+        return;
 
     vUniform->widget = vUniformParsed.params;
     if (vUniformParsed.paramsArray.size() > 1) {
@@ -3063,37 +3199,39 @@ void ShaderKey::Complete_Uniform_Camera(RenderPackWeak vRenderPack, const Unifor
             vUniform->widget = "camera:mvp";
             if (vUniformParsed.paramsArray.size() > 2) {
                 vUniform->camDefRotXY = ct::fvec2(vUniformParsed.paramsArray[2], ',');
-                vUniform->camRotXY    = vUniform->camDefRotXY;
+                vUniform->camRotXY = vUniform->camDefRotXY;
             }
             if (vUniformParsed.paramsArray.size() > 3) {
                 vUniform->camDefZoom = ct::fvariant(vUniformParsed.paramsArray[3]).GetF();
-                vUniform->camZoom    = vUniform->camDefZoom;
+                vUniform->camZoom = vUniform->camDefZoom;
             }
             if (vUniformParsed.paramsArray.size() > 4) {
                 vUniform->camDefTranslateXYZ = ct::fvec3(vUniformParsed.paramsArray[4], ',');
-                vUniform->camTranslateXYZ    = vUniform->camDefTranslateXYZ;
+                vUniform->camTranslateXYZ = vUniform->camDefTranslateXYZ;
             }
         }
     }
 }
 
 void ShaderKey::Complete_Uniform_Mouse(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (vRenderPack.expired() || !vUniform) return;
+    if (vRenderPack.expired() || !vUniform)
+        return;
 
-    vUniform->widget            = vUniformParsed.params;
-    vUniform->x                 = 0.0f;
-    vUniform->y                 = 0.0f;
-    vUniform->z                 = 0.0f;
-    vUniform->w                 = 0.0f;
+    vUniform->widget = vUniformParsed.params;
+    vUniform->x = 0.0f;
+    vUniform->y = 0.0f;
+    vUniform->z = 0.0f;
+    vUniform->w = 0.0f;
     vUniform->timeLineSupported = true;
 }
 
 void ShaderKey::Complete_Uniform_Slider(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (vRenderPack.expired() || !vUniform) return;
+    if (vRenderPack.expired() || !vUniform)
+        return;
 
     vUniform->timeLineSupported = true;
-    vUniform->count             = uType::GetCountChannelForType(vUniform->glslType);
-    
+    vUniform->count = uType::GetCountChannelForType(vUniform->glslType);
+
     if (!vUniformParsed.params.empty()) {
         std::vector<std::string> arr = ct::splitStringToVector(vUniformParsed.params, ":");
         if (vUniform->count)  // slider
@@ -3156,43 +3294,45 @@ void ShaderKey::Complete_Uniform_Slider(RenderPackWeak vRenderPack, const Unifor
 }
 
 void ShaderKey::Complete_Uniform_Color(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (vRenderPack.expired() || !vUniform) return;
+    if (vRenderPack.expired() || !vUniform)
+        return;
 
-    vUniform->widget            = "color";
+    vUniform->widget = "color";
     vUniform->timeLineSupported = true;
 
     if (vUniform->glslType == uType::uTypeEnum::U_VEC3) {
         if (vUniformParsed.paramsArray.size() > 1) {
             vUniform->def = ct::fvec4(vUniformParsed.paramsArray[1], ',', vUniform->count);
-            vUniform->x   = vUniform->def.x;
-            vUniform->y   = vUniform->def.y;
-            vUniform->z   = vUniform->def.z;
+            vUniform->x = vUniform->def.x;
+            vUniform->y = vUniform->def.y;
+            vUniform->z = vUniform->def.z;
         }
     } else if (vUniform->glslType == uType::uTypeEnum::U_VEC4) {
         if (vUniformParsed.paramsArray.size() > 1) {
             vUniform->def = ct::fvec4(vUniformParsed.paramsArray[1], ',', vUniform->count);
-            vUniform->x   = vUniform->def.x;
-            vUniform->y   = vUniform->def.y;
-            vUniform->z   = vUniform->def.z;
-            vUniform->w   = vUniform->def.w;
+            vUniform->x = vUniform->def.x;
+            vUniform->y = vUniform->def.y;
+            vUniform->z = vUniform->def.z;
+            vUniform->w = vUniform->def.w;
         }
     }
 }
 
 void ShaderKey::Complete_Uniform_Time(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (vRenderPack.expired() || !vUniform) return;
+    if (vRenderPack.expired() || !vUniform)
+        return;
 
-    vUniform->widget            = "time";
+    vUniform->widget = "time";
     vUniform->timeLineSupported = true;
 
     if (vUniform->glslType == uType::uTypeEnum::U_FLOAT) {
         for (size_t i = 1; i < vUniformParsed.paramsArray.size(); ++i) {
             auto& valStr = vUniformParsed.paramsArray[i];
             if (valStr == "true") {
-                vUniform->bx    = true;
+                vUniform->bx = true;
                 vUniform->def.x = 1.0f;
             } else if (valStr == "false") {
-                vUniform->bx    = false;
+                vUniform->bx = false;
                 vUniform->def.x = 0.0f;
             } else {
                 // def.y contain the period
@@ -3203,7 +3343,8 @@ void ShaderKey::Complete_Uniform_Time(RenderPackWeak vRenderPack, const UniformP
 }
 
 void ShaderKey::Complete_Uniform_Text(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (vRenderPack.expired() || !vUniform) return;
+    if (vRenderPack.expired() || !vUniform)
+        return;
 
     vUniform->widget = "text";
 
@@ -3215,9 +3356,10 @@ void ShaderKey::Complete_Uniform_Text(RenderPackWeak vRenderPack, const UniformP
 }
 
 void ShaderKey::Complete_Uniform_Radio(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (vRenderPack.expired() || !vUniform) return;
+    if (vRenderPack.expired() || !vUniform)
+        return;
 
-    vUniform->widget            = "radio";
+    vUniform->widget = "radio";
     vUniform->timeLineSupported = true;
 
     if (vUniform->glslType == uType::uTypeEnum::U_VEC2 || vUniform->glslType == uType::uTypeEnum::U_BVEC2) {
@@ -3225,8 +3367,10 @@ void ShaderKey::Complete_Uniform_Radio(RenderPackWeak vRenderPack, const Uniform
         vUniform->by = false;
         if (vUniformParsed.paramsArray.size() == 2) {
             const int i = ct::fvariant(vUniformParsed.paramsArray[1]).GetI();
-            if (i == 0) vUniform->bx = true;
-            if (i == 1) vUniform->by = true;
+            if (i == 0)
+                vUniform->bx = true;
+            if (i == 1)
+                vUniform->by = true;
         } else {
             vUniform->bx = true;
         }
@@ -3238,9 +3382,12 @@ void ShaderKey::Complete_Uniform_Radio(RenderPackWeak vRenderPack, const Uniform
         vUniform->bz = false;
         if (vUniformParsed.paramsArray.size() == 2) {
             const int i = ct::fvariant(vUniformParsed.paramsArray[1]).GetI();
-            if (i == 0) vUniform->bx = true;
-            if (i == 1) vUniform->by = true;
-            if (i == 2) vUniform->bz = true;
+            if (i == 0)
+                vUniform->bx = true;
+            if (i == 1)
+                vUniform->by = true;
+            if (i == 2)
+                vUniform->bz = true;
         } else {
             vUniform->bx = true;
         }
@@ -3254,10 +3401,14 @@ void ShaderKey::Complete_Uniform_Radio(RenderPackWeak vRenderPack, const Uniform
         vUniform->bw = false;
         if (vUniformParsed.paramsArray.size() == 2) {
             const int i = ct::fvariant(vUniformParsed.paramsArray[1]).GetI();
-            if (i == 0) vUniform->bx = true;
-            if (i == 1) vUniform->by = true;
-            if (i == 2) vUniform->bz = true;
-            if (i == 3) vUniform->bw = true;
+            if (i == 0)
+                vUniform->bx = true;
+            if (i == 1)
+                vUniform->by = true;
+            if (i == 2)
+                vUniform->bz = true;
+            if (i == 3)
+                vUniform->bw = true;
         } else {
             vUniform->bx = true;
         }
@@ -3269,11 +3420,12 @@ void ShaderKey::Complete_Uniform_Radio(RenderPackWeak vRenderPack, const Uniform
 }
 
 void ShaderKey::Complete_Uniform_Button(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (vRenderPack.expired() || !vUniform) return;
+    if (vRenderPack.expired() || !vUniform)
+        return;
 
-    vUniform->widget            = "button";
+    vUniform->widget = "button";
     vUniform->timeLineSupported = false;
-    vUniform->canWeSave         = false;
+    vUniform->canWeSave = false;
 
     vUniform->bx = false;
     vUniform->by = false;
@@ -3283,46 +3435,57 @@ void ShaderKey::Complete_Uniform_Button(RenderPackWeak vRenderPack, const Unifor
     if (vUniform->glslType == uType::uTypeEnum::U_FLOAT || vUniform->glslType == uType::uTypeEnum::U_BOOL) {
         if (vUniformParsed.originalParamsArray.size() == 2) {
             auto arr = ct::splitStringToVector(vUniformParsed.originalParamsArray[1], ',');
-            if (!arr.empty()) vUniform->buttonName0 = arr[0];
+            if (!arr.empty())
+                vUniform->buttonName0 = arr[0];
         }
     } else if (vUniform->glslType == uType::uTypeEnum::U_VEC2 || vUniform->glslType == uType::uTypeEnum::U_BVEC2) {
         if (vUniformParsed.originalParamsArray.size() == 2) {
             auto arr = ct::splitStringToVector(vUniformParsed.originalParamsArray[1], ',');
-            if (!arr.empty()) vUniform->buttonName0 = arr[0];
-            if (arr.size() > 1) vUniform->buttonName1 = arr[1];
+            if (!arr.empty())
+                vUniform->buttonName0 = arr[0];
+            if (arr.size() > 1)
+                vUniform->buttonName1 = arr[1];
         }
     } else if (vUniform->glslType == uType::uTypeEnum::U_VEC3 || vUniform->glslType == uType::uTypeEnum::U_BVEC3) {
         if (vUniformParsed.originalParamsArray.size() == 2) {
             auto arr = ct::splitStringToVector(vUniformParsed.originalParamsArray[1], ',');
-            if (!arr.empty()) vUniform->buttonName0 = arr[0];
-            if (arr.size() > 1) vUniform->buttonName1 = arr[1];
-            if (arr.size() > 2) vUniform->buttonName2 = arr[2];
+            if (!arr.empty())
+                vUniform->buttonName0 = arr[0];
+            if (arr.size() > 1)
+                vUniform->buttonName1 = arr[1];
+            if (arr.size() > 2)
+                vUniform->buttonName2 = arr[2];
         }
     } else if (vUniform->glslType == uType::uTypeEnum::U_VEC4 || vUniform->glslType == uType::uTypeEnum::U_BVEC4) {
         if (vUniformParsed.originalParamsArray.size() == 2) {
             auto arr = ct::splitStringToVector(vUniformParsed.originalParamsArray[1], ',');
-            if (!arr.empty()) vUniform->buttonName0 = arr[0];
-            if (arr.size() > 1) vUniform->buttonName1 = arr[1];
-            if (arr.size() > 2) vUniform->buttonName2 = arr[2];
-            if (arr.size() > 3) vUniform->buttonName3 = arr[3];
+            if (!arr.empty())
+                vUniform->buttonName0 = arr[0];
+            if (arr.size() > 1)
+                vUniform->buttonName1 = arr[1];
+            if (arr.size() > 2)
+                vUniform->buttonName2 = arr[2];
+            if (arr.size() > 3)
+                vUniform->buttonName3 = arr[3];
         }
     }
 }
 void ShaderKey::Complete_Uniform_Combobox(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (vRenderPack.expired() || !vUniform) return;
+    if (vRenderPack.expired() || !vUniform)
+        return;
 
     vUniform->widget = "combobox";
     if (vUniformParsed.originalParamsArray.size() > 1) {
         // std::string str;
         // size_t len = 0;
         vUniform->choices = ct::splitStringToVector(vUniformParsed.originalParamsArray[1], ",");
-        vUniform->ix      = 0;
+        vUniform->ix = 0;
     }
     if (vUniformParsed.originalParamsArray.size() > 2) {
         const std::string key = vUniformParsed.originalParamsArray[2];
 
         bool found = false;
-        int idx    = 0;
+        int idx = 0;
         for (auto it = vUniform->choices.begin(); it != vUniform->choices.end(); ++it) {
             if (*it == key) {
                 found = true;
@@ -3333,16 +3496,17 @@ void ShaderKey::Complete_Uniform_Combobox(RenderPackWeak vRenderPack, const Unif
         }
         if (found) {
             vUniform->def.x = (float)idx;
-            vUniform->ix    = idx;
+            vUniform->ix = idx;
         }
     }
     vUniform->timeLineSupported = true;
 }
 
 void ShaderKey::Complete_Uniform_Checkbox(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (vRenderPack.expired() || !vUniform) return;
+    if (vRenderPack.expired() || !vUniform)
+        return;
 
-    vUniform->widget            = "checkbox";
+    vUniform->widget = "checkbox";
     vUniform->timeLineSupported = true;
 
     if (vUniform->glslType == uType::uTypeEnum::U_FLOAT || vUniform->glslType == uType::uTypeEnum::U_BOOL) {
@@ -3350,7 +3514,8 @@ void ShaderKey::Complete_Uniform_Checkbox(RenderPackWeak vRenderPack, const Unif
         if (vUniformParsed.paramsArray.size() == 2)  // vec3 or bvec3(checkbox:false)
         {
             auto arr = ct::splitStringToVector(vUniformParsed.paramsArray[1], ',');
-            if (!arr.empty()) vUniform->bx = ct::ivariant(arr[0]).GetB();
+            if (!arr.empty())
+                vUniform->bx = ct::ivariant(arr[0]).GetB();
         }
         vUniform->bdef.x = vUniform->bx;
     } else if (vUniform->glslType == uType::uTypeEnum::U_VEC2 || vUniform->glslType == uType::uTypeEnum::U_BVEC2) {
@@ -3359,8 +3524,10 @@ void ShaderKey::Complete_Uniform_Checkbox(RenderPackWeak vRenderPack, const Unif
         if (vUniformParsed.paramsArray.size() == 2)  // vec3 or bvec3(checkbox:false)
         {
             auto arr = ct::splitStringToVector(vUniformParsed.paramsArray[1], ',');
-            if (!arr.empty()) vUniform->bx = ct::ivariant(arr[0]).GetB();
-            if (arr.size() > 1) vUniform->by = ct::ivariant(arr[1]).GetB();
+            if (!arr.empty())
+                vUniform->bx = ct::ivariant(arr[0]).GetB();
+            if (arr.size() > 1)
+                vUniform->by = ct::ivariant(arr[1]).GetB();
         }
         vUniform->bdef.x = vUniform->bx;
         vUniform->bdef.y = vUniform->by;
@@ -3371,9 +3538,12 @@ void ShaderKey::Complete_Uniform_Checkbox(RenderPackWeak vRenderPack, const Unif
         if (vUniformParsed.paramsArray.size() == 2)  // vec3 or bvec3(checkbox:false)
         {
             auto arr = ct::splitStringToVector(vUniformParsed.paramsArray[1], ',');
-            if (!arr.empty()) vUniform->bx = ct::ivariant(arr[0]).GetB();
-            if (arr.size() > 1) vUniform->by = ct::ivariant(arr[1]).GetB();
-            if (arr.size() > 2) vUniform->bz = ct::ivariant(arr[2]).GetB();
+            if (!arr.empty())
+                vUniform->bx = ct::ivariant(arr[0]).GetB();
+            if (arr.size() > 1)
+                vUniform->by = ct::ivariant(arr[1]).GetB();
+            if (arr.size() > 2)
+                vUniform->bz = ct::ivariant(arr[2]).GetB();
         }
         vUniform->bdef.x = vUniform->bx;
         vUniform->bdef.y = vUniform->by;
@@ -3386,10 +3556,14 @@ void ShaderKey::Complete_Uniform_Checkbox(RenderPackWeak vRenderPack, const Unif
         if (vUniformParsed.paramsArray.size() == 2)  // vec4 or bvec4(checkbox:false)
         {
             auto arr = ct::splitStringToVector(vUniformParsed.paramsArray[1], ',');
-            if (!arr.empty()) vUniform->bx = ct::ivariant(arr[0]).GetB();
-            if (arr.size() > 1) vUniform->by = ct::ivariant(arr[1]).GetB();
-            if (arr.size() > 2) vUniform->bz = ct::ivariant(arr[2]).GetB();
-            if (arr.size() > 3) vUniform->bw = ct::ivariant(arr[3]).GetB();
+            if (!arr.empty())
+                vUniform->bx = ct::ivariant(arr[0]).GetB();
+            if (arr.size() > 1)
+                vUniform->by = ct::ivariant(arr[1]).GetB();
+            if (arr.size() > 2)
+                vUniform->bz = ct::ivariant(arr[2]).GetB();
+            if (arr.size() > 3)
+                vUniform->bw = ct::ivariant(arr[3]).GetB();
         }
         vUniform->bdef.x = vUniform->bx;
         vUniform->bdef.y = vUniform->by;
@@ -3399,9 +3573,10 @@ void ShaderKey::Complete_Uniform_Checkbox(RenderPackWeak vRenderPack, const Unif
 }
 
 void ShaderKey::Complete_Uniform_Buffer(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    if (vRenderPack.expired() || !vUniform) return;
+    if (vRenderPack.expired() || !vUniform)
+        return;
 
-    vUniform->widget     = "buffer";
+    vUniform->widget = "buffer";
     vUniform->attachment = 0;
 
     const bool bufferConfigExist = false;
@@ -3417,9 +3592,10 @@ void ShaderKey::Complete_Uniform_Buffer(RenderPackWeak vRenderPack, const Unifor
         if (key == "choice") {
             if (it->second.size() == 1) {
                 vUniform->bufferShaderName = *it->second.begin();
-                auto rpPtr                 = vRenderPack.lock();
+                auto rpPtr = vRenderPack.lock();
                 if (rpPtr) {
-                    if (rpPtr->puName == vUniform->bufferShaderName) vUniform->bufferShaderName.clear();
+                    if (rpPtr->puName == vUniform->bufferShaderName)
+                        vUniform->bufferShaderName.clear();
                 }
             }
 
@@ -3430,14 +3606,15 @@ void ShaderKey::Complete_Uniform_Buffer(RenderPackWeak vRenderPack, const Unifor
             if (it->second.size() == 1) {
                 vUniform->inFileBufferName = *it->second.begin();
                 vUniform->bufferShaderName = puKey;
-                auto rpPtr                 = vRenderPack.lock();
+                auto rpPtr = vRenderPack.lock();
                 if (rpPtr) {
                     if (rpPtr->GetShaderKey()) {
                         if (!rpPtr->GetShaderKey()->puInFileBufferFromKey.empty()) {
                             vUniform->bufferShaderName = rpPtr->GetShaderKey()->puInFileBufferFromKey;
                         }
                     }
-                    if (rpPtr->puName == vUniform->inFileBufferName) vUniform->inFileBufferName.clear();
+                    if (rpPtr->puName == vUniform->inFileBufferName)
+                        vUniform->inFileBufferName.clear();
                 }
             }
         }
@@ -3479,7 +3656,8 @@ void ShaderKey::Complete_Uniform_Buffer_With_Buffer(RenderPackWeak vRenderPack, 
                 auto rpPtr = vRenderPack.lock();
                 if (rpPtr) {
                     const auto rp = rpPtr->CreateChildBuffer(vUniform->name, vUniform->bufferShaderName, vUniform->inFileBufferName);
-                    if (rp) vUniform->bufferShaderName = rp->puName;
+                    if (rp)
+                        vUniform->bufferShaderName = rp->puName;
                 }
                 vUniform->pipe = nullptr;
             } else  // une config pour ce buffer
@@ -3513,12 +3691,14 @@ void ShaderKey::Complete_Uniform_Buffer_With_Buffer(RenderPackWeak vRenderPack, 
                         }
 
                         GLenum mag = GL_LINEAR;
-                        if (vUniform->filter == "linear") mag = GL_LINEAR;
-                        if (vUniform->filter == "nearest") mag = GL_NEAREST;
+                        if (vUniform->filter == "linear")
+                            mag = GL_LINEAR;
+                        if (vUniform->filter == "nearest")
+                            mag = GL_NEAREST;
 
                         rpPtr->puTexParams.useMipMap = (int)vUniform->mipmap;
-                        rpPtr->puTexParams.wrapS     = wrap;
-                        rpPtr->puTexParams.wrapT     = wrap;
+                        rpPtr->puTexParams.wrapS = wrap;
+                        rpPtr->puTexParams.wrapT = wrap;
                         rpPtr->puTexParams.minFilter = min;
                         rpPtr->puTexParams.magFilter = mag;
                     }
@@ -3534,7 +3714,7 @@ void ShaderKey::Complete_Uniform_Buffer_With_Buffer(RenderPackWeak vRenderPack, 
 }
 
 void ShaderKey::Complete_Uniform_Picture(RenderPackWeak /*vRenderPack*/, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    vUniform->widget     = "picture";
+    vUniform->widget = "picture";
     vUniform->attachment = 0;
 
     // default params
@@ -3570,7 +3750,7 @@ void ShaderKey::Complete_Uniform_Picture(RenderPackWeak /*vRenderPack*/, const U
             vUniform->textureChoiceActivated = false;
         } else if (key == "flip") {
             if (it->second.size() == 1) {
-                vUniform->flip                 = ct::fvariant(*it->second.begin()).GetB();
+                vUniform->flip = ct::fvariant(*it->second.begin()).GetB();
                 vUniform->textureFlipChoosebox = false;
             } else {
                 // une choose box a afficher
@@ -3578,7 +3758,7 @@ void ShaderKey::Complete_Uniform_Picture(RenderPackWeak /*vRenderPack*/, const U
             }
         } else if (key == "wrap") {
             if (it->second.size() == 1) {
-                vUniform->wrap                 = *it->second.begin();
+                vUniform->wrap = *it->second.begin();
                 vUniform->textureWrapChoosebox = false;
             } else {
                 // une choose box a afficher
@@ -3586,7 +3766,7 @@ void ShaderKey::Complete_Uniform_Picture(RenderPackWeak /*vRenderPack*/, const U
             }
         } else if (key == "filter") {
             if (it->second.size() == 1) {
-                vUniform->filter                 = *it->second.begin();
+                vUniform->filter = *it->second.begin();
                 vUniform->textureFilterChoosebox = false;
             } else {
                 // une choose box a afficher
@@ -3594,7 +3774,7 @@ void ShaderKey::Complete_Uniform_Picture(RenderPackWeak /*vRenderPack*/, const U
             }
         } else if (key == "mipmap") {
             if (it->second.size() == 1) {
-                vUniform->mipmap                 = ct::fvariant(*it->second.begin()).GetB();
+                vUniform->mipmap = ct::fvariant(*it->second.begin()).GetB();
                 vUniform->textureMipmapChoosebox = false;
             } else {
                 // une choose box a afficher
@@ -3618,9 +3798,11 @@ void ShaderKey::Complete_Uniform_Picture_With_Texture(UniformVariantPtr vUniform
         if (vUniform->target.empty()) {
             if (!vUniform->filePathNames.empty()) {
                 std::string _filepathName = vUniform->filePathNames[0];
-                if (!FileHelper::Instance()->IsFileExist(_filepathName, true)) _filepathName = FileHelper::Instance()->GetAbsolutePathForFileLocation(_filepathName, (int)FILE_LOCATION_Enum::FILE_LOCATION_ASSET_TEXTURE_2D);
+                if (!FileHelper::Instance()->IsFileExist(_filepathName, true))
+                    _filepathName = FileHelper::Instance()->GetAbsolutePathForFileLocation(_filepathName, (int)FILE_LOCATION_Enum::FILE_LOCATION_ASSET_TEXTURE_2D);
 
-                vUniform->texture_ptr = Texture2D::createFromFile(_filepathName.c_str(), GL_TEXTURE_2D, vUniform->flip, vUniform->mipmap, vUniform->wrap, vUniform->filter);
+                vUniform->texture_ptr =
+                    Texture2D::createFromFile(_filepathName.c_str(), GL_TEXTURE_2D, vUniform->flip, vUniform->mipmap, vUniform->wrap, vUniform->filter);
             } else {
                 vUniform->texture_ptr = Texture2D::createEmpty(GL_TEXTURE_2D);
             }
@@ -3658,7 +3840,7 @@ void ShaderKey::Complete_Uniform_Depth(RenderPackWeak /*vRenderPack*/, const Uni
 }
 
 void ShaderKey::Complete_Uniform_Volume(RenderPackWeak /*vRenderPack*/, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    vUniform->widget     = "volume";
+    vUniform->widget = "volume";
     vUniform->attachment = 0;
 
     for (auto it = vUniformParsed.paramsDico.begin(); it != vUniformParsed.paramsDico.end(); ++it) {
@@ -3697,7 +3879,8 @@ void ShaderKey::Complete_Uniform_Volume(RenderPackWeak /*vRenderPack*/, const Un
 
     if (!vUniform->filePathNames.empty()) {
         std::string _filepathName = vUniform->filePathNames[0];
-        if (!FileHelper::Instance()->IsFileExist(_filepathName, true)) _filepathName = FileHelper::Instance()->GetAbsolutePathForFileLocation(_filepathName, (int)FILE_LOCATION_Enum::FILE_LOCATION_ASSET_TEXTURE_3D);
+        if (!FileHelper::Instance()->IsFileExist(_filepathName, true))
+            _filepathName = FileHelper::Instance()->GetAbsolutePathForFileLocation(_filepathName, (int)FILE_LOCATION_Enum::FILE_LOCATION_ASSET_TEXTURE_3D);
 
         vUniform->volume_ptr = Texture3D::createFromFile(_filepathName.c_str(), vUniform->volumeFormat, vUniform->mipmap, vUniform->wrap, vUniform->filter);
 
@@ -3706,7 +3889,7 @@ void ShaderKey::Complete_Uniform_Volume(RenderPackWeak /*vRenderPack*/, const Un
 
             if (vUniform->glslType == uType::uTypeEnum::U_SAMPLER3D) {
                 vUniform->uSampler3D = vUniform->volume_ptr->getBack()->glTex;
-                vUniform->uImage3D   = vUniform->volume_ptr->getFront()->glTex;
+                vUniform->uImage3D = vUniform->volume_ptr->getFront()->glTex;
             } else if (vUniform->glslType == uType::uTypeEnum::U_VEC3) {
                 vUniform->x = (float)vUniform->volume_ptr->getSize().x;
                 vUniform->y = (float)vUniform->volume_ptr->getSize().y;
@@ -3725,7 +3908,7 @@ void ShaderKey::Complete_Uniform_Compute(RenderPackWeak vRenderPack, const Unifo
         // on cree une texture dans un compute
         // uniform sampler3D(compute:format=rgba32f:flip=true:wrap=repeat:filter=nearest:loc=0) uTexSDf;
 
-        vUniform->widget     = "compute";
+        vUniform->widget = "compute";
         vUniform->attachment = 0;
 
         for (auto it = vUniformParsed.paramsDico.begin(); it != vUniformParsed.paramsDico.end(); ++it) {
@@ -3779,19 +3962,21 @@ void ShaderKey::Complete_Uniform_Compute(RenderPackWeak vRenderPack, const Unifo
                         if (uni) {
                             // vUniform->volume_ptr = uni->volume;
                             // vUniform->ownVolume = false;
-                            if (uni->volume_ptr) vUniform->uSampler3D = uni->volume_ptr->getBack()->glTex;
+                            if (uni->volume_ptr)
+                                vUniform->uSampler3D = uni->volume_ptr->getBack()->glTex;
                         }
                     }
                 }
             } else  // on cree une texture 3d vide
             {
-                vUniform->volume_ptr = Texture3D::createComputeVolume(vUniform->volumeFormat, rpPtr->puSectionConfig.computeConfig.size, vUniform->mipmap, vUniform->wrap, vUniform->filter);
+                vUniform->volume_ptr =
+                    Texture3D::createComputeVolume(vUniform->volumeFormat, rpPtr->puSectionConfig.computeConfig.size, vUniform->mipmap, vUniform->wrap, vUniform->filter);
 
                 if (vUniform->volume_ptr) {
                     vUniform->ownVolume = true;
 
-                    vUniform->uSampler3D           = vUniform->volume_ptr->getBack()->glTex;
-                    vUniform->uImage3D             = vUniform->volume_ptr->getFront()->glTex;
+                    vUniform->uSampler3D = vUniform->volume_ptr->getBack()->glTex;
+                    vUniform->uImage3D = vUniform->volume_ptr->getFront()->glTex;
                     vUniform->computeTextureFormat = vUniform->volume_ptr->getBack()->glinternalformat;
                 }
             }
@@ -3805,20 +3990,21 @@ void ShaderKey::Complete_Uniform_Compute(RenderPackWeak vRenderPack, const Unifo
                         if (uni) {
                             // vUniform->texture_ptr = uni->texture;
                             // vUniform->ownTexture = false;
-                            if (uni->texture_ptr) vUniform->uSampler2D = uni->texture_ptr->getBack()->glTex;
+                            if (uni->texture_ptr)
+                                vUniform->uSampler2D = uni->texture_ptr->getBack()->glTex;
                         }
                     }
                 }
             } else  // on cree une texture 2d vide
             {
-                ct::ivec3 size        = rpPtr->puSectionConfig.computeConfig.size;
+                ct::ivec3 size = rpPtr->puSectionConfig.computeConfig.size;
                 vUniform->texture_ptr = Texture2D::createComputeTexture(vUniform->volumeFormat, size.xy(), vUniform->mipmap, vUniform->wrap, vUniform->filter);
 
                 if (vUniform->texture_ptr) {
                     vUniform->ownTexture = true;
 
-                    vUniform->uSampler2D           = vUniform->texture_ptr->getBack()->glTex;
-                    vUniform->uImage2D             = vUniform->texture_ptr->getFront()->glTex;
+                    vUniform->uSampler2D = vUniform->texture_ptr->getBack()->glTex;
+                    vUniform->uImage2D = vUniform->texture_ptr->getFront()->glTex;
                     vUniform->computeTextureFormat = vUniform->texture_ptr->getBack()->glinternalformat;
                 }
             }
@@ -3831,9 +4017,9 @@ void ShaderKey::Complete_Uniform_Compute(RenderPackWeak vRenderPack, const Unifo
                         if (uni) {
                             if (uni->volume_ptr) {
                                 const ct::ivec3 size = uni->volume_ptr->getSize();
-                                vUniform->x          = (float)size.x;
-                                vUniform->y          = (float)size.y;
-                                vUniform->z          = (float)size.z;
+                                vUniform->x = (float)size.x;
+                                vUniform->y = (float)size.y;
+                                vUniform->z = (float)size.z;
                             }
                         }
                     }
@@ -3852,8 +4038,8 @@ void ShaderKey::Complete_Uniform_Compute(RenderPackWeak vRenderPack, const Unifo
                         if (uni) {
                             if (uni->texture_ptr) {
                                 const ct::ivec2 size = uni->texture_ptr->getSize();
-                                vUniform->x          = (float)size.x;
-                                vUniform->y          = (float)size.y;
+                                vUniform->x = (float)size.x;
+                                vUniform->y = (float)size.y;
                             }
                         }
                     }
@@ -3867,7 +4053,7 @@ void ShaderKey::Complete_Uniform_Compute(RenderPackWeak vRenderPack, const Unifo
 }
 
 void ShaderKey::Complete_Uniform_CubeMap(RenderPackWeak /*vRenderPack*/, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
-    vUniform->widget     = "cubemap";
+    vUniform->widget = "cubemap";
     vUniform->attachment = 0;
 
     for (auto it = vUniformParsed.paramsDico.begin(); it != vUniformParsed.paramsDico.end(); ++it) {
@@ -3901,10 +4087,11 @@ void ShaderKey::Complete_Uniform_CubeMap(RenderPackWeak /*vRenderPack*/, const U
     }
 
     if (vUniform->filePathNames.size() == 6) {
-        vUniform->cubemap_ptr = TextureCube::create(FileHelper::Instance()->GetAbsolutePathForFileLocation(vUniform->filePathNames, (int)FILE_LOCATION_Enum::FILE_LOCATION_ASSET_CUBEMAP));
+        vUniform->cubemap_ptr =
+            TextureCube::create(FileHelper::Instance()->GetAbsolutePathForFileLocation(vUniform->filePathNames, (int)FILE_LOCATION_Enum::FILE_LOCATION_ASSET_CUBEMAP));
 
         if (vUniform->cubemap_ptr != nullptr) {
-            vUniform->ownCubeMap   = true;
+            vUniform->ownCubeMap = true;
             vUniform->uSamplerCube = vUniform->cubemap_ptr->getCubeMapId();
         }
     }

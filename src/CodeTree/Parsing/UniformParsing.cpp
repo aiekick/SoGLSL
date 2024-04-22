@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -21,8 +21,7 @@
 #include <CodeTree/CodeTree.h>
 #include <ctools/Logger.h>
 
-UniformParsedStruct UniformParsing::ParseUniformString(const std::string& vUniformString, const size_t& vCurrentFileLine,
-                                                       std::shared_ptr<SectionCode> vSectionCodePtr) {
+UniformParsedStruct UniformParsing::ParseUniformString(const std::string& vUniformString, const size_t& vCurrentFileLine, std::shared_ptr<SectionCode> vSectionCodePtr) {
     UniformParsedStruct uniParsed;
 
     if (!vSectionCodePtr) {
@@ -51,13 +50,11 @@ UniformParsedStruct UniformParsing::ParseUniformString(const std::string& vUnifo
                             uniformPos = lastParenthesisPos + 1;
                         } else {
                             uniParsed.badSyntaxDetected = true;
-                            vSectionCodePtr->SetSyntaxError(vSectionCodePtr->relativeFile, "Uniform error", true, "bad syntax, missing )",
-                                                            vCurrentFileLine);
+                            vSectionCodePtr->SetSyntaxError(vSectionCodePtr->relativeFile, "Uniform error", true, "bad syntax, missing )", vCurrentFileLine);
                         }
                     } else {
                         uniParsed.badSyntaxDetected = true;
-                        vSectionCodePtr->SetSyntaxError(vSectionCodePtr->relativeFile, "Uniform error", true, "bad syntax, missing )",
-                                                        vCurrentFileLine);
+                        vSectionCodePtr->SetSyntaxError(vSectionCodePtr->relativeFile, "Uniform error", true, "bad syntax, missing )", vCurrentFileLine);
                     }
                 }
             }
@@ -78,13 +75,11 @@ UniformParsedStruct UniformParsing::ParseUniformString(const std::string& vUnifo
                             uniformPos = lastParenthesisPos + 1;
                         } else {
                             uniParsed.badSyntaxDetected = true;
-                            vSectionCodePtr->SetSyntaxError(vSectionCodePtr->relativeFile, "Uniform error", true, "bad syntax, missing )",
-                                                            vCurrentFileLine);
+                            vSectionCodePtr->SetSyntaxError(vSectionCodePtr->relativeFile, "Uniform error", true, "bad syntax, missing )", vCurrentFileLine);
                         }
                     } else {
                         uniParsed.badSyntaxDetected = true;
-                        vSectionCodePtr->SetSyntaxError(vSectionCodePtr->relativeFile, "Uniform error", true, "bad syntax, missing )",
-                                                        vCurrentFileLine);
+                        vSectionCodePtr->SetSyntaxError(vSectionCodePtr->relativeFile, "Uniform error", true, "bad syntax, missing )", vCurrentFileLine);
                     }
                 } else {
                     size_t nextSpace = vUniformString.find_first_of(' ', typePos + 1);
@@ -105,7 +100,9 @@ UniformParsedStruct UniformParsing::ParseUniformString(const std::string& vUnifo
                     uniParsed.name = vUniformString.substr(namePos, firstEndName - namePos);
                     uniformPos = firstEndName + 1;
                 } else {
-                    vSectionCodePtr->SetSyntaxError(vSectionCodePtr->relativeFile, "Uniform error", true,
+                    vSectionCodePtr->SetSyntaxError(vSectionCodePtr->relativeFile,
+                                                    "Uniform error",
+                                                    true,
                                                     "accepted chars are _abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
                                                     vCurrentFileLine);
                 }
@@ -125,8 +122,7 @@ UniformParsedStruct UniformParsing::ParseUniformString(const std::string& vUnifo
                         uniformPos = endArray + 1;
                     } else {
                         uniParsed.badSyntaxDetected = true;
-                        vSectionCodePtr->SetSyntaxError(vSectionCodePtr->relativeFile, "Uniform error", true, "bad syntax, missing ]",
-                                                        vCurrentFileLine);
+                        vSectionCodePtr->SetSyntaxError(vSectionCodePtr->relativeFile, "Uniform error", true, "bad syntax, missing ]", vCurrentFileLine);
                     }
                 } else {
                     uniParsed.badSyntaxDetected = true;
@@ -159,8 +155,7 @@ UniformParsedStruct UniformParsing::ParseUniformString(const std::string& vUnifo
                     }
                 } else {
                     uniParsed.badSyntaxDetected = true;
-                    vSectionCodePtr->SetSyntaxError(vSectionCodePtr->relativeFile, "Uniform error", true, "uniform line must finish by ;",
-                                                    vCurrentFileLine);
+                    vSectionCodePtr->SetSyntaxError(vSectionCodePtr->relativeFile, "Uniform error", true, "uniform line must finish by ;", vCurrentFileLine);
                 }
             }
         }
@@ -236,8 +231,7 @@ UniformParsedStruct UniformParsing::ParseUniformString(const std::string& vUnifo
 }
 
 // parse section params and set errors
-void UniformParsing::ParseUniformSectionParamsString(UniformParsedStruct* vUniform, const size_t& vCurrentFileLine,
-                                                     std::shared_ptr<SectionCode> vSectionCode) {
+void UniformParsing::ParseUniformSectionParamsString(UniformParsedStruct* vUniform, const size_t& vCurrentFileLine, std::shared_ptr<SectionCode> vSectionCode) {
     std::vector<std::string> words = ct::splitStringToVector(vUniform->sectionParams, ':');
     vUniform->sectionParamsArray = words;
 
@@ -256,8 +250,7 @@ void UniformParsing::ParseUniformSectionParamsString(UniformParsedStruct* vUnifo
 }
 
 // parse uniform params and set errors
-void UniformParsing::ParseUniformTypeParamsString(UniformParsedStruct* vUniform, const size_t& vCurrentFileLine,
-                                                  std::shared_ptr<SectionCode> vSectionCode) {
+void UniformParsing::ParseUniformTypeParamsString(UniformParsedStruct* vUniform, const size_t& vCurrentFileLine, std::shared_ptr<SectionCode> vSectionCode) {
     // la syntaxe generale c'est :
     // (widgetName:params
     // et param contient des liste de mot separee apr ;, les mot peuvent etre mot(liste de mot separ� par ,)
@@ -272,8 +265,7 @@ void UniformParsing::ParseUniformTypeParamsString(UniformParsedStruct* vUniform,
             } else if (fields.size() > 2) {
                 vUniform->badSyntaxDetected = true;
                 if (vSectionCode)
-                    vSectionCode->SetSyntaxError(vSectionCode->relativeFile, "Uniform section error", true, "too mush = in " + word,
-                                                 vCurrentFileLine);
+                    vSectionCode->SetSyntaxError(vSectionCode->relativeFile, "Uniform section error", true, "too mush = in " + word, vCurrentFileLine);
             } else {
                 vUniform->paramsDico[word];
             }
@@ -290,8 +282,7 @@ void UniformParsing::ParseUniformTypeParamsString(UniformParsedStruct* vUniform,
             } else if (fields.size() > 2) {
                 vUniform->badSyntaxDetected = true;
                 if (vSectionCode)
-                    vSectionCode->SetSyntaxError(vSectionCode->relativeFile, "Uniform section error", true, "too mush = in " + word,
-                                                 vCurrentFileLine);
+                    vSectionCode->SetSyntaxError(vSectionCode->relativeFile, "Uniform section error", true, "too mush = in " + word, vCurrentFileLine);
             } else {
                 vUniform->originalParamsDico[word];
             }
@@ -347,7 +338,7 @@ void UniformParsing::ParseUniformSection(UniformParsedStruct* vUniformParsed) {
                             pos = param.find_first_of("!<>=");
                             if (pos != std::string::npos) {
                                 sectionCond = param;
-                            } else { // est un name
+                            } else {  // est un name
                                 if (param == "noexport") {
                                     vUniformParsed->noExport = true;
                                 } else {
@@ -683,9 +674,11 @@ bool UniformParsing::IsUniformTypeSupported(const std::string& vType, const bool
             std::string fromFile = vKey->puKey;
             if (!vKey->puInFileBufferFromKey.empty())
                 fromFile = vKey->puInFileBufferFromKey;
-            vKey->GetSyntaxErrors()->SetSyntaxError(
-                vKey, "Parsing Error :", "uniform type warning", false,
-                LineFileErrors(vCurrentFileLine, fromFile, "an uniform of type " + vType + " is not supported for the moment.\n"));
+            vKey->GetSyntaxErrors()->SetSyntaxError(vKey,
+                                                    "Parsing Error :",
+                                                    "uniform type warning",
+                                                    false,
+                                                    LineFileErrors(vCurrentFileLine, fromFile, "an uniform of type " + vType + " is not supported for the moment.\n"));
         }
     }
 
@@ -705,9 +698,11 @@ bool UniformParsing::IsUniformWidgetSupported(const std::string& vWidget, Shader
         CTOOL_DEBUG_BREAK;
 
         if (vKey) {
-            vKey->GetSyntaxErrors()->SetSyntaxError(
-                vKey, "Parsing Error :", "uniform widget warning", false,
-                LineFileErrors(vCurrentFileLine, vKey->puKey, "widget " + vWidget + " is not supported for the moment.\n"));
+            vKey->GetSyntaxErrors()->SetSyntaxError(vKey,
+                                                    "Parsing Error :",
+                                                    "uniform widget warning",
+                                                    false,
+                                                    LineFileErrors(vCurrentFileLine, vKey->puKey, "widget " + vWidget + " is not supported for the moment.\n"));
         }
     }
 

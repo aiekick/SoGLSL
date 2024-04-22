@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -30,74 +30,80 @@
 */
 // glGetUniformLocation peut renvoyer -1 si un uniform est d�clar� dans un shader mais jamais utilis�. opengl fait ces simplifications
 
-class Shader
-{
+class Shader {
 public:
-	static ShaderPtr Create(const GuiBackend_Window& vWin, std::string vShaderName);
+    static ShaderPtr Create(const GuiBackend_Window& vWin, std::string vShaderName);
 
 private:
-	//GLint puuUniforms[kUniforpuMAX];
-	GLenum err = 0;
-	bool _isValid = false;
-	GuiBackend_Window puWindow;
+    // GLint puuUniforms[kUniforpuMAX];
+    GLenum err = 0;
+    bool _isValid = false;
+    GuiBackend_Window puWindow;
 
 public:
-	GLuint puuProgram = 0;
-	GLint linked = 0;
-	std::string puShaderName;
-	ProgramMsg puState;
-	ShaderPtr m_This = nullptr;
+    GLuint puuProgram = 0;
+    GLint linked = 0;
+    std::string puShaderName;
+    ProgramMsg puState;
+    ShaderPtr m_This = nullptr;
 
 public:
-	Shader(const GuiBackend_Window& vWin, std::string vShaderName);
-	~Shader();
+    Shader(const GuiBackend_Window& vWin, std::string vShaderName);
+    ~Shader();
 
-	bool IsValid();
+    bool IsValid();
 
-	ProgramMsg InitAndLinkShaderProgram(
-		bool vIsCompute,
-		ShaderParsedStruct shaderCode,
-		std::string geomLayoutParams,
-		std::string version);
-	ShaderMsg LinkShaderProgram();
+    ProgramMsg InitAndLinkShaderProgram(bool vIsCompute, ShaderParsedStruct shaderCode, std::string geomLayoutParams, std::string version);
+    ShaderMsg LinkShaderProgram();
 
-	// return 0 if NOK
-	GLuint LoadFromString(
-		ShaderTypeEnum type,
-		ShaderParsedCodeStruct shaderCode,
-		std::string version);
+    // return 0 if NOK
+    GLuint LoadFromString(ShaderTypeEnum type, ShaderParsedCodeStruct shaderCode, std::string version);
 
-	void Use();
-	void UnUse();
+    void Use();
+    void UnUse();
 
-	void Render();
+    void Render();
 
-	void LogToOutput(ShaderTypeEnum  type, std::string vBuild, bool vErase, ShaderMsg vMsg);
+    void LogToOutput(ShaderTypeEnum type, std::string vBuild, bool vErase, ShaderMsg vMsg);
 
-	std::string GetLastShaderErrorString(ShaderTypeEnum vShaderTypeEnum){ return puError[vShaderTypeEnum]; }
-	std::string GetLastShaderWarningsString(ShaderTypeEnum vShaderTypeEnum) { return puWarnings[vShaderTypeEnum]; }
+    std::string GetLastShaderErrorString(ShaderTypeEnum vShaderTypeEnum) {
+        return puError[vShaderTypeEnum];
+    }
+    std::string GetLastShaderWarningsString(ShaderTypeEnum vShaderTypeEnum) {
+        return puWarnings[vShaderTypeEnum];
+    }
 
-	std::string GetUsedPrecisionString(){ return puPrecision; }
-	std::string GetUsedGlslVersionString(){ return puVersion; }
-	std::string GetUsedUniformsString(){ return puUniforms; }
-	std::string GetUsedHeaderString(ShaderTypeEnum vKey) { if (puHeader.find(vKey) != puHeader.end()) return puHeader[vKey]; return ""; }
-	
-	void SaveToFile(std::string vCode, const std::string& vFilePathName);
-	
-	GLint getUniformLocationForName(std::string name);
+    std::string GetUsedPrecisionString() {
+        return puPrecision;
+    }
+    std::string GetUsedGlslVersionString() {
+        return puVersion;
+    }
+    std::string GetUsedUniformsString() {
+        return puUniforms;
+    }
+    std::string GetUsedHeaderString(ShaderTypeEnum vKey) {
+        if (puHeader.find(vKey) != puHeader.end())
+            return puHeader[vKey];
+        return "";
+    }
 
-public: // WebGl
-	static std::string GetWebGlTemplate_CreateShader(std::string vOffset);
-	static std::string GetWebGlTemplate_LoadFromString(std::string vOffset);
-	static std::string GetWebGlTemplate_LinkShader(std::string vOffset);
-	static std::string GetWebGlTemplate_TestCreateShaderWithPrecision(std::string vOffset);
-	static std::string GetWebGlTemplate_DetermineShaderPrecision(std::string vOffset);
+    void SaveToFile(std::string vCode, const std::string& vFilePathName);
+
+    GLint getUniformLocationForName(std::string name);
+
+public:  // WebGl
+    static std::string GetWebGlTemplate_CreateShader(std::string vOffset);
+    static std::string GetWebGlTemplate_LoadFromString(std::string vOffset);
+    static std::string GetWebGlTemplate_LinkShader(std::string vOffset);
+    static std::string GetWebGlTemplate_TestCreateShaderWithPrecision(std::string vOffset);
+    static std::string GetWebGlTemplate_DetermineShaderPrecision(std::string vOffset);
 
 private:
-	std::unordered_map<ShaderTypeEnum, std::string> puError;
-	std::unordered_map<ShaderTypeEnum, std::string> puWarnings;
-	std::string puPrecision;
-	std::string puVersion;
-	std::string puUniforms;
-	std::unordered_map<ShaderTypeEnum, std::string> puHeader;
+    std::unordered_map<ShaderTypeEnum, std::string> puError;
+    std::unordered_map<ShaderTypeEnum, std::string> puWarnings;
+    std::string puPrecision;
+    std::string puVersion;
+    std::string puUniforms;
+    std::unordered_map<ShaderTypeEnum, std::string> puHeader;
 };

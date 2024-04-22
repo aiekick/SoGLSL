@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,44 +18,39 @@
 
 #include "AssetManager.h"
 
-AssetManager::AssetManager()
-{
-
+AssetManager::AssetManager() {
 }
 
-AssetManager::~AssetManager()
-{
-	Clear();
+AssetManager::~AssetManager() {
+    Clear();
 }
 
-void AssetManager::Clear()
-{
-
+void AssetManager::Clear() {
 }
 
 /*
 Texture2DPtr AssetManager::GetTexture2D(UniformParsedStruct *vUniformParsedStruct)
 {
-	return nullptr;
+    return nullptr;
 }
 
 Texture3DPtr AssetManager::GetTexture3D(UniformParsedStruct* vUniformParsedStruct)
 {
-	return nullptr;
+    return nullptr;
 }
 
 TextureCubePtr AssetManager::GetTextureCube(UniformParsedStruct* vUniformParsedStruct)
 {
-	return nullptr;
+    return nullptr;
 }
 
 TextureSound* AssetManager::GetTextureSound(UniformParsedStruct* vUniformParsedStruct)
 {
-	return nullptr;
+    return nullptr;
 }
 
 TextureVideo* AssetManager::GetTextureVideo(UniformParsedStruct* vUniformParsedStruct)
 {
-	return nullptr;
+    return nullptr;
 }
 */

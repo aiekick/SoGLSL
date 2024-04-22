@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -20,42 +20,49 @@
 #include <ctools/cTools.h>
 #include <string>
 
-class Texture3D : public PingPong
-{
+class Texture3D : public PingPong {
 public:
-	static Texture3DPtr createFromFile(const char* vFilePathName, std::string vSourceFile, bool vGenMipMap = true,
-		std::string vWrap = "clamp", std::string vFilter = "linear");
-	static Texture3DPtr createFromBuffer(int vCountChannels, float *vBuffer, size_t vCount, ct::ivec3 vVolumeSize, bool vGenMipMap = true,
-		std::string vWrap = "clamp", std::string vFilter = "linear");
-	static Texture3DPtr createComputeVolume(std::string vFormat, ct::ivec3 vVolumeSize, bool vGenMipMap = true,
-		std::string vWrap = "clamp", std::string vFilter = "linear");
+    static Texture3DPtr createFromFile(const char* vFilePathName,
+                                       std::string vSourceFile,
+                                       bool vGenMipMap = true,
+                                       std::string vWrap = "clamp",
+                                       std::string vFilter = "linear");
+    static Texture3DPtr createFromBuffer(int vCountChannels,
+                                         float* vBuffer,
+                                         size_t vCount,
+                                         ct::ivec3 vVolumeSize,
+                                         bool vGenMipMap = true,
+                                         std::string vWrap = "clamp",
+                                         std::string vFilter = "linear");
+    static Texture3DPtr createComputeVolume(std::string vFormat,
+                                            ct::ivec3 vVolumeSize,
+                                            bool vGenMipMap = true,
+                                            std::string vWrap = "clamp",
+                                            std::string vFilter = "linear");
 
 public:
-	Texture3D();
-	virtual ~Texture3D();
-	
-	bool InitFromFile(const char* vFilePathName, std::string vSourceFile, bool vGenMipMap, std::string vWrap, std::string vFilter);
-	bool InitFromBuffer(int vCountChannels, float *vBuffer, size_t vCount, ct::ivec3 vVolumeSize, bool vGenMipMap, std::string vWrap, std::string vFilter);
-	bool InitComputeVolume(std::string vFormat, ct::ivec3 vVolumeSize, bool vGenMipMap, std::string vWrap, std::string vFilter);
-	
-public:
-	ct::ivec3 getSize()
-	{
-		if (puBackTex)
-		{
-			return ct::ivec3((int)puBackTex->w, (int)puBackTex->h, (int)puBackTex->d);
-		}
+    Texture3D();
+    virtual ~Texture3D();
 
-		return ct::ivec3(0);
-	}
+    bool InitFromFile(const char* vFilePathName, std::string vSourceFile, bool vGenMipMap, std::string vWrap, std::string vFilter);
+    bool InitFromBuffer(int vCountChannels, float* vBuffer, size_t vCount, ct::ivec3 vVolumeSize, bool vGenMipMap, std::string vWrap, std::string vFilter);
+    bool InitComputeVolume(std::string vFormat, ct::ivec3 vVolumeSize, bool vGenMipMap, std::string vWrap, std::string vFilter);
+
+public:
+    ct::ivec3 getSize() {
+        if (puBackTex) {
+            return ct::ivec3((int)puBackTex->w, (int)puBackTex->h, (int)puBackTex->d);
+        }
+
+        return ct::ivec3(0);
+    }
 
 private:
-	ctTexturePtr PrepareFromFile(const char* vFilePathName, std::string vType, bool vGenMipMap, std::string vWrap, std::string vFilter);
-	ctTexturePtr PrepareFromBuffer(int vCountChannels, float *vBuffer, size_t vCount, ct::ivec3 vVolumeSize, bool vGenMipMap, std::string vWrap, std::string vFilter);
-	ctTexturePtr PrepareComputeVolume(std::string vFormat, ct::ivec3 vVolumeSize, bool vGenMipMap, std::string vWrap, std::string vFilter);
+    ctTexturePtr PrepareFromFile(const char* vFilePathName, std::string vType, bool vGenMipMap, std::string vWrap, std::string vFilter);
+    ctTexturePtr PrepareFromBuffer(int vCountChannels, float* vBuffer, size_t vCount, ct::ivec3 vVolumeSize, bool vGenMipMap, std::string vWrap, std::string vFilter);
+    ctTexturePtr PrepareComputeVolume(std::string vFormat, ct::ivec3 vVolumeSize, bool vGenMipMap, std::string vWrap, std::string vFilter);
 
 private:
-	uint8_t* GetBufferFromFile_ShaderToy(std::string vFile, ctTexturePtr vTexture = nullptr);
-	uint8_t* GetBufferFromFile_MagicaVoxel_Vox(std::string vFile, ctTexturePtr vTexture = nullptr);
+    uint8_t* GetBufferFromFile_ShaderToy(std::string vFile, ctTexturePtr vTexture = nullptr);
+    uint8_t* GetBufferFromFile_MagicaVoxel_Vox(std::string vFile, ctTexturePtr vTexture = nullptr);
 };
-

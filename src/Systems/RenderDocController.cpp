@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,41 +18,34 @@
 
 #include <Systems/RenderDocController.h>
 #ifdef WIN32
-    #include <Windows.h>
+#include <Windows.h>
 #elif defined(__linux__)
-    #include <dlfcn.h>
+#include <dlfcn.h>
 #endif
 #include <cstdio>
 
-bool RenderDocController::Init()
-{
+bool RenderDocController::Init() {
     m_GetApiPtr = nullptr;
 
 #if defined(WIN32)
     HMODULE mod = GetModuleHandleA("renderdoc.dll");
-    if (mod)
-    {
+    if (mod) {
         m_GetApiPtr = (pRENDERDOC_GetAPI)GetProcAddress(mod, "RENDERDOC_GetAPI");
     }
 #elif defined(__linux__)
     void* mod = dlopen("librenderdoc.so", RTLD_NOW | RTLD_NOLOAD);
-    if (mod)
-    {
+    if (mod) {
         m_GetApiPtr = (pRENDERDOC_GetAPI)dlsym(mod, "RENDERDOC_GetAPI");
     }
 #else
 // Apple is not supported by renderdoc
 #endif
 
-    if (m_GetApiPtr)
-    {
+    if (m_GetApiPtr) {
         int ret = m_GetApiPtr(eRENDERDOC_API_Version_1_0_0, (void**)&m_RDdocPtr);
-        if (ret != 1)
-        {
+        if (ret != 1) {
             m_RDdocPtr = nullptr;
-        }
-        else
-        {
+        } else {
             int major, minor, patch;
             m_RDdocPtr->GetAPIVersion(&major, &minor, &patch);
             printf("-----------\n");
@@ -65,20 +58,18 @@ bool RenderDocController::Init()
     return true;
 }
 
-void RenderDocController::Unit()
-{
+void RenderDocController::Unit() {
     m_RDdocPtr = nullptr;
     m_GetApiPtr = nullptr;
 }
 
-void RenderDocController::RequestCapture()
-{
+void RenderDocController::RequestCapture() {
     m_Capture_Requested = true;
 }
 
-void RenderDocController::StartCaptureIfResquested()
-{
-    if (!m_Capture_Requested) return;
+void RenderDocController::StartCaptureIfResquested() {
+    if (!m_Capture_Requested)
+        return;
 
     // we do that because when we call it via imgui
     // we catch the EndCapture before the StartCapture..
@@ -89,20 +80,18 @@ void RenderDocController::StartCaptureIfResquested()
     // You can specify NULL, NULL for the device to capture on if you have only one device and
     // either no windows at all or only one window, and it will capture from that device.
     // See the documentation below for a longer explanation
-    if (m_RDdocPtr)
-    {
+    if (m_RDdocPtr) {
         printf("Renderdoc Capture Started\n");
         m_RDdocPtr->StartFrameCapture(NULL, NULL);
     }
 }
 
-void RenderDocController::EndCaptureIfResquested()
-{
-    if (!m_Capture_Started) return;
+void RenderDocController::EndCaptureIfResquested() {
+    if (!m_Capture_Started)
+        return;
 
     // stop the capture
-    if (m_RDdocPtr)
-    {
+    if (m_RDdocPtr) {
         m_RDdocPtr->EndFrameCapture(NULL, NULL);
         printf("Renderdoc Capture Ended\n");
     }

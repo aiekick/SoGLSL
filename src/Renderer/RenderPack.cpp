@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -75,8 +75,7 @@ RenderPackPtr RenderPack::Create(const GuiBackend_Window& vWin) {
 //// COMPUTE STATIC //////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
-RenderPackPtr RenderPack::createComputeWithFileWithoutLoading(const GuiBackend_Window& vWin, const std::string& vName, ct::ivec3 vSize,
-                                                              ShaderKeyPtr vShaderKey) {
+RenderPackPtr RenderPack::createComputeWithFileWithoutLoading(const GuiBackend_Window& vWin, const std::string& vName, ct::ivec3 vSize, ShaderKeyPtr vShaderKey) {
     ZoneScoped;
 
     auto res = RenderPack::Create(vWin);
@@ -107,8 +106,13 @@ RenderPackPtr RenderPack::createComputeWithFile(const GuiBackend_Window& vWin, c
 //// BUFFER STATIC ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
-RenderPackPtr RenderPack::createBufferWithFileWithoutLoading(const GuiBackend_Window& vWin, const std::string& vName, ct::ivec3 vSize,
-                                                             ShaderKeyPtr vShaderKey, bool vUseZBuffer, bool vUseFBO, bool vUseRenderBuffer,
+RenderPackPtr RenderPack::createBufferWithFileWithoutLoading(const GuiBackend_Window& vWin,
+                                                             const std::string& vName,
+                                                             ct::ivec3 vSize,
+                                                             ShaderKeyPtr vShaderKey,
+                                                             bool vUseZBuffer,
+                                                             bool vUseFBO,
+                                                             bool vUseRenderBuffer,
                                                              bool vUseFloatBuffer) {
     ZoneScoped;
 
@@ -118,8 +122,14 @@ RenderPackPtr RenderPack::createBufferWithFileWithoutLoading(const GuiBackend_Wi
     return res;
 }
 
-RenderPackPtr RenderPack::createBufferWithFile(const GuiBackend_Window& vWin, const std::string& vName, ct::ivec3 vSize, ShaderKeyPtr vShaderKey,
-                                               bool vUseZBuffer, bool vUseFBO, bool vUseRenderBuffer, TextureParamsStruct* vTexParam,
+RenderPackPtr RenderPack::createBufferWithFile(const GuiBackend_Window& vWin,
+                                               const std::string& vName,
+                                               ct::ivec3 vSize,
+                                               ShaderKeyPtr vShaderKey,
+                                               bool vUseZBuffer,
+                                               bool vUseFBO,
+                                               bool vUseRenderBuffer,
+                                               TextureParamsStruct* vTexParam,
                                                bool vUseFloatBuffer) {
     ZoneScoped;
 
@@ -445,8 +455,11 @@ bool RenderPack::Load(const std::string& vInFileBufferName, bool vReplaceRenderP
                     }
 
                     if (puFrameBuffer && puFrameBuffer->load()) {
-                        ConfigureBufferParams(puSectionConfig.framebufferConfig.format, puSectionConfig.framebufferConfig.mipmap, 1000,
-                                              puSectionConfig.framebufferConfig.wrap, puSectionConfig.framebufferConfig.filter);
+                        ConfigureBufferParams(puSectionConfig.framebufferConfig.format,
+                                              puSectionConfig.framebufferConfig.mipmap,
+                                              1000,
+                                              puSectionConfig.framebufferConfig.wrap,
+                                              puSectionConfig.framebufferConfig.filter);
 
                         puFrameBuffer->GetTexParameters(&puTexParams);
                     }
@@ -474,12 +487,15 @@ bool RenderPack::Load(const std::string& vInFileBufferName, bool vReplaceRenderP
                 puMeshRect.setRect(0.0f, 0.0f, (float)puMaxScreenSize.x, (float)puMaxScreenSize.y);
 
                 if (puUseFBO) {
-                    puFrameBuffer = FrameBuffersPipeLine::Create(puWindow, puMaxScreenSize, puSectionConfig.framebufferConfig.format, puUseFXAA,
-                                                                 puCountFXAASamples, puCreateZBuffer);
+                    puFrameBuffer =
+                        FrameBuffersPipeLine::Create(puWindow, puMaxScreenSize, puSectionConfig.framebufferConfig.format, puUseFXAA, puCountFXAASamples, puCreateZBuffer);
 
                     if (puFrameBuffer && puFrameBuffer->load()) {
-                        ConfigureBufferParams(puSectionConfig.framebufferConfig.format, puSectionConfig.framebufferConfig.mipmap, 1000,
-                                              puSectionConfig.framebufferConfig.wrap, puSectionConfig.framebufferConfig.filter);
+                        ConfigureBufferParams(puSectionConfig.framebufferConfig.format,
+                                              puSectionConfig.framebufferConfig.mipmap,
+                                              1000,
+                                              puSectionConfig.framebufferConfig.wrap,
+                                              puSectionConfig.framebufferConfig.filter);
 
                         puFrameBuffer->GetTexParameters(&puTexParams);
                     }
@@ -506,12 +522,15 @@ bool RenderPack::Load(const std::string& vInFileBufferName, bool vReplaceRenderP
                 puMeshRect.setRect(0.0f, 0.0f, (float)puMaxScreenSize.x, (float)puMaxScreenSize.y);
 
                 if (puUseFBO) {
-                    puFrameBuffer = FrameBuffersPipeLine::Create(puWindow, puMaxScreenSize, puSectionConfig.framebufferConfig.format, puUseFXAA,
-                                                                 puCountFXAASamples, puCreateZBuffer);
+                    puFrameBuffer =
+                        FrameBuffersPipeLine::Create(puWindow, puMaxScreenSize, puSectionConfig.framebufferConfig.format, puUseFXAA, puCountFXAASamples, puCreateZBuffer);
 
                     if (puFrameBuffer && puFrameBuffer->load()) {
-                        ConfigureBufferParams(puSectionConfig.framebufferConfig.format, puSectionConfig.framebufferConfig.mipmap, 1000,
-                                              puSectionConfig.framebufferConfig.wrap, puSectionConfig.framebufferConfig.filter);
+                        ConfigureBufferParams(puSectionConfig.framebufferConfig.format,
+                                              puSectionConfig.framebufferConfig.mipmap,
+                                              1000,
+                                              puSectionConfig.framebufferConfig.wrap,
+                                              puSectionConfig.framebufferConfig.filter);
 
                         puFrameBuffer->GetTexParameters(&puTexParams);
                     }
@@ -565,8 +584,7 @@ void RenderPack::LoadMeshFileFromVertexSection() {
 
     if (puShaderKey) {
         if (!puSectionConfig.vertexConfig.modelFileToLoad.empty()) {
-            const std::string pathToFile =
-                FileHelper::Instance()->GetRelativePathToParent(puSectionConfig.vertexConfig.modelFileToLoad, puShaderKey->GetPath(), true);
+            const std::string pathToFile = FileHelper::Instance()->GetRelativePathToParent(puSectionConfig.vertexConfig.modelFileToLoad, puShaderKey->GetPath(), true);
             if (FileHelper::Instance()->IsFileExist(pathToFile, true)) {
                 MeshLoader::Instance()->LoadFile(m_This, pathToFile);
                 MeshLoader::Instance()->puFilePathName = pathToFile;
@@ -597,8 +615,13 @@ void RenderPack::UpdateInfileBufferName(const std::string& vInFileBufferName) {
     }
 }
 
-void RenderPack::SetBufferDefaultParams(const std::string& vName, ct::ivec3 vSize, ShaderKeyPtr vShaderKey, bool vUseZBuffer, bool vUseFBO,
-                                        bool vUseRenderBuffer, bool vUseFloatBuffer) {
+void RenderPack::SetBufferDefaultParams(const std::string& vName,
+                                        ct::ivec3 vSize,
+                                        ShaderKeyPtr vShaderKey,
+                                        bool vUseZBuffer,
+                                        bool vUseFBO,
+                                        bool vUseRenderBuffer,
+                                        bool vUseFloatBuffer) {
     ZoneScoped;
 
     puRenderPackType = RenderPack_Type::RENDERPACK_TYPE_BUFFER;
@@ -629,8 +652,15 @@ void RenderPack::SetShaderKey(ShaderKeyPtr vShaderKey, bool vReplaceRenderPackNa
     }
 }
 
-bool RenderPack::InitBufferWithFile(const GuiBackend_Window& vWin, const std::string& vName, ct::ivec3 vSize, ShaderKeyPtr vShaderKey,
-                                    bool vUseZBuffer, bool vUseFBO, bool vUseRenderBuffer, TextureParamsStruct* vTexParam, bool vUseFloatBuffer) {
+bool RenderPack::InitBufferWithFile(const GuiBackend_Window& vWin,
+                                    const std::string& vName,
+                                    ct::ivec3 vSize,
+                                    ShaderKeyPtr vShaderKey,
+                                    bool vUseZBuffer,
+                                    bool vUseFBO,
+                                    bool vUseRenderBuffer,
+                                    TextureParamsStruct* vTexParam,
+                                    bool vUseFloatBuffer) {
     ZoneScoped;
 
     bool res = false;
@@ -656,8 +686,8 @@ bool RenderPack::InitBufferWithFile(const GuiBackend_Window& vWin, const std::st
     // ParseCurrentFullShaderCodeFile();
 
     if (vUseFBO) {
-        puFrameBuffer = FrameBuffersPipeLine::Create(vWin, puMaxScreenSize, puSectionConfig.framebufferConfig.format, puUseFXAA, puCountFXAASamples,
-                                                     puCreateZBuffer, 1, vUseRenderBuffer, puUseFloatBuffer);
+        puFrameBuffer = FrameBuffersPipeLine::Create(
+            vWin, puMaxScreenSize, puSectionConfig.framebufferConfig.format, puUseFXAA, puCountFXAASamples, puCreateZBuffer, 1, vUseRenderBuffer, puUseFloatBuffer);
 
         if (vTexParam != nullptr) {
             puTexParams = *vTexParam;
@@ -853,8 +883,7 @@ void RenderPack::GetTexParameters(TextureParamsStruct* vTexParams) {
     }
 }
 
-void RenderPack::ConfigureBufferParams(std::string vFormat, bool vMipMap, int vMaxMipMaplvl, std::string vWrap, std::string vFilter,
-                                       bool vReloadFBO) {
+void RenderPack::ConfigureBufferParams(std::string vFormat, bool vMipMap, int vMaxMipMaplvl, std::string vWrap, std::string vFilter, bool vReloadFBO) {
     ZoneScoped;
 
     puTexParamCustomized = true;
@@ -927,7 +956,10 @@ void RenderPack::ConfigureBufferParams(std::string vFormat, bool vMipMap, int vM
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool RenderPack::RenderNode(GLenum* vRenderMode, FrameBuffersPipeLinePtr vPipe, std::atomic<size_t>* vCurrentIteration, std::atomic<bool>* vWorking,
+bool RenderPack::RenderNode(GLenum* vRenderMode,
+                            FrameBuffersPipeLinePtr vPipe,
+                            std::atomic<size_t>* vCurrentIteration,
+                            std::atomic<bool>* vWorking,
                             const bool& vDontUseAnyFBO)  // pour les threads
 {
     bool res = false;
@@ -1027,7 +1059,7 @@ bool RenderPack::RenderShader(GLenum* vRenderMode, FrameBuffersPipeLinePtr vPipe
 
 #ifdef TRACY_ENABLE
     TracyGpuZoneTransient(___tracy_gpu_zone, puTracyRenderShaderName.c_str(), true);
-#endif // TRACY_ENABLE
+#endif  // TRACY_ENABLE
     AIGPScoped(puName, "Render Shader %s", puName.c_str());
 
     if (vRenderMode)
@@ -1042,8 +1074,7 @@ bool RenderPack::RenderShader(GLenum* vRenderMode, FrameBuffersPipeLinePtr vPipe
                 }
 
                 {
-                    const int64 firstTimeMark =
-                        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+                    const int64 firstTimeMark = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
                     if (puRenderPackType == RenderPack_Type::RENDERPACK_TYPE_COMPUTE) {
                         ComputeShader();
@@ -1051,8 +1082,7 @@ bool RenderPack::RenderShader(GLenum* vRenderMode, FrameBuffersPipeLinePtr vPipe
                         PixelShader(vPipe);
                     }
 
-                    const int64 secondTimeMark =
-                        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+                    const int64 secondTimeMark = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
                     puLastRenderTime = (secondTimeMark - firstTimeMark) / 1000.0f;
                     puFrameIdx++;
@@ -1427,8 +1457,12 @@ void RenderPack::UpdatePreDefinedUniforms(std::list<UniformVariantPtr> vUniforms
     }
 }
 
-void RenderPack::UpdateUniforms(UpdateUniformFuncSignature vSpecificUniformsFunc, DisplayQualityType vDisplayQuality, MouseInterface* vMouse,
-                                CameraInterface* vCamera, ct::ivec2 vScreenSize, MeshRectType* vMouseRect) {
+void RenderPack::UpdateUniforms(UpdateUniformFuncSignature vSpecificUniformsFunc,
+                                DisplayQualityType vDisplayQuality,
+                                MouseInterface* vMouse,
+                                CameraInterface* vCamera,
+                                ct::ivec2 vScreenSize,
+                                MeshRectType* vMouseRect) {
     ZoneScoped;
 
     if (puShaderKey) {
@@ -1454,7 +1488,10 @@ void RenderPack::UpdateUniforms(UpdateUniformFuncSignature vSpecificUniformsFunc
     }
 }
 
-void RenderPack::UpdateUniform(UniformVariantPtr vUniPtr, DisplayQualityType vDisplayQuality, MouseInterface* vMouse, CameraInterface* vCamera,
+void RenderPack::UpdateUniform(UniformVariantPtr vUniPtr,
+                               DisplayQualityType vDisplayQuality,
+                               MouseInterface* vMouse,
+                               CameraInterface* vCamera,
                                MeshRectType* vMouseRect) {
     ZoneScoped;
 
@@ -1483,8 +1520,7 @@ void RenderPack::UpdateUniform(UniformVariantPtr vUniPtr, DisplayQualityType vDi
             } else if (vUniPtr->widget == "usetesscontrol")  // use tesselation control
             {
                 if (puShaderKey) {
-                    vUniPtr->bx =
-                        puShaderKey->puShaderGlobalSettings.useTesselationShaderIfPresent && puShaderKey->puIsTesselationControlShaderPresent;
+                    vUniPtr->bx = puShaderKey->puShaderGlobalSettings.useTesselationShaderIfPresent && puShaderKey->puIsTesselationControlShaderPresent;
                     vUniPtr->x = (vUniPtr->bx ? 1.0f : 0.0f);
                 }
             } else if (vUniPtr->widget == "usetesseval")  // use tesselation eval
@@ -1562,7 +1598,10 @@ void RenderPack::UpdateUniform(UniformVariantPtr vUniPtr, DisplayQualityType vDi
     }
 }
 
-void RenderPack::UpdateMouseWidgets(UniformVariantPtr vUniPtr, DisplayQualityType vDisplayQuality, MouseInterface* vMouse, CameraInterface* vCamera,
+void RenderPack::UpdateMouseWidgets(UniformVariantPtr vUniPtr,
+                                    DisplayQualityType vDisplayQuality,
+                                    MouseInterface* vMouse,
+                                    CameraInterface* vCamera,
                                     MeshRectType* vMouseRect) {
     UNUSED(vCamera);
 
@@ -1756,8 +1795,7 @@ void RenderPack::UpdateTimeWidgets(float vDeltaTime) {
                         std::time_t now_c = Clock::to_time_t(now);
                         struct tm* parts = std::localtime(&now_c);
 
-                        const float time_seconds =
-                            (float)(parts->tm_hour * 3600 + parts->tm_min * 60 + parts->tm_sec + (float)(ms.count() % 1000) * 0.001f);
+                        const float time_seconds = (float)(parts->tm_hour * 3600 + parts->tm_min * 60 + parts->tm_sec + (float)(ms.count() % 1000) * 0.001f);
 
                         uni->x = (float)(1900 + parts->tm_year);
                         uni->y = (float)(1 + parts->tm_mon);
@@ -1927,9 +1965,9 @@ bool RenderPack::ParseAndCompilShader(const std::string& vInFileBufferName, cons
         if (isCompute) {
             puLastShaderCode = puShaderKey->GetComputeShader(puShaderKey->puInFileBufferName);
         } else {
-            puLastShaderCode =
-                puShaderKey->GetFullShader(puShaderKey->puInFileBufferName, puShaderKey->puShaderGlobalSettings.useGeometryShaderIfPresent,
-                                           puShaderKey->puShaderGlobalSettings.useTesselationShaderIfPresent);
+            puLastShaderCode = puShaderKey->GetFullShader(puShaderKey->puInFileBufferName,
+                                                          puShaderKey->puShaderGlobalSettings.useGeometryShaderIfPresent,
+                                                          puShaderKey->puShaderGlobalSettings.useTesselationShaderIfPresent);
         }
 
         puLastShaderNote = puLastShaderCode.GetNote();
@@ -1948,8 +1986,7 @@ bool RenderPack::ParseAndCompilShader(const std::string& vInFileBufferName, cons
         puShaderKey->puSyntaxErrors.CompleteWithShader(puShaderKey, newPossibleShader);
 
         puSomeErrorsFromLastShader = puShaderKey->puSyntaxErrors.puIsThereSomeErrors || puShaderKey->puParseSuccess == ShaderMsg::SHADER_MSG_ERROR;
-        puSomeWarningsFromLastShader =
-            puShaderKey->puSyntaxErrors.puIsThereSomeWarnings || puShaderKey->puParseSuccess == ShaderMsg::SHADER_MSG_WARNING;
+        puSomeWarningsFromLastShader = puShaderKey->puSyntaxErrors.puIsThereSomeWarnings || puShaderKey->puParseSuccess == ShaderMsg::SHADER_MSG_WARNING;
 
         if (!puSomeErrorsFromLastShader) {
             // onc ree les uniforms et ca va d'abord detruire les actuels qui seront donc les anciens
@@ -2017,8 +2054,7 @@ bool RenderPack::ParseAndCompilShader(const std::string& vInFileBufferName, cons
             // re check les warnings evneutles apres la finalisation des uniforms
             // si ya des bug d'ecriture sur els widgets ca ne crahs pas le sahder, mais ca ne marcherai pas comme voulu, du
             // coup on genere des warnings
-            puSomeWarningsFromLastShader =
-                puShaderKey->puSyntaxErrors.puIsThereSomeWarnings || puShaderKey->puParseSuccess == ShaderMsg::SHADER_MSG_WARNING;
+            puSomeWarningsFromLastShader = puShaderKey->puSyntaxErrors.puIsThereSomeWarnings || puShaderKey->puParseSuccess == ShaderMsg::SHADER_MSG_WARNING;
 
             puShader.reset();
             puShader = newPossibleShader;
@@ -2146,9 +2182,7 @@ void RenderPack::ReloadModelIfNeeded(bool vNeedUpdate) {
     } else {
         puModel_Render.reset();
         switch (puMeshType) {
-            case BaseMeshEnum::PRIMITIVE_TYPE_POINTS:
-                puModel_Render = PointModel::Create(puWindow, puShaderKey->puShaderGlobalSettings.countVertices);
-                break;
+            case BaseMeshEnum::PRIMITIVE_TYPE_POINTS: puModel_Render = PointModel::Create(puWindow, puShaderKey->puShaderGlobalSettings.countVertices); break;
             case BaseMeshEnum::PRIMITIVE_TYPE_QUAD: puModel_Render = QuadModel::Create(puWindow); break;
             case BaseMeshEnum::PRIMITIVE_TYPE_MESH: puModel_Render = PNTBTCModel::Create(puWindow); break;
             case BaseMeshEnum::PRIMITIVE_TYPE_NONE:
@@ -2166,8 +2200,11 @@ void RenderPack::CreateOrUpdatePipe(FrameBufferShaderConfigStruct vFrameBufferSh
             vFrameBufferShaderConfigStruct.needSizeUpdate = false;
         }
         if (vFrameBufferShaderConfigStruct.needFBOUpdate) {
-            ConfigureBufferParams(vFrameBufferShaderConfigStruct.format, vFrameBufferShaderConfigStruct.mipmap, 1000,
-                                  vFrameBufferShaderConfigStruct.wrap, vFrameBufferShaderConfigStruct.filter);
+            ConfigureBufferParams(vFrameBufferShaderConfigStruct.format,
+                                  vFrameBufferShaderConfigStruct.mipmap,
+                                  1000,
+                                  vFrameBufferShaderConfigStruct.wrap,
+                                  vFrameBufferShaderConfigStruct.filter);
 
             vFrameBufferShaderConfigStruct.needFBOUpdate = false;
         }
@@ -2187,23 +2224,49 @@ void RenderPack::CreateOrUpdatePipe(FrameBufferShaderConfigStruct vFrameBufferSh
 
             if (vFrameBufferShaderConfigStruct.size.xy() > 0 && vFrameBufferShaderConfigStruct.size.xy() < maxSize.xy()) {
                 puMeshRect = GetScreenRectWithSize(vFrameBufferShaderConfigStruct.size.xy(), puMaxScreenSize.xy());
-                puFrameBuffer =
-                    FrameBuffersPipeLine::Create(puWindow, vFrameBufferShaderConfigStruct.size, vFrameBufferShaderConfigStruct.format, puUseFXAA,
-                                                 puCountFXAASamples, puCreateZBuffer, puCountAttachments, puUseRBuffer, puUseFloatBuffer);
+                puFrameBuffer = FrameBuffersPipeLine::Create(puWindow,
+                                                             vFrameBufferShaderConfigStruct.size,
+                                                             vFrameBufferShaderConfigStruct.format,
+                                                             puUseFXAA,
+                                                             puCountFXAASamples,
+                                                             puCreateZBuffer,
+                                                             puCountAttachments,
+                                                             puUseRBuffer,
+                                                             puUseFloatBuffer);
             } else if (vFrameBufferShaderConfigStruct.ratio > 0.0f) {
                 puMeshRect = GetScreenRectWithRatio(vFrameBufferShaderConfigStruct.ratio, puMaxScreenSize.xy());
-                puFrameBuffer =
-                    FrameBuffersPipeLine::Create(puWindow, ct::ivec3((int)puMeshRect.w, (int)puMeshRect.h, 0), vFrameBufferShaderConfigStruct.format,
-                                                 puUseFXAA, puCountFXAASamples, puCreateZBuffer, puCountAttachments, puUseRBuffer, puUseFloatBuffer);
+                puFrameBuffer = FrameBuffersPipeLine::Create(puWindow,
+                                                             ct::ivec3((int)puMeshRect.w, (int)puMeshRect.h, 0),
+                                                             vFrameBufferShaderConfigStruct.format,
+                                                             puUseFXAA,
+                                                             puCountFXAASamples,
+                                                             puCreateZBuffer,
+                                                             puCountAttachments,
+                                                             puUseRBuffer,
+                                                             puUseFloatBuffer);
             } else {
                 puMeshRect.setRect(0.0f, 0.0f, (float)puMaxScreenSize.x, (float)puMaxScreenSize.y);
-                puFrameBuffer = FrameBuffersPipeLine::Create(puWindow, puMaxScreenSize, vFrameBufferShaderConfigStruct.format, puUseFXAA,
-                                                             puCountFXAASamples, puCreateZBuffer, puCountAttachments, puUseRBuffer, puUseFloatBuffer);
+                puFrameBuffer = FrameBuffersPipeLine::Create(puWindow,
+                                                             puMaxScreenSize,
+                                                             vFrameBufferShaderConfigStruct.format,
+                                                             puUseFXAA,
+                                                             puCountFXAASamples,
+                                                             puCreateZBuffer,
+                                                             puCountAttachments,
+                                                             puUseRBuffer,
+                                                             puUseFloatBuffer);
             }
         } else {
             puMeshRect.setRect(0.0f, 0.0f, (float)puMaxScreenSize.x, (float)puMaxScreenSize.y);
-            puFrameBuffer = FrameBuffersPipeLine::Create(puWindow, puMaxScreenSize, vFrameBufferShaderConfigStruct.format, puUseFXAA,
-                                                         puCountFXAASamples, puCreateZBuffer, puCountAttachments, puUseRBuffer, puUseFloatBuffer);
+            puFrameBuffer = FrameBuffersPipeLine::Create(puWindow,
+                                                         puMaxScreenSize,
+                                                         vFrameBufferShaderConfigStruct.format,
+                                                         puUseFXAA,
+                                                         puCountFXAASamples,
+                                                         puCreateZBuffer,
+                                                         puCountAttachments,
+                                                         puUseRBuffer,
+                                                         puUseFloatBuffer);
         }
     }
 }
@@ -2427,8 +2490,8 @@ RenderPackPtr RenderPack::CreateChildBuffer(const std::string& vBufferId, const 
 
                 if (!vInFileBufferName.empty()) {
                     std::string currentKeyString = puShaderKey->puMainSection->code;
-                    key = puShaderKey->puParentCodeTree->AddOrUpdateFromStringAndGetKey(bufferFilePathName, currentKeyString, vBufferFileName,
-                                                                                        vInFileBufferName, true, true, false);
+                    key = puShaderKey->puParentCodeTree->AddOrUpdateFromStringAndGetKey(
+                        bufferFilePathName, currentKeyString, vBufferFileName, vInFileBufferName, true, true, false);
                 } else {
                     std::string filePathName = vBufferFileName;
 
@@ -2607,8 +2670,8 @@ RenderPackPtr RenderPack::CreateSceneBuffer(const std::string& vBufferId, const 
 
                 if (!vInFileBufferName.empty()) {
                     std::string currentKeyString = puShaderKey->puMainSection->code;
-                    key = puShaderKey->puParentCodeTree->AddOrUpdateFromStringAndGetKey(bufferFilePathName, currentKeyString, vBufferFileName,
-                                                                                        vInFileBufferName, true, true, false);
+                    key = puShaderKey->puParentCodeTree->AddOrUpdateFromStringAndGetKey(
+                        bufferFilePathName, currentKeyString, vBufferFileName, vInFileBufferName, true, true, false);
                 } else {
                     std::string filePathName = vBufferFileName;
 
@@ -2832,11 +2895,12 @@ bool RenderPack::DrawRenderingOptions_BlendFunc_Src() {
     bool change = false;
 
     // ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Blend Src");
-    if (ImGui::ContrastedCombo(
-            150, "Src##MCBlendFunc", &puMeshBlendFuncSource,
-            "ZERO\0ONE\0SRC_COL\0ONE_MIN_SRC_COL\0DST_COL\0ONE_MIN_DST_COL\0SRC_ALPHA\0ONE_MIN_SRC_ALPHA\0DST_ALPHA\0ONE_MIN_DST_ALPHA\0CONST_"
-            "COL\0ONE_MIN_CONST_COL\0CONST_ALPHA\0ONE_MIN_CONST_ALPHA\0SRC_ALPHA_SAT\0SRC1_COL\0ONE_MIN_SRC1_COL\0SRC1_ALPHA\0ONE_MIN_SRC1_ALPHA\0\0",
-            -1)) {
+    if (ImGui::ContrastedCombo(150,
+                               "Src##MCBlendFunc",
+                               &puMeshBlendFuncSource,
+                               "ZERO\0ONE\0SRC_COL\0ONE_MIN_SRC_COL\0DST_COL\0ONE_MIN_DST_COL\0SRC_ALPHA\0ONE_MIN_SRC_ALPHA\0DST_ALPHA\0ONE_MIN_DST_ALPHA\0CONST_"
+                               "COL\0ONE_MIN_CONST_COL\0CONST_ALPHA\0ONE_MIN_CONST_ALPHA\0SRC_ALPHA_SAT\0SRC1_COL\0ONE_MIN_SRC1_COL\0SRC1_ALPHA\0ONE_MIN_SRC1_ALPHA\0\0",
+                               -1)) {
         if (puMeshBlendFuncSource == 0)
             puBlendSFactor = GL_ZERO;
         else if (puMeshBlendFuncSource == 1)
@@ -2888,11 +2952,12 @@ bool RenderPack::DrawRenderingOptions_BlendFunc_Dst() {
     bool change = false;
 
     // ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Blend Dst");
-    if (ImGui::ContrastedCombo(
-            150, "Dst##MCBlendFunc", &puMeshBlendFuncDestination,
-            "ZERO\0ONE\0SRC_COL\0ONE_MIN_SRC_COL\0DST_COL\0ONE_MIN_DST_COL\0SRC_ALPHA\0ONE_MIN_SRC_ALPHA\0DST_ALPHA\0ONE_MIN_DST_ALPHA\0CONST_"
-            "COL\0ONE_MIN_CONST_COL\0CONST_ALPHA\0ONE_MIN_CONST_ALPHA\0SRC_ALPHA_SAT\0SRC1_COL\0ONE_MIN_SRC1_COL\0SRC1_ALPHA\0ONE_MIN_SRC1_ALPHA\0\0",
-            -1)) {
+    if (ImGui::ContrastedCombo(150,
+                               "Dst##MCBlendFunc",
+                               &puMeshBlendFuncDestination,
+                               "ZERO\0ONE\0SRC_COL\0ONE_MIN_SRC_COL\0DST_COL\0ONE_MIN_DST_COL\0SRC_ALPHA\0ONE_MIN_SRC_ALPHA\0DST_ALPHA\0ONE_MIN_DST_ALPHA\0CONST_"
+                               "COL\0ONE_MIN_CONST_COL\0CONST_ALPHA\0ONE_MIN_CONST_ALPHA\0SRC_ALPHA_SAT\0SRC1_COL\0ONE_MIN_SRC1_COL\0SRC1_ALPHA\0ONE_MIN_SRC1_ALPHA\0\0",
+                               -1)) {
         if (puMeshBlendFuncDestination == 0)
             puBlendDFactor = GL_ZERO;
         else if (puMeshBlendFuncDestination == 1)
@@ -3011,8 +3076,7 @@ bool RenderPack::DrawRenderingButtons(const char* vRenderPackString) {
                 if (_buttonBefore)
                     ImGui::SameLine();
                 snprintf(buffer, 256, "T##%s", vRenderPackString);
-                configChange |=
-                    ImGui::RadioButtonLabeled(ImVec2(0.0f, 0.0f), buffer, "Transparent", &puShaderKey->puShaderGlobalSettings.useTransparent);
+                configChange |= ImGui::RadioButtonLabeled(ImVec2(0.0f, 0.0f), buffer, "Transparent", &puShaderKey->puShaderGlobalSettings.useTransparent);
                 _buttonBefore = true;
             }
 
@@ -3072,8 +3136,8 @@ bool RenderPack::DrawComboBoxs() {
 
     char buffer[256];
 
-    const bool _ConfigsToShow = puShaderKey->IsThereSomeConfigs() || puShaderKey->IsThereSomeSectionConfigs() ||
-        puShaderKey->puIsGeometryShaderPresent || puShaderKey->puIsTesselationControlShaderPresent || puShaderKey->puIsTesselationEvalShaderPresent;
+    const bool _ConfigsToShow = puShaderKey->IsThereSomeConfigs() || puShaderKey->IsThereSomeSectionConfigs() || puShaderKey->puIsGeometryShaderPresent ||
+        puShaderKey->puIsTesselationControlShaderPresent || puShaderKey->puIsTesselationEvalShaderPresent;
 
     if (_ConfigsToShow) {
         if (ImGui::BeginFramedGroup("Conifg Boxs")) {
@@ -3089,8 +3153,8 @@ bool RenderPack::DrawComboBoxs() {
                 snprintf(buffer, 256, "Use Geometry Shader##%s", puName.c_str());
                 if (ImGui::Checkbox(buffer, &puShaderKey->puShaderGlobalSettings.useGeometryShaderIfPresent)) {
                     if (puShaderKey->puShaderGlobalSettings.useGeometryShaderIfPresent) {
-                        puShaderKey->SelectConfigName("GEOMETRY", puShaderKey->puInFileBufferName,
-                                                      puShaderKey->GetSelectedConfigName("GEOMETRY", puShaderKey->puInFileBufferName));
+                        puShaderKey->SelectConfigName(
+                            "GEOMETRY", puShaderKey->puInFileBufferName, puShaderKey->GetSelectedConfigName("GEOMETRY", puShaderKey->puInFileBufferName));
                     } else {
                         puLastRenderMode = (GLenum)GetLastRenderMode_NoGeopuNoTess();
                     }
@@ -3111,11 +3175,11 @@ bool RenderPack::DrawComboBoxs() {
                 if (ImGui::Checkbox(buffer, &puShaderKey->puShaderGlobalSettings.useTesselationShaderIfPresent)) {
                     if (puShaderKey->puShaderGlobalSettings.useTesselationShaderIfPresent) {
                         if (puShaderKey->puIsTesselationControlShaderPresent)
-                            puShaderKey->SelectConfigName("TESSCONTROL", puShaderKey->puInFileBufferName,
-                                                          puShaderKey->GetSelectedConfigName("TESSCONTROL", puShaderKey->puInFileBufferName));
+                            puShaderKey->SelectConfigName(
+                                "TESSCONTROL", puShaderKey->puInFileBufferName, puShaderKey->GetSelectedConfigName("TESSCONTROL", puShaderKey->puInFileBufferName));
                         if (puShaderKey->puIsTesselationEvalShaderPresent)
-                            puShaderKey->SelectConfigName("TESSEVAL", puShaderKey->puInFileBufferName,
-                                                          puShaderKey->GetSelectedConfigName("TESSEVAL", puShaderKey->puInFileBufferName));
+                            puShaderKey->SelectConfigName(
+                                "TESSEVAL", puShaderKey->puInFileBufferName, puShaderKey->GetSelectedConfigName("TESSEVAL", puShaderKey->puInFileBufferName));
                     } else {
                         puLastRenderMode = (GLenum)GetLastRenderMode_NoGeopuNoTess();
                     }
@@ -3265,15 +3329,14 @@ bool RenderPack::DrawRenderingOptions_Model() {
     bool change = false;
 
     if (puShaderKey && puModel_Render) {
-        const bool displayCond = (puDisplayModeArray.size() > 1U &&
-                                  !(puShaderKey->puShaderGlobalSettings.useGeometryShaderIfPresent && puShaderKey->puIsGeometryShaderPresent) &&
-                                  !(puShaderKey->puShaderGlobalSettings.useTesselationShaderIfPresent &&
-                                    (puShaderKey->puIsTesselationControlShaderPresent || puShaderKey->puIsTesselationEvalShaderPresent)));
+        const bool displayCond =
+            (puDisplayModeArray.size() > 1U && !(puShaderKey->puShaderGlobalSettings.useGeometryShaderIfPresent && puShaderKey->puIsGeometryShaderPresent) &&
+             !(puShaderKey->puShaderGlobalSettings.useTesselationShaderIfPresent &&
+               (puShaderKey->puIsTesselationControlShaderPresent || puShaderKey->puIsTesselationEvalShaderPresent)));
         if (puShowOpenModelButton || displayCond) {
             if (ImGui::BeginFramedGroup("Mesh Settings")) {
                 if (displayCond) {
-                    if (ImGui::ContrastedComboVectorDefault(150, "Display mode", &puDisplayModeArrayIndex, puDisplayModeArray,
-                                                            (int)puDisplayModeArray.size(), 0)) {
+                    if (ImGui::ContrastedComboVectorDefault(150, "Display mode", &puDisplayModeArrayIndex, puDisplayModeArray, (int)puDisplayModeArray.size(), 0)) {
                         puLastRenderMode = (GLenum)puSectionConfig.vertexConfig.displayMode[puDisplayModeArray[puDisplayModeArrayIndex]];
                         puShaderKey->puShaderGlobalSettings.displayMode = puDisplayModeArray[puDisplayModeArrayIndex];
                         change = true;
@@ -3306,8 +3369,8 @@ bool RenderPack::DrawRenderingOptions_FrameBuffer() {
 
                 for (int i = 0; i < puFrameBuffer->getCountTextures(); i++) {
                     if (puBufferIdsToShow[i]) {
-                        ImGui::TextureOverLay(100, puFrameBuffer->getBackTexture(i).get(), ImVec4(0, 0, 0, 0), ct::toStr(i).c_str(),
-                                              ImVec4(0, 0, 0, 1), ImVec4(0, 0, 0, 0));
+                        ImGui::TextureOverLay(
+                            100, puFrameBuffer->getBackTexture(i).get(), ImVec4(0, 0, 0, 0), ct::toStr(i).c_str(), ImVec4(0, 0, 0, 1), ImVec4(0, 0, 0, 0));
                     }
                 }
 
@@ -3329,8 +3392,7 @@ bool RenderPack::DrawRenderingOptions(bool vExpertMode) {
             if (ImGui::BeginFramedGroup("Rendering")) {
                 change |= ImGui::ToggleContrastedButton(ICON_NDP_PAUSE, ICON_NDP_PLAY, &puCanWeRender);
                 ImGui::SameLine();
-                change |=
-                    ImGui::RadioButtonLabeled(ImVec2(0.0f, 0.0f), "ext pipeline", "Can be merged in space3d", &puCanBeIntegratedInExternalPipeline);
+                change |= ImGui::RadioButtonLabeled(ImVec2(0.0f, 0.0f), "ext pipeline", "Can be merged in space3d", &puCanBeIntegratedInExternalPipeline);
                 ImGui::EndFramedGroup();
             }
 
@@ -3342,8 +3404,7 @@ bool RenderPack::DrawRenderingOptions(bool vExpertMode) {
                         if (ImGui::BeginFramedGroup("Line ThickNess")) {
                             char buffer[256];
                             snprintf(buffer, 256, "Line Width##%s", puName.c_str());
-                            change |= ImGui::SliderFloatDefault(150, buffer, &puShaderKey->puShaderGlobalSettings.lineWidth, 0.0f, 10.0f, 1.0f, 0.01f,
-                                                                "%.2f");
+                            change |= ImGui::SliderFloatDefault(150, buffer, &puShaderKey->puShaderGlobalSettings.lineWidth, 0.0f, 10.0f, 1.0f, 0.01f, "%.2f");
 
                             ImGui::EndFramedGroup();
                         }
@@ -3412,9 +3473,8 @@ bool RenderPack::DrawImGuiUniformWidget(float vFirstColumnWidth) {
 
     if (puShaderKey && puCanWeRender) {
         if (puShader) {
-            change |= puShaderKey->puParentCodeTree->DrawImGuiUniformWidget(puShaderKey, vFirstColumnWidth, m_This,
-                                                                            puShaderKey->puShaderGlobalSettings.showUnUsedUniforms,
-                                                                            puShaderKey->puShaderGlobalSettings.showCustomUniforms);
+            change |= puShaderKey->puParentCodeTree->DrawImGuiUniformWidget(
+                puShaderKey, vFirstColumnWidth, m_This, puShaderKey->puShaderGlobalSettings.showUnUsedUniforms, puShaderKey->puShaderGlobalSettings.showCustomUniforms);
         }
     }
 
@@ -3546,14 +3606,12 @@ bool RenderPack::SaveFBOToHdr(const std::string& vFilePathName, bool vFlipY, int
     return false;
 }
 
-bool RenderPack::SaveFBOToJpg(const std::string& vFilePathName, bool vFlipY, int vSubSamplesCount, int vQualityFrom0To100, ct::ivec2 vNewSize,
-                              int vAttachmentId) {
+bool RenderPack::SaveFBOToJpg(const std::string& vFilePathName, bool vFlipY, int vSubSamplesCount, int vQualityFrom0To100, ct::ivec2 vNewSize, int vAttachmentId) {
     ZoneScoped;
 
     if (puFrameBuffer) {
         if (vNewSize.emptyOR()) {
-            return puFrameBuffer->getBackBuffer()->SaveToJpg(vFilePathName, vFlipY, vSubSamplesCount, vQualityFrom0To100, puFrameBuffer->size.xy(),
-                                                             vAttachmentId);
+            return puFrameBuffer->getBackBuffer()->SaveToJpg(vFilePathName, vFlipY, vSubSamplesCount, vQualityFrom0To100, puFrameBuffer->size.xy(), vAttachmentId);
         } else {
             return puFrameBuffer->getBackBuffer()->SaveToJpg(vFilePathName, vFlipY, vSubSamplesCount, vQualityFrom0To100, vNewSize, vAttachmentId);
         }
@@ -3612,8 +3670,8 @@ bool RenderPack::DrawCountPatchVerticesSlider(float vWidth) {
             if (puShaderKey->puIsTesselationControlShaderPresent || puShaderKey->puIsTesselationEvalShaderPresent) {
                 if (puModel_Render && puPatchsCountVertices.y > 0) {
                     ImGui::PushID(m_This.lock().get());
-                    if (ImGui::SliderUIntDefaultCompact(vWidth, "Patch Vertices Count", &puPatchsCountVertices.w, puPatchsCountVertices.x,
-                                                        puPatchsCountVertices.y, puPatchsCountVertices.z)) {
+                    if (ImGui::SliderUIntDefaultCompact(
+                            vWidth, "Patch Vertices Count", &puPatchsCountVertices.w, puPatchsCountVertices.x, puPatchsCountVertices.y, puPatchsCountVertices.z)) {
                         ChangeCountPatchVertices(puPatchsCountVertices.w);
                         change = true;
                     }
@@ -3653,8 +3711,7 @@ bool RenderPack::DrawCountMeshIndicesToShowSlider(float vWidth) {
 
     if (puCountIndicesToShow.y > 0) {
         ImGui::PushID(m_This.lock().get());
-        if (ImGui::SliderUIntDefaultCompact(vWidth, "Indices", &puCountIndicesToShow.w, puCountIndicesToShow.x, puCountIndicesToShow.y,
-                                            puCountIndicesToShow.z)) {
+        if (ImGui::SliderUIntDefaultCompact(vWidth, "Indices", &puCountIndicesToShow.w, puCountIndicesToShow.x, puCountIndicesToShow.y, puCountIndicesToShow.z)) {
             puCountIndicesToShow.w = ct::clamp(puCountIndicesToShow.w, puCountIndicesToShow.x, puCountIndicesToShow.y);
             ChangeCountMeshIndicesToShow(puCountIndicesToShow.w);
             change = true;
@@ -3683,8 +3740,7 @@ bool RenderPack::DrawCountMeshPointsSlider(float vWidth) {
 
     if (puCountVertices.y > 0) {
         ImGui::PushID(m_This.lock().get());
-        if (ImGui::SliderSizeTDefaultCompact(vWidth, "Points", &globalSettings.countVertices, puCountVertices.x, puCountVertices.y,
-                                             puCountVertices.z)) {
+        if (ImGui::SliderSizeTDefaultCompact(vWidth, "Points", &globalSettings.countVertices, puCountVertices.x, puCountVertices.y, puCountVertices.z)) {
             globalSettings.countVertices = ct::clamp((uint32_t)globalSettings.countVertices, puCountVertices.x, puCountVertices.y);
             ChangeCountMeshPoints((uint32_t)globalSettings.countVertices);
             change = true;
@@ -3716,8 +3772,8 @@ bool RenderPack::DrawCountMeshInstancesSlider(float vWidth) {
     if (puShaderKey && puModel_Render) {
         if (puCountInstances.y > 0) {
             ImGui::PushID(m_This.lock().get());
-            if (ImGui::SliderSizeTDefaultCompact(vWidth, "Instances", &puShaderKey->puShaderGlobalSettings.countInstances, puCountInstances.x,
-                                                 puCountInstances.y, puCountInstances.z)) {
+            if (ImGui::SliderSizeTDefaultCompact(
+                    vWidth, "Instances", &puShaderKey->puShaderGlobalSettings.countInstances, puCountInstances.x, puCountInstances.y, puCountInstances.z)) {
                 ChangeCountMeshInstances((uint32_t)puShaderKey->puShaderGlobalSettings.countInstances);
                 change = true;
             }
@@ -3745,8 +3801,8 @@ bool RenderPack::DrawCountRenderingIterationsSlider(float vWidth) {
 
     if (puShaderKey) {
         ImGui::PushID(m_This.lock().get());
-        if (ImGui::SliderSizeTDefaultCompact(vWidth, "Iterations", &puShaderKey->puShaderGlobalSettings.countIterations, puCountIterations.x,
-                                             puCountIterations.y, puCountIterations.z)) {
+        if (ImGui::SliderSizeTDefaultCompact(
+                vWidth, "Iterations", &puShaderKey->puShaderGlobalSettings.countIterations, puCountIterations.x, puCountIterations.y, puCountIterations.z)) {
             puShaderKey->puShaderGlobalSettings.countIterations =
                 ct::clamp((uint32_t)puShaderKey->puShaderGlobalSettings.countIterations, puCountIterations.x, puCountIterations.y);
             ChangeCountRenderingIterations((uint32_t)puShaderKey->puShaderGlobalSettings.countIterations);
@@ -3773,8 +3829,12 @@ bool RenderPack::DrawCountFramesToJumpSlider(float vWidth) {
 
     if (puShaderKey) {
         ImGui::PushID(m_This.lock().get());
-        if (ImGui::SliderSizeTDefaultCompact(vWidth, "Count Frames to Jump", &puShaderKey->puShaderGlobalSettings.countFramesToJump,
-                                             puCountFrameToJump.x, puCountFrameToJump.y, puCountFrameToJump.z)) {
+        if (ImGui::SliderSizeTDefaultCompact(vWidth,
+                                             "Count Frames to Jump",
+                                             &puShaderKey->puShaderGlobalSettings.countFramesToJump,
+                                             puCountFrameToJump.x,
+                                             puCountFrameToJump.y,
+                                             puCountFrameToJump.z)) {
             puShaderKey->puShaderGlobalSettings.countFramesToJump =
                 ct::clamp((uint32_t)puShaderKey->puShaderGlobalSettings.countFramesToJump, puCountFrameToJump.x, puCountFrameToJump.y);
             ChangeCountFramesToJump((uint32_t)puShaderKey->puShaderGlobalSettings.countFramesToJump);
@@ -3805,8 +3865,7 @@ float RenderPack::GetLineWidth() {
 bool RenderPack::IsUsingSmoothLine() {
     ZoneScoped;
 
-    return puGeometryOutputRenderMode == GL_LINES || puLastRenderMode == GL_LINES || puLastRenderMode == GL_LINE_LOOP ||
-        puLastRenderMode == GL_LINE_STRIP;
+    return puGeometryOutputRenderMode == GL_LINES || puLastRenderMode == GL_LINES || puLastRenderMode == GL_LINE_LOOP || puLastRenderMode == GL_LINE_STRIP;
 }
 
 ///////////////////////////////////////////////////////

@@ -27,8 +27,11 @@
 //// CONTROLLER INPUT CLASS //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
-bool ControllerInput::CreateAction(const char* vActionName, const char* vLocalizedActionName, const std::vector<XrPath>& vControllerBasePaths,
-                                   const XrActionSet& vActionSet, const XrActionType& vActionType) {
+bool ControllerInput::CreateAction(const char* vActionName,
+                                   const char* vLocalizedActionName,
+                                   const std::vector<XrPath>& vControllerBasePaths,
+                                   const XrActionSet& vActionSet,
+                                   const XrActionType& vActionType) {
     assert(vActionName);
     assert(vLocalizedActionName);
 
@@ -58,8 +61,7 @@ bool ControllerInput::CreateAction(const char* vActionName, const char* vLocaliz
 }
 
 template <typename T>
-bool ControllerInput::CaptureDatas(const XrSession& vXRSession, const uint32_t& vEye, const std::vector<XrPath>& vControllerBasePaths,
-                                   T& vOutputAction) {
+bool ControllerInput::CaptureDatas(const XrSession& vXRSession, const uint32_t& vEye, const std::vector<XrPath>& vControllerBasePaths, T& vOutputAction) {
     switch (actionType) {
         case XR_ACTION_TYPE_BOOLEAN_INPUT: vOutputAction.type = XR_TYPE_ACTION_STATE_BOOLEAN; break;
         case XR_ACTION_TYPE_FLOAT_INPUT: vOutputAction.type = XR_TYPE_ACTION_STATE_FLOAT; break;
@@ -403,17 +405,15 @@ void VRActions::GetActionRealTimeInfos(const XrSession& vXRSession, const XrSpac
                 if (i == 0) {
                     if (CameraSystem::Instance()->m_CameraSettings.m_CameraMode == CAMERA_MODE_Enum::CAMERA_MODE_TURNTABLE_Y) {
                         if (IS_FLOAT_DIFFERENT(controllerData.thumbstickYValue.currentState, 0.0f)) {
-                            CameraSystem::Instance()->IncRotateXYZ(ct::fvec3(
-                                0.0f, 0.0f,
-                                controllerData.thumbstickXValue.currentState * CameraSystem::Instance()->m_CameraSettings.m_VRRotStepFactor.z));
+                            CameraSystem::Instance()->IncRotateXYZ(
+                                ct::fvec3(0.0f, 0.0f, controllerData.thumbstickXValue.currentState * CameraSystem::Instance()->m_CameraSettings.m_VRRotStepFactor.z));
                             CameraSystem::Instance()->IncZoom(controllerData.thumbstickYValue.currentState *
                                                               CameraSystem::Instance()->m_CameraSettings.m_VRZoomStepFactor);
                         }
                     } else if (CameraSystem::Instance()->m_CameraSettings.m_CameraMode == CAMERA_MODE_Enum::CAMERA_MODE_FREE) {
                         if (IS_FLOAT_DIFFERENT(controllerData.thumbstickYValue.currentState, 0.0f)) {
-                            CameraSystem::Instance()->IncRotateXYZ(ct::fvec3(
-                                0.0f, 0.0f,
-                                controllerData.thumbstickXValue.currentState * CameraSystem::Instance()->m_CameraSettings.m_VRRotStepFactor.z));
+                            CameraSystem::Instance()->IncRotateXYZ(
+                                ct::fvec3(0.0f, 0.0f, controllerData.thumbstickXValue.currentState * CameraSystem::Instance()->m_CameraSettings.m_VRRotStepFactor.z));
                         }
 
                         if (controllerData.triggerValue.currentState > 0.0f) {
@@ -425,16 +425,18 @@ void VRActions::GetActionRealTimeInfos(const XrSession& vXRSession, const XrSpac
                     if (CameraSystem::Instance()->m_CameraSettings.m_CameraMode == CAMERA_MODE_Enum::CAMERA_MODE_TURNTABLE_Y) {
                         if (IS_FLOAT_DIFFERENT(controllerData.thumbstickXValue.currentState, 0.0f) ||
                             IS_FLOAT_DIFFERENT(controllerData.thumbstickYValue.currentState, 0.0f)) {
-                            CameraSystem::Instance()->IncRotateXYZ(ct::fvec3(
-                                controllerData.thumbstickXValue.currentState * CameraSystem::Instance()->m_CameraSettings.m_VRRotStepFactor.x,
-                                controllerData.thumbstickYValue.currentState * CameraSystem::Instance()->m_CameraSettings.m_VRRotStepFactor.y, 0.0f));
+                            CameraSystem::Instance()->IncRotateXYZ(
+                                ct::fvec3(controllerData.thumbstickXValue.currentState * CameraSystem::Instance()->m_CameraSettings.m_VRRotStepFactor.x,
+                                          controllerData.thumbstickYValue.currentState * CameraSystem::Instance()->m_CameraSettings.m_VRRotStepFactor.y,
+                                          0.0f));
                         }
                     } else if (CameraSystem::Instance()->m_CameraSettings.m_CameraMode == CAMERA_MODE_Enum::CAMERA_MODE_FREE) {
                         if (IS_FLOAT_DIFFERENT(controllerData.thumbstickXValue.currentState, 0.0f) ||
                             IS_FLOAT_DIFFERENT(controllerData.thumbstickYValue.currentState, 0.0f)) {
-                            CameraSystem::Instance()->IncRotateXYZ(ct::fvec3(
-                                controllerData.thumbstickXValue.currentState * CameraSystem::Instance()->m_CameraSettings.m_VRRotStepFactor.x,
-                                controllerData.thumbstickYValue.currentState * CameraSystem::Instance()->m_CameraSettings.m_VRRotStepFactor.y, 0.0f));
+                            CameraSystem::Instance()->IncRotateXYZ(
+                                ct::fvec3(controllerData.thumbstickXValue.currentState * CameraSystem::Instance()->m_CameraSettings.m_VRRotStepFactor.x,
+                                          controllerData.thumbstickYValue.currentState * CameraSystem::Instance()->m_CameraSettings.m_VRRotStepFactor.y,
+                                          0.0f));
                         }
 
                         if (controllerData.triggerValue.currentState > 0.0f) {

@@ -391,8 +391,7 @@ std::string UniformHelper::SerializeUniform(UniformVariantPtr vUniform) {
                     str = vUniform->name + ":target:" + vUniform->target + "\n";
                 } else if (vUniform->textureFileChoosebox || vUniform->textureChoiceActivated) {
                     if (vUniform->filePathNames.size() == 1) {
-                        str = vUniform->name + ":choose:" + SecureAbsolutePath(
-                                  FileHelper::Instance()->GetPathRelativeToApp(vUniform->filePathNames[0]));
+                        str = vUniform->name + ":choose:" + SecureAbsolutePath(FileHelper::Instance()->GetPathRelativeToApp(vUniform->filePathNames[0]));
                         if (vUniform->textureFlipChoosebox)
                             str += ":flip:" + ct::toStr(vUniform->flip ? "true" : "false");
                         if (vUniform->textureMipmapChoosebox)
@@ -404,8 +403,7 @@ std::string UniformHelper::SerializeUniform(UniformVariantPtr vUniform) {
                         str += "\n";
                     }
                 }
-            } else if (vUniform->widget == "mouse:2pos_2click" || vUniform->widget == "mouse:2press_2click" ||
-                       vUniform->widget == "mouse:shadertoy") {
+            } else if (vUniform->widget == "mouse:2pos_2click" || vUniform->widget == "mouse:2press_2click" || vUniform->widget == "mouse:shadertoy") {
                 if (vUniform->glslType == uType::uTypeEnum::U_VEC4) {
                     if (!vUniform->constant) {
                         str = vUniform->name + ":" + ct::toStr(vUniform->x / UniformHelper::FBOSizeForMouseUniformNormalization.x) + ";" +
@@ -419,9 +417,7 @@ std::string UniformHelper::SerializeUniform(UniformVariantPtr vUniform) {
                 if (!vUniform->constant) {
                     switch (vUniform->glslType) {
                         case uType::uTypeEnum::U_FLOAT: str = vUniform->name + ":" + ct::toStr(vUniform->x) + "\n"; break;
-                        case uType::uTypeEnum::U_VEC2:
-                            str = vUniform->name + ":" + ct::toStr(vUniform->x) + ";" + ct::toStr(vUniform->y) + "\n";
-                            break;
+                        case uType::uTypeEnum::U_VEC2: str = vUniform->name + ":" + ct::toStr(vUniform->x) + ";" + ct::toStr(vUniform->y) + "\n"; break;
                         case uType::uTypeEnum::U_VEC3:
                             str = vUniform->name + ":" + ct::toStr(vUniform->x) + ";" + ct::toStr(vUniform->y) + ";" + ct::toStr(vUniform->z) + "\n";
                         case uType::uTypeEnum::U_VEC4:
@@ -429,40 +425,31 @@ std::string UniformHelper::SerializeUniform(UniformVariantPtr vUniform) {
                                 ct::toStr(vUniform->w) + "\n";
                             break;
                         case uType::uTypeEnum::U_INT: str = vUniform->name + ":" + ct::toStr(vUniform->ix) + "\n"; break;
-                        case uType::uTypeEnum::U_IVEC2:
-                            str = vUniform->name + ":" + ct::toStr(vUniform->ix) + ";" + ct::toStr(vUniform->iy) + "\n";
-                            break;
+                        case uType::uTypeEnum::U_IVEC2: str = vUniform->name + ":" + ct::toStr(vUniform->ix) + ";" + ct::toStr(vUniform->iy) + "\n"; break;
                         case uType::uTypeEnum::U_IVEC3:
-                            str =
-                                vUniform->name + ":" + ct::toStr(vUniform->ix) + ";" + ct::toStr(vUniform->iy) + ";" + ct::toStr(vUniform->iz) + "\n";
+                            str = vUniform->name + ":" + ct::toStr(vUniform->ix) + ";" + ct::toStr(vUniform->iy) + ";" + ct::toStr(vUniform->iz) + "\n";
                             break;
                         case uType::uTypeEnum::U_IVEC4:
-                            str = vUniform->name + ":" + ct::toStr(vUniform->ix) + ";" + ct::toStr(vUniform->iy) + ";" + ct::toStr(vUniform->iz) +
-                                ";" + ct::toStr(vUniform->iw) + "\n";
+                            str = vUniform->name + ":" + ct::toStr(vUniform->ix) + ";" + ct::toStr(vUniform->iy) + ";" + ct::toStr(vUniform->iz) + ";" +
+                                ct::toStr(vUniform->iw) + "\n";
                             break;
                         case uType::uTypeEnum::U_UINT: str = vUniform->name + ":" + ct::toStr(vUniform->ux) + "\n"; break;
-                        case uType::uTypeEnum::U_UVEC2:
-                            str = vUniform->name + ":" + ct::toStr(vUniform->ux) + ";" + ct::toStr(vUniform->uy) + "\n";
-                            break;
+                        case uType::uTypeEnum::U_UVEC2: str = vUniform->name + ":" + ct::toStr(vUniform->ux) + ";" + ct::toStr(vUniform->uy) + "\n"; break;
                         case uType::uTypeEnum::U_UVEC3:
-                            str =
-                                vUniform->name + ":" + ct::toStr(vUniform->ux) + ";" + ct::toStr(vUniform->uy) + ";" + ct::toStr(vUniform->uz) + "\n";
+                            str = vUniform->name + ":" + ct::toStr(vUniform->ux) + ";" + ct::toStr(vUniform->uy) + ";" + ct::toStr(vUniform->uz) + "\n";
                             break;
                         case uType::uTypeEnum::U_UVEC4:
-                            str = vUniform->name + ":" + ct::toStr(vUniform->ux) + ";" + ct::toStr(vUniform->uy) + ";" + ct::toStr(vUniform->uz) +
-                                ";" + ct::toStr(vUniform->uw) + "\n";
+                            str = vUniform->name + ":" + ct::toStr(vUniform->ux) + ";" + ct::toStr(vUniform->uy) + ";" + ct::toStr(vUniform->uz) + ";" +
+                                ct::toStr(vUniform->uw) + "\n";
                             break;
                         case uType::uTypeEnum::U_BOOL: str = vUniform->name + ":" + ct::toStr(vUniform->bx) + "\n"; break;
-                        case uType::uTypeEnum::U_BVEC2:
-                            str = vUniform->name + ":" + ct::toStr(vUniform->bx) + ";" + ct::toStr(vUniform->by) + "\n";
-                            break;
+                        case uType::uTypeEnum::U_BVEC2: str = vUniform->name + ":" + ct::toStr(vUniform->bx) + ";" + ct::toStr(vUniform->by) + "\n"; break;
                         case uType::uTypeEnum::U_BVEC3:
-                            str =
-                                vUniform->name + ":" + ct::toStr(vUniform->bx) + ";" + ct::toStr(vUniform->by) + ";" + ct::toStr(vUniform->bz) + "\n";
+                            str = vUniform->name + ":" + ct::toStr(vUniform->bx) + ";" + ct::toStr(vUniform->by) + ";" + ct::toStr(vUniform->bz) + "\n";
                             break;
                         case uType::uTypeEnum::U_BVEC4:
-                            str = vUniform->name + ":" + ct::toStr(vUniform->bx) + ";" + ct::toStr(vUniform->by) + ";" + ct::toStr(vUniform->bz) +
-                                ";" + ct::toStr(vUniform->bw) + "\n";
+                            str = vUniform->name + ":" + ct::toStr(vUniform->bx) + ";" + ct::toStr(vUniform->by) + ";" + ct::toStr(vUniform->bz) + ";" +
+                                ct::toStr(vUniform->bw) + "\n";
                             break;
                         default: break;
                     }
@@ -495,59 +482,53 @@ std::string UniformHelper::SerializeUniformAsConst(UniformVariantPtr vUniform) {
                 }
             } else if (vUniform->glslType == uType::uTypeEnum::U_VEC2) {
                 if (vUniform->widget == "checkbox") {
-                    str = "const vec2 " + vUniform->name + " = vec2(" + ct::toStr((vUniform->bx ? 1.0f : 0.0f)) + "," +
-                        ct::toStr((vUniform->by ? 1.0f : 0.0f)) + ");\n";
+                    str = "const vec2 " + vUniform->name + " = vec2(" + ct::toStr((vUniform->bx ? 1.0f : 0.0f)) + "," + ct::toStr((vUniform->by ? 1.0f : 0.0f)) + ");\n";
                 } else {
                     str = "const vec2 " + vUniform->name + " = vec2(" + ct::toStr(vUniform->x) + "," + ct::toStr(vUniform->y) + ");\n";
                 }
             } else if (vUniform->glslType == uType::uTypeEnum::U_VEC3) {
                 if (vUniform->widget == "checkbox") {
-                    str = "const vec3 " + vUniform->name + " = vec3(" + ct::toStr((vUniform->bx ? 1.0f : 0.0f)) + "," +
-                        ct::toStr((vUniform->by ? 1.0f : 0.0f)) + "," + ct::toStr((vUniform->bz ? 1.0f : 0.0f)) + ");\n";
+                    str = "const vec3 " + vUniform->name + " = vec3(" + ct::toStr((vUniform->bx ? 1.0f : 0.0f)) + "," + ct::toStr((vUniform->by ? 1.0f : 0.0f)) + "," +
+                        ct::toStr((vUniform->bz ? 1.0f : 0.0f)) + ");\n";
                 } else {
-                    str = "const vec3 " + vUniform->name + " = vec3(" + ct::toStr(vUniform->x) + "," + ct::toStr(vUniform->y) + "," +
-                        ct::toStr(vUniform->z) + ");\n";
+                    str = "const vec3 " + vUniform->name + " = vec3(" + ct::toStr(vUniform->x) + "," + ct::toStr(vUniform->y) + "," + ct::toStr(vUniform->z) + ");\n";
                 }
             } else if (vUniform->glslType == uType::uTypeEnum::U_VEC4) {
                 if (vUniform->widget == "checkbox") {
-                    str = "const vec4" + vUniform->name + " = vec4(" + ct::toStr((vUniform->bx ? 1.0f : 0.0f)) + "," +
-                        ct::toStr((vUniform->by ? 1.0f : 0.0f)) + "," + ct::toStr((vUniform->bz ? 1.0f : 0.0f)) + "," +
-                        ct::toStr((vUniform->bw ? 1.0f : 0.0f)) + ");\n";
+                    str = "const vec4" + vUniform->name + " = vec4(" + ct::toStr((vUniform->bx ? 1.0f : 0.0f)) + "," + ct::toStr((vUniform->by ? 1.0f : 0.0f)) + "," +
+                        ct::toStr((vUniform->bz ? 1.0f : 0.0f)) + "," + ct::toStr((vUniform->bw ? 1.0f : 0.0f)) + ");\n";
                 } else {
-                    str = "const vec4 " + vUniform->name + " = vec4(" + ct::toStr(vUniform->x) + "," + ct::toStr(vUniform->y) + "," +
-                        ct::toStr(vUniform->z) + "," + ct::toStr(vUniform->w) + ");\n";
+                    str = "const vec4 " + vUniform->name + " = vec4(" + ct::toStr(vUniform->x) + "," + ct::toStr(vUniform->y) + "," + ct::toStr(vUniform->z) + "," +
+                        ct::toStr(vUniform->w) + ");\n";
                 }
             } else if (vUniform->glslType == uType::uTypeEnum::U_INT)
                 str = "const int " + vUniform->name + " = " + ct::toStr(vUniform->ix) + ";\n";
             else if (vUniform->glslType == uType::uTypeEnum::U_IVEC2)
                 str = "const ivec2 " + vUniform->name + " = ivec2(" + ct::toStr(vUniform->ix) + "," + ct::toStr(vUniform->iy) + ");\n";
             else if (vUniform->glslType == uType::uTypeEnum::U_IVEC3)
-                str = "const ivec3 " + vUniform->name + " = ivec3(" + ct::toStr(vUniform->ix) + "," + ct::toStr(vUniform->iy) + "," +
-                    ct::toStr(vUniform->iz) + ");\n";
+                str = "const ivec3 " + vUniform->name + " = ivec3(" + ct::toStr(vUniform->ix) + "," + ct::toStr(vUniform->iy) + "," + ct::toStr(vUniform->iz) + ");\n";
             else if (vUniform->glslType == uType::uTypeEnum::U_IVEC4)
-                str = "const ivec4 " + vUniform->name + " = ivec4(" + ct::toStr(vUniform->ix) + "," + ct::toStr(vUniform->iy) + "," +
-                    ct::toStr(vUniform->iz) + "," + ct::toStr(vUniform->iw) + ");\n";
+                str = "const ivec4 " + vUniform->name + " = ivec4(" + ct::toStr(vUniform->ix) + "," + ct::toStr(vUniform->iy) + "," + ct::toStr(vUniform->iz) + "," +
+                    ct::toStr(vUniform->iw) + ");\n";
             else if (vUniform->glslType == uType::uTypeEnum::U_UINT)
                 str = "const uint " + vUniform->name + " = " + ct::toStr(vUniform->ux) + ";\n";
             else if (vUniform->glslType == uType::uTypeEnum::U_UVEC2)
                 str = "const uvec2 " + vUniform->name + " = uvec2(" + ct::toStr(vUniform->ux) + "," + ct::toStr(vUniform->uy) + ");\n";
             else if (vUniform->glslType == uType::uTypeEnum::U_UVEC3)
-                str = "const uvec3 " + vUniform->name + " = uvec3(" + ct::toStr(vUniform->ux) + "," + ct::toStr(vUniform->uy) + "," +
-                    ct::toStr(vUniform->uz) + ");\n";
+                str = "const uvec3 " + vUniform->name + " = uvec3(" + ct::toStr(vUniform->ux) + "," + ct::toStr(vUniform->uy) + "," + ct::toStr(vUniform->uz) + ");\n";
             else if (vUniform->glslType == uType::uTypeEnum::U_UVEC4)
-                str = "const uvec4 " + vUniform->name + " = uvec4(" + ct::toStr(vUniform->ux) + "," + ct::toStr(vUniform->uy) + "," +
-                    ct::toStr(vUniform->uz) + "," + ct::toStr(vUniform->uw) + ");\n";
+                str = "const uvec4 " + vUniform->name + " = uvec4(" + ct::toStr(vUniform->ux) + "," + ct::toStr(vUniform->uy) + "," + ct::toStr(vUniform->uz) + "," +
+                    ct::toStr(vUniform->uw) + ");\n";
             else if (vUniform->glslType == uType::uTypeEnum::U_BOOL)
                 str = "const bool " + vUniform->name + " = " + (vUniform->bx ? "true" : "false") + ";\n";
             else if (vUniform->glslType == uType::uTypeEnum::U_BVEC2)
-                str = "const bvec2 " + vUniform->name + " = bvec2(" + (vUniform->bx ? "true" : "false") + "," + (vUniform->by ? "true" : "false") +
-                    ");\n";
+                str = "const bvec2 " + vUniform->name + " = bvec2(" + (vUniform->bx ? "true" : "false") + "," + (vUniform->by ? "true" : "false") + ");\n";
             else if (vUniform->glslType == uType::uTypeEnum::U_BVEC3)
-                str = "const bvec3 " + vUniform->name + " = bvec3(" + (vUniform->bx ? "true" : "false") + "," + (vUniform->by ? "true" : "false") +
-                    "," + (vUniform->bz ? "true" : "false") + ");\n";
+                str = "const bvec3 " + vUniform->name + " = bvec3(" + (vUniform->bx ? "true" : "false") + "," + (vUniform->by ? "true" : "false") + "," +
+                    (vUniform->bz ? "true" : "false") + ");\n";
             else if (vUniform->glslType == uType::uTypeEnum::U_BVEC4)
-                str = "const bvec4 " + vUniform->name + " = bvec4(" + (vUniform->bx ? "true" : "false") + "," + (vUniform->by ? "true" : "false") +
-                    "," + (vUniform->bz ? "true" : "false") + "," + (vUniform->bw ? "true" : "false") + ");\n";
+                str = "const bvec4 " + vUniform->name + " = bvec4(" + (vUniform->bx ? "true" : "false") + "," + (vUniform->by ? "true" : "false") + "," +
+                    (vUniform->bz ? "true" : "false") + "," + (vUniform->bw ? "true" : "false") + ");\n";
             else if (vUniform->glslType == uType::uTypeEnum::U_SAMPLER2D)
                 str = "//uniform sampler2D " + vUniform->name + ";\n";
             else if (vUniform->glslType == uType::uTypeEnum::U_SAMPLER3D)
@@ -604,8 +585,7 @@ std::string UniformHelper::SerializeUniformAsWidget(UniformVariantPtr vUniform) 
                     str += vUniform->inf.xyz().string(',') + ":";
                     str += vUniform->sup.xyz().string(',') + ":";
                     str += vUniform->def.xyz().string(',');
-                    if (IS_FLOAT_DIFFERENT(vUniform->step.x, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.y, 0.0f) ||
-                        IS_FLOAT_DIFFERENT(vUniform->step.z, 0.0f))
+                    if (IS_FLOAT_DIFFERENT(vUniform->step.x, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.y, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.z, 0.0f))
                         str += ":" + vUniform->step.xyz().string(',');
                     str += ") " + vUniform->name + ";\n";
                 }
@@ -615,8 +595,8 @@ std::string UniformHelper::SerializeUniformAsWidget(UniformVariantPtr vUniform) 
                     str += vUniform->inf.string(',') + ":";
                     str += vUniform->sup.string(',') + ":";
                     str += vUniform->def.string(',');
-                    if (IS_FLOAT_DIFFERENT(vUniform->step.x, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.y, 0.0f) ||
-                        IS_FLOAT_DIFFERENT(vUniform->step.z, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.w, 0.0f))
+                    if (IS_FLOAT_DIFFERENT(vUniform->step.x, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.y, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.z, 0.0f) ||
+                        IS_FLOAT_DIFFERENT(vUniform->step.w, 0.0f))
                         str += ":" + vUniform->step.string(',');
                     str += ") " + vUniform->name + ";\n";
                 }
@@ -646,8 +626,7 @@ std::string UniformHelper::SerializeUniformAsWidget(UniformVariantPtr vUniform) 
                     str += vUniform->inf.xyz().string(',') + ":";
                     str += vUniform->sup.xyz().string(',') + ":";
                     str += vUniform->def.xyz().string(',');
-                    if (IS_FLOAT_DIFFERENT(vUniform->step.x, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.y, 0.0f) ||
-                        IS_FLOAT_DIFFERENT(vUniform->step.z, 0.0f))
+                    if (IS_FLOAT_DIFFERENT(vUniform->step.x, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.y, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.z, 0.0f))
                         str += ":" + vUniform->step.xyz().string(',');
                     str += ") " + vUniform->name + ";\n";
                 }
@@ -657,8 +636,8 @@ std::string UniformHelper::SerializeUniformAsWidget(UniformVariantPtr vUniform) 
                     str += vUniform->inf.string(',') + ":";
                     str += vUniform->sup.string(',') + ":";
                     str += vUniform->def.string(',');
-                    if (IS_FLOAT_DIFFERENT(vUniform->step.x, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.y, 0.0f) ||
-                        IS_FLOAT_DIFFERENT(vUniform->step.z, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.w, 0.0f))
+                    if (IS_FLOAT_DIFFERENT(vUniform->step.x, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.y, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.z, 0.0f) ||
+                        IS_FLOAT_DIFFERENT(vUniform->step.w, 0.0f))
                         str += ":" + vUniform->step.string(',');
                     str += ") " + vUniform->name + ";\n";
                 }
@@ -688,8 +667,7 @@ std::string UniformHelper::SerializeUniformAsWidget(UniformVariantPtr vUniform) 
                     str += vUniform->inf.xyz().string(',') + ":";
                     str += vUniform->sup.xyz().string(',') + ":";
                     str += vUniform->def.xyz().string(',');
-                    if (IS_FLOAT_DIFFERENT(vUniform->step.x, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.y, 0.0f) ||
-                        IS_FLOAT_DIFFERENT(vUniform->step.z, 0.0f))
+                    if (IS_FLOAT_DIFFERENT(vUniform->step.x, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.y, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.z, 0.0f))
                         str += ":" + vUniform->step.xyz().string(',');
                     str += ") " + vUniform->name + ";\n";
                 }
@@ -699,8 +677,8 @@ std::string UniformHelper::SerializeUniformAsWidget(UniformVariantPtr vUniform) 
                     str += vUniform->inf.string(',') + ":";
                     str += vUniform->sup.string(',') + ":";
                     str += vUniform->def.string(',');
-                    if (IS_FLOAT_DIFFERENT(vUniform->step.x, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.y, 0.0f) ||
-                        IS_FLOAT_DIFFERENT(vUniform->step.z, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.w, 0.0f))
+                    if (IS_FLOAT_DIFFERENT(vUniform->step.x, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.y, 0.0f) || IS_FLOAT_DIFFERENT(vUniform->step.z, 0.0f) ||
+                        IS_FLOAT_DIFFERENT(vUniform->step.w, 0.0f))
                         str += ":" + vUniform->step.string(',');
                     str += ") " + vUniform->name + ";\n";
                 }
@@ -929,8 +907,8 @@ void UniformHelper::DeSerializeUniform(ShaderKeyPtr vShaderKey, UniformVariantPt
                 if (!vUniform->constant) {
                     auto vec = ct::fvariant(vParams[1]).GetVectorFloat(',');
                     if (vec.size() == 16) {
-                        vUniform->mat4 = glm::mat4(vec[0], vec[1], vec[2], vec[3], vec[4], vec[5], vec[6], vec[7], vec[8], vec[9], vec[10], vec[11],
-                                                   vec[12], vec[13], vec[14], vec[15]);
+                        vUniform->mat4 = glm::mat4(
+                            vec[0], vec[1], vec[2], vec[3], vec[4], vec[5], vec[6], vec[7], vec[8], vec[9], vec[10], vec[11], vec[12], vec[13], vec[14], vec[15]);
                     }
                 }
             }

@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -23,55 +23,52 @@ class PNTBTCModel;
 typedef std::shared_ptr<PNTBTCModel> PNTBTCModelPtr;
 typedef std::weak_ptr<PNTBTCModel> PNTBTCModelWeak;
 
-class PNTBTCModel : public BaseModel
-{
+class PNTBTCModel : public BaseModel {
 private:
-	std::vector<PNTBTCMeshPtr> m_Meshs;
+    std::vector<PNTBTCMeshPtr> m_Meshs;
 
 public:
-	static PNTBTCModelPtr Create(const GuiBackend_Window& vWin);
+    static PNTBTCModelPtr Create(const GuiBackend_Window& vWin);
 
 protected:
-	PNTBTCModelWeak m_This;
+    PNTBTCModelWeak m_This;
 
 public:
-	PNTBTCModel(const GuiBackend_Window& vWin);
-	~PNTBTCModel() override;
+    PNTBTCModel(const GuiBackend_Window& vWin);
+    ~PNTBTCModel() override;
 
-	void Clear() override;
-	bool IsValid() override;
+    void Clear() override;
+    bool IsValid() override;
 
-	void DrawModel(const std::string& vName, const GLenum& vRenderMode = GL_TRIANGLES, const bool& vUseTesselation = false) override;
+    void DrawModel(const std::string& vName, const GLenum& vRenderMode = GL_TRIANGLES, const bool& vUseTesselation = false) override;
 
-	uint32_t GetVaoID(uint32_t vMeshID = 0U) override;
-	uint32_t GetVboID(uint32_t vMeshID = 0U) override;
-	uint32_t GetIboID(uint32_t vMeshID = 0U) override;
+    uint32_t GetVaoID(uint32_t vMeshID = 0U) override;
+    uint32_t GetVboID(uint32_t vMeshID = 0U) override;
+    uint32_t GetIboID(uint32_t vMeshID = 0U) override;
 
-	uint32_t GetMeshCount();
+    uint32_t GetMeshCount();
 
-	/// <summary>
-	/// add, fill and build a mesh and return it
-	/// </summary>
-	/// <param name="vVerticeArray"></param>
-	/// <param name="vIndiceArray"></param>
-	/// <returns></returns>
-	PNTBTCMeshPtr AddMesh(
-		const PNTBTCMesh::VerticeArray& vVerticeArray, 
-		const PNTBTCMesh::IndiceArray& vIndiceArray);
+    /// <summary>
+    /// add, fill and build a mesh and return it
+    /// </summary>
+    /// <param name="vVerticeArray"></param>
+    /// <param name="vIndiceArray"></param>
+    /// <returns></returns>
+    PNTBTCMeshPtr AddMesh(const PNTBTCMesh::VerticeArray& vVerticeArray, const PNTBTCMesh::IndiceArray& vIndiceArray);
 
-	/// <summary>
-	/// add a empy mesh and retrun it
-	/// </summary>
-	/// <returns></returns>
-	PNTBTCMeshPtr AddMesh();
+    /// <summary>
+    /// add a empy mesh and retrun it
+    /// </summary>
+    /// <returns></returns>
+    PNTBTCMeshPtr AddMesh();
 
-	/// <summary>
-	/// add a already build mesh
-	/// </summary>
-	/// <param name="vMesh"></param>
-	void AddMesh(PNTBTCMeshPtr vMeshPtr);
+    /// <summary>
+    /// add a already build mesh
+    /// </summary>
+    /// <param name="vMesh"></param>
+    void AddMesh(PNTBTCMeshPtr vMeshPtr);
 
-	bool ReLoadModel();
+    bool ReLoadModel();
 
-	std::vector<PNTBTCMeshPtr>* GetMeshs();
+    std::vector<PNTBTCMeshPtr>* GetMeshs();
 };

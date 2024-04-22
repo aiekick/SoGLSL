@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -16,18 +16,17 @@
 #pragma once
 
 #pragma warning(push)
-#pragma warning(disable:4201)   // suppress even more warnings about nameless structs
+#pragma warning(disable : 4201)  // suppress even more warnings about nameless structs
 #include <glm/mat4x4.hpp>
 #pragma warning(pop)
 
-class CameraInterface
-{
+class CameraInterface {
 public:
-	glm::mat4 uView = glm::mat4(1.0f);
-	glm::mat4 uProj = glm::mat4(1.0f);
-	glm::mat4 uModel = glm::mat4(1.0f);
-	glm::mat4 uCam = glm::mat4(1.0f);
-	glm::mat4 uInvCam = glm::mat4(1.0f);
-	glm::mat4 uNormalMatrix = glm::mat4(1.0f); // matrice pour afficher les normales
-	glm::mat4 uSliceModel = glm::mat4(1.0f);
+    glm::mat4 uView = glm::mat4(1.0f);
+    glm::mat4 uProj = glm::mat4(1.0f);
+    glm::mat4 uModel = glm::mat4(1.0f);
+    glm::mat4 uCam = glm::mat4(1.0f);
+    glm::mat4 uInvCam = glm::mat4(1.0f);
+    glm::mat4 uNormalMatrix = glm::mat4(1.0f);  // matrice pour afficher les normales
+    glm::mat4 uSliceModel = glm::mat4(1.0f);
 };

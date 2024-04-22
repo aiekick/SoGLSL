@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -31,11 +31,11 @@
 #endif
 #include <string>
 
-//#include "fonts/comicbd_ttf_compressed.h"
+// #include "fonts/comicbd_ttf_compressed.h"
 
 void LinkCallback(ImGui::MarkdownLinkCallbackData data_);
 inline ImGui::MarkdownImageData ImageCallback(ImGui::MarkdownLinkCallbackData data_);
-static ImGui::MarkdownConfig mdConfig{ LinkCallback, nullptr, ImageCallback, "", { {nullptr, true }, {nullptr, true }, {nullptr, false } } };
+static ImGui::MarkdownConfig mdConfig{LinkCallback, nullptr, ImageCallback, "", {{nullptr, true}, {nullptr, true}, {nullptr, false}}};
 
 static std::string _selectedPath = "";
 
@@ -43,314 +43,286 @@ static std::string _selectedPath = "";
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-void LinkCallback(ImGui::MarkdownLinkCallbackData data_)
-{
-	const std::string url(data_.link, data_.linkLength);
-	if (!data_.isImage)
-	{
+void LinkCallback(ImGui::MarkdownLinkCallbackData data_) {
+    const std::string url(data_.link, data_.linkLength);
+    if (!data_.isImage) {
         FileHelper::Instance()->OpenUrl(url);
 #ifdef WIN32
-		ShellExecuteA(nullptr, "open", url.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+        ShellExecuteA(nullptr, "open", url.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
 #elif defined(LINUX) or defined(APPLE)
 
 #endif
-	}
+    }
 }
 
-inline ImGui::MarkdownImageData ImageCallback(ImGui::MarkdownLinkCallbackData /*data_*/)
-{
-	// In your application you would load an image based on data_ input. Here we just use the imgui font texture.
-	const ImTextureID image = ImGui::GetIO().Fonts->TexID;
-	const ImGui::MarkdownImageData imageData{ true, false, image, ImVec2(40.0f, 20.0f) };
-	return imageData;
+inline ImGui::MarkdownImageData ImageCallback(ImGui::MarkdownLinkCallbackData /*data_*/) {
+    // In your application you would load an image based on data_ input. Here we just use the imgui font texture.
+    const ImTextureID image = ImGui::GetIO().Fonts->TexID;
+    const ImGui::MarkdownImageData imageData{true, false, image, ImVec2(40.0f, 20.0f)};
+    return imageData;
 }
 
-void Markdown(const std::string& markdown_)
-{
-	// fonts for, respectively, headings H1, H2, H3 and beyond
-	ImGui::Markdown(markdown_.c_str(), markdown_.length(), mdConfig);
+void Markdown(const std::string& markdown_) {
+    // fonts for, respectively, headings H1, H2, H3 and beyond
+    ImGui::Markdown(markdown_.c_str(), markdown_.length(), mdConfig);
 }
 
-ImFont* HelpManager::AddFont(std::string vFontFileName, float vFontSize)
-{
-	ImFont* res = nullptr;
+ImFont* HelpManager::AddFont(std::string vFontFileName, float vFontSize) {
+    ImFont* res = nullptr;
 
-	ImGuiIO& io = ImGui::GetIO();
+    ImGuiIO& io = ImGui::GetIO();
 
-	res = io.Fonts->AddFontFromFileTTF(vFontFileName.c_str(), vFontSize);
-	
-	if (res)
-	{
-		/*// Build texture atlas
-		unsigned char* pixels;
-		int width, height;
+    res = io.Fonts->AddFontFromFileTTF(vFontFileName.c_str(), vFontSize);
 
-		io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);   // Load as RGBA 32-bits (75% of the memory is wasted, but default font is so small) because it is more likely to be compatible with user's existing shaders. If your ImTextureId represent a higher-level concept than just a GL texture id, consider calling GetTexDataAsAlpha8() instead to save on GPU memory.
+    if (res) {
+        /*// Build texture atlas
+        unsigned char* pixels;
+        int width, height;
 
-		// Upload texture to graphics system
-		GLint last_texture;
-		glGetIntegerv(GL_TEXTURE_BINDING_2D, &last_texture);
-		glGenTextures(1, &g_FontTexture);
-		glBindTexture(GL_TEXTURE_2D, g_FontTexture);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+        io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);   // Load as RGBA 32-bits (75% of the memory is wasted, but default font is so small) because it is more
+        likely to be compatible with user's existing shaders. If your ImTextureId represent a higher-level concept than just a GL texture id, consider calling
+        GetTexDataAsAlpha8() instead to save on GPU memory.
 
-		// Store our identifier
-		io.Fonts->TexID = (ImTextureID)(intptr_t)g_FontTexture;
+        // Upload texture to graphics system
+        GLint last_texture;
+        glGetIntegerv(GL_TEXTURE_BINDING_2D, &last_texture);
+        glGenTextures(1, &g_FontTexture);
+        glBindTexture(GL_TEXTURE_2D, g_FontTexture);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 
-		// Restore state
-		glBindTexture(GL_TEXTURE_2D, last_texture);*/
-	}
+        // Store our identifier
+        io.Fonts->TexID = (ImTextureID)(intptr_t)g_FontTexture;
 
-	return res;
+        // Restore state
+        glBindTexture(GL_TEXTURE_2D, last_texture);*/
+    }
+
+    return res;
 }
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-HelpManager::HelpManager()
-{
-	
+HelpManager::HelpManager() {
 }
 
-HelpManager::~HelpManager()
-{
-
+HelpManager::~HelpManager() {
 }
 
 static ImFont* contentFont = nullptr;
 
+void HelpManager::InitFont() {
+    ImGuiIO& io = ImGui::GetIO();
 
-void HelpManager::InitFont()
-{
-	ImGuiIO& io = ImGui::GetIO();
+    io.Fonts->Clear();
 
-	io.Fonts->Clear();
+    io.Fonts->AddFontDefault();
 
-	io.Fonts->AddFontDefault();
+    ImFont* font = nullptr;
 
-	ImFont* font = nullptr;
+    const float fontSize = 13.0f;
 
-	const float fontSize = 13.0f;
+    font = io.Fonts->AddFontFromMemoryCompressedBase85TTF(proggy_clean_ttf_compressed_data_base85,
+                                                          fontSize * 2.0f);  // io.Fonts->AddFontFromFileTTF("comicbd.ttf", fontSize * 2.0f);
+    if (font == nullptr)
+        font = io.Fonts->Fonts[0];
+    mdConfig.headingFormats[0].font = font;
 
-	font = io.Fonts->AddFontFromMemoryCompressedBase85TTF(proggy_clean_ttf_compressed_data_base85, fontSize * 2.0f); //io.Fonts->AddFontFromFileTTF("comicbd.ttf", fontSize * 2.0f);
-	if (font == nullptr) font = io.Fonts->Fonts[0];
-	mdConfig.headingFormats[0].font = font;
+    font = io.Fonts->AddFontFromMemoryCompressedBase85TTF(proggy_clean_ttf_compressed_data_base85, fontSize * 1.75f);
+    if (font == nullptr)
+        font = io.Fonts->Fonts[0];
+    mdConfig.headingFormats[1].font = font;
 
-	font = io.Fonts->AddFontFromMemoryCompressedBase85TTF(proggy_clean_ttf_compressed_data_base85, fontSize * 1.75f);
-	if (font == nullptr) font = io.Fonts->Fonts[0];
-	mdConfig.headingFormats[1].font = font;
+    font = io.Fonts->AddFontFromMemoryCompressedBase85TTF(proggy_clean_ttf_compressed_data_base85, fontSize * 1.5f);
+    if (font == nullptr)
+        font = io.Fonts->Fonts[0];
+    mdConfig.headingFormats[2].font = font;
 
-	font = io.Fonts->AddFontFromMemoryCompressedBase85TTF(proggy_clean_ttf_compressed_data_base85, fontSize * 1.5f);
-	if (font == nullptr) font = io.Fonts->Fonts[0];
-	mdConfig.headingFormats[2].font = font;
-
-	font = io.Fonts->AddFontFromMemoryCompressedBase85TTF(proggy_clean_ttf_compressed_data_base85, fontSize * 1.25f);
-	if (font == nullptr) font = io.Fonts->Fonts[0];
-	contentFont = font;
+    font = io.Fonts->AddFontFromMemoryCompressedBase85TTF(proggy_clean_ttf_compressed_data_base85, fontSize * 1.25f);
+    if (font == nullptr)
+        font = io.Fonts->Fonts[0];
+    contentFont = font;
 }
 
-void HelpManager::Init(std::string vAppName)
-{
-	puAppName = vAppName;
+void HelpManager::Init(std::string vAppName) {
+    puAppName = vAppName;
 
-	if (puAppName == "NOODLESPLATE")
-	{
-		AddUniformHelp("0.NoodlesPlate ?", "", "", "", "");
-	}
+    if (puAppName == "NOODLESPLATE") {
+        AddUniformHelp("0.NoodlesPlate ?", "", "", "", "");
+    }
 
-	if (puAppName == "SDFFONTDESIGNER")
-	{
-		AddUniformHelp("0.SdfFontDesigner ?", "", "", "", "");
-	}
+    if (puAppName == "SDFFONTDESIGNER") {
+        AddUniformHelp("0.SdfFontDesigner ?", "", "", "", "");
+    }
 
-	AddUniformHelp("0.Requirement", "", "", "", "");
-	AddUniformHelp("1.Issue, Features Request, Discuss", "", "", "", "");
-	AddUniformHelp("2.Features", "", "", "", "");
+    AddUniformHelp("0.Requirement", "", "", "", "");
+    AddUniformHelp("1.Issue, Features Request, Discuss", "", "", "", "");
+    AddUniformHelp("2.Features", "", "", "", "");
 
-	if (puAppName == "NOODLESPLATE")
-	{
-		AddUniformHelp("2.Features", "Shader Import", "From GlslSandbox", "", "");
-		AddUniformHelp("2.Features", "Shader Import", "From ShaderToy", "", "");
-		AddUniformHelp("2.Features", "Shader Import", "From VertexShaderArt", "", "");
-		//AddUniformHelp("2.Features", "Node Graph", "", "", "");
-	}
+    if (puAppName == "NOODLESPLATE") {
+        AddUniformHelp("2.Features", "Shader Import", "From GlslSandbox", "", "");
+        AddUniformHelp("2.Features", "Shader Import", "From ShaderToy", "", "");
+        AddUniformHelp("2.Features", "Shader Import", "From VertexShaderArt", "", "");
+        // AddUniformHelp("2.Features", "Node Graph", "", "", "");
+    }
 
-	if (puAppName == "NOODLESPLATE")
-	{
-		AddUniformHelp("3.Shader Scripting", "Shader Structure", "FrameBuffer Section", "", "");
-	}
+    if (puAppName == "NOODLESPLATE") {
+        AddUniformHelp("3.Shader Scripting", "Shader Structure", "FrameBuffer Section", "", "");
+    }
 
-	AddUniformHelp("3.Shader Scripting", "Shader Structure", "Uniforms Section", "", "");
-	AddUniformHelp("3.Shader Scripting", "Shader Structure", "Note Section", "", "");
-	AddUniformHelp("3.Shader Scripting", "Shader Structure", "Common Section", "", "");
+    AddUniformHelp("3.Shader Scripting", "Shader Structure", "Uniforms Section", "", "");
+    AddUniformHelp("3.Shader Scripting", "Shader Structure", "Note Section", "", "");
+    AddUniformHelp("3.Shader Scripting", "Shader Structure", "Common Section", "", "");
 
-	if (puAppName == "NOODLESPLATE")
-	{
-		AddUniformHelp("3.Shader Scripting", "Shader Structure", "Vertex Section", "", "");
-		AddUniformHelp("3.Shader Scripting", "Shader Structure", "Geometry Section", "", "");
-	}
+    if (puAppName == "NOODLESPLATE") {
+        AddUniformHelp("3.Shader Scripting", "Shader Structure", "Vertex Section", "", "");
+        AddUniformHelp("3.Shader Scripting", "Shader Structure", "Geometry Section", "", "");
+    }
 
-	AddUniformHelp("3.Shader Scripting", "Shader Structure", "Fragment Section", "", "");
+    AddUniformHelp("3.Shader Scripting", "Shader Structure", "Fragment Section", "", "");
 
-	if (puAppName == "NOODLESPLATE")
-	{
-		AddUniformHelp("3.Shader Scripting", "Shader Structure", "Compute Section", "", "");
-	}
+    if (puAppName == "NOODLESPLATE") {
+        AddUniformHelp("3.Shader Scripting", "Shader Structure", "Compute Section", "", "");
+    }
 
-	AddUniformHelp("3.Shader Scripting", "Files Inclusion", "", "", "");
-	AddUniformHelp("3.Shader Scripting", "In-Code Configuration", "On-Section Config Name", "", "");
-	AddUniformHelp("3.Shader Scripting", "In-Code Configuration", "In-Section Config Name", "", "");
+    AddUniformHelp("3.Shader Scripting", "Files Inclusion", "", "", "");
+    AddUniformHelp("3.Shader Scripting", "In-Code Configuration", "On-Section Config Name", "", "");
+    AddUniformHelp("3.Shader Scripting", "In-Code Configuration", "In-Section Config Name", "", "");
 
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Sections(arrangement)", "", "");
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Buffer", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Sections(arrangement)", "", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Buffer", "");
 
-	if (puAppName == "NOODLESPLATE")
-	{
-		AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Camera", "");
-	}
+    if (puAppName == "NOODLESPLATE") {
+        AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Camera", "");
+    }
 
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Button", "");
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Checkbox", "");
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Radio", "");
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Color", "");
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "ComboBox", "");
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Cubemap", "");
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Date", "");
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "DeltaTime", "");
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Frame Counter", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Button", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Checkbox", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Radio", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Color", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "ComboBox", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Cubemap", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Date", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "DeltaTime", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Frame Counter", "");
 
-	if (puAppName == "NOODLESPLATE")
-	{
-		AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Gizmo", "");
-	}
+    if (puAppName == "NOODLESPLATE") {
+        AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Gizmo", "");
+    }
 
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Midi", "");
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Mouse", "");
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Sliders", "");
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Texture 2D", "");
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Texture 3D", "");
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Time", "");
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Sound", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Midi", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Mouse", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Sliders", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Texture 2D", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Texture 3D", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Time", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Sound", "");
 #ifdef USE_VR
-	AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "VR", "");
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "VR", "");
 #endif
 }
 
-void HelpManager::AddUniformHelp(std::string vCat0, std::string vCat1, std::string vCat2, std::string vCat3, std::string vTags)
-{
-	if (!vCat0.empty())
-		puTree[vCat0];
-	if (!vCat1.empty())
-		puTree[vCat0][vCat1];
-	if (!vCat2.empty())
-		puTree[vCat0][vCat1][vCat2];
-	if (!vCat3.empty())
-		puTree[vCat0][vCat1][vCat2].emplace_back(vCat3);
-	if (!vTags.empty())
-	{
-		std::string path = vCat0;
-		if (!vCat1.empty())
-			path += "/" + vCat1;
-		if (!vCat2.empty())
-			path += "/" + vCat2;
-		if (!vCat3.empty())
-			path += "/" + vCat3;
+void HelpManager::AddUniformHelp(std::string vCat0, std::string vCat1, std::string vCat2, std::string vCat3, std::string vTags) {
+    if (!vCat0.empty())
+        puTree[vCat0];
+    if (!vCat1.empty())
+        puTree[vCat0][vCat1];
+    if (!vCat2.empty())
+        puTree[vCat0][vCat1][vCat2];
+    if (!vCat3.empty())
+        puTree[vCat0][vCat1][vCat2].emplace_back(vCat3);
+    if (!vTags.empty()) {
+        std::string path = vCat0;
+        if (!vCat1.empty())
+            path += "/" + vCat1;
+        if (!vCat2.empty())
+            path += "/" + vCat2;
+        if (!vCat3.empty())
+            path += "/" + vCat3;
 
-		auto arr = ct::splitStringToVector(vTags, " ", false);
-		for (auto it = arr.begin(); it != arr.end(); ++it)
-		{
-			puPathForTags[*it] = path;
-		}
-	}
+        auto arr = ct::splitStringToVector(vTags, " ", false);
+        for (auto it = arr.begin(); it != arr.end(); ++it) {
+            puPathForTags[*it] = path;
+        }
+    }
 }
 
-void HelpManager::DrawImGui()
-{
-	DrawTree();
-	
-	ImGui::SameLine();
+void HelpManager::DrawImGui() {
+    DrawTree();
 
-	DrawContent();
+    ImGui::SameLine();
+
+    DrawContent();
 }
 
-void HelpManager::DrawTree()
-{
-	ImGui::BeginChild("##HelpTreePane", ImVec2(300,0));
+void HelpManager::DrawTree() {
+    ImGui::BeginChild("##HelpTreePane", ImVec2(300, 0));
 
-	ImGui::PushFont(contentFont);
+    ImGui::PushFont(contentFont);
 
-	for (auto it0 = puTree.begin(); it0 != puTree.end(); ++it0)
-	{
-		std::string path = it0->first;
+    for (auto it0 = puTree.begin(); it0 != puTree.end(); ++it0) {
+        std::string path = it0->first;
 
-		if (ImGui::Selectable(it0->first.c_str(), _selectedPath == path))
-		{
-			_selectedPath = path;
-		}
+        if (ImGui::Selectable(it0->first.c_str(), _selectedPath == path)) {
+            _selectedPath = path;
+        }
 
-		ImGui::Indent();
+        ImGui::Indent();
 
-		for (auto it1 = it0->second.begin(); it1 != it0->second.end(); ++it1)
-		{
-			std::string path2 = path + "/" + it1->first;
-			
-			if (ImGui::Selectable(it1->first.c_str(), _selectedPath == path2))
-			{
-				_selectedPath = path2;
-			}
+        for (auto it1 = it0->second.begin(); it1 != it0->second.end(); ++it1) {
+            std::string path2 = path + "/" + it1->first;
 
-			ImGui::Indent();
+            if (ImGui::Selectable(it1->first.c_str(), _selectedPath == path2)) {
+                _selectedPath = path2;
+            }
 
-			for (auto it2 = it1->second.begin(); it2 != it1->second.end(); ++it2)
-			{
-				std::string path3 = path2 + "/" + it2->first;
+            ImGui::Indent();
 
-				if (ImGui::Selectable(it2->first.c_str(), _selectedPath == path3))
-				{
-					_selectedPath = path3;
-				}
+            for (auto it2 = it1->second.begin(); it2 != it1->second.end(); ++it2) {
+                std::string path3 = path2 + "/" + it2->first;
 
-				ImGui::Indent();
+                if (ImGui::Selectable(it2->first.c_str(), _selectedPath == path3)) {
+                    _selectedPath = path3;
+                }
 
-				for (auto it3 = it2->second.begin(); it3 != it2->second.end(); ++it3)
-				{
-					std::string path4 = path3 + "/" + *it3;
+                ImGui::Indent();
 
-					if (ImGui::Selectable((*it3).c_str(), _selectedPath == path4))
-					{
-						_selectedPath = path4;
-					}
-				}
+                for (auto it3 = it2->second.begin(); it3 != it2->second.end(); ++it3) {
+                    std::string path4 = path3 + "/" + *it3;
 
-				ImGui::Unindent();
-			}
+                    if (ImGui::Selectable((*it3).c_str(), _selectedPath == path4)) {
+                        _selectedPath = path4;
+                    }
+                }
 
-			ImGui::Unindent();
-		}
+                ImGui::Unindent();
+            }
 
-		ImGui::Unindent();
-	}
+            ImGui::Unindent();
+        }
 
-	ImGui::PopFont();
+        ImGui::Unindent();
+    }
 
-	ImGui::EndChild();
+    ImGui::PopFont();
+
+    ImGui::EndChild();
 }
 
-void HelpManager::DrawContent()
-{
-	ImGui::BeginChild("##helpcontent", ImVec2(0, 0));
-	
-	//ImGui::PushFont(contentFont);
+void HelpManager::DrawContent() {
+    ImGui::BeginChild("##helpcontent", ImVec2(0, 0));
 
-	std::string markdownText = u8R"()";
+    // ImGui::PushFont(contentFont);
 
-	if (_selectedPath == "0.NoodlesPlate ?")
-	{
-		markdownText = u8R"(
+    std::string markdownText = u8R"()";
+
+    if (_selectedPath == "0.NoodlesPlate ?") {
+        markdownText =
+            u8R"(
 NoodlesPlate is a GLSL Shader Editor (almost an IDE) :
   * Offline : run only on Windows (for the moment), tested on win 7. Not tested on other version, but there is no reason for it not to work)
   * LightWeight : near 5 MO and no lib, just an exe, auto installed at first execution, in the directory where you put it.
@@ -386,10 +358,9 @@ Happys Codding. :)
 AieKick.
 
 )";
-	}
-	else if (_selectedPath == "0.SdfFontDesigner ?")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "0.SdfFontDesigner ?") {
+        markdownText =
+            u8R"(
 SdfFontDesigner is a GLSL Shader Editor for create font bitmap :
   * Offline : run only on Windows (for the moment), tested on win 7. Not tested on other version, but there is no reason for it not to work)
   * LightWeight : near 5 MO and no lib, just an exe, auto installed at first execution, in the directory where you put it.
@@ -416,28 +387,23 @@ Happys Codding. :)
 AieKick.
 
 )";
-	}
-	else if (_selectedPath == "0.Requirement")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "0.Requirement") {
+        markdownText =
+            u8R"(
 the minimum requirement i thinck is :
 * window operating sytem 32 or 64 bits dependant of the version :)
 * a modern gpu with opengl 3.3 mini
 )";
-	}
-	else if (_selectedPath == "1.Issue, Features Request, Discuss")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "1.Issue, Features Request, Discuss") {
+        markdownText =
+            u8R"(
 you can post an issue, ask a feature of just discuss about my soft => [here](https://github.com/aiekick/SdfFontDesigner/issues)
 )";
-	}
-	else if (_selectedPath == "2.Features")
-	{
-		markdownText = u8R"(In this section yiu will find informations about specifics features.)";
-	}
-	else if (_selectedPath == "2.Features/Shader Import")
-	{
-		markdownText = u8R"(In this section yiu will find informations about Import of Shaders By url
+    } else if (_selectedPath == "2.Features") {
+        markdownText = u8R"(In this section yiu will find informations about specifics features.)";
+    } else if (_selectedPath == "2.Features/Shader Import") {
+        markdownText =
+            u8R"(In this section yiu will find informations about Import of Shaders By url
 for the moment, three web site are supported (partially) :
   * [GlslSandbox](http://glslsandbox.com/) (fully)
   * [ShaderToy](https://www.shadertoy.com) (partially)
@@ -453,14 +419,11 @@ for some platforms you need to do some specific things before import.
 
 please go in the subsection for informations.
 )";
-	}
-	else if (_selectedPath == "2.Features/Shader Import/From GlslSandbox")
-	{
-		markdownText = u8R"(Nothing special for the moment)";
-	}
-	else if (_selectedPath == "2.Features/Shader Import/From ShaderToy")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "2.Features/Shader Import/From GlslSandbox") {
+        markdownText = u8R"(Nothing special for the moment)";
+    } else if (_selectedPath == "2.Features/Shader Import/From ShaderToy") {
+        markdownText =
+            u8R"(
 For Import url from Shadertoy, you need to have an [Api Key](https://www.shadertoy.com/api)
 
 You can create this Api Key, in your ShaderToy profile / Config / Manage Your Apps.
@@ -472,14 +435,11 @@ if not, NoodesPlate will say, 'he can't found the shader at url'.
 After that, if you have good knowledge about the file structure, you have no other choice, than, create import manually yourself.
 
 )";
-	}
-	else if (_selectedPath == "2.Features/Shader Import/From VertexShaderArt")
-	{
-		markdownText = u8R"(Nothing special for the moment)";
-	}
-	else if (_selectedPath == "2.Features/Node Graph")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "2.Features/Shader Import/From VertexShaderArt") {
+        markdownText = u8R"(Nothing special for the moment)";
+    } else if (_selectedPath == "2.Features/Node Graph") {
+        markdownText =
+            u8R"(
 the Node Graph is an experimental feature, let you tune function of the current buffer, and replace some input who have the same signature only.
 a little buggy for the moment.
 
@@ -496,17 +456,15 @@ it need to be a system for manipulate buffers, and assmeble cutom fucntion from 
 the goal of this is not to become a full nodegraph creation systeme, but a mixed, classical code / and quick tuning :)
 
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting") {
+        markdownText =
+            u8R"(
 Here i will describe the shader scripting. its more than just glsl.
 my system is designed around glsl, and extend it with cool feature
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Shader Structure")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Shader Structure") {
+        markdownText =
+            u8R"(
 A shader file integrate many sections in one file :
 
 the possibles sections are listed in the tree
@@ -534,10 +492,9 @@ is valid :)
 
 you have some samples available on the repo : [here](https://github.com/aiekick/NoodlesPlate)
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Shader Structure/FrameBuffer Section")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Shader Structure/FrameBuffer Section") {
+        markdownText =
+            u8R"(
 this section correspond to the FRAMEBUFFER. this one control the size and the format of the FBO.
 
 it is written like that :
@@ -553,10 +510,9 @@ here we have 3 possibles keys :
 with no key the default it FORMAT(float) and no size or ratio defined, so its adjusted to screen
 
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Shader Structure/Uniforms Section")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Shader Structure/Uniforms Section") {
+        markdownText =
+            u8R"(
 this section will contain all the uniforms
 
 it is written like that :
@@ -583,10 +539,9 @@ code
 
 :)
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Shader Structure/Note Section")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Shader Structure/Note Section") {
+        markdownText =
+            u8R"(
 this section correspond to the nota.
 
 it is written like that :
@@ -599,10 +554,9 @@ when you import a shader, the infos of the shader are set in this section
 you can show in the ide the content of note via tne button Note
 
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Shader Structure/Common Section")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Shader Structure/Common Section") {
+        markdownText =
+            u8R"(
 this section ia a common section. so is content can be merge for the three type of shaders, Vertes, Geometry and fragment
 
 it is written like that :
@@ -613,10 +567,9 @@ no key or params for this one
 
 its useful when located in include files.
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Shader Structure/Vertex Section")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Shader Structure/Vertex Section") {
+        markdownText =
+            u8R"(
 this section correspond to the vertex shader.
 
 it is written like that :
@@ -658,11 +611,11 @@ layout(location = 2) in vec4 colorName;
 
 you can define what you want for these names, the important things is the location number
 )";
-	}
-	
-	else if (_selectedPath == "3.Shader Scripting/Shader Structure/Geometry Section")
-	{
-		markdownText = u8R"(
+    }
+
+    else if (_selectedPath == "3.Shader Scripting/Shader Structure/Geometry Section") {
+        markdownText =
+            u8R"(
 this section correspond to the geometry shader
 
 it is written like that
@@ -684,10 +637,9 @@ layout(triangle_strip, max_vertices=3) out; // output primitive(s) (points / lin
 
 for have many test case you can write some In-Code Config or Section Config, see in tree
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Shader Structure/Fragment Section")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Shader Structure/Fragment Section") {
+        markdownText =
+            u8R"(
 this section correspond to the fragment shader
 
 it is written like that :
@@ -702,10 +654,9 @@ layout(location = 0) out vec4 fragColor;
 
 for declare other attachment, this notation is not sufficient, go to the tree : Uniforms / Buffer
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Shader Structure/Compute Section")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Shader Structure/Compute Section") {
+        markdownText =
+            u8R"(
 this section corrspond to the coomptue shader
 
 it is written like that :
@@ -720,10 +671,9 @@ fot the classi shader, you can put all except this COMPUTE.
 i will comeback to this feature in a futrue version, because the systeme is not stable and complex to explain
  
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Files Inclusion")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Files Inclusion") {
+        markdownText =
+            u8R"(
 you can put in code : #include "file.glsl"
 
 the content of this include file will be merged by NoodlesPlate for compiling in the parent shader
@@ -791,10 +741,9 @@ code
 teh include file can have his own uniforms and as a include file can be common to many buffer, all the unfirosma re grouped.
 so you tune this include file for all buufer who use it :) powerfull no ? :)
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/In-Code Configuration/On-Section Config Name")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/In-Code Configuration/On-Section Config Name") {
+        markdownText =
+            u8R"(
 like said before, you have a general KEY for all sections.
 
 its written like that :
@@ -840,10 +789,9 @@ like that you can handle wiht a combobox many vertex primitive by example.
 
 see this sample if you want : [FluidHeightMap](https://github.com/aiekick/NoodlesPlate/tree/master/FluidHeightMap)
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/In-Code Configuration/In-Section Config Name")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/In-Code Configuration/In-Section Config Name") {
+        markdownText =
+            u8R"(
 You have also the possibily to have In-Code Configs;, selectable for each section in a combobox in the left pane
 
 you need to write that :
@@ -904,11 +852,11 @@ is he will emrge in VERTEx and FRAGMENT, you will get the choice the the both se
 
 see this sample if you want : [FluidHeightMap](https://github.com/aiekick/NoodlesPlate/tree/master/FluidHeightMap)
 )";
-	}
+    }
 
-	else if (_selectedPath == "3.Shader Scripting/Uniforms")
-	{
-		markdownText = u8R"(
+    else if (_selectedPath == "3.Shader Scripting/Uniforms") {
+        markdownText =
+            u8R"(
 the general syntax of an uniform in NoodlesPlate is :
 
 uniform(section) type(params) name; // comment
@@ -920,10 +868,9 @@ example :
 
 uniform vec2(0:1:0.5,0.8) slider;
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Sections(arrangement)")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Sections(arrangement)") {
+        markdownText =
+            u8R"(
 each uniform are attached to a default section called 'default'
 
 but you can define your own :
@@ -949,14 +896,11 @@ you can put these 3 section params together, or separated, or what you want, in 
   * uniform(0:toto:checkName==true)
   * uniform(checkName==true:0:toto)
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets")
-	{
-		static UniformVariant uniformSlider;
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Buffer")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets") {
+        static UniformVariant uniformSlider;
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Buffer") {
+        markdownText =
+            u8R"(
 Buffer Uniform are the way for have multiPass feature :
 
 * you can load another shader file result attachment in a sampler2D
@@ -984,10 +928,9 @@ pay attention to never use the name buffer ofr an uniform,
 its a reserved name, and the resulting erros are weird and not related to that name, so difficult to know what is rely :)
 
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Camera")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Camera") {
+        markdownText =
+            u8R"(
 
 when you use mouse on screen you manipulate the cam, without know it :)
 
@@ -1008,10 +951,9 @@ get the cam model
 get the cam normal matrix
 * uniform mat4(camera:nm) name;
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Button")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Button") {
+        markdownText =
+            u8R"(
 you can define an uniform button (pressed when released) :
 many channel can be true at a time
 only for float, vec2, vec3, vec4, bool, bvec2, bvec3, bvec4
@@ -1040,10 +982,9 @@ if (uButtonB == false) do false stuff
 if (uButtonBV3.x == true) do true stuff
 if (uButtonBV2.y == false) do false stuff
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Checkbox")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Checkbox") {
+        markdownText =
+            u8R"(
 you can define uniform checkbox :
 many channel can be true at a time
 only for float, vec2, vec3, vec4, bool, bvec2, bvec3, bvec4
@@ -1073,10 +1014,9 @@ if (name == false) do false stuff
 if (name.y == true) do true stuff
 if (name.y == false) do false stuff
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Radio")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Radio") {
+        markdownText =
+            u8R"(
 you can define uniform radio : 
 only one channel can be true at a time
 only for vec2, vec3, vec4, bvec2, bvec3, bvec4
@@ -1103,10 +1043,9 @@ if bool base type, so you can do that :
 if (name.x == true) do true stuff
 if (name.x == false) do false stuff
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Color")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Color") {
+        markdownText =
+            u8R"(
 you can have uniform color widget :
 
 the syntax is : 
@@ -1114,10 +1053,9 @@ the syntax is :
 * uniform vec4(color:default0,default1,default2,default3) name;
 
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/ComboBox")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/ComboBox") {
+        markdownText =
+            u8R"(
 you can have a combobox :
 
 the syntax is : 
@@ -1128,44 +1066,39 @@ in glsl :
 * choice1 will be the value 0
 etc..
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Cubemap")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Cubemap") {
+        markdownText =
+            u8R"(
 you can have a cubemap uniform :
 use 6 texture filename with ext separated by ','
 uniform samplerCube(POS_X, NEG_X, POS_Y, NEG_Y, POS_Z, NEG_Z) name;
 will be improved/refactored in the future.
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Date")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Date") {
+        markdownText =
+            u8R"(
 you can have a date uniform for get date (year, month, day, seconds (epoc time)):
 
 the syntax is : 
 *uniform vec4(date) name;
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/DeltaTime")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/DeltaTime") {
+        markdownText =
+            u8R"(
 you can have a deltatime widget who get the render time of the last frame :
 
 the syntax is : uniform float(deltatime) name;
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Frame Counter")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Frame Counter") {
+        markdownText =
+            u8R"(
 you can have a frame counter uniform.
 
 the syntax is : uniform int(frame) name;
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Gizmo")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Gizmo") {
+        markdownText =
+            u8R"(
 you can have gizmo shown on screen. thanks to Cedric Guillemet for his [ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo) :
 this gizmo will appear on the screnn, but for using it, you need to use the camera perpspective :
 
@@ -1181,10 +1114,9 @@ you have a button, for hide the gizmo, on top right if you want
 
 you need maybe to activate the space3d : Settings/Show 3d Space (maybe you need to reset the cam, in the left panel)
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Mouse")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Mouse") {
+        markdownText =
+            u8R"(
 you can have a mouse uniform, compatible with ShaderToy, GlslSandobx and VertexShaderArt
 
 mouse x,y == gl_fragCoord.xy;
@@ -1205,10 +1137,9 @@ uniform vec2(mouse:normalized_2pos_2click) name;
 mouse x,y == gl_fragCoord.xy / z,w = mouse click initial pos => 0 to 1 (normalized for eachs)
 uniform vec2(mouse:normalized_2pos_2keepclick) name;
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Sliders")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Sliders") {
+        markdownText =
+            u8R"(
 you can have usefull Slider uniform widgets :
 
 the syntax is :
@@ -1222,10 +1153,9 @@ uniform vec4(inf0,inf1,inf2,inf3:sup0,sup1,sup2,sup3:default0,default1,default2,
 * if you define 0.5 with a vec3, its like vec3(0.5,0.5,0.5), but you can also define 0.5,0.5,0.5 directly
 * you can mix, by ex : vec3(0:1:0.8,0.2,0.5) work well :)
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Texture 2D")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Texture 2D") {
+        markdownText =
+            u8R"(
 you can have picture widget :
 
 the possible syntax's are :
@@ -1246,10 +1176,9 @@ by right click on the choose box, you can remap the options is not defined.
 after that if you want of get the size on this choose texture, you can target this uniform :
 uniform vec2(picture:target=uniforpuname) name;
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Texture 3D")
-	{
-		markdownText = u8R"( 
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Texture 3D") {
+        markdownText =
+            u8R"( 
 you can use texture 3D, for the moment the texture 3d format used by shadertoy
 
 the syntax is : 
@@ -1258,11 +1187,11 @@ uniform sampler3D(volume:file=toto.bin:flip=true:mipmap=true:wrap=repeat:filter=
 
 noi choice available for the moment
 )";
-	}
+    }
 
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Time")
-	{
-		markdownText = u8R"(
+    else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Time") {
+        markdownText =
+            u8R"(
 you can also have a time widget :
 
 the syntax is : 
@@ -1278,10 +1207,9 @@ uniform float(time:1.59:false) name;
 uniform float(time:true:1.59) name;
 
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Sound")
-	{
-		markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Sound") {
+        markdownText =
+            u8R"(
 you can also have a sound widget :
 
 the syntax is : 
@@ -1295,14 +1223,13 @@ uniform sampler2D(sound:choice=toto.ext:loop=true:histo=128) name;
 
 only wav and mp3 files are supproted for the moment
 )";
-//	with history
-//	uniform sampler2D(sound:file = toto.ext : loop = true : histo = 128) name;
-//	the number after histo is the samples count of the sound historic(fft)
+        //	with history
+        //	uniform sampler2D(sound:file = toto.ext : loop = true : histo = 128) name;
+        //	the number after histo is the samples count of the sound historic(fft)
 
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Midi")
-	{
-	markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Midi") {
+        markdownText =
+            u8R"(
 you can have a midi uniform for control sliders via midi device.
 you can only have float uniform for the moment
 
@@ -1324,10 +1251,9 @@ the device is : WORLDEeasycontrol0
 the bytes are : 176,3,-1 (the 3rd byte is the value, the only byte who change, so set here to -1)
 the value are : 2, so the byte -1
 )";
-	}
-	else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/VR")
-	{
-	markdownText = u8R"(
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/VR") {
+        markdownText =
+            u8R"(
 this the uniforms available for VR
 
 * know when the vr is enabled or not.
@@ -1366,12 +1292,12 @@ this the uniforms available for VR
 	uniform float(vr:squeeze:left) leftSqueeze;
 	uniform float(vr:squeeze:right) rightSqueeze;
 )";
-	}
+    }
 
-	//ImGui::Text(markdownText.c_str());
-	Markdown(markdownText);
+    // ImGui::Text(markdownText.c_str());
+    Markdown(markdownText);
 
-	//ImGui::PopFont();
+    // ImGui::PopFont();
 
-	ImGui::EndChild();
+    ImGui::EndChild();
 }

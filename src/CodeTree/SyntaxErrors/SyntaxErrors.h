@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -24,35 +24,35 @@
 
 class Shader;
 class ShaderKey;
-class SyntaxErrors
-{
+class SyntaxErrors {
 public:
-	typedef std::function<void(std::string, std::string, std::string, ErrorLine)> SyntaxMessagingFunction;
-	static SyntaxMessagingFunction s_SyntaxMessagingFunction;
-
-public:
-	std::map<std::string, std::map<bool, std::map<std::string, std::map<std::string, std::map<size_t, ErrorLine>>>>> puInfos;
-	bool puIsThereSomeErrors = false;
-	bool puIsThereSomeWarnings = false;
-	std::string puParentKeyName;
+    typedef std::function<void(std::string, std::string, std::string, ErrorLine)> SyntaxMessagingFunction;
+    static SyntaxMessagingFunction s_SyntaxMessagingFunction;
 
 public:
-	SyntaxErrors();
-	~SyntaxErrors();
+    std::map<std::string, std::map<bool, std::map<std::string, std::map<std::string, std::map<size_t, ErrorLine>>>>> puInfos;
+    bool puIsThereSomeErrors = false;
+    bool puIsThereSomeWarnings = false;
+    std::string puParentKeyName;
 
-	void clear(const std::string& vErrorConcern = "");
-	void SetSyntaxError(
-		std::weak_ptr<ShaderKey> vKey, const std::string& vErrorConcern,
-		const std::string& vErrorType, bool vErrorOrWarnings,
-		const LineFileErrors& vLineFileErrorsType);
-	bool isThereSomeSyntaxMessages(std::weak_ptr<ShaderKey> vKey, bool vErrorOrWarnings);
+public:
+    SyntaxErrors();
+    ~SyntaxErrors();
 
-	std::string toString(std::weak_ptr<ShaderKey> vKey, bool vErrorOrWarnings);
+    void clear(const std::string& vErrorConcern = "");
+    void SetSyntaxError(std::weak_ptr<ShaderKey> vKey,
+                        const std::string& vErrorConcern,
+                        const std::string& vErrorType,
+                        bool vErrorOrWarnings,
+                        const LineFileErrors& vLineFileErrorsType);
+    bool isThereSomeSyntaxMessages(std::weak_ptr<ShaderKey> vKey, bool vErrorOrWarnings);
 
-public: // ImGui
-	bool CollapsingHeaderError(const char* vLabel, bool vForceExpand = false, bool vShowEditButton = false, bool* vEditCatched = nullptr);
-	bool CollapsingHeaderWarnings(const char* vLabel, bool vForceExpand = false, bool vShowEditButton = false, bool* vEditCatched = nullptr);
-	bool ImGui_DisplayMessages(ShaderKeyPtr vKey, const char* vLabel, bool vForceExpand = false, bool vShowEditButton = false, bool* vEditCatched = nullptr);
-	bool ImGui_DisplayMessages(bool vErrorOrWarnings, ShaderKeyPtr vKey, bool vForceExpand = false, bool vShowEditButton = false, bool* vEditCatched = nullptr);
-	void CompleteWithShader(ShaderKeyPtr vKey, ShaderPtr vShader);
+    std::string toString(std::weak_ptr<ShaderKey> vKey, bool vErrorOrWarnings);
+
+public:  // ImGui
+    bool CollapsingHeaderError(const char* vLabel, bool vForceExpand = false, bool vShowEditButton = false, bool* vEditCatched = nullptr);
+    bool CollapsingHeaderWarnings(const char* vLabel, bool vForceExpand = false, bool vShowEditButton = false, bool* vEditCatched = nullptr);
+    bool ImGui_DisplayMessages(ShaderKeyPtr vKey, const char* vLabel, bool vForceExpand = false, bool vShowEditButton = false, bool* vEditCatched = nullptr);
+    bool ImGui_DisplayMessages(bool vErrorOrWarnings, ShaderKeyPtr vKey, bool vForceExpand = false, bool vShowEditButton = false, bool* vEditCatched = nullptr);
+    void CompleteWithShader(ShaderKeyPtr vKey, ShaderPtr vShader);
 };

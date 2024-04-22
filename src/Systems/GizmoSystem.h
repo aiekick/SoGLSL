@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -22,12 +22,7 @@
 
 #include <ImGuiPack/ImGuiPack.h>
 
-enum GizmoCullingPimitiveEnum {
-    GIZMO_CULLING_PRIMITIVE_CUBE = 0,
-    GIZMO_CULLING_PRIMITIVE_SPHERE,
-    GIZMO_CULLING_PRIMITIVE_NONE,
-    GIZMO_CULLING_PRIMITIVE_Count
-};
+enum GizmoCullingPimitiveEnum { GIZMO_CULLING_PRIMITIVE_CUBE = 0, GIZMO_CULLING_PRIMITIVE_SPHERE, GIZMO_CULLING_PRIMITIVE_NONE, GIZMO_CULLING_PRIMITIVE_Count };
 
 class CameraSystem;
 class CodeTree;
@@ -71,12 +66,18 @@ protected:
 public:
     bool Init(CodeTreePtr vCodeTree) override;
     void Unit() override;
-    bool DrawWidget(CodeTreePtr vCodeTree, UniformVariantPtr vUniPtr, const float& vMaxWidth, const float& vFirstColumnWidth,
-                    RenderPackWeak vRenderPack, const bool& vShowUnUsed, const bool& vShowCustom, const bool& vForNodes, bool* vChange) override;
+    bool DrawWidget(CodeTreePtr vCodeTree,
+                    UniformVariantPtr vUniPtr,
+                    const float& vMaxWidth,
+                    const float& vFirstColumnWidth,
+                    RenderPackWeak vRenderPack,
+                    const bool& vShowUnUsed,
+                    const bool& vShowCustom,
+                    const bool& vForNodes,
+                    bool* vChange) override;
     bool SerializeUniform(UniformVariantPtr vUniform, std::string* vStr) override;
     bool DeSerializeUniform(ShaderKeyPtr vShaderKey, UniformVariantPtr vUniform, const std::vector<std::string>& vParams) override;
-    void Complete_Uniform(ShaderKeyPtr vParentKey, RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed,
-                          UniformVariantPtr vUniform) override;
+    void Complete_Uniform(ShaderKeyPtr vParentKey, RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) override;
     bool UpdateUniforms(UniformVariantPtr vUniPtr) override;
 
     bool Use();
@@ -101,10 +102,8 @@ public:
     bool UpdateGizmos(RenderPackWeak vRenderPack, UniformVariantPtr vUniPtr, CameraSystem* vCamera, ct::ivec2 vScreenSize);
 
 private:
-    void Complete_Uniform_Gizmo(ShaderKeyPtr vParentKey, RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed,
-                                UniformVariantPtr vUniform);
-    void Complete_Uniform_Culling(ShaderKeyPtr vParentKey, RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed,
-                                  UniformVariantPtr vUniform);
+    void Complete_Uniform_Gizmo(ShaderKeyPtr vParentKey, RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform);
+    void Complete_Uniform_Culling(ShaderKeyPtr vParentKey, RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform);
 
 public:
     std::string InitRenderPack(const GuiBackend_Window& vWin, CodeTreePtr vCodeTree);

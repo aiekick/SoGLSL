@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -31,7 +31,7 @@ protected:
     std::string puRenderingPath;                                                     // donne le chemin de stockage
     std::string puRenderingPrefix;                                                   // donne le prefix des fichier rendus
     std::string puRenderingFileName;                                                 // donne le nom de fichier
-    bool puRendering                  = false;                                       // dit si on est en mode rendu
+    bool puRendering = false;                                                        // dit si on est en mode rendu
     RenderingModeEnum puRenderingMode = RenderingModeEnum::RENDERING_MODE_PICTURES;  // donne le type de rendu
 
 public:

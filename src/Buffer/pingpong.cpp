@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,38 +18,33 @@
 
 #include "pingpong.h"
 
-PingPong::PingPong()
-{
-	puFrontTex = nullptr;
-	puBackTex = nullptr;
+PingPong::PingPong() {
+    puFrontTex = nullptr;
+    puBackTex = nullptr;
 }
-PingPong::~PingPong()
-{
-	clean();
+PingPong::~PingPong() {
+    clean();
 }
 
-void PingPong::clean()
-{
-	if (puFrontTex && puFrontTex->glTex > 0)
-	{
-		glBindTexture(puFrontTex->glTextureType, 0);
-		glDeleteTextures(1, &puFrontTex->glTex);
-		puFrontTex->glTex = 0;
-		puFrontTex.reset();
-	}
+void PingPong::clean() {
+    if (puFrontTex && puFrontTex->glTex > 0) {
+        glBindTexture(puFrontTex->glTextureType, 0);
+        glDeleteTextures(1, &puFrontTex->glTex);
+        puFrontTex->glTex = 0;
+        puFrontTex.reset();
+    }
 
-	if (puBackTex && puBackTex->glTex > 0)
-	{
-		glBindTexture(puBackTex->glTextureType, 0);
-		glDeleteTextures(1, &puBackTex->glTex);
-		puBackTex->glTex = 0;
-		puBackTex.reset();
-	}
+    if (puBackTex && puBackTex->glTex > 0) {
+        glBindTexture(puBackTex->glTextureType, 0);
+        glDeleteTextures(1, &puBackTex->glTex);
+        puBackTex->glTex = 0;
+        puBackTex.reset();
+    }
 }
 
-void PingPong::Swap() // seulement pour le compute
+void PingPong::Swap()  // seulement pour le compute
 {
-	ctTexturePtr tex = puBackTex;
-	puBackTex = puFrontTex;
-	puFrontTex = tex;
+    ctTexturePtr tex = puBackTex;
+    puBackTex = puFrontTex;
+    puFrontTex = tex;
 }

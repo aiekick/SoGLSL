@@ -5,7 +5,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -39,90 +39,88 @@
 #include <atomic>
 #include <mutex>
 
-struct VersionStruct
-{
-	std::string number;
-	std::string url;
-	std::string changelog;
+struct VersionStruct {
+    std::string number;
+    std::string url;
+    std::string changelog;
 
-	VersionStruct()
-	{
-		number.clear();
-		url.clear();
-		changelog.clear();
-	}
+    VersionStruct() {
+        number.clear();
+        url.clear();
+        changelog.clear();
+    }
 };
 
-class NetCodeRetriever : public conf::ConfigAbstract
-{
+class NetCodeRetriever : public conf::ConfigAbstract {
 public:
-	static std::mutex sWorkerThread_Mutex;
-	static std::atomic<float> sProgress;
-	static std::atomic<bool> sWorking;
-	static std::atomic<float> sGenerationTime;
-	static std::atomic<UrlLoadingStatus> sUrlLoadingStatus;
-	static std::atomic<bool> sInportInOneFile;
-	static VersionStruct sVersion;
-	static std::list<ShaderInfos> sShaders;
+    static std::mutex sWorkerThread_Mutex;
+    static std::atomic<float> sProgress;
+    static std::atomic<bool> sWorking;
+    static std::atomic<float> sGenerationTime;
+    static std::atomic<UrlLoadingStatus> sUrlLoadingStatus;
+    static std::atomic<bool> sInportInOneFile;
+    static VersionStruct sVersion;
+    static std::list<ShaderInfos> sShaders;
 
 private:
-	bool puUseProxy = false;
+    bool puUseProxy = false;
 #ifdef _DEBUG
-	char puShaderToyApiKey[100] = "ftnKwW";
+    char puShaderToyApiKey[100] = "ftnKwW";
 #else
-	char puShaderToyApiKey[100] = "";
+    char puShaderToyApiKey[100] = "";
 #endif
-	char puUrl[1000] = "";
-	char puProxyPath[100] = "";
-	char puUserPwd[100] = "";
+    char puUrl[1000] = "";
+    char puProxyPath[100] = "";
+    char puUserPwd[100] = "";
 
 public:
-	bool puCheckVersionAtStart = false;
+    bool puCheckVersionAtStart = false;
 
 private:
-	std::thread puWorkerThread;
-	float puGenerationTime = 0.0f;
-	std::function<void()> puFinishFunc;
+    std::thread puWorkerThread;
+    float puGenerationTime = 0.0f;
+    std::function<void()> puFinishFunc;
 
 public:
-	void SetProxyPath(const std::string& vProxyPath);
-	void SetProxyUserPwd(const std::string& vUserPwd);
-	void SetUrl(const std::string& vUrl);
-	void SetShaderToyApiKey(const std::string& vApiKey);
-	void SetProxyUse(bool vUseProxy);
+    void SetProxyPath(const std::string& vProxyPath);
+    void SetProxyUserPwd(const std::string& vUserPwd);
+    void SetUrl(const std::string& vUrl);
+    void SetShaderToyApiKey(const std::string& vApiKey);
+    void SetProxyUse(bool vUseProxy);
 
-	std::string GetProxyPath();
-	std::string GetProxyUserPwd();
-	std::string GetUrl();
-	std::string GetShaderToyApiKey();
-	bool GetProxyUse();
+    std::string GetProxyPath();
+    std::string GetProxyUserPwd();
+    std::string GetUrl();
+    std::string GetShaderToyApiKey();
+    bool GetProxyUse();
 
 public:
-	static NetCodeRetriever* Instance()
-	{
-		static NetCodeRetriever _instance;
-		return &_instance;
-	}
+    static NetCodeRetriever* Instance() {
+        static NetCodeRetriever _instance;
+        return &_instance;
+    }
 
 protected:
-	NetCodeRetriever(); // Prevent construction
-	NetCodeRetriever(const NetCodeRetriever&) {}; // Prevent construction by copying
-	NetCodeRetriever& operator =(const NetCodeRetriever&) { return *this; }; // Prevent assignment
-	~NetCodeRetriever(); // Prevent unwanted destruction
-	
-public:
-	bool drawUrl(bool *vShow, bool vHideProxySettings = false, bool vHideShaderToyApiKey = false);
-	void ParseVersionString(std::string vVersionString);
-	void RetrieveWithoutThread(std::function<void()> vFinishFunc);
-	void RetrieveLastVersionWithoutThread(std::string vUrl, std::function<void()> vFinishFunc);
-	void CreateThread(std::function<void()> vFinishFunc);
-	bool StopWorkerThread();
-	bool IsJoinable();
-	void Join();
-	void FinishIfRequired();
+    NetCodeRetriever();                           // Prevent construction
+    NetCodeRetriever(const NetCodeRetriever&){};  // Prevent construction by copying
+    NetCodeRetriever& operator=(const NetCodeRetriever&) {
+        return *this;
+    };                    // Prevent assignment
+    ~NetCodeRetriever();  // Prevent unwanted destruction
 
 public:
-	std::string getXml(const std::string& vOffset, const std::string& vUserDatas) override;
-	bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas) override;
+    bool drawUrl(bool* vShow, bool vHideProxySettings = false, bool vHideShaderToyApiKey = false);
+    void ParseVersionString(std::string vVersionString);
+    void RetrieveWithoutThread(std::function<void()> vFinishFunc);
+    void RetrieveLastVersionWithoutThread(std::string vUrl, std::function<void()> vFinishFunc);
+    void CreateThread(std::function<void()> vFinishFunc);
+    bool StopWorkerThread();
+    bool IsJoinable();
+    void Join();
+    void FinishIfRequired();
+
+public:
+    std::string getXml(const std::string& vOffset, const std::string& vUserDatas) override;
+    bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas) override;
 };
-#endif // #ifdef USE_NETWORK
+#endif  // #ifdef USE_NETWORK

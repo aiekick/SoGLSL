@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,28 +25,28 @@ class TextureCube;
 class TextureSound;
 class TextureVideo;
 
-class AssetManager
-{
+class AssetManager {
 public:
-	static AssetManager* Instance()
-	{
-		static AssetManager _instance;
-		return &_instance;
-	}
+    static AssetManager* Instance() {
+        static AssetManager _instance;
+        return &_instance;
+    }
 
 protected:
-	AssetManager(); // Prevent construction
-	AssetManager(const AssetManager&) {}; // Prevent construction by copying
-	AssetManager& operator =(const AssetManager&) { return *this; }; // Prevent assignment
-	~AssetManager(); // Prevent unwanted destruction
+    AssetManager();                       // Prevent construction
+    AssetManager(const AssetManager&){};  // Prevent construction by copying
+    AssetManager& operator=(const AssetManager&) {
+        return *this;
+    };                // Prevent assignment
+    ~AssetManager();  // Prevent unwanted destruction
 
 public:
-	void Clear();
+    void Clear();
 
 public:
-	/*Texture2DPtr GetTexture2D(UniformParsedStruct *vUniformParsedStruct);
-	Texture3DPtr GetTexture3D(UniformParsedStruct *vUniformParsedStruct);
-	TextureCubePtr GetTextureCube(UniformParsedStruct *vUniformParsedStruct);
-	TextureSoundPtr GetTextureSound(UniformParsedStruct *vUniformParsedStruct);
-	TextureVideoPtr GetTextureVideo(UniformParsedStruct *vUniformParsedStruct);*/
+    /*Texture2DPtr GetTexture2D(UniformParsedStruct *vUniformParsedStruct);
+    Texture3DPtr GetTexture3D(UniformParsedStruct *vUniformParsedStruct);
+    TextureCubePtr GetTextureCube(UniformParsedStruct *vUniformParsedStruct);
+    TextureSoundPtr GetTextureSound(UniformParsedStruct *vUniformParsedStruct);
+    TextureVideoPtr GetTextureVideo(UniformParsedStruct *vUniformParsedStruct);*/
 };

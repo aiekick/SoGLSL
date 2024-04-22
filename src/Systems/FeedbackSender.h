@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -22,25 +22,24 @@
 #include <list>
 #include <string>
 
-class FeedbackSender : public conf::ConfigAbstract
-{
+class FeedbackSender : public conf::ConfigAbstract {
 public:
-	// category, widget type, widget name, doc
-	std::unordered_map<std::string, std::list<std::string>> puRecentFiles;
+    // category, widget type, widget name, doc
+    std::unordered_map<std::string, std::list<std::string>> puRecentFiles;
 
 public:
-	FeedbackSender();
-	~FeedbackSender();
+    FeedbackSender();
+    ~FeedbackSender();
 
-	void SendFeedbackMail();
-	void SendIssueMail();
-	void SendCongratMail();
+    void SendFeedbackMail();
+    void SendIssueMail();
+    void SendCongratMail();
 
-	///////////////////////////////////////////////////////
-	//// CONFIGURATION ////////////////////////////////////
-	///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
+    //// CONFIGURATION ////////////////////////////////////
+    ///////////////////////////////////////////////////////
 
-	std::string getXml(const std::string& vOffset, const std::string& vUserDatas) override;
-	bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas) override;
+    std::string getXml(const std::string& vOffset, const std::string& vUserDatas) override;
+    bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas) override;
 };
-#endif // #ifdef USE_NETWORK
+#endif  // #ifdef USE_NETWORK

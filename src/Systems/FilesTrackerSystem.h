@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -21,32 +21,32 @@
 #include <string>
 #include <memory>
 
-class FilesTrackerSystem : public efsw::FileWatchListener
-{
+class FilesTrackerSystem : public efsw::FileWatchListener {
 public:
-	bool Changes = false;
-	std::set<std::string> files;
+    bool Changes = false;
+    std::set<std::string> files;
 
 private:
-	std::unique_ptr<efsw::FileWatcher> m_FilesTracker = nullptr;
-	std::set<efsw::WatchID> m_WatchIDs;
+    std::unique_ptr<efsw::FileWatcher> m_FilesTracker = nullptr;
+    std::set<efsw::WatchID> m_WatchIDs;
 
 public:
-	static FilesTrackerSystem* Instance()
-	{
-		static FilesTrackerSystem _instance;
-		return &_instance;
-	}
+    static FilesTrackerSystem* Instance() {
+        static FilesTrackerSystem _instance;
+        return &_instance;
+    }
 
 protected:
-	void handleFileAction(efsw::WatchID watchid, const std::string& dir, const std::string& filename, efsw::Action action, std::string oldFilename = "") override;
+    void handleFileAction(efsw::WatchID watchid, const std::string& dir, const std::string& filename, efsw::Action action, std::string oldFilename = "") override;
 
-	FilesTrackerSystem(); // Prevent construction
-	FilesTrackerSystem(const FilesTrackerSystem&) = default; // Prevent construction by copying
-	FilesTrackerSystem& operator =(const FilesTrackerSystem&) { return *this; }; // Prevent assignment
-	~FilesTrackerSystem(); // Prevent unwanted destruction
+    FilesTrackerSystem();                                     // Prevent construction
+    FilesTrackerSystem(const FilesTrackerSystem&) = default;  // Prevent construction by copying
+    FilesTrackerSystem& operator=(const FilesTrackerSystem&) {
+        return *this;
+    };                      // Prevent assignment
+    ~FilesTrackerSystem();  // Prevent unwanted destruction
 
 public:
-	void addWatch(const std::string& vPath);
-	void update();
+    void addWatch(const std::string& vPath);
+    void update();
 };

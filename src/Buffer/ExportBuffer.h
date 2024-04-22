@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -28,44 +28,42 @@
 // https://community.khronos.org/t/transform-feedback-tutorial-not-getting-the-desired-output/76581
 // https://github.com/progschj/OpenGL-Examples/blob/master/09transforpufeedback.cpp => a compiler pour voir
 
-class ExportBuffer
-{
+class ExportBuffer {
 public:
-	std::vector<VertexStruct::P3_N3_T2_C4> vertices;
-	std::vector<VertexStruct::I1> indices;
-	std::vector<std::string> puLayouts;
-	std::string fileToLoad;
+    std::vector<VertexStruct::P3_N3_T2_C4> vertices;
+    std::vector<VertexStruct::I1> indices;
+    std::vector<std::string> puLayouts;
+    std::string fileToLoad;
 
 public:
-	bool puNeedCapture = false;
-	GLuint queryTBO = 0;
-	GLuint queryIBO = 0;
-	GLuint ibo = 0;
-	GLuint tbo = 0;
-	GLuint fdbo = 0;
-	size_t puCapturedCountPoints = 0;
-	size_t puCapturedCountIndices = 0;
-	size_t puMaxCountPoints = 50000;
+    bool puNeedCapture = false;
+    GLuint queryTBO = 0;
+    GLuint queryIBO = 0;
+    GLuint ibo = 0;
+    GLuint tbo = 0;
+    GLuint fdbo = 0;
+    size_t puCapturedCountPoints = 0;
+    size_t puCapturedCountIndices = 0;
+    size_t puMaxCountPoints = 50000;
 
 public:
-	std::string puFilePathName;
-	std::string puFilePath;
+    std::string puFilePathName;
+    std::string puFilePath;
 
 public:
-	ExportBuffer(); // Prevent construction
-	~ExportBuffer(); // Prevent unwanted destruction
+    ExportBuffer();   // Prevent construction
+    ~ExportBuffer();  // Prevent unwanted destruction
 
 public:
-	void DrawImGui(const GuiBackend_Window& vWin, BaseModelWeak vModel);
+    void DrawImGui(const GuiBackend_Window& vWin, BaseModelWeak vModel);
 
 public:
-	void Clear();
-	void InitBuffer(BaseModelWeak vModel);
-	size_t GetCountPoints();
-	void StartCapture();
-	void BeforeCapture();
-	void Capture(BaseModelWeak vModel, const GLuint& vRenderMode);
-	void AfterCapture(const GLuint& vRenderMode);
-	void ExportToFile();
-
+    void Clear();
+    void InitBuffer(BaseModelWeak vModel);
+    size_t GetCountPoints();
+    void StartCapture();
+    void BeforeCapture();
+    void Capture(BaseModelWeak vModel, const GLuint& vRenderMode);
+    void AfterCapture(const GLuint& vRenderMode);
+    void ExportToFile();
 };

@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,15 +18,13 @@
 #include <vector>
 #include <string>
 
-class NaturalSort
-{
+class NaturalSort {
 public:
-	static void SortStringVector(std::vector<std::string>& vVectorToSort);
+    static void SortStringVector(std::vector<std::string>& vVectorToSort);
 
 protected:
-	NaturalSort(); // Prevent construction
-	~NaturalSort(); // Prevent unwanted destruction
-	NaturalSort(const NaturalSort&) = delete;
-	NaturalSort& operator =(const NaturalSort&) = delete;
+    NaturalSort();   // Prevent construction
+    ~NaturalSort();  // Prevent unwanted destruction
+    NaturalSort(const NaturalSort&) = delete;
+    NaturalSort& operator=(const NaturalSort&) = delete;
 };
-

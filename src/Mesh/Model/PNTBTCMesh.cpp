@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -29,432 +29,365 @@
 //// STATIC ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-PNTBTCMeshPtr PNTBTCMesh::Create()
-{
-	PNTBTCMeshPtr res = std::make_shared<PNTBTCMesh>();
-	res->m_This = res;
-	return res;
+PNTBTCMeshPtr PNTBTCMesh::Create() {
+    PNTBTCMeshPtr res = std::make_shared<PNTBTCMesh>();
+    res->m_This = res;
+    return res;
 }
 
-PNTBTCMeshPtr PNTBTCMesh::Create(const GuiBackend_Window& vWin)
-{
-	PNTBTCMeshPtr res = std::make_shared<PNTBTCMesh>(vWin);
-	res->m_This = res;
-	return res;
+PNTBTCMeshPtr PNTBTCMesh::Create(const GuiBackend_Window& vWin) {
+    PNTBTCMeshPtr res = std::make_shared<PNTBTCMesh>(vWin);
+    res->m_This = res;
+    return res;
 }
 
-PNTBTCMeshPtr PNTBTCMesh::Create(
-	const GuiBackend_Window& vWin, 
-	const VerticeArray& vVerticeArray, 
-	const IndiceArray& vIndiceArray)
-{
-	PNTBTCMeshPtr res = std::make_shared<PNTBTCMesh>(vWin, vVerticeArray, vIndiceArray);
-	res->m_This = res;
-	if (!res->Init())
-		res.reset();
-	return res;
+PNTBTCMeshPtr PNTBTCMesh::Create(const GuiBackend_Window& vWin, const VerticeArray& vVerticeArray, const IndiceArray& vIndiceArray) {
+    PNTBTCMeshPtr res = std::make_shared<PNTBTCMesh>(vWin, vVerticeArray, vIndiceArray);
+    res->m_This = res;
+    if (!res->Init())
+        res.reset();
+    return res;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //// CTOR / DTOR ///////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-PNTBTCMesh::PNTBTCMesh()
-{
-
+PNTBTCMesh::PNTBTCMesh() {
 }
 
-PNTBTCMesh::PNTBTCMesh(const GuiBackend_Window& vWin)
-	: m_Window(vWin)
-{
-
+PNTBTCMesh::PNTBTCMesh(const GuiBackend_Window& vWin) : m_Window(vWin) {
 }
 
-PNTBTCMesh::PNTBTCMesh(
-	const GuiBackend_Window& vWin, 
-	const VerticeArray& vVerticeArray, 
-	const IndiceArray& vIndiceArray)
-	: m_Window(vWin)
-{
-	m_MeshDatas.m_Vertices = vVerticeArray;
-	m_MeshDatas.m_Indices = vIndiceArray;
+PNTBTCMesh::PNTBTCMesh(const GuiBackend_Window& vWin, const VerticeArray& vVerticeArray, const IndiceArray& vIndiceArray) : m_Window(vWin) {
+    m_MeshDatas.m_Vertices = vVerticeArray;
+    m_MeshDatas.m_Indices = vIndiceArray;
 }
 
-PNTBTCMesh::~PNTBTCMesh()
-{
-	Unit();
+PNTBTCMesh::~PNTBTCMesh() {
+    Unit();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //// INIT / UNIT ///////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool PNTBTCMesh::Init()
-{
-	m_IsLoaded = PreparePNTBTC(m_IsLoaded);
-	return m_IsLoaded;
+bool PNTBTCMesh::Init() {
+    m_IsLoaded = PreparePNTBTC(m_IsLoaded);
+    return m_IsLoaded;
 }
 
-void PNTBTCMesh::Unit()
-{
-	m_MeshDatas.Clear(m_Window);
-	m_IsLoaded = false;
+void PNTBTCMesh::Unit() {
+    m_MeshDatas.Clear(m_Window);
+    m_IsLoaded = false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //// TESTS /////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool PNTBTCMesh::empty()
-{
-	return 
-		m_MeshDatas.m_Vertices.empty() || 
-		m_MeshDatas.m_Indices.empty();
+bool PNTBTCMesh::empty() {
+    return m_MeshDatas.m_Vertices.empty() || m_MeshDatas.m_Indices.empty();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //// GETTERS ///////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-PNTBTCMesh::VerticeArray* PNTBTCMesh::GetVertices()
-{
-	return &m_MeshDatas.m_Vertices;
+PNTBTCMesh::VerticeArray* PNTBTCMesh::GetVertices() {
+    return &m_MeshDatas.m_Vertices;
 }
 
-uint64_t PNTBTCMesh::GetVerticesCount()
-{
-	return (uint64_t)m_MeshDatas.m_Vertices.size();
+uint64_t PNTBTCMesh::GetVerticesCount() {
+    return (uint64_t)m_MeshDatas.m_Vertices.size();
 }
 
-PNTBTCMesh::IndiceArray* PNTBTCMesh::GetIndices()
-{
-	return &m_MeshDatas.m_Indices;
+PNTBTCMesh::IndiceArray* PNTBTCMesh::GetIndices() {
+    return &m_MeshDatas.m_Indices;
 }
 
-uint64_t PNTBTCMesh::GetIndicesCount()
-{
-	return (uint64_t)m_MeshDatas.m_Indices.size();
+uint64_t PNTBTCMesh::GetIndicesCount() {
+    return (uint64_t)m_MeshDatas.m_Indices.size();
 }
 
-bool PNTBTCMesh::HasNormals()
-{
-	return m_HaveNormals;
+bool PNTBTCMesh::HasNormals() {
+    return m_HaveNormals;
 }
 
-void PNTBTCMesh::HaveNormals()
-{
-	m_HaveNormals = true;
+void PNTBTCMesh::HaveNormals() {
+    m_HaveNormals = true;
 }
 
-bool PNTBTCMesh::HasTangeants()
-{
-	return m_HaveTangeants;
+bool PNTBTCMesh::HasTangeants() {
+    return m_HaveTangeants;
 }
 
-void PNTBTCMesh::HaveTangeants()
-{
-	m_HaveTangeants = true;
+void PNTBTCMesh::HaveTangeants() {
+    m_HaveTangeants = true;
 }
 
-bool PNTBTCMesh::HasBiTangeants()
-{
-	return m_HaveBiTangeants;
+bool PNTBTCMesh::HasBiTangeants() {
+    return m_HaveBiTangeants;
 }
 
-void PNTBTCMesh::HaveBiTangeants()
-{
-	m_HaveBiTangeants = true;
+void PNTBTCMesh::HaveBiTangeants() {
+    m_HaveBiTangeants = true;
 }
 
-bool PNTBTCMesh::HasTextureCoords()
-{
-	return m_HaveTextureCoords;
+bool PNTBTCMesh::HasTextureCoords() {
+    return m_HaveTextureCoords;
 }
 
-void PNTBTCMesh::HaveTextureCoords()
-{
-	m_HaveTextureCoords = true;
+void PNTBTCMesh::HaveTextureCoords() {
+    m_HaveTextureCoords = true;
 }
 
-bool PNTBTCMesh::HasVertexColors()
-{
-	return m_HaveVertexColors;
+bool PNTBTCMesh::HasVertexColors() {
+    return m_HaveVertexColors;
 }
 
-void PNTBTCMesh::HaveVertexColors()
-{
-	m_HaveVertexColors = true;
+void PNTBTCMesh::HaveVertexColors() {
+    m_HaveVertexColors = true;
 }
 
-bool PNTBTCMesh::HasIndices()
-{
-	return m_HaveIndices;
+bool PNTBTCMesh::HasIndices() {
+    return m_HaveIndices;
 }
 
-void PNTBTCMesh::HaveIndices()
-{
-	m_HaveIndices = true;
+void PNTBTCMesh::HaveIndices() {
+    m_HaveIndices = true;
 }
 
-void PNTBTCMesh::SetCanWeRender(bool vFlag)
-{
-	m_CanWeRender = vFlag;
+void PNTBTCMesh::SetCanWeRender(bool vFlag) {
+    m_CanWeRender = vFlag;
 }
 
-void PNTBTCMesh::DrawModel(
-	const std::string& vName,
-	const uint32_t& vIdx,
-	const GuiBackend_Window& vWin,
-	const GLenum& vRenderMode, 
-	const bool& vUseTesselation,
-	const uint64_t& vIndicesCountToShow,
-	const uint64_t& vPatchVerticesCount,
-	const uint64_t& vInstanceCount)
-{
-	if (m_IsLoaded && m_CanWeRender)
-	{
-		GuiBackend::MakeContextCurrent(vWin);
+void PNTBTCMesh::DrawModel(const std::string& vName,
+                           const uint32_t& vIdx,
+                           const GuiBackend_Window& vWin,
+                           const GLenum& vRenderMode,
+                           const bool& vUseTesselation,
+                           const uint64_t& vIndicesCountToShow,
+                           const uint64_t& vPatchVerticesCount,
+                           const uint64_t& vInstanceCount) {
+    if (m_IsLoaded && m_CanWeRender) {
+        GuiBackend::MakeContextCurrent(vWin);
 
-		AIGPScoped(vName, "Sub Mesh %u", vIdx);
+        AIGPScoped(vName, "Sub Mesh %u", vIdx);
 
-		TracyGpuZone("PNTBTCModel::DrawModel");
+        TracyGpuZone("PNTBTCModel::DrawModel");
 
-		if (glIsVertexArray(m_MeshDatas.m_Vao) == GL_TRUE)
-		{
-			if (vIndicesCountToShow > 0 && vIndicesCountToShow <= m_IndicesCount)
-			{
-				// bind
-				glBindVertexArray(m_MeshDatas.m_Vao); // select first VAO
-				LogGlError();
-				glEnableVertexAttribArray(0); // pos
-				LogGlError();
-				glEnableVertexAttribArray(1); // nor
-				LogGlError();
-				glEnableVertexAttribArray(2); // tan
-				LogGlError();
-				glEnableVertexAttribArray(3); // btan
-				LogGlError();
-				glEnableVertexAttribArray(4); // tex
-				LogGlError();
-				glEnableVertexAttribArray(5); // col
-				LogGlError();
+        if (glIsVertexArray(m_MeshDatas.m_Vao) == GL_TRUE) {
+            if (vIndicesCountToShow > 0 && vIndicesCountToShow <= m_IndicesCount) {
+                // bind
+                glBindVertexArray(m_MeshDatas.m_Vao);  // select first VAO
+                LogGlError();
+                glEnableVertexAttribArray(0);  // pos
+                LogGlError();
+                glEnableVertexAttribArray(1);  // nor
+                LogGlError();
+                glEnableVertexAttribArray(2);  // tan
+                LogGlError();
+                glEnableVertexAttribArray(3);  // btan
+                LogGlError();
+                glEnableVertexAttribArray(4);  // tex
+                LogGlError();
+                glEnableVertexAttribArray(5);  // col
+                LogGlError();
 
-				if (vUseTesselation && vPatchVerticesCount && glPatchParameteri)
-					glPatchParameteri(GL_PATCH_VERTICES, (GLint)vPatchVerticesCount);
+                if (vUseTesselation && vPatchVerticesCount && glPatchParameteri)
+                    glPatchParameteri(GL_PATCH_VERTICES, (GLint)vPatchVerticesCount);
 
-				if (vInstanceCount > 1U)
-				{
-					glDrawElementsInstanced(vRenderMode, (GLsizei)vIndicesCountToShow, GL_UNSIGNED_INT, nullptr, (GLsizei)vInstanceCount);	// draw first object 6 => decalage 3 coord * 2 (float)
-					LogGlError();
-				}
-				else
-				{
-					glDrawElements(vRenderMode, (GLsizei)vIndicesCountToShow, GL_UNSIGNED_INT, nullptr);
-					LogGlError();
-				}
+                if (vInstanceCount > 1U) {
+                    glDrawElementsInstanced(vRenderMode,
+                                            (GLsizei)vIndicesCountToShow,
+                                            GL_UNSIGNED_INT,
+                                            nullptr,
+                                            (GLsizei)vInstanceCount);  // draw first object 6 => decalage 3 coord * 2 (float)
+                    LogGlError();
+                } else {
+                    glDrawElements(vRenderMode, (GLsizei)vIndicesCountToShow, GL_UNSIGNED_INT, nullptr);
+                    LogGlError();
+                }
 
-				// unbind
-				glDisableVertexAttribArray(5); // col
-				LogGlError();
-				glDisableVertexAttribArray(4); // tex
-				LogGlError();
-				glDisableVertexAttribArray(6); // btan
-				LogGlError();
-				glDisableVertexAttribArray(2); // tan
-				LogGlError();
-				glDisableVertexAttribArray(1); // nor
-				LogGlError();
-				glDisableVertexAttribArray(0); // pos
-				LogGlError();
-				glBindVertexArray(0);
-				LogGlError();
-			}
-		}
-	}
+                // unbind
+                glDisableVertexAttribArray(5);  // col
+                LogGlError();
+                glDisableVertexAttribArray(4);  // tex
+                LogGlError();
+                glDisableVertexAttribArray(6);  // btan
+                LogGlError();
+                glDisableVertexAttribArray(2);  // tan
+                LogGlError();
+                glDisableVertexAttribArray(1);  // nor
+                LogGlError();
+                glDisableVertexAttribArray(0);  // pos
+                LogGlError();
+                glBindVertexArray(0);
+                LogGlError();
+            }
+        }
+    }
 }
 
-uint32_t PNTBTCMesh::GetVaoID()
-{
-	return m_MeshDatas.GetVaoID();
+uint32_t PNTBTCMesh::GetVaoID() {
+    return m_MeshDatas.GetVaoID();
 }
 
-uint32_t PNTBTCMesh::GetVboID()
-{
-	return m_MeshDatas.GetVboID();
+uint32_t PNTBTCMesh::GetVboID() {
+    return m_MeshDatas.GetVboID();
 }
 
-uint32_t PNTBTCMesh::GetIboID()
-{
-	return m_MeshDatas.GetIboID();
+uint32_t PNTBTCMesh::GetIboID() {
+    return m_MeshDatas.GetIboID();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //// PRIVATE ///////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool PNTBTCMesh::PreparePNTBTC(bool vUpdate)
-{
-	//GuiBackend::MakeContextCurrent(m_Window);
+bool PNTBTCMesh::PreparePNTBTC(bool vUpdate) {
+    // GuiBackend::MakeContextCurrent(m_Window);
 
-	TracyGpuZone("PNTBTCModel::PreparePNTBTC");
+    TracyGpuZone("PNTBTCModel::PreparePNTBTC");
 
-	if (!m_MeshDatas.m_Vertices.empty())
-	{
-		if (vUpdate)
-		{
-			m_VerticesCount = m_MeshDatas.m_Vertices.size();
+    if (!m_MeshDatas.m_Vertices.empty()) {
+        if (vUpdate) {
+            m_VerticesCount = m_MeshDatas.m_Vertices.size();
 
-			glBindVertexArray(m_MeshDatas.m_Vao);
-			LogGlError();
+            glBindVertexArray(m_MeshDatas.m_Vao);
+            LogGlError();
 
-			glBindBuffer(GL_ARRAY_BUFFER, m_MeshDatas.m_Vbo);
-			LogGlError();
+            glBindBuffer(GL_ARRAY_BUFFER, m_MeshDatas.m_Vbo);
+            LogGlError();
 
-			glBufferData(GL_ARRAY_BUFFER,
-				m_MeshDatas.verticeSize * m_MeshDatas.m_Vertices.size(),
-				m_MeshDatas.m_Vertices.data(), GL_DYNAMIC_DRAW);
-			LogGlError();
+            glBufferData(GL_ARRAY_BUFFER, m_MeshDatas.verticeSize * m_MeshDatas.m_Vertices.size(), m_MeshDatas.m_Vertices.data(), GL_DYNAMIC_DRAW);
+            LogGlError();
 
-			if (!m_MeshDatas.m_Indices.empty())
-			{
-				m_IndicesCount = m_MeshDatas.m_Indices.size();
+            if (!m_MeshDatas.m_Indices.empty()) {
+                m_IndicesCount = m_MeshDatas.m_Indices.size();
 
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_MeshDatas.m_Ibo);
-				LogGlError();
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_MeshDatas.m_Ibo);
+                LogGlError();
 
-				glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-					m_MeshDatas.indiceSize * m_MeshDatas.m_Indices.size(),
-					m_MeshDatas.m_Indices.data(), GL_DYNAMIC_DRAW);
-				LogGlError();
-			}
+                glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_MeshDatas.indiceSize * m_MeshDatas.m_Indices.size(), m_MeshDatas.m_Indices.data(), GL_DYNAMIC_DRAW);
+                LogGlError();
+            }
 
-			glBindVertexArray(0);
-			LogGlError();
-			glBindBuffer(GL_ARRAY_BUFFER, 0); // bien unbind les buffer apres le vao sinon le contexte est v�rol�
-			LogGlError();
+            glBindVertexArray(0);
+            LogGlError();
+            glBindBuffer(GL_ARRAY_BUFFER, 0);  // bien unbind les buffer apres le vao sinon le contexte est v�rol�
+            LogGlError();
 
-			if (!m_MeshDatas.m_Indices.empty())
-			{
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // bien unbind les buffer apres le vao sinon le contexte est v�rol�
-				LogGlError();
-			}
-		}
-		else
-		{
-			m_VerticesCount = m_MeshDatas.m_Vertices.size();
+            if (!m_MeshDatas.m_Indices.empty()) {
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);  // bien unbind les buffer apres le vao sinon le contexte est v�rol�
+                LogGlError();
+            }
+        } else {
+            m_VerticesCount = m_MeshDatas.m_Vertices.size();
 
-			if (m_MeshDatas.m_Vbo > 0)
-			{
-				glDeleteBuffers(1, &m_MeshDatas.m_Vbo);
-				LogGlError();
-			}
+            if (m_MeshDatas.m_Vbo > 0) {
+                glDeleteBuffers(1, &m_MeshDatas.m_Vbo);
+                LogGlError();
+            }
 
-			if (m_MeshDatas.m_Ibo > 0)
-			{
-				glDeleteBuffers(1, &m_MeshDatas.m_Ibo);
-				LogGlError();
-			}
+            if (m_MeshDatas.m_Ibo > 0) {
+                glDeleteBuffers(1, &m_MeshDatas.m_Ibo);
+                LogGlError();
+            }
 
-			if (m_MeshDatas.m_Vao > 0)
-			{
-				glDeleteVertexArrays(1, &m_MeshDatas.m_Vao);
-				LogGlError();
-			}
+            if (m_MeshDatas.m_Vao > 0) {
+                glDeleteVertexArrays(1, &m_MeshDatas.m_Vao);
+                LogGlError();
+            }
 
+            // gen
+            glGenVertexArrays(1, &m_MeshDatas.m_Vao);
+            LogGlError();
+            glGenBuffers(1, &m_MeshDatas.m_Vbo);
+            LogGlError();
+            glGenBuffers(1, &m_MeshDatas.m_Ibo);
+            LogGlError();
 
-			// gen
-			glGenVertexArrays(1, &m_MeshDatas.m_Vao);
-			LogGlError();
-			glGenBuffers(1, &m_MeshDatas.m_Vbo);
-			LogGlError();
-			glGenBuffers(1, &m_MeshDatas.m_Ibo);
-			LogGlError();
+            glBindVertexArray(m_MeshDatas.m_Vao);
+            LogGlError();
+            glBindBuffer(GL_ARRAY_BUFFER, m_MeshDatas.m_Vbo);
+            LogGlError();
 
-			glBindVertexArray(m_MeshDatas.m_Vao);
-			LogGlError();
-			glBindBuffer(GL_ARRAY_BUFFER, m_MeshDatas.m_Vbo);
-			LogGlError();
+            glBufferData(GL_ARRAY_BUFFER, m_MeshDatas.verticeSize * m_MeshDatas.m_Vertices.size(), m_MeshDatas.m_Vertices.data(), GL_DYNAMIC_DRAW);
+            LogGlError();
 
-			glBufferData(GL_ARRAY_BUFFER,
-				m_MeshDatas.verticeSize * m_MeshDatas.m_Vertices.size(),
-				m_MeshDatas.m_Vertices.data(), GL_DYNAMIC_DRAW);
-			LogGlError();
+            // pos
+            glEnableVertexAttribArray(0);
+            LogGlError();
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, m_MeshDatas.verticeSize, (void*)nullptr);
+            LogGlError();
+            glDisableVertexAttribArray(0);
+            LogGlError();
 
-			// pos
-			glEnableVertexAttribArray(0);
-			LogGlError();
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, m_MeshDatas.verticeSize, (void*)nullptr);
-			LogGlError();
-			glDisableVertexAttribArray(0);
-			LogGlError();
+            // nor
+            glEnableVertexAttribArray(1);
+            LogGlError();
+            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, m_MeshDatas.verticeSize, (void*)(sizeof(float) * 3));
+            LogGlError();
+            glDisableVertexAttribArray(1);
+            LogGlError();
 
-			// nor
-			glEnableVertexAttribArray(1);
-			LogGlError();
-			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, m_MeshDatas.verticeSize, (void*)(sizeof(float) * 3));
-			LogGlError();
-			glDisableVertexAttribArray(1);
-			LogGlError();
+            // tangent
+            glEnableVertexAttribArray(2);
+            LogGlError();
+            glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, m_MeshDatas.verticeSize, (void*)(sizeof(float) * 6));
+            LogGlError();
+            glDisableVertexAttribArray(2);
+            LogGlError();
 
-			// tangent
-			glEnableVertexAttribArray(2);
-			LogGlError();
-			glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, m_MeshDatas.verticeSize, (void*)(sizeof(float) * 6));
-			LogGlError();
-			glDisableVertexAttribArray(2);
-			LogGlError();
+            // bi tangent
+            glEnableVertexAttribArray(3);
+            LogGlError();
+            glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, m_MeshDatas.verticeSize, (void*)(sizeof(float) * 9));
+            LogGlError();
+            glDisableVertexAttribArray(3);
+            LogGlError();
 
-			// bi tangent
-			glEnableVertexAttribArray(3);
-			LogGlError();
-			glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, m_MeshDatas.verticeSize, (void*)(sizeof(float) * 9));
-			LogGlError();
-			glDisableVertexAttribArray(3);
-			LogGlError();
+            // tex
+            glEnableVertexAttribArray(4);
+            LogGlError();
+            glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, m_MeshDatas.verticeSize, (void*)(sizeof(float) * 12));
+            LogGlError();
+            glDisableVertexAttribArray(4);
+            LogGlError();
 
-			// tex
-			glEnableVertexAttribArray(4);
-			LogGlError();
-			glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, m_MeshDatas.verticeSize, (void*)(sizeof(float) * 12));
-			LogGlError();
-			glDisableVertexAttribArray(4);
-			LogGlError();
+            // col
+            glEnableVertexAttribArray(5);
+            LogGlError();
+            glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, m_MeshDatas.verticeSize, (void*)(sizeof(float) * 14));
+            LogGlError();
+            glDisableVertexAttribArray(5);
+            LogGlError();
 
-			// col
-			glEnableVertexAttribArray(5);
-			LogGlError();
-			glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, m_MeshDatas.verticeSize, (void*)(sizeof(float) * 14));
-			LogGlError();
-			glDisableVertexAttribArray(5);
-			LogGlError();
+            if (!m_MeshDatas.m_Indices.empty()) {
+                m_IndicesCount = m_MeshDatas.m_Indices.size();
 
-			if (!m_MeshDatas.m_Indices.empty())
-			{
-				m_IndicesCount = m_MeshDatas.m_Indices.size();
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_MeshDatas.m_Ibo);
+                LogGlError();
 
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_MeshDatas.m_Ibo);
-				LogGlError();
+                glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_MeshDatas.indiceSize * m_MeshDatas.m_Indices.size(), m_MeshDatas.m_Indices.data(), GL_DYNAMIC_DRAW);
+                LogGlError();
+            }
 
-				glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-					m_MeshDatas.indiceSize * m_MeshDatas.m_Indices.size(),
-					m_MeshDatas.m_Indices.data(), GL_DYNAMIC_DRAW);
-				LogGlError();
-			}
+            // unbind
+            glBindVertexArray(0);
+            LogGlError();
+            glBindBuffer(GL_ARRAY_BUFFER, 0);  // bien unbind les buffer apres le vao sinon le contexte est v�rol�
+            LogGlError();
+            if (!m_MeshDatas.m_Indices.empty()) {
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+                LogGlError();
+            }
+        }
+    }
 
-			// unbind
-			glBindVertexArray(0);
-			LogGlError();
-			glBindBuffer(GL_ARRAY_BUFFER, 0); // bien unbind les buffer apres le vao sinon le contexte est v�rol�
-			LogGlError();
-			if (!m_MeshDatas.m_Indices.empty())
-			{
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-				LogGlError();
-			}
-		}
-	}
+    glFinish();
 
-	glFinish();
-
-	return true;
+    return true;
 }

@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -58,22 +58,22 @@ using namespace std::placeholders;
 /////////////////////////////////////////////////////////////////////////////////////////
 
 UniformVariantPtr CodeTree::puPictureChooseUniform = nullptr;
-UniformVariantPtr CodeTree::puPicturePopupUniform  = nullptr;
-static int _TextureWrap                            = 0;
-static int _TextureFilter                          = 0;
+UniformVariantPtr CodeTree::puPicturePopupUniform = nullptr;
+static int _TextureWrap = 0;
+static int _TextureFilter = 0;
 
 UniformVariantPtr CodeTree::puBufferChooseUniform = nullptr;
-UniformVariantPtr CodeTree::puBufferPopupUniform  = nullptr;
-static int _BufferWrap                            = 0;
-static int _BufferFilter                          = 0;
+UniformVariantPtr CodeTree::puBufferPopupUniform = nullptr;
+static int _BufferWrap = 0;
+static int _BufferFilter = 0;
 
 UniformVariantPtr CodeTree::puSoundChooseUniform = nullptr;
-UniformVariantPtr CodeTree::puSoundPopupUniform  = nullptr;
+UniformVariantPtr CodeTree::puSoundPopupUniform = nullptr;
 
-ShaderKeyPtr CodeTree::puShaderKeyToEditPopup               = nullptr;
+ShaderKeyPtr CodeTree::puShaderKeyToEditPopup = nullptr;
 ShaderKeyPtr CodeTree::puShaderKeyWhereCreateUniformsConfig = nullptr;
 ShaderKeyPtr CodeTree::puShaderKeyWhereRenameUniformsConfig = nullptr;
-ShaderKeyPtr CodeTree::puShaderKeyUniformsConfigToSwitch    = nullptr;
+ShaderKeyPtr CodeTree::puShaderKeyUniformsConfigToSwitch = nullptr;
 
 UniformVariantPtr CodeTree::puCurrentGizmo = nullptr;
 
@@ -83,8 +83,8 @@ UniformVariantPtr CodeTree::puCurrentGizmo = nullptr;
 
 CodeTree::CodeTree() {
     puDontSaveConfigFiles = false;
-    puShowUnUsedUniforms  = false;
-    puShowCustomUniforms  = false;
+    puShowUnUsedUniforms = false;
+    puShowCustomUniforms = false;
 
     InitTextureChooseDialogWithUniform(nullptr);
     TexturePopupInit();
@@ -186,7 +186,8 @@ ShaderKeyPtr CodeTree::LoadFromFile(const std::string& vFilePathName, KEY_TYPE_E
     return nullptr;
 }
 
-ShaderKeyPtr CodeTree::LoadFromString(const std::string& vKey, const std::string& vFileString,
+ShaderKeyPtr CodeTree::LoadFromString(const std::string& vKey,
+                                      const std::string& vFileString,
                                       const std::string& vOriginalFilePathName,  // like the oriignal file from where the current code (vFileString) come form
                                       const std::string& vInFileBufferName,      // like MAIN or CHILD_A, CHILD_B
                                       KEY_TYPE_Enum vFileType) {
@@ -212,9 +213,9 @@ ShaderKeyPtr CodeTree::AddKey(const std::string& vKey, bool vIsInclude) {
 ShaderKeyPtr CodeTree::AddShaderKey(const std::string& vKey, bool vFilebased) {
     if (puShaderKeys.find(vKey) == puShaderKeys.end())  // non trouve
     {
-        ShaderKeyPtr key      = ShaderKey::Create();
+        ShaderKeyPtr key = ShaderKey::Create();
         key->puParentCodeTree = m_This;
-        key->puKeyType        = KEY_TYPE_Enum::KEY_TYPE_SHADER;
+        key->puKeyType = KEY_TYPE_Enum::KEY_TYPE_SHADER;
 
         if (!vKey.empty() && vFilebased)  // file based
         {
@@ -231,7 +232,7 @@ ShaderKeyPtr CodeTree::AddShaderKey(const std::string& vKey, bool vFilebased) {
             }
         } else  // string based
         {
-            key->puKey         = vKey;
+            key->puKey = vKey;
             puShaderKeys[vKey] = key;
             return puShaderKeys[vKey];
         }
@@ -255,9 +256,9 @@ ShaderKeyPtr CodeTree::GetShaderKey(const std::string& vKey) {
 ShaderKeyPtr CodeTree::AddIncludeKey(const std::string& vKey, bool vFilebased) {
     if (puIncludeKeys.find(vKey) == puIncludeKeys.end())  // non found
     {
-        ShaderKeyPtr key      = ShaderKey::Create();
+        ShaderKeyPtr key = ShaderKey::Create();
         key->puParentCodeTree = m_This;
-        key->puKeyType        = KEY_TYPE_Enum::KEY_TYPE_INCLUDE;
+        key->puKeyType = KEY_TYPE_Enum::KEY_TYPE_INCLUDE;
 
         key->puIsInclude = true;
 
@@ -276,7 +277,7 @@ ShaderKeyPtr CodeTree::AddIncludeKey(const std::string& vKey, bool vFilebased) {
             }
         } else  // string based
         {
-            key->puKey          = vKey;
+            key->puKey = vKey;
             puIncludeKeys[vKey] = key;
             return puIncludeKeys[vKey];
         }
@@ -299,15 +300,20 @@ ShaderKeyPtr CodeTree::GetKey(const std::string& vKey) {
     ShaderKeyPtr key = nullptr;
 
     key = GetShaderKey(vKey);
-    if (!key) key = GetIncludeKey(vKey);
+    if (!key)
+        key = GetIncludeKey(vKey);
 
     return key;
 }
 
-ShaderKeyPtr CodeTree::AddOrUpdateFromStringAndGetKey(const std::string& vKey, const std::string& vFileString,
-                                                      const std::string& vOriginalFilePathName,  // like the oriignal file from where the current code (vFileString) come form
-                                                      const std::string& vInFileBufferName,      // like MAIN or CHILD_A, CHILD_B
-                                                      bool vResetConfigs, bool vResetReplaceCodes, bool vIsInclude) {
+ShaderKeyPtr CodeTree::AddOrUpdateFromStringAndGetKey(
+    const std::string& vKey,
+    const std::string& vFileString,
+    const std::string& vOriginalFilePathName,  // like the oriignal file from where the current code (vFileString) come form
+    const std::string& vInFileBufferName,      // like MAIN or CHILD_A, CHILD_B
+    bool vResetConfigs,
+    bool vResetReplaceCodes,
+    bool vIsInclude) {
     ShaderKeyPtr key = nullptr;
 
     AddOrUpdateFromString(vKey, vFileString, vOriginalFilePathName, vInFileBufferName, vResetConfigs, vResetReplaceCodes, vIsInclude);
@@ -358,10 +364,13 @@ bool CodeTree::AddOrUpdateFromFile(ShaderKeyPtr vKey, bool vResetConfigs, bool v
     return res;
 }
 
-bool CodeTree::AddOrUpdateFromString(const std::string& vKey, const std::string& vFileString,
+bool CodeTree::AddOrUpdateFromString(const std::string& vKey,
+                                     const std::string& vFileString,
                                      const std::string& vOriginalFilePathName,  // like the oriignal file from where the current code (vFileString) come form
                                      const std::string& vInFileBufferName,      // like MAIN or CHILD_A, CHILD_B
-                                     bool vResetConfigs, bool /*vResetReplaceCodes*/, bool vIsInclude) {
+                                     bool vResetConfigs,
+                                     bool /*vResetReplaceCodes*/,
+                                     bool vIsInclude) {
     bool res = false;
 
     ShaderKeyPtr key = nullptr;
@@ -410,7 +419,8 @@ std::shared_ptr<SectionCode> CodeTree::GetSectionCode(const std::string& vKey) {
     std::shared_ptr<SectionCode> res = nullptr;
 
     ShaderKeyPtr key = GetShaderKey(vKey);
-    if (!key) key = GetIncludeKey(vKey);
+    if (!key)
+        key = GetIncludeKey(vKey);
 
     if (key) {
         res = key->puMainSection;
@@ -419,11 +429,15 @@ std::shared_ptr<SectionCode> CodeTree::GetSectionCode(const std::string& vKey) {
     return res;
 }
 
-ShaderParsedStruct CodeTree::GetFullShader(const std::string& vKey, const std::string& vInFileBufferName, const std::string& /*vSectionName*/, const std::string& /*vConfigName*/) {
+ShaderParsedStruct CodeTree::GetFullShader(const std::string& vKey,
+                                           const std::string& vInFileBufferName,
+                                           const std::string& /*vSectionName*/,
+                                           const std::string& /*vConfigName*/) {
     ShaderParsedStruct res;
 
     ShaderKeyPtr key = GetShaderKey(vKey);
-    if (!key) key = GetIncludeKey(vKey);
+    if (!key)
+        key = GetIncludeKey(vKey);
 
     if (key) {
         res = key->GetFullShader(vInFileBufferName, true, true);
@@ -446,15 +460,15 @@ bool CodeTree::DrawImGuiUniformWidget(ShaderKeyPtr vKey, float vFirstColumnWidth
     bool change = false;
 
     if (vKey != nullptr) {
-        char nodeTitle[256]   = "";
+        char nodeTitle[256] = "";
         const float PaneWidth = ImGui::GetContentRegionAvail().x - ImGui::GetStyle().FramePadding.x * 2.0f;
         for (auto itSec = vKey->puUniformSectionDataBase.begin(); itSec != vKey->puUniformSectionDataBase.end(); ++itSec) {
             std::string section = itSec->first;
-            auto uniforms       = &itSec->second;
+            auto uniforms = &itSec->second;
 
             if (section != "hidden") {
                 static bool _existingUniforms = false;
-                _existingUniforms             = false;
+                _existingUniforms = false;
 
                 // if sone search, we hide section widget
                 for (auto itLst = uniforms->begin(); itLst != uniforms->end(); ++itLst) {
@@ -534,16 +548,21 @@ bool CodeTree::CheckUniformVisiblity(UniformVariantPtr v, bool vShowUnUsed) {
         }
     } else if (v->useVisOpCond && v->uniCondPtr) {
         // 0 => no op // 1 > // 2 >= // 3 < // 4 <=
-        if (v->useVisOpCond == 1) visible = (*(v->uniCondPtr) > v->uniOpCondThreshold);
-        if (v->useVisOpCond == 2) visible = (*(v->uniCondPtr) >= v->uniOpCondThreshold);
-        if (v->useVisOpCond == 3) visible = (*(v->uniCondPtr) < v->uniOpCondThreshold);
-        if (v->useVisOpCond == 4) visible = (*(v->uniCondPtr) <= v->uniOpCondThreshold);
+        if (v->useVisOpCond == 1)
+            visible = (*(v->uniCondPtr) > v->uniOpCondThreshold);
+        if (v->useVisOpCond == 2)
+            visible = (*(v->uniCondPtr) >= v->uniOpCondThreshold);
+        if (v->useVisOpCond == 3)
+            visible = (*(v->uniCondPtr) < v->uniOpCondThreshold);
+        if (v->useVisOpCond == 4)
+            visible = (*(v->uniCondPtr) <= v->uniOpCondThreshold);
     } else {
         visible = true;
     }
 
     // si c'est des uniforms seulement pour l'ui on le met toujours visible
-    if (v->uiOnly) v->loc = 0;
+    if (v->uiOnly)
+        v->loc = 0;
 
     if (visible && !vShowUnUsed) {
         if (v->loc < 0) {
@@ -554,7 +573,12 @@ bool CodeTree::CheckUniformVisiblity(UniformVariantPtr v, bool vShowUnUsed) {
     return visible;
 }
 
-bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float vMaxWidth, float vFirstColumnWidth, RenderPackWeak vRenderPack, bool vShowUnUsed, bool vShowCustom) {
+bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr,
+                                              float vMaxWidth,
+                                              float vFirstColumnWidth,
+                                              RenderPackWeak vRenderPack,
+                                              bool vShowUnUsed,
+                                              bool vShowCustom) {
     bool change = false;
 
     if (vUniPtr) {
@@ -563,8 +587,9 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
         const bool visible = CheckUniformVisiblity(vUniPtr, vShowUnUsed);
         if (visible) {
             ShaderKeyPtr key = nullptr;
-            auto rpPtr       = vRenderPack.lock();
-            if (rpPtr) key = rpPtr->GetShaderKey();
+            auto rpPtr = vRenderPack.lock();
+            if (rpPtr)
+                key = rpPtr->GetShaderKey();
             if (GizmoSystem::Instance()->DrawWidget(m_This, v, vMaxWidth, vFirstColumnWidth, vRenderPack, vShowUnUsed, vShowCustom, false, &change)) {
                 return change;
             } else if (GamePadSystem::Instance()->DrawWidget(m_This, v, vMaxWidth, vFirstColumnWidth, vRenderPack, vShowUnUsed, vShowCustom, false, &change)) {
@@ -587,7 +612,7 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                 if (ImGui::ContrastedButton(ICON_NDP_RESET, "Reset")) {
                     change |= true;
                     v->bx = (v->def.x > 0.5f);
-                    v->x  = 0.0f;
+                    v->x = 0.0f;
                 }
                 ImGui::SameLine();
                 if (ImGui::ToggleContrastedButton(ICON_NDP_PAUSE, ICON_NDP_PLAY, &v->bx)) {
@@ -613,7 +638,7 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                 if (v->count > 0) {
                     v->bx = false;
                     if (ImGui::ContrastedButton(v->buttonName0.c_str())) {
-                        v->bx  = true;
+                        v->bx = true;
                         change = true;
                     }
                 }
@@ -621,7 +646,7 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     ImGui::SameLine();
                     v->by = false;
                     if (ImGui::ContrastedButton(v->buttonName1.c_str())) {
-                        v->by  = true;
+                        v->by = true;
                         change = true;
                     }
                 }
@@ -629,7 +654,7 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     ImGui::SameLine();
                     v->bz = false;
                     if (ImGui::ContrastedButton(v->buttonName2.c_str())) {
-                        v->bz  = true;
+                        v->bz = true;
                         change = true;
                     }
                 }
@@ -637,7 +662,7 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     ImGui::SameLine();
                     v->bw = false;
                     if (ImGui::ContrastedButton(v->buttonName3.c_str())) {
-                        v->bw  = true;
+                        v->bw = true;
                         change = true;
                     }
                 }
@@ -658,7 +683,7 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                         const bool btn = ImGui::ContrastedButton(ICON_NDP_RESET);
                         if (btn) {
                             change = true;
-                            v->bx  = v->bdef.x;
+                            v->bx = v->bdef.x;
                         }
                         ImGui::SameLine();
                         if (ImGui::Checkbox(buffer, &v->bx)) {
@@ -677,7 +702,7 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                         const bool btn = ImGui::ContrastedButton(ICON_NDP_RESET);
                         if (btn) {
                             change = true;
-                            v->by  = v->bdef.y;
+                            v->by = v->bdef.y;
                         }
                         ImGui::SameLine();
                         if (ImGui::Checkbox(buffer, &v->by)) {
@@ -696,7 +721,7 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                         const bool btn = ImGui::ContrastedButton(ICON_NDP_RESET);
                         if (btn) {
                             change = true;
-                            v->bz  = v->bdef.z;
+                            v->bz = v->bdef.z;
                         }
                         ImGui::SameLine();
                         if (ImGui::Checkbox(buffer, &v->bz)) {
@@ -715,7 +740,7 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                         const bool btn = ImGui::ContrastedButton(ICON_NDP_RESET);
                         if (btn) {
                             change = true;
-                            v->bw  = v->bdef.w;
+                            v->bw = v->bdef.w;
                         }
                         ImGui::SameLine();
                         if (ImGui::Checkbox(buffer, &v->bw)) {
@@ -736,10 +761,10 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                         const bool btn = ImGui::ContrastedButton(ICON_NDP_RESET);
                         if (btn) {
                             change = true;
-                            v->bx  = v->bdef.x;
-                            v->by  = v->bdef.y;
-                            v->bz  = v->bdef.z;
-                            v->bw  = v->bdef.w;
+                            v->bx = v->bdef.x;
+                            v->by = v->bdef.y;
+                            v->bz = v->bdef.z;
+                            v->bw = v->bdef.w;
                         }
                         ImGui::SameLine();
                         if (ImGui::Checkbox(buffer, &v->bx)) {
@@ -992,7 +1017,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                         v->x = v->def.x;
                         v->y = v->def.y;
                         v->z = v->def.z;
-                        if (v->count == 4) v->w = v->def.w;
+                        if (v->count == 4)
+                            v->w = v->def.w;
                     }
                     ImGui::SameLine();
                     ImGui::PushItemWidth(vMaxWidth - ImGui::GetCursorPosX() - 9.0f);
@@ -1106,7 +1132,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                         ImGui::SameLine(vFirstColumnWidth);
                         if (ImGui::TextureButton(tex, (vMaxWidth - vFirstColumnWidth) * 0.5f, ImGui::GetUniformLocColor(v->loc), 10)) {
                             puBufferFilePath = FileHelper::Instance()->GetAbsolutePathForFileLocation("", (int)FILE_LOCATION_Enum::FILE_LOCATION_IMPORT);
-                            if (puBufferFilePathName.find(".glsl") == std::string::npos) puBufferFilePathName.clear();
+                            if (puBufferFilePathName.find(".glsl") == std::string::npos)
+                                puBufferFilePathName.clear();
                             IGFD::FileDialogConfig config;
                             config.path = puBufferFilePath;
                             config.filePathName = puBufferFilePathName;
@@ -1131,7 +1158,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 0, ".x");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderFloatDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->x, v->inf.x, v->sup.x, v->def.x, v->step.x, "%.5f")) {
+                    if (ImGui::SliderFloatDefault(
+                            vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->x, v->inf.x, v->sup.x, v->def.x, v->step.x, "%.5f")) {
                         change |= true;
                         RecordToTimeLine(key, v, 0);
                     }
@@ -1140,7 +1168,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 1, ".y");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderFloatDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##y" + v->name).c_str(), &v->y, v->inf.y, v->sup.y, v->def.y, v->step.y, "%.5f")) {
+                    if (ImGui::SliderFloatDefault(
+                            vMaxWidth - ImGui::GetCursorPosX(), ("##y" + v->name).c_str(), &v->y, v->inf.y, v->sup.y, v->def.y, v->step.y, "%.5f")) {
                         change |= true;
                         RecordToTimeLine(key, v, 1);
                     }
@@ -1149,7 +1178,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 2, ".z");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderFloatDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##z" + v->name).c_str(), &v->z, v->inf.z, v->sup.z, v->def.z, v->step.z, "%.5f")) {
+                    if (ImGui::SliderFloatDefault(
+                            vMaxWidth - ImGui::GetCursorPosX(), ("##z" + v->name).c_str(), &v->z, v->inf.z, v->sup.z, v->def.z, v->step.z, "%.5f")) {
                         change |= true;
                         RecordToTimeLine(key, v, 2);
                     }
@@ -1158,7 +1188,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 3, ".w");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderFloatDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##w" + v->name).c_str(), &v->w, v->inf.w, v->sup.w, v->def.w, v->step.w, "%.5f")) {
+                    if (ImGui::SliderFloatDefault(
+                            vMaxWidth - ImGui::GetCursorPosX(), ("##w" + v->name).c_str(), &v->w, v->inf.w, v->sup.w, v->def.w, v->step.w, "%.5f")) {
                         change |= true;
                         RecordToTimeLine(key, v, 3);
                     }
@@ -1169,22 +1200,25 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
 
                 DrawUniformName(key, v);
                 ctTexturePtr tex = nullptr;
-                if (v->texture_ptr) tex = v->texture_ptr->getBack();
+                if (v->texture_ptr)
+                    tex = v->texture_ptr->getBack();
                 if (v->textureFileChoosebox || v->textureChoiceActivated) {
                     ImGui::SameLine(vFirstColumnWidth);
                     if (ImGui::TextureButton(tex, (vMaxWidth - vFirstColumnWidth) * 0.5f, ImGui::GetUniformLocColor(v->loc), 10)) {
                         if (!v->filePathNames.empty()) {
                             puPictureFilePathName = v->filePathNames[0];
                             if (!FileHelper::Instance()->IsFileExist(puPictureFilePathName, true))
-                                puPictureFilePathName = FileHelper::Instance()->GetAbsolutePathForFileLocation(puPictureFilePathName, (int)FILE_LOCATION_Enum::FILE_LOCATION_ASSET_TEXTURE_2D);
+                                puPictureFilePathName = FileHelper::Instance()->GetAbsolutePathForFileLocation(puPictureFilePathName,
+                                                                                                               (int)FILE_LOCATION_Enum::FILE_LOCATION_ASSET_TEXTURE_2D);
                         }
                         IGFD::FileDialogConfig config;
                         config.filePathName = puPictureFilePathName;
                         config.countSelectionMax = 1;
                         config.flags = ImGuiFileDialogFlags_Modal;
-                        ImGuiFileDialog::Instance()->OpenDialog(
-                            "PictureDialog", "Open Picture File",
-                            "Image files (*.png *.jpg *.jpeg *.tga *.hdr){.png,.jpg,.jpeg,.tga,.hdr},.png,.jpg,.jpeg,.tga,.hdr", config);
+                        ImGuiFileDialog::Instance()->OpenDialog("PictureDialog",
+                                                                "Open Picture File",
+                                                                "Image files (*.png *.jpg *.jpeg *.tga *.hdr){.png,.jpg,.jpeg,.tga,.hdr},.png,.jpg,.jpeg,.tga,.hdr",
+                                                                config);
                         InitTextureChooseDialogWithUniform(v);
                     }
                     change |= TexturePopupCheck(v);
@@ -1236,7 +1270,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v);
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderFloatDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->x, v->inf.x, v->sup.x, v->def.x, v->step.x, "%.5f")) {
+                    if (ImGui::SliderFloatDefault(
+                            vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->x, v->inf.x, v->sup.x, v->def.x, v->step.x, "%.5f")) {
                         change |= true;
                         RecordToTimeLine(key, v, 0);
                     }
@@ -1257,7 +1292,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v);
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->ix, (int)v->inf.x, (int)v->sup.x, (int)v->def.x, (int)v->step.x)) {
+                    if (ImGui::SliderIntDefault(
+                            vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->ix, (int)v->inf.x, (int)v->sup.x, (int)v->def.x, (int)v->step.x)) {
                         change |= true;
                         RecordToTimeLine(key, v, 0);
                     }
@@ -1278,7 +1314,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v);
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->ux, (int)v->inf.x, (int)v->sup.x, (int)v->def.x, (int)v->step.x)) {
+                    if (ImGui::SliderUIntDefault(
+                            vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->ux, (int)v->inf.x, (int)v->sup.x, (int)v->def.x, (int)v->step.x)) {
                         change |= true;
                         v->ux = ct::maxi<uint32_t>(v->ux, 0U);
                         RecordToTimeLine(key, v, 0);
@@ -1304,7 +1341,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 0, ".x");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderFloatDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->x, v->inf.x, v->sup.x, v->def.x, v->step.x, "%.5f")) {
+                    if (ImGui::SliderFloatDefault(
+                            vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->x, v->inf.x, v->sup.x, v->def.x, v->step.x, "%.5f")) {
                         change |= true;
                         RecordToTimeLine(key, v, 0);
                     }
@@ -1313,7 +1351,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 1, ".y");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderFloatDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##y" + v->name).c_str(), &v->y, v->inf.y, v->sup.y, v->def.y, v->step.y, "%.5f")) {
+                    if (ImGui::SliderFloatDefault(
+                            vMaxWidth - ImGui::GetCursorPosX(), ("##y" + v->name).c_str(), &v->y, v->inf.y, v->sup.y, v->def.y, v->step.y, "%.5f")) {
                         change |= true;
                         RecordToTimeLine(key, v, 1);
                     }
@@ -1342,7 +1381,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 0, ".x");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderFloatDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->x, v->inf.x, v->sup.x, v->def.x, v->step.x, "%.5f")) {
+                    if (ImGui::SliderFloatDefault(
+                            vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->x, v->inf.x, v->sup.x, v->def.x, v->step.x, "%.5f")) {
                         change |= true;
                         RecordToTimeLine(key, v, 0);
                     }
@@ -1351,7 +1391,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 1, ".y");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderFloatDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##y" + v->name).c_str(), &v->y, v->inf.y, v->sup.y, v->def.y, v->step.y, "%.5f")) {
+                    if (ImGui::SliderFloatDefault(
+                            vMaxWidth - ImGui::GetCursorPosX(), ("##y" + v->name).c_str(), &v->y, v->inf.y, v->sup.y, v->def.y, v->step.y, "%.5f")) {
                         change |= true;
                         RecordToTimeLine(key, v, 1);
                     }
@@ -1360,7 +1401,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 2, ".z");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderFloatDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##z" + v->name).c_str(), &v->z, v->inf.z, v->sup.z, v->def.z, v->step.z, "%.5f")) {
+                    if (ImGui::SliderFloatDefault(
+                            vMaxWidth - ImGui::GetCursorPosX(), ("##z" + v->name).c_str(), &v->z, v->inf.z, v->sup.z, v->def.z, v->step.z, "%.5f")) {
                         change |= true;
                         RecordToTimeLine(key, v, 2);
                     }
@@ -1393,7 +1435,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 0, ".x");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderFloatDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->x, v->inf.x, v->sup.x, v->def.x, v->step.x, "%.5f")) {
+                    if (ImGui::SliderFloatDefault(
+                            vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->x, v->inf.x, v->sup.x, v->def.x, v->step.x, "%.5f")) {
                         change |= true;
                         RecordToTimeLine(key, v, 0);
                     }
@@ -1402,7 +1445,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 1, ".y");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderFloatDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##y" + v->name).c_str(), &v->y, v->inf.y, v->sup.y, v->def.y, v->step.y, "%.5f")) {
+                    if (ImGui::SliderFloatDefault(
+                            vMaxWidth - ImGui::GetCursorPosX(), ("##y" + v->name).c_str(), &v->y, v->inf.y, v->sup.y, v->def.y, v->step.y, "%.5f")) {
                         change |= true;
                         RecordToTimeLine(key, v, 1);
                     }
@@ -1411,7 +1455,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 2, ".z");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderFloatDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##z" + v->name).c_str(), &v->z, v->inf.z, v->sup.z, v->def.z, v->step.z, "%.5f")) {
+                    if (ImGui::SliderFloatDefault(
+                            vMaxWidth - ImGui::GetCursorPosX(), ("##z" + v->name).c_str(), &v->z, v->inf.z, v->sup.z, v->def.z, v->step.z, "%.5f")) {
                         change |= true;
                         RecordToTimeLine(key, v, 2);
                     }
@@ -1420,7 +1465,8 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 3, ".w");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderFloatDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##w" + v->name).c_str(), &v->w, v->inf.w, v->sup.w, v->def.w, v->step.w, "%.5f")) {
+                    if (ImGui::SliderFloatDefault(
+                            vMaxWidth - ImGui::GetCursorPosX(), ("##w" + v->name).c_str(), &v->w, v->inf.w, v->sup.w, v->def.w, v->step.w, "%.5f")) {
                         change |= true;
                         RecordToTimeLine(key, v, 3);
                     }
@@ -1445,7 +1491,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 0, ".x");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->ix, (int32_t)v->inf.x, (int32_t)v->sup.x, (int32_t)v->def.x, (int32_t)v->step.x)) {
+                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                ("##x" + v->name).c_str(),
+                                                &v->ix,
+                                                (int32_t)v->inf.x,
+                                                (int32_t)v->sup.x,
+                                                (int32_t)v->def.x,
+                                                (int32_t)v->step.x)) {
                         change |= true;
                         RecordToTimeLine(key, v, 0);
                     }
@@ -1454,7 +1506,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 1, ".y");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##y" + v->name).c_str(), &v->iy, (int32_t)v->inf.y, (int32_t)v->sup.y, (int32_t)v->def.y, (int32_t)v->step.y)) {
+                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                ("##y" + v->name).c_str(),
+                                                &v->iy,
+                                                (int32_t)v->inf.y,
+                                                (int32_t)v->sup.y,
+                                                (int32_t)v->def.y,
+                                                (int32_t)v->step.y)) {
                         change |= true;
                         RecordToTimeLine(key, v, 1);
                     }
@@ -1483,7 +1541,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 0, ".x");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->ix, (int32_t)v->inf.x, (int32_t)v->sup.x, (int32_t)v->def.x, (int32_t)v->step.x)) {
+                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                ("##x" + v->name).c_str(),
+                                                &v->ix,
+                                                (int32_t)v->inf.x,
+                                                (int32_t)v->sup.x,
+                                                (int32_t)v->def.x,
+                                                (int32_t)v->step.x)) {
                         change |= true;
                         RecordToTimeLine(key, v, 0);
                     }
@@ -1492,7 +1556,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 1, ".y");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##y" + v->name).c_str(), &v->iy, (int32_t)v->inf.y, (int32_t)v->sup.y, (int32_t)v->def.y, (int32_t)v->step.y)) {
+                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                ("##y" + v->name).c_str(),
+                                                &v->iy,
+                                                (int32_t)v->inf.y,
+                                                (int32_t)v->sup.y,
+                                                (int32_t)v->def.y,
+                                                (int32_t)v->step.y)) {
                         change |= true;
                         RecordToTimeLine(key, v, 1);
                     }
@@ -1501,7 +1571,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 2, ".z");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##z" + v->name).c_str(), &v->iz, (int32_t)v->inf.z, (int32_t)v->sup.z, (int32_t)v->def.z, (int32_t)v->step.z)) {
+                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                ("##z" + v->name).c_str(),
+                                                &v->iz,
+                                                (int32_t)v->inf.z,
+                                                (int32_t)v->sup.z,
+                                                (int32_t)v->def.z,
+                                                (int32_t)v->step.z)) {
                         change |= true;
                         RecordToTimeLine(key, v, 2);
                     }
@@ -1534,7 +1610,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 0, ".x");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->ix, (int32_t)v->inf.x, (int32_t)v->sup.x, (int32_t)v->def.x, (int32_t)v->step.x)) {
+                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                ("##x" + v->name).c_str(),
+                                                &v->ix,
+                                                (int32_t)v->inf.x,
+                                                (int32_t)v->sup.x,
+                                                (int32_t)v->def.x,
+                                                (int32_t)v->step.x)) {
                         change |= true;
                         RecordToTimeLine(key, v, 0);
                     }
@@ -1543,7 +1625,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 1, ".y");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##y" + v->name).c_str(), &v->iy, (int32_t)v->inf.y, (int32_t)v->sup.y, (int32_t)v->def.y, (int32_t)v->step.y)) {
+                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                ("##y" + v->name).c_str(),
+                                                &v->iy,
+                                                (int32_t)v->inf.y,
+                                                (int32_t)v->sup.y,
+                                                (int32_t)v->def.y,
+                                                (int32_t)v->step.y)) {
                         change |= true;
                         RecordToTimeLine(key, v, 1);
                     }
@@ -1552,7 +1640,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 2, ".z");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##z" + v->name).c_str(), &v->iz, (int32_t)v->inf.z, (int32_t)v->sup.z, (int32_t)v->def.z, (int32_t)v->step.z)) {
+                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                ("##z" + v->name).c_str(),
+                                                &v->iz,
+                                                (int32_t)v->inf.z,
+                                                (int32_t)v->sup.z,
+                                                (int32_t)v->def.z,
+                                                (int32_t)v->step.z)) {
                         change |= true;
                         RecordToTimeLine(key, v, 2);
                     }
@@ -1561,7 +1655,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 3, ".w");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##w" + v->name).c_str(), &v->iw, (int32_t)v->inf.w, (int32_t)v->sup.w, (int32_t)v->def.w, (int32_t)v->step.w)) {
+                    if (ImGui::SliderIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                ("##w" + v->name).c_str(),
+                                                &v->iw,
+                                                (int32_t)v->inf.w,
+                                                (int32_t)v->sup.w,
+                                                (int32_t)v->def.w,
+                                                (int32_t)v->step.w)) {
                         change |= true;
                         RecordToTimeLine(key, v, 3);
                     }
@@ -1586,7 +1686,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 0, ".x");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->ux, (uint32_t)v->inf.x, (uint32_t)v->sup.x, (uint32_t)v->def.x, (uint32_t)v->step.x)) {
+                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                 ("##x" + v->name).c_str(),
+                                                 &v->ux,
+                                                 (uint32_t)v->inf.x,
+                                                 (uint32_t)v->sup.x,
+                                                 (uint32_t)v->def.x,
+                                                 (uint32_t)v->step.x)) {
                         change |= true;
                         v->ux = ct::maxi<uint32_t>(v->ux, 0U);
                         RecordToTimeLine(key, v, 0);
@@ -1596,7 +1702,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 1, ".y");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##y" + v->name).c_str(), &v->uy, (uint32_t)v->inf.y, (uint32_t)v->sup.y, (uint32_t)v->def.y, (uint32_t)v->step.y)) {
+                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                 ("##y" + v->name).c_str(),
+                                                 &v->uy,
+                                                 (uint32_t)v->inf.y,
+                                                 (uint32_t)v->sup.y,
+                                                 (uint32_t)v->def.y,
+                                                 (uint32_t)v->step.y)) {
                         change |= true;
                         v->uy = ct::maxi<uint32_t>(v->uy, 0U);
                         RecordToTimeLine(key, v, 1);
@@ -1626,7 +1738,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 0, ".x");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->ux, (uint32_t)v->inf.x, (uint32_t)v->sup.x, (uint32_t)v->def.x, (uint32_t)v->step.x)) {
+                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                 ("##x" + v->name).c_str(),
+                                                 &v->ux,
+                                                 (uint32_t)v->inf.x,
+                                                 (uint32_t)v->sup.x,
+                                                 (uint32_t)v->def.x,
+                                                 (uint32_t)v->step.x)) {
                         change |= true;
                         v->ux = ct::maxi<uint32_t>(v->ux, 0U);
                         RecordToTimeLine(key, v, 0);
@@ -1636,7 +1754,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 1, ".y");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##y" + v->name).c_str(), &v->uy, (uint32_t)v->inf.y, (uint32_t)v->sup.y, (uint32_t)v->def.y, (uint32_t)v->step.y)) {
+                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                 ("##y" + v->name).c_str(),
+                                                 &v->uy,
+                                                 (uint32_t)v->inf.y,
+                                                 (uint32_t)v->sup.y,
+                                                 (uint32_t)v->def.y,
+                                                 (uint32_t)v->step.y)) {
                         change |= true;
                         v->uy = ct::maxi<uint32_t>(v->uy, 0U);
                         RecordToTimeLine(key, v, 1);
@@ -1646,7 +1770,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 2, ".z");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##z" + v->name).c_str(), &v->uz, (uint32_t)v->inf.z, (uint32_t)v->sup.z, (uint32_t)v->def.z, (uint32_t)v->step.z)) {
+                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                 ("##z" + v->name).c_str(),
+                                                 &v->uz,
+                                                 (uint32_t)v->inf.z,
+                                                 (uint32_t)v->sup.z,
+                                                 (uint32_t)v->def.z,
+                                                 (uint32_t)v->step.z)) {
                         change |= true;
                         v->uz = ct::maxi<uint32_t>(v->uz, 0U);
                         RecordToTimeLine(key, v, 2);
@@ -1680,7 +1810,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 0, ".x");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->ux, (uint32_t)v->inf.x, (uint32_t)v->sup.x, (uint32_t)v->def.x, (uint32_t)v->step.x)) {
+                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                 ("##x" + v->name).c_str(),
+                                                 &v->ux,
+                                                 (uint32_t)v->inf.x,
+                                                 (uint32_t)v->sup.x,
+                                                 (uint32_t)v->def.x,
+                                                 (uint32_t)v->step.x)) {
                         change |= true;
                         v->ux = ct::maxi<uint32_t>(v->ux, 0U);
                         RecordToTimeLine(key, v, 0);
@@ -1690,7 +1826,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 1, ".y");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##y" + v->name).c_str(), &v->uy, (uint32_t)v->inf.y, (uint32_t)v->sup.y, (uint32_t)v->def.y, (uint32_t)v->step.y)) {
+                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                 ("##y" + v->name).c_str(),
+                                                 &v->uy,
+                                                 (uint32_t)v->inf.y,
+                                                 (uint32_t)v->sup.y,
+                                                 (uint32_t)v->def.y,
+                                                 (uint32_t)v->step.y)) {
                         change |= true;
                         v->uy = ct::maxi<uint32_t>(v->uy, 0U);
                         RecordToTimeLine(key, v, 1);
@@ -1700,7 +1842,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 2, ".z");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##z" + v->name).c_str(), &v->uz, (uint32_t)v->inf.z, (uint32_t)v->sup.z, (uint32_t)v->def.z, (uint32_t)v->step.z)) {
+                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                 ("##z" + v->name).c_str(),
+                                                 &v->uz,
+                                                 (uint32_t)v->inf.z,
+                                                 (uint32_t)v->sup.z,
+                                                 (uint32_t)v->def.z,
+                                                 (uint32_t)v->step.z)) {
                         change |= true;
                         v->uz = ct::maxi<uint32_t>(v->uz, 0U);
                         RecordToTimeLine(key, v, 2);
@@ -1710,7 +1858,13 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     DrawUniformName(key, v, 3, ".w");
                     ImGui::SameLine(vFirstColumnWidth);
                     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
-                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##w" + v->name).c_str(), &v->uw, (uint32_t)v->inf.w, (uint32_t)v->sup.w, (uint32_t)v->def.w, (uint32_t)v->step.w)) {
+                    if (ImGui::SliderUIntDefault(vMaxWidth - ImGui::GetCursorPosX(),
+                                                 ("##w" + v->name).c_str(),
+                                                 &v->uw,
+                                                 (uint32_t)v->inf.w,
+                                                 (uint32_t)v->sup.w,
+                                                 (uint32_t)v->def.w,
+                                                 (uint32_t)v->step.w)) {
                         change |= true;
                         v->uw = ct::maxi<uint32_t>(v->uw, 0U);
                         RecordToTimeLine(key, v, 3);
@@ -1731,11 +1885,41 @@ bool CodeTree::DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr, float v
                     ImGui::Indent();
 
                     if (v->uFloatArr) {
-                        ImGui::Text("0 : %.2f %.2f %.2f %.2f\n1 : %.2f %.2f %.2f %.2f\n2 : %.2f %.2f %.2f %.2f\n3 : %.2f %.2f %.2f %.2f", v->uFloatArr[0], v->uFloatArr[1], v->uFloatArr[2], v->uFloatArr[3], v->uFloatArr[4], v->uFloatArr[5],
-                                    v->uFloatArr[6], v->uFloatArr[7], v->uFloatArr[8], v->uFloatArr[9], v->uFloatArr[10], v->uFloatArr[11], v->uFloatArr[12], v->uFloatArr[13], v->uFloatArr[14], v->uFloatArr[15]);
+                        ImGui::Text("0 : %.2f %.2f %.2f %.2f\n1 : %.2f %.2f %.2f %.2f\n2 : %.2f %.2f %.2f %.2f\n3 : %.2f %.2f %.2f %.2f",
+                                    v->uFloatArr[0],
+                                    v->uFloatArr[1],
+                                    v->uFloatArr[2],
+                                    v->uFloatArr[3],
+                                    v->uFloatArr[4],
+                                    v->uFloatArr[5],
+                                    v->uFloatArr[6],
+                                    v->uFloatArr[7],
+                                    v->uFloatArr[8],
+                                    v->uFloatArr[9],
+                                    v->uFloatArr[10],
+                                    v->uFloatArr[11],
+                                    v->uFloatArr[12],
+                                    v->uFloatArr[13],
+                                    v->uFloatArr[14],
+                                    v->uFloatArr[15]);
                     } else {
-                        ImGui::Text("0 : %.2f %.2f %.2f %.2f\n1 : %.2f %.2f %.2f %.2f\n2 : %.2f %.2f %.2f %.2f\n3 : %.2f %.2f %.2f %.2f", v->mat4[0][0], v->mat4[1][0], v->mat4[2][0], v->mat4[3][0], v->mat4[0][1], v->mat4[1][1], v->mat4[2][1],
-                                    v->mat4[3][1], v->mat4[0][2], v->mat4[1][2], v->mat4[2][2], v->mat4[3][2], v->mat4[0][3], v->mat4[1][3], v->mat4[2][3], v->mat4[3][3]);
+                        ImGui::Text("0 : %.2f %.2f %.2f %.2f\n1 : %.2f %.2f %.2f %.2f\n2 : %.2f %.2f %.2f %.2f\n3 : %.2f %.2f %.2f %.2f",
+                                    v->mat4[0][0],
+                                    v->mat4[1][0],
+                                    v->mat4[2][0],
+                                    v->mat4[3][0],
+                                    v->mat4[0][1],
+                                    v->mat4[1][1],
+                                    v->mat4[2][1],
+                                    v->mat4[3][1],
+                                    v->mat4[0][2],
+                                    v->mat4[1][2],
+                                    v->mat4[2][2],
+                                    v->mat4[3][2],
+                                    v->mat4[0][3],
+                                    v->mat4[1][3],
+                                    v->mat4[2][3],
+                                    v->mat4[3][3]);
                     }
 
                     ImGui::Unindent();
@@ -1766,7 +1950,7 @@ void CodeTree::ResetUniformWidgetToTheirDefaultValue(UniformVariantPtr vUniPtr) 
 
         if (v->widgetType == "time") {
             v->bx = (v->def.x > 0.5f);
-            v->x  = 0.0f;
+            v->x = 0.0f;
 
         } else if (v->widgetType == "sound") {
             /*if (v->sound)
@@ -1818,9 +2002,11 @@ bool CodeTree::DrawUniformName(ShaderKeyPtr vKey, UniformVariantPtr vUniPtr, int
             // on veut afficher un bouton cadenas pour pouvoir bloquer la maj de l'uniform en question quand on charge une nouvelle config
             ImGui::PushID(ImGui::IncPUSHID());
             if (vUniPtr->lockedAgainstConfigLoading) {
-                if (ImGui::ButtonNoFrame(ICON_NDP2_SHIELD "##lockedagainstconfigloading", ImVec2(7, 7), ImVec4(0.9f, 0.1f, 0.5f, 1), "locked against config loading")) vUniPtr->lockedAgainstConfigLoading = !vUniPtr->lockedAgainstConfigLoading;
+                if (ImGui::ButtonNoFrame(ICON_NDP2_SHIELD "##lockedagainstconfigloading", ImVec2(7, 7), ImVec4(0.9f, 0.1f, 0.5f, 1), "locked against config loading"))
+                    vUniPtr->lockedAgainstConfigLoading = !vUniPtr->lockedAgainstConfigLoading;
             } else {
-                if (ImGui::ButtonNoFrame(ICON_NDP2_SHIELD_OUTLINE "##notlockedagainstconfigloading", ImVec2(7, 7), ImVec4(0.5f, 0.5f, 0.5f, 1), "not locked against config loading"))
+                if (ImGui::ButtonNoFrame(
+                        ICON_NDP2_SHIELD_OUTLINE "##notlockedagainstconfigloading", ImVec2(7, 7), ImVec4(0.5f, 0.5f, 0.5f, 1), "not locked against config loading"))
                     vUniPtr->lockedAgainstConfigLoading = !vUniPtr->lockedAgainstConfigLoading;
             }
 
@@ -1830,15 +2016,18 @@ bool CodeTree::DrawUniformName(ShaderKeyPtr vKey, UniformVariantPtr vUniPtr, int
         }
 
         if (vUniPtr->timeLineSupported && TimeLineSystem::Instance()->IsActive()) {
-            if (vUniPtr->glslType == uType::uTypeEnum::U_BOOL || vUniPtr->glslType == uType::uTypeEnum::U_BVEC2 || vUniPtr->glslType == uType::uTypeEnum::U_BVEC3 || vUniPtr->glslType == uType::uTypeEnum::U_BVEC4 ||
-                vUniPtr->glslType == uType::uTypeEnum::U_FLOAT || vUniPtr->glslType == uType::uTypeEnum::U_VEC2 || vUniPtr->glslType == uType::uTypeEnum::U_VEC3 || vUniPtr->glslType == uType::uTypeEnum::U_VEC4 ||
-                vUniPtr->glslType == uType::uTypeEnum::U_UINT || vUniPtr->glslType == uType::uTypeEnum::U_UVEC2 || vUniPtr->glslType == uType::uTypeEnum::U_UVEC3 || vUniPtr->glslType == uType::uTypeEnum::U_UVEC4 ||
-                vUniPtr->glslType == uType::uTypeEnum::U_INT || vUniPtr->glslType == uType::uTypeEnum::U_IVEC2 || vUniPtr->glslType == uType::uTypeEnum::U_IVEC3 || vUniPtr->glslType == uType::uTypeEnum::U_IVEC4 ||
-                vUniPtr->glslType == uType::uTypeEnum::U_MAT2 || vUniPtr->glslType == uType::uTypeEnum::U_MAT3 || vUniPtr->glslType == uType::uTypeEnum::U_MAT4) {
+            if (vUniPtr->glslType == uType::uTypeEnum::U_BOOL || vUniPtr->glslType == uType::uTypeEnum::U_BVEC2 || vUniPtr->glslType == uType::uTypeEnum::U_BVEC3 ||
+                vUniPtr->glslType == uType::uTypeEnum::U_BVEC4 || vUniPtr->glslType == uType::uTypeEnum::U_FLOAT || vUniPtr->glslType == uType::uTypeEnum::U_VEC2 ||
+                vUniPtr->glslType == uType::uTypeEnum::U_VEC3 || vUniPtr->glslType == uType::uTypeEnum::U_VEC4 || vUniPtr->glslType == uType::uTypeEnum::U_UINT ||
+                vUniPtr->glslType == uType::uTypeEnum::U_UVEC2 || vUniPtr->glslType == uType::uTypeEnum::U_UVEC3 || vUniPtr->glslType == uType::uTypeEnum::U_UVEC4 ||
+                vUniPtr->glslType == uType::uTypeEnum::U_INT || vUniPtr->glslType == uType::uTypeEnum::U_IVEC2 || vUniPtr->glslType == uType::uTypeEnum::U_IVEC3 ||
+                vUniPtr->glslType == uType::uTypeEnum::U_IVEC4 || vUniPtr->glslType == uType::uTypeEnum::U_MAT2 || vUniPtr->glslType == uType::uTypeEnum::U_MAT3 ||
+                vUniPtr->glslType == uType::uTypeEnum::U_MAT4) {
                 bool status = TimeLineSystem::Instance()->IsKeyExist(vKey, vUniPtr, vComponent);
                 if (!status) {
                     ImGui::PushID(ImGui::IncPUSHID());
-                    keyChanged = ImGui::ButtonNoFrame(ICON_NDP2_CHECKBOX_BLANK_CIRCLE "##bulletforaddkeyintimeline", ImVec2(7, 7), ImVec4(0.5f, 0.5f, 0.5f, 1), "add key in timeline");
+                    keyChanged = ImGui::ButtonNoFrame(
+                        ICON_NDP2_CHECKBOX_BLANK_CIRCLE "##bulletforaddkeyintimeline", ImVec2(7, 7), ImVec4(0.5f, 0.5f, 0.5f, 1), "add key in timeline");
                     ImGui::PopID();
                     if (keyChanged) {
                         status = !status;
@@ -1851,7 +2040,11 @@ bool CodeTree::DrawUniformName(ShaderKeyPtr vKey, UniformVariantPtr vUniPtr, int
                 } else {
                     status = TimeLineSystem::Instance()->IsKeyExistForCurrentFrame(vKey, vUniPtr, vComponent);
                     ImGui::PushID(ImGui::IncPUSHID());
-                    keyChanged = ImGui::ButtonNoFrame(status ? ICON_NDP2_HEXAGON "##losangeforaddkeyintimeline" : ICON_NDP2_HEXAGON_OUTLINE "##losangeforaddkeyintimeline", ImVec2(7, 7), ImVec4(0.9f, 0.9f, 0.1f, 1), "add key in timeline");
+                    keyChanged =
+                        ImGui::ButtonNoFrame(status ? ICON_NDP2_HEXAGON "##losangeforaddkeyintimeline" : ICON_NDP2_HEXAGON_OUTLINE "##losangeforaddkeyintimeline",
+                                             ImVec2(7, 7),
+                                             ImVec4(0.9f, 0.9f, 0.1f, 1),
+                                             "add key in timeline");
                     ImGui::PopID();
                     if (keyChanged) {
                         status = !status;
@@ -1882,7 +2075,8 @@ bool CodeTree::DrawUniformName(ShaderKeyPtr vKey, UniformVariantPtr vUniPtr, int
 void CodeTree::DrawUniformComment(UniformVariantPtr vUniPtr) {
     if (vUniPtr) {
         if (ImGui::IsItemActive() || ImGui::IsItemHovered())
-            if (!vUniPtr->comment.empty()) ImGui::SetTooltip(vUniPtr->comment.c_str());
+            if (!vUniPtr->comment.empty())
+                ImGui::SetTooltip(vUniPtr->comment.c_str());
     }
 }
 
@@ -1891,7 +2085,8 @@ void CodeTree::DrawUniformComment(UniformVariantPtr vUniPtr) {
 /////////////////////////////////////////////////////
 
 /*
-void CodeTree::SetCodeToReplaceInShadertype(const std::string& vKey, const std::string& vKeyInCode, const std::string& vCodeToReplace, const std::string& vShaderType, bool vForceReParse)
+void CodeTree::SetCodeToReplaceInShadertype(const std::string& vKey, const std::string& vKeyInCode, const std::string& vCodeToReplace, const std::string& vShaderType,
+bool vForceReParse)
 {
     ShaderKeyPtr key = GetShaderKey(vKey);
     if (!key)
@@ -2014,9 +2209,10 @@ void CodeTree::FillIncludeFileListOfShaderKey(ShaderKeyPtr vShaderKey) {
             const auto& type = it->first;
             for (auto it2 = it->second.begin(); it2 != it->second.end(); ++it2) {
                 const auto& filename = *it2;
-                auto keyPtr          = GetKey(filename);
+                auto keyPtr = GetKey(filename);
                 if (keyPtr) {
-                    if (keyPtr->puFileString.empty()) puFilesUsedFromLastShadersConstruction[type][keyPtr];
+                    if (keyPtr->puFileString.empty())
+                        puFilesUsedFromLastShadersConstruction[type][keyPtr];
 
                     if (type == KEY_TYPE_Enum::KEY_TYPE_INCLUDE) {
                         for (auto itDB = vShaderKey->puUniformsDataBase.begin(); itDB != vShaderKey->puUniformsDataBase.end(); ++itDB) {
@@ -2077,14 +2273,15 @@ void CodeTree::SetUniformPointerForIncludeUniformName(ShaderKeyPtr vIncludeKey, 
 
                 if (vUniformPointer->sectionName.empty()) {
                     vUniformPointer->sectionName = "default";
-                } 
+                }
 
                 // liste des uniforms par includes files puis par section et par ordre de section
                 if (vUniformPointer->sectionOrder >= (int)puIncludeUniformSectionUniformsList[vIncludeKey->puKey][vUniformPointer->sectionName].size())
                     puIncludeUniformSectionUniformsList[vIncludeKey->puKey][vUniformPointer->sectionName].emplace_back(mloc);
                 else {
                     auto itIncSec = puIncludeUniformSectionUniformsList[vIncludeKey->puKey][vUniformPointer->sectionName].begin();
-                    for (int i = 0; i < vUniformPointer->sectionOrder; i++) itIncSec++;
+                    for (int i = 0; i < vUniformPointer->sectionOrder; i++)
+                        itIncSec++;
                     puIncludeUniformSectionUniformsList[vIncludeKey->puKey][vUniformPointer->sectionName].insert(itIncSec, mloc);
                 }
 
@@ -2158,7 +2355,7 @@ void CodeTree::LoadConfigIncludeFile(const std::string& vShaderFileName, const C
 
     if (!configFile.empty()) {
         if (puIncludeUniformsList.find(vShaderFileName) != puIncludeUniformsList.end()) {
-            auto dico        = &puIncludeUniformsList[vShaderFileName];
+            auto dico = &puIncludeUniformsList[vShaderFileName];
             ShaderKeyPtr key = GetKey(vShaderFileName);
             if (key && dico->size() > 0) {
                 std::string file;
@@ -2218,7 +2415,8 @@ void CodeTree::LoadConfigIncludeFile(const std::string& vShaderFileName, const C
                                         UniformHelper::DeSerializeUniform(key, v, arr);
                                         dico->at(name)->Propagate();
 
-                                        if (puIncludeUniformSectionOpened[vShaderFileName].find(v->sectionName) == puIncludeUniformSectionOpened[vShaderFileName].end())  // non found
+                                        if (puIncludeUniformSectionOpened[vShaderFileName].find(v->sectionName) ==
+                                            puIncludeUniformSectionOpened[vShaderFileName].end())  // non found
                                         {
                                             puIncludeUniformSectionOpened[vShaderFileName][v->sectionName] = true;
                                         }
@@ -2266,7 +2464,7 @@ bool CodeTree::DrawImGuiIncludesUniformWidget(RenderPackWeak vMainRenderPack, fl
 
         ImGui::Indent();
 
-        bool editCatched  = false;
+        bool editCatched = false;
         bool headerOpened = false;
 
         auto rpPtr = vMainRenderPack.lock();
@@ -2291,7 +2489,7 @@ bool CodeTree::DrawImGuiIncludesUniformWidget(RenderPackWeak vMainRenderPack, fl
 
             for (const auto& itSec : it.second) {
                 std::string section = itSec.first;
-                auto uniforms       = &itSec.second;
+                auto uniforms = &itSec.second;
 
                 if (section != "hidden") {
                     snprintf(nodeTitle, 255, "%s", section.c_str());
@@ -2486,12 +2684,12 @@ std::set<std::string> CodeTree::ReParseFilesIfChange(std::set<std::string> vFile
 
             if (!key->puBufferNames.empty()) {
                 std::string newCode = FileHelper::Instance()->LoadFileToString(key->puKey, true);
-                auto ps             = FileHelper::Instance()->ParsePathFileName(file);
+                auto ps = FileHelper::Instance()->ParsePathFileName(file);
                 if (ps.isOk) {
                     for (const auto& bufName : key->puBufferNames) {
                         std::string f = ps.path + "/" + ps.name + "_" + bufName + "." + ps.ext;
-                        f             = FileHelper::Instance()->CorrectSlashTypeForFilePathName(f);
-                        auto k        = GetParentkeyRecurs(f);
+                        f = FileHelper::Instance()->CorrectSlashTypeForFilePathName(f);
+                        auto k = GetParentkeyRecurs(f);
                         if (k) {
                             k->puFileString = newCode;
                             parentKeysToUpdate.emplace(k);
@@ -2546,7 +2744,7 @@ AssetManager* CodeTree::GetAssetManager() {
 ///////////////////////////////////////////////////////////////////////////////
 
 std::string CodeTree::GetConfigFileName(const std::string& vBaseFileName, const std::string& vConfigName, const std::string& vExt) {
-    const size_t p       = vBaseFileName.find_last_of('.');
+    const size_t p = vBaseFileName.find_last_of('.');
     std::string fileName = vBaseFileName.substr(0, p);
 
     if (!vConfigName.empty()) {
@@ -2561,7 +2759,7 @@ std::string CodeTree::GetConfigFileName(const std::string& vBaseFileName, const 
 }
 
 CodeTreePtr CodeTree::Create() {
-    auto res    = std::make_shared<CodeTree>();
+    auto res = std::make_shared<CodeTree>();
     res->m_This = res;
     return res;
 }
@@ -2572,39 +2770,44 @@ CodeTreePtr CodeTree::Create() {
 
 void CodeTree::InitTextureChooseDialogWithUniform(UniformVariantPtr vUniform) {
     if (vUniform) {
-        puFlipTexture          = vUniform->flip;
-        puMipmapTexture        = vUniform->mipmap;
-        puWrapTexture          = vUniform->wrap;
-        puFilterTexture        = vUniform->filter;
+        puFlipTexture = vUniform->flip;
+        puMipmapTexture = vUniform->mipmap;
+        puWrapTexture = vUniform->wrap;
+        puFilterTexture = vUniform->filter;
         textureChoiceActivated = vUniform->textureChoiceActivated;
-        textureFlipChoosebox   = vUniform->textureFlipChoosebox;
+        textureFlipChoosebox = vUniform->textureFlipChoosebox;
         textureMipmapChoosebox = vUniform->textureMipmapChoosebox;
         textureFilterChoosebox = vUniform->textureFilterChoosebox;
-        textureWrapChoosebox   = vUniform->textureWrapChoosebox;
+        textureWrapChoosebox = vUniform->textureWrapChoosebox;
         puPictureChooseUniform = vUniform;
     } else {
         ImGuiFileDialog::Instance()->Close();
         // puShowPictureDialog = false;
         puPictureChooseUniform = nullptr;
-        puPictureFilePath      = FileHelper::Instance()->GetAbsolutePathForFileLocation("", (int)FILE_LOCATION_Enum::FILE_LOCATION_ASSET_TEXTURE_2D);
+        puPictureFilePath = FileHelper::Instance()->GetAbsolutePathForFileLocation("", (int)FILE_LOCATION_Enum::FILE_LOCATION_ASSET_TEXTURE_2D);
         puPictureFilePathName.clear();
-        puFlipTexture          = false;
-        puMipmapTexture        = true;
-        puWrapTexture          = "repeat";
-        puWrapTexture          = "linear";
+        puFlipTexture = false;
+        puMipmapTexture = true;
+        puWrapTexture = "repeat";
+        puWrapTexture = "linear";
         textureChoiceActivated = true;
-        textureFlipChoosebox   = true;
+        textureFlipChoosebox = true;
         textureMipmapChoosebox = true;
         textureFilterChoosebox = true;
-        textureWrapChoosebox   = true;
+        textureWrapChoosebox = true;
     }
 
-    if (puWrapTexture == "clamp") _TextureWrap = 0;
-    if (puWrapTexture == "repeat") _TextureWrap = 1;
-    if (puWrapTexture == "mirror") _TextureWrap = 2;
+    if (puWrapTexture == "clamp")
+        _TextureWrap = 0;
+    if (puWrapTexture == "repeat")
+        _TextureWrap = 1;
+    if (puWrapTexture == "mirror")
+        _TextureWrap = 2;
 
-    if (puFilterTexture == "linear") _TextureFilter = 0;
-    if (puFilterTexture == "nearest") _TextureFilter = 1;
+    if (puFilterTexture == "linear")
+        _TextureFilter = 0;
+    if (puFilterTexture == "nearest")
+        _TextureFilter = 1;
 }
 
 void CodeTree::DrawTextureOptions(const char* /*vFilter*/, IGFDUserDatas /*vUserDatas*/, bool* /*vCantContinue*/) {
@@ -2616,15 +2819,20 @@ void CodeTree::DrawTextureOptions(const char* /*vFilter*/, IGFDUserDatas /*vUser
     }
     if (textureWrapChoosebox || textureChoiceActivated) {
         if (ImGui::Combo("Wrap", &_TextureWrap, "clamp\0repeat\0mirror\0\0")) {
-            if (_TextureWrap == 0) puWrapTexture = "clamp";
-            if (_TextureWrap == 1) puWrapTexture = "repeat";
-            if (_TextureWrap == 2) puWrapTexture = "mirror";
+            if (_TextureWrap == 0)
+                puWrapTexture = "clamp";
+            if (_TextureWrap == 1)
+                puWrapTexture = "repeat";
+            if (_TextureWrap == 2)
+                puWrapTexture = "mirror";
         }
     }
     if (textureFilterChoosebox || textureChoiceActivated) {
         if (ImGui::Combo("Filter", &_TextureFilter, "linear\0nearest\0\0")) {
-            if (_TextureFilter == 0) puFilterTexture = "linear";
-            if (_TextureFilter == 1) puFilterTexture = "nearest";
+            if (_TextureFilter == 0)
+                puFilterTexture = "linear";
+            if (_TextureFilter == 1)
+                puFilterTexture = "nearest";
         }
     }
 }
@@ -2635,38 +2843,43 @@ void CodeTree::DrawTextureOptions(const char* /*vFilter*/, IGFDUserDatas /*vUser
 
 void CodeTree::InitBufferChooseDialogWithUniform(UniformVariantPtr vUniform) {
     if (vUniform) {
-        puFlipBuffer          = vUniform->flip;
-        puMipmapBuffer        = vUniform->mipmap;
-        puWrapBuffer          = vUniform->wrap;
-        puFilterBuffer        = vUniform->filter;
+        puFlipBuffer = vUniform->flip;
+        puMipmapBuffer = vUniform->mipmap;
+        puWrapBuffer = vUniform->wrap;
+        puFilterBuffer = vUniform->filter;
         bufferChoiceActivated = vUniform->bufferChoiceActivated;
-        bufferFlipChoosebox   = vUniform->bufferFlipChoosebox;
+        bufferFlipChoosebox = vUniform->bufferFlipChoosebox;
         bufferMipmapChoosebox = vUniform->bufferMipmapChoosebox;
         bufferFilterChoosebox = vUniform->bufferFilterChoosebox;
-        bufferWrapChoosebox   = vUniform->bufferWrapChoosebox;
+        bufferWrapChoosebox = vUniform->bufferWrapChoosebox;
         puBufferChooseUniform = vUniform;
     } else {
         ImGuiFileDialog::Instance()->Close();
         puBufferChooseUniform = nullptr;
-        puBufferFilePath      = FileHelper::Instance()->GetAbsolutePathForFileLocation("", (int)FILE_LOCATION_Enum::FILE_LOCATION_SCRIPT);
+        puBufferFilePath = FileHelper::Instance()->GetAbsolutePathForFileLocation("", (int)FILE_LOCATION_Enum::FILE_LOCATION_SCRIPT);
         puBufferFilePathName.clear();
-        puFlipBuffer          = false;
-        puMipmapBuffer        = true;
-        puWrapBuffer          = "repeat";
-        puWrapBuffer          = "linear";
+        puFlipBuffer = false;
+        puMipmapBuffer = true;
+        puWrapBuffer = "repeat";
+        puWrapBuffer = "linear";
         bufferChoiceActivated = true;
-        bufferFlipChoosebox   = true;
+        bufferFlipChoosebox = true;
         bufferMipmapChoosebox = true;
         bufferFilterChoosebox = true;
-        bufferWrapChoosebox   = true;
+        bufferWrapChoosebox = true;
     }
 
-    if (puWrapBuffer == "clamp") _BufferWrap = 0;
-    if (puWrapBuffer == "repeat") _BufferWrap = 1;
-    if (puWrapBuffer == "mirror") _BufferWrap = 2;
+    if (puWrapBuffer == "clamp")
+        _BufferWrap = 0;
+    if (puWrapBuffer == "repeat")
+        _BufferWrap = 1;
+    if (puWrapBuffer == "mirror")
+        _BufferWrap = 2;
 
-    if (puFilterBuffer == "linear") _BufferFilter = 0;
-    if (puFilterBuffer == "nearest") _BufferFilter = 1;
+    if (puFilterBuffer == "linear")
+        _BufferFilter = 0;
+    if (puFilterBuffer == "nearest")
+        _BufferFilter = 1;
 }
 
 void CodeTree::DrawBufferOptions(const char* /*vFilter*/, IGFDUserDatas /*vUserDatas*/, bool* vCantContinue) {
@@ -2678,15 +2891,20 @@ void CodeTree::DrawBufferOptions(const char* /*vFilter*/, IGFDUserDatas /*vUserD
     }
     if (bufferWrapChoosebox || bufferChoiceActivated) {
         if (ImGui::Combo("Wrap", &_BufferWrap, "clamp\0repeat\0mirror\0\0")) {
-            if (_BufferWrap == 0) puWrapBuffer = "clamp";
-            if (_BufferWrap == 1) puWrapBuffer = "repeat";
-            if (_BufferWrap == 2) puWrapBuffer = "mirror";
+            if (_BufferWrap == 0)
+                puWrapBuffer = "clamp";
+            if (_BufferWrap == 1)
+                puWrapBuffer = "repeat";
+            if (_BufferWrap == 2)
+                puWrapBuffer = "mirror";
         }
     }
     if (bufferFilterChoosebox || bufferChoiceActivated) {
         if (ImGui::Combo("Filter", &_BufferFilter, "linear\0nearest\0\0")) {
-            if (_BufferFilter == 0) puFilterBuffer = "linear";
-            if (_BufferFilter == 1) puFilterBuffer = "nearest";
+            if (_BufferFilter == 0)
+                puFilterBuffer = "linear";
+            if (_BufferFilter == 1)
+                puFilterBuffer = "nearest";
         }
     }
 
@@ -2705,13 +2923,13 @@ void CodeTree::InitSoundChooseDialogWithUniform(UniformVariantPtr vUniform) {
     if (vUniform) {
         soundChoiceActivated = vUniform->textureChoiceActivated;
         puSoundChooseUniform = vUniform;
-        puSoundLoop          = vUniform->soundLoop;
+        puSoundLoop = vUniform->soundLoop;
     } else {
         ImGuiFileDialog::Instance()->Close();
         // puShowPictureDialog = false;
         puSoundChooseUniform = nullptr;
-        puSoundLoop          = true;
-        puSoundFilePath      = FileHelper::Instance()->GetAbsolutePathForFileLocation("", (int)FILE_LOCATION_Enum::FILE_LOCATION_ASSET_SOUND);
+        puSoundLoop = true;
+        puSoundFilePath = FileHelper::Instance()->GetAbsolutePathForFileLocation("", (int)FILE_LOCATION_Enum::FILE_LOCATION_ASSET_SOUND);
         puSoundFilePathName.clear();
         soundChoiceActivated = true;
     }
@@ -2735,7 +2953,8 @@ bool CodeTree::DrawDialogs(RenderPackWeak vRenderPack, ct::ivec2 vScreenSize) {
     // si'l est doiffeerent j'y vais sinon je quitte.
     // comme cela pas d'appel multiples a la memem focntion pednant le meme calcul de imgui
 
-    if (_currentImGuiFrame_ForLast_DrawDialogs_Call == ImGui::GetCurrentContext()->FrameCount) return false;
+    if (_currentImGuiFrame_ForLast_DrawDialogs_Call == ImGui::GetCurrentContext()->FrameCount)
+        return false;
     _currentImGuiFrame_ForLast_DrawDialogs_Call = ImGui::GetCurrentContext()->FrameCount;
 
     bool change = false;
@@ -2754,7 +2973,7 @@ bool CodeTree::DrawDialogs(RenderPackWeak vRenderPack, ct::ivec2 vScreenSize) {
                 change = true;
 
                 puPictureFilePathName = ImGuiFileDialog::Instance()->GetFilePathName();
-                puPictureFilePath     = ImGuiFileDialog::Instance()->GetCurrentPath();
+                puPictureFilePath = ImGuiFileDialog::Instance()->GetCurrentPath();
 
                 puPictureFilePathName = FileHelper::Instance()->GetPathRelativeToApp(puPictureFilePathName);
 
@@ -2774,7 +2993,7 @@ bool CodeTree::DrawDialogs(RenderPackWeak vRenderPack, ct::ivec2 vScreenSize) {
                 change = true;
 
                 puSoundFilePathName = ImGuiFileDialog::Instance()->GetFilePathName();
-                puSoundFilePath     = ImGuiFileDialog::Instance()->GetCurrentPath();
+                puSoundFilePath = ImGuiFileDialog::Instance()->GetCurrentPath();
 
                 puSoundFilePathName = FileHelper::Instance()->GetPathRelativeToApp(puSoundFilePathName);
 
@@ -2795,7 +3014,7 @@ bool CodeTree::DrawDialogs(RenderPackWeak vRenderPack, ct::ivec2 vScreenSize) {
                 change = true;
 
                 puBufferFilePathName = ImGuiFileDialog::Instance()->GetFilePathName();
-                puBufferFilePath     = ImGuiFileDialog::Instance()->GetCurrentPath();
+                puBufferFilePath = ImGuiFileDialog::Instance()->GetCurrentPath();
 
                 puBufferFilePathName = FileHelper::Instance()->GetPathRelativeToApp(puBufferFilePathName);
 
@@ -2951,23 +3170,28 @@ bool CodeTree::TexturePopupCheck(UniformVariantPtr vUniform) {
     if (vUniform) {
         if (ImGui::BeginPopupContextItem("TexturePopup", ImGuiPopupFlags_MouseButtonRight))  // bouton droit au dessus du dernier item
         {
-            puFlipBuffer           = vUniform->flip;
-            puMipmapBuffer         = vUniform->mipmap;
-            puWrapBuffer           = vUniform->wrap;
-            puFilterBuffer         = vUniform->filter;
+            puFlipBuffer = vUniform->flip;
+            puMipmapBuffer = vUniform->mipmap;
+            puWrapBuffer = vUniform->wrap;
+            puFilterBuffer = vUniform->filter;
             textureChoiceActivated = vUniform->textureChoiceActivated;
-            textureFlipChoosebox   = vUniform->textureFlipChoosebox;
+            textureFlipChoosebox = vUniform->textureFlipChoosebox;
             textureMipmapChoosebox = vUniform->textureMipmapChoosebox;
             textureFilterChoosebox = vUniform->textureFilterChoosebox;
-            textureWrapChoosebox   = vUniform->textureWrapChoosebox;
-            puPicturePopupUniform  = vUniform;
+            textureWrapChoosebox = vUniform->textureWrapChoosebox;
+            puPicturePopupUniform = vUniform;
 
-            if (puWrapBuffer == "clamp") _TextureWrap = 0;
-            if (puWrapBuffer == "repeat") _TextureWrap = 1;
-            if (puWrapBuffer == "mirror") _TextureWrap = 2;
+            if (puWrapBuffer == "clamp")
+                _TextureWrap = 0;
+            if (puWrapBuffer == "repeat")
+                _TextureWrap = 1;
+            if (puWrapBuffer == "mirror")
+                _TextureWrap = 2;
 
-            if (puFilterBuffer == "linear") _TextureFilter = 0;
-            if (puFilterBuffer == "nearest") _TextureFilter = 1;
+            if (puFilterBuffer == "linear")
+                _TextureFilter = 0;
+            if (puFilterBuffer == "nearest")
+                _TextureFilter = 1;
 
             res = true;
 
@@ -3005,9 +3229,12 @@ bool CodeTree::DrawTexturePopup(RenderPackWeak vRenderPack) {
                 if (ImGui::Combo("Wrap", &_TextureWrap, "clamp\0repeat\0mirror\0\0")) {
                     change = true;
 
-                    if (_TextureWrap == 0) puWrapTexture = "clamp";
-                    if (_TextureWrap == 1) puWrapTexture = "repeat";
-                    if (_TextureWrap == 2) puWrapTexture = "mirror";
+                    if (_TextureWrap == 0)
+                        puWrapTexture = "clamp";
+                    if (_TextureWrap == 1)
+                        puWrapTexture = "repeat";
+                    if (_TextureWrap == 2)
+                        puWrapTexture = "mirror";
 
                     ApplyTextureChange(vRenderPack, puPicturePopupUniform);
                 }
@@ -3018,8 +3245,10 @@ bool CodeTree::DrawTexturePopup(RenderPackWeak vRenderPack) {
                 if (ImGui::Combo("Filter", &_TextureFilter, "linear\0nearest\0\0")) {
                     change = true;
 
-                    if (_TextureFilter == 0) puFilterTexture = "linear";
-                    if (_TextureFilter == 1) puFilterTexture = "nearest";
+                    if (_TextureFilter == 0)
+                        puFilterTexture = "linear";
+                    if (_TextureFilter == 1)
+                        puFilterTexture = "nearest";
 
                     ApplyTextureChange(vRenderPack, puPicturePopupUniform);
                 }
@@ -3030,7 +3259,8 @@ bool CodeTree::DrawTexturePopup(RenderPackWeak vRenderPack) {
 
                 if (!puPicturePopupUniform->filePathNames.empty()) {
                     std::string _filepathName = puPicturePopupUniform->filePathNames[0];
-                    if (!FileHelper::Instance()->IsFileExist(_filepathName, true)) _filepathName = FileHelper::Instance()->GetAbsolutePathForFileLocation(_filepathName, (int)FILE_LOCATION_Enum::FILE_LOCATION_ASSET_TEXTURE_2D);
+                    if (!FileHelper::Instance()->IsFileExist(_filepathName, true))
+                        _filepathName = FileHelper::Instance()->GetAbsolutePathForFileLocation(_filepathName, (int)FILE_LOCATION_Enum::FILE_LOCATION_ASSET_TEXTURE_2D);
 
                     FileHelper::Instance()->SelectFile(_filepathName);
                 }
@@ -3182,7 +3412,8 @@ bool CodeTree::DrawPopups(RenderPackWeak vRenderPack) {
     // si'l est doiffeerent j'y vais sinon je quitte.
     // comme cela pas d'appel multiples a la memem focntion pednant le meme calcul de imgui
 
-    if (_currentImGuiFrame_ForLast_DrawPopups_Call == ImGui::GetCurrentContext()->FrameCount) return false;
+    if (_currentImGuiFrame_ForLast_DrawPopups_Call == ImGui::GetCurrentContext()->FrameCount)
+        return false;
     _currentImGuiFrame_ForLast_DrawPopups_Call = ImGui::GetCurrentContext()->FrameCount;
 
     bool res = DrawTexturePopup(vRenderPack);
@@ -3199,9 +3430,9 @@ void CodeTree::ApplyTextureChange(RenderPackWeak vRenderPack, UniformVariantPtr 
     if (!vRenderPack.expired() && vUniform) {
         auto rpPtr = vRenderPack.lock();
         if (rpPtr && rpPtr->GetShaderKey()) {
-            vUniform->flip   = puFlipTexture;
+            vUniform->flip = puFlipTexture;
             vUniform->mipmap = puMipmapTexture;
-            vUniform->wrap   = puWrapTexture;
+            vUniform->wrap = puWrapTexture;
             vUniform->filter = puFilterTexture;
 
             rpPtr->GetShaderKey()->Complete_Uniform_Picture_With_Texture(vUniform);
@@ -3218,9 +3449,9 @@ void CodeTree::ResetTexture(RenderPackWeak vRenderPack, UniformVariantPtr vUnifo
             if (uniParsed.isOk()) {
                 rpPtr->GetShaderKey()->Complete_Uniform_Picture(vRenderPack, uniParsed, vUniform);
             } else {
-                vUniform->flip   = false;
+                vUniform->flip = false;
                 vUniform->mipmap = true;
-                vUniform->wrap   = "repeat";
+                vUniform->wrap = "repeat";
                 vUniform->filter = "linear";
 
                 vUniform->filePathNames.clear();
@@ -3242,9 +3473,9 @@ void CodeTree::EmptyTexture(RenderPackWeak vRenderPack, UniformVariantPtr vUnifo
             vUniform->filePathNames.clear();
             rpPtr->GetShaderKey()->Complete_Uniform_Picture(rpPtr, uniParsed, vUniform);
         } else {
-            vUniform->flip   = false;
+            vUniform->flip = false;
             vUniform->mipmap = true;
-            vUniform->wrap   = "repeat";
+            vUniform->wrap = "repeat";
             vUniform->filter = "linear";
 
             vUniform->filePathNames.clear();
@@ -3270,10 +3501,10 @@ bool CodeTree::SoundPopupCheck(UniformVariantPtr vUniform) {
     if (vUniform) {
         if (ImGui::BeginPopupContextItem("SoundPopup", ImGuiPopupFlags_MouseButtonRight))  // bouton droit au dessus du dernier item
         {
-            puSoundLoop          = vUniform->soundLoop;
+            puSoundLoop = vUniform->soundLoop;
             soundChoiceActivated = vUniform->soundChoiceActivated;
-            soundLoopChoosebox   = vUniform->soundLoopChoosebox;
-            puSoundPopupUniform  = vUniform;
+            soundLoopChoosebox = vUniform->soundLoopChoosebox;
+            puSoundPopupUniform = vUniform;
 
             res = true;
 
@@ -3349,7 +3580,7 @@ void CodeTree::ResetSound(RenderPackWeak vRenderPack, UniformVariantPtr vUniform
         if (uniParsed.isOk()) {
             rpPtr->GetShaderKey()->Complete_Uniform_TextureSound(vRenderPack, uniParsed, vUniform);
         } else {
-            vUniform->soundLoop  = true;
+            vUniform->soundLoop = true;
             vUniform->soundHisto = 0;
             vUniform->filePathNames.clear();
 
@@ -3374,23 +3605,28 @@ bool CodeTree::BufferPopupCheck(UniformVariantPtr vUniform) {
     if (vUniform) {
         if (ImGui::BeginPopupContextItem("BufferPopup", ImGuiPopupFlags_MouseButtonRight))  // bouton droit au dessus du dernier item
         {
-            puFlipBuffer          = vUniform->flip;
-            puMipmapBuffer        = vUniform->mipmap;
-            puWrapBuffer          = vUniform->wrap;
-            puFilterBuffer        = vUniform->filter;
+            puFlipBuffer = vUniform->flip;
+            puMipmapBuffer = vUniform->mipmap;
+            puWrapBuffer = vUniform->wrap;
+            puFilterBuffer = vUniform->filter;
             bufferChoiceActivated = vUniform->bufferChoiceActivated;
-            bufferFlipChoosebox   = vUniform->bufferFlipChoosebox;
+            bufferFlipChoosebox = vUniform->bufferFlipChoosebox;
             bufferMipmapChoosebox = vUniform->bufferMipmapChoosebox;
             bufferFilterChoosebox = vUniform->bufferFilterChoosebox;
-            bufferWrapChoosebox   = vUniform->bufferWrapChoosebox;
-            puBufferPopupUniform  = vUniform;
+            bufferWrapChoosebox = vUniform->bufferWrapChoosebox;
+            puBufferPopupUniform = vUniform;
 
-            if (puWrapBuffer == "clamp") _BufferWrap = 0;
-            if (puWrapBuffer == "repeat") _BufferWrap = 1;
-            if (puWrapBuffer == "mirror") _BufferWrap = 2;
+            if (puWrapBuffer == "clamp")
+                _BufferWrap = 0;
+            if (puWrapBuffer == "repeat")
+                _BufferWrap = 1;
+            if (puWrapBuffer == "mirror")
+                _BufferWrap = 2;
 
-            if (puFilterBuffer == "linear") _BufferFilter = 0;
-            if (puFilterBuffer == "nearest") _BufferFilter = 1;
+            if (puFilterBuffer == "linear")
+                _BufferFilter = 0;
+            if (puFilterBuffer == "nearest")
+                _BufferFilter = 1;
 
             res = true;
 
@@ -3524,9 +3760,9 @@ void CodeTree::ResetBuffer(RenderPackWeak vRenderPack, UniformVariantPtr vUnifor
         if (uniParsed.isOk()) {
             rpPtr->GetShaderKey()->Complete_Uniform_Buffer(vRenderPack, uniParsed, vUniform);
         } else {
-            vUniform->flip   = false;
+            vUniform->flip = false;
             vUniform->mipmap = true;
-            vUniform->wrap   = "repeat";
+            vUniform->wrap = "repeat";
             vUniform->filter = "linear";
 
             vUniform->filePathNames.clear();
@@ -3543,10 +3779,14 @@ void CodeTree::ResetBuffer(RenderPackWeak vRenderPack, UniformVariantPtr vUnifor
 ///////////////////////////////////////////////////////////////////////////////
 
 // private fucntion used by AddOrUpdateFromFile & AddOrUpdateFromFile & AddOrUpdateFromString
-bool CodeTree::AddOrUpdateKeyWithCode(ShaderKeyPtr vKey, const std::string& vKeyId, const std::string& vCode,
+bool CodeTree::AddOrUpdateKeyWithCode(ShaderKeyPtr vKey,
+                                      const std::string& vKeyId,
+                                      const std::string& vCode,
                                       const std::string& vOriginalFilePathName,  // like the oriignal file from where the current code (vFileString) come from
                                       const std::string& vInFileBufferName,      // like MAIN or CHILD_A, CHILD_B
-                                      bool vResetConfigs, bool vIsInclude, bool vIsStringBased) {
+                                      bool vResetConfigs,
+                                      bool vIsInclude,
+                                      bool vIsStringBased) {
     bool res = false;
 
     if (!vCode.empty()) {
@@ -3582,11 +3822,12 @@ bool CodeTree::AddOrUpdateKeyWithCode(ShaderKeyPtr vKey, const std::string& vKey
             if (vKey) {
                 vKey->puInFileBufferName = vInFileBufferName;
 
-                if (vIsStringBased) vKey->puFileString = vCode;
+                if (vIsStringBased)
+                    vKey->puFileString = vCode;
 
                 std::string keyId = vKeyId;
                 if (!vOriginalFilePathName.empty()) {
-                    keyId                       = vOriginalFilePathName;
+                    keyId = vOriginalFilePathName;
                     vKey->puInFileBufferFromKey = vOriginalFilePathName;
                 }
                 vKey->GetSyntaxErrors()->clear();
@@ -3595,7 +3836,7 @@ bool CodeTree::AddOrUpdateKeyWithCode(ShaderKeyPtr vKey, const std::string& vKey
                 vKey->puIsGeometryShaderPresent = false;
                 vKey->puUniformParsedDataBase.clear();
                 vKey->puCompilationSuccess = ShaderMsg::SHADER_MSG_OK;
-                vKey->puParseSuccess       = ShaderMsg::SHADER_MSG_OK;
+                vKey->puParseSuccess = ShaderMsg::SHADER_MSG_OK;
                 vKey->puIncludeFileNames.clear();
                 vKey->puMainSection = SectionCode::Create(vKey, nullptr, keyId, vCode, "NONE", "FULL", "", "", 0, 0, 0, false);
                 if (!vIsInclude) {
@@ -3618,7 +3859,8 @@ bool CodeTree::AddOrUpdateKeyWithCode(ShaderKeyPtr vKey, const std::string& vKey
 
                 res = true;
             } else {
-                if (!vKey) LogVarError("Cant add key....");  //-V547
+                if (!vKey)
+                    LogVarError("Cant add key....");  //-V547
             }
         }
     }

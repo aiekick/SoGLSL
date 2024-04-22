@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -30,24 +30,24 @@
 #include <Profiler/TracyProfiler.h>
 void* operator new(std::size_t count)
 {
-	auto ptr = malloc(count);
-	TracyAlloc(ptr, count);
-	return ptr;
+    auto ptr = malloc(count);
+    TracyAlloc(ptr, count);
+    return ptr;
 }
 void* operator new[](std::size_t count)
 {
-	auto ptr = malloc(count);
-	TracyAlloc(ptr, count);
-	return ptr;
+    auto ptr = malloc(count);
+    TracyAlloc(ptr, count);
+    return ptr;
 }
 void operator delete(void* ptr) noexcept
 {
-	TracyFree(ptr);
-	free(ptr);
+    TracyFree(ptr);
+    free(ptr);
 }
 void operator delete[](void* ptr) noexcept
 {
-	TracyFree(ptr);
-	free(ptr);
+    TracyFree(ptr);
+    free(ptr);
 }
 */

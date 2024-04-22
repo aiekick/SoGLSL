@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -19,38 +19,35 @@
 #include <vector>
 #include <map>
 
-class ErrorLineFragment
-{
+class ErrorLineFragment {
 public:
-	std::string file;
-	size_t line = 0;
-	std::string error;
+    std::string file;
+    size_t line = 0;
+    std::string error;
 
 public:
-	ErrorLineFragment();
-	ErrorLineFragment(size_t vLine, std::string vFile, std::string vErr);
+    ErrorLineFragment();
+    ErrorLineFragment(size_t vLine, std::string vFile, std::string vErr);
 };
 
-class ErrorLine
-{
+class ErrorLine {
 public:
-	std::vector<ErrorLineFragment> fragments;
+    std::vector<ErrorLineFragment> fragments;
 
 public:
-	ErrorLine();
-	ErrorLine(std::vector<ErrorLineFragment> vFragment);
-	ErrorLine(std::string vErr);
-	ErrorLine(size_t vLine, std::string vFile, std::string vErr);
+    ErrorLine();
+    ErrorLine(std::vector<ErrorLineFragment> vFragment);
+    ErrorLine(std::string vErr);
+    ErrorLine(size_t vLine, std::string vFile, std::string vErr);
 };
 
-class LineFileErrors
-{
+class LineFileErrors {
 public:
-	std::map<size_t, std::map<std::string, ErrorLine>> errLine;
+    std::map<size_t, std::map<std::string, ErrorLine>> errLine;
 
 public:
-	LineFileErrors();
-	LineFileErrors(const size_t& vLine, const std::string& vFile, const std::string& error);
-	void Set(const size_t& vLine, const std::string& vFile, const std::string& error);
-	void Set(const size_t& vLine, const std::string& vFile, ErrorLine vErrorLineStruct);
+    LineFileErrors();
+    LineFileErrors(const size_t& vLine, const std::string& vFile, const std::string& error);
+    void Set(const size_t& vLine, const std::string& vFile, const std::string& error);
+    void Set(const size_t& vLine, const std::string& vFile, ErrorLine vErrorLineStruct);
 };

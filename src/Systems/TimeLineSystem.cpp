@@ -4,7 +4,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -44,34 +44,34 @@ static float _PreviewRatio = 0.5f;
 void UploadableUniform::copy(std::shared_ptr<UploadableUniform> v) {
     if (v.use_count()) {
         uniformName = v->uniformName;
-        glslType    = v->glslType;
+        glslType = v->glslType;
 
         memcpy(useFloat, v->useFloat, sizeof(float) * 4);
         memcpy(xyzw, v->xyzw, sizeof(float) * 4);
         memcpy(useBool, v->useBool, sizeof(bool) * 4);
         memcpy(useInt, v->useInt, sizeof(int) * 4);
         memcpy(ixyzw, v->ixyzw, sizeof(int) * 4);
-        mat4                    = v->mat4;
-        useMat                  = v->useMat;
-        timeLineHandlerType     = v->timeLineHandlerType;
+        mat4 = v->mat4;
+        useMat = v->useMat;
+        timeLineHandlerType = v->timeLineHandlerType;
         bezierControlStartPoint = v->bezierControlStartPoint;
-        bezierContorlEndPoint   = v->bezierContorlEndPoint;
+        bezierContorlEndPoint = v->bezierContorlEndPoint;
     }
 }
 
 void UploadableUniform::copyValuesForTimeLine(UniformVariantPtr v) {
     if (v) {
         uniformName = v->name;
-        glslType    = v->glslType;
-        xyzw[0]     = v->x;
-        xyzw[1]     = v->y;
-        xyzw[2]     = v->z;
-        xyzw[3]     = v->w;
-        ixyzw[0]    = v->ix;
-        ixyzw[1]    = v->iy;
-        ixyzw[2]    = v->iz;
-        ixyzw[3]    = v->iw;
-        mat4        = v->mat4;
+        glslType = v->glslType;
+        xyzw[0] = v->x;
+        xyzw[1] = v->y;
+        xyzw[2] = v->z;
+        xyzw[3] = v->w;
+        ixyzw[0] = v->ix;
+        ixyzw[1] = v->iy;
+        ixyzw[2] = v->iz;
+        ixyzw[3] = v->iw;
+        mat4 = v->mat4;
     }
 }
 
@@ -87,7 +87,7 @@ bool UploadableUniform::GetValue(float* val) {
                 for (size_t idx = 0U; idx < 4; ++idx) {
                     if (useFloat[idx]) {
                         *val = xyzw[idx];
-                        res  = true;
+                        res = true;
                     }
                 }
                 break;
@@ -98,7 +98,7 @@ bool UploadableUniform::GetValue(float* val) {
                 for (size_t idx = 0U; idx < 4; ++idx) {
                     if (useBool[idx]) {
                         *val = xyzw[idx];
-                        res  = true;
+                        res = true;
                     }
                 }
                 break;
@@ -109,7 +109,7 @@ bool UploadableUniform::GetValue(float* val) {
                 for (size_t idx = 0U; idx < 4; ++idx) {
                     if (useInt[idx]) {
                         *val = (float)ixyzw[idx];
-                        res  = true;
+                        res = true;
                     }
                 }
                 break;
@@ -132,14 +132,14 @@ bool UploadableUniform::GetValue(float* val, int vChannel) {
             case uType::uTypeEnum::U_BVEC3:
             case uType::uTypeEnum::U_BVEC4: {
                 *val = xyzw[vChannel];
-                res  = true;
+                res = true;
             } break;
             case uType::uTypeEnum::U_INT:
             case uType::uTypeEnum::U_IVEC2:
             case uType::uTypeEnum::U_IVEC3:
             case uType::uTypeEnum::U_IVEC4: {
                 *val = (float)ixyzw[vChannel];
-                res  = true;
+                res = true;
             } break;
             default: break;
         }
@@ -160,14 +160,14 @@ bool UploadableUniform::SetValue(float val, int vChannel) {
             case uType::uTypeEnum::U_BVEC3:
             case uType::uTypeEnum::U_BVEC4: {
                 xyzw[vChannel] = val;
-                res            = true;
+                res = true;
             } break;
             case uType::uTypeEnum::U_INT:
             case uType::uTypeEnum::U_IVEC2:
             case uType::uTypeEnum::U_IVEC3:
             case uType::uTypeEnum::U_IVEC4: {
                 ixyzw[vChannel] = (int)val;
-                res             = true;
+                res = true;
             } break;
             default: break;
         }
@@ -188,10 +188,10 @@ UploadableUniform::UploadableUniform() {
     memset(ixyzw, 0, sizeof(int) * 4);
 
     useMat = 0;
-    mat4   = glm::mat4(1.0f);
+    mat4 = glm::mat4(1.0f);
 
     bezierControlStartPoint = ct::fvec2(1.0f, 0.0f);
-    bezierContorlEndPoint   = ct::fvec2(1.0f, 0.0f);
+    bezierContorlEndPoint = ct::fvec2(1.0f, 0.0f);
 
     timeLineHandlerType = TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_BOTH;
 }
@@ -201,12 +201,12 @@ UploadableUniform::UploadableUniform() {
 //////////////////////////////////////////////////////
 
 UniformTimeKey::UniformTimeKey() {
-    glslType              = uType::uTypeEnum::U_VOID;
+    glslType = uType::uTypeEnum::U_VOID;
     splineStartButtonDown = false;
-    splineEndButtonDown   = false;
-    currentStartButton    = 0;
-    currentEndButton      = 0;
-    currentAxisButton     = 0;
+    splineEndButtonDown = false;
+    currentStartButton = 0;
+    currentEndButton = 0;
+    currentAxisButton = 0;
     // interpolationMode = TimeLineInterpolation::TIMELINE_INTERPOLATION_SPLINE;
 }
 
@@ -219,9 +219,9 @@ TimeLineSystem::TimeLineSystem() {
 
     puActive = false;
 
-    puFrameBg         = ImVec4(0.21f, 0.29f, 0.36f, 0.0f);
-    puRangeFrame      = ImVec4(0.2f, 0.2f, 0.2f, 0.4f);
-    puThickLinesDark  = ImVec4(0.4f, 0.4f, 0.4f, 0.5f);
+    puFrameBg = ImVec4(0.21f, 0.29f, 0.36f, 0.0f);
+    puRangeFrame = ImVec4(0.2f, 0.2f, 0.2f, 0.4f);
+    puThickLinesDark = ImVec4(0.4f, 0.4f, 0.4f, 0.5f);
     puThickLinesLight = ImVec4(0.6f, 0.6f, 0.6f, 0.5f);
 
     puActiveKey = nullptr;
@@ -243,9 +243,9 @@ void TimeLineSystem::ClearLocalVar() {
     ZoneScoped;
 
     puUseMouseSelectionType = TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_NONE;
-    puMouseStartOverButton  = false;
-    puMouseOverButton       = false;
-    puMouseHasDragged       = false;
+    puMouseStartOverButton = false;
+    puMouseOverButton = false;
+    puMouseHasDragged = false;
     puSelectedKeys.clear();
     puUniformsToEdit.clear();
 }
@@ -257,7 +257,8 @@ ct::ivec4 TimeLineSystem::ShowUI(ImGuiContext* /*vContext*/, const ct::ivec4& vS
 
     const ImVec4 color = ImVec4(0.0f, 0.0f, 0.0f, 0.5f);
     const ImGuiWindowFlags flags =
-        /*ImGuiWindowFlags_NoDocking | */ ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar;
+        /*ImGuiWindowFlags_NoDocking | */ ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings |
+        ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar;
 
     ImGui::PushStyleColor(ImGuiCol_WindowBg, color);
 
@@ -362,9 +363,12 @@ void TimeLineSystem::AddShaderKeyForCurrentFrame(ShaderKeyPtr vKey) {
 
                     if (v->timeLineSupported) {
                         AddKeyForCurrentFrame(vKey, v, 0);
-                        if (v->count > 0) AddKeyForCurrentFrame(vKey, v, 1);
-                        if (v->count > 1) AddKeyForCurrentFrame(vKey, v, 2);
-                        if (v->count > 2) AddKeyForCurrentFrame(vKey, v, 3);
+                        if (v->count > 0)
+                            AddKeyForCurrentFrame(vKey, v, 1);
+                        if (v->count > 1)
+                            AddKeyForCurrentFrame(vKey, v, 2);
+                        if (v->count > 2)
+                            AddKeyForCurrentFrame(vKey, v, 3);
                     }
                 }
             }
@@ -385,9 +389,12 @@ void TimeLineSystem::DelShaderKeyForCurrentFrame(ShaderKeyPtr vKey) {
                     UniformVariantPtr v = it->second;
 
                     DelKeyForCurrentFrame(vKey, v, 0);
-                    if (v->count > 0) DelKeyForCurrentFrame(vKey, v, 1);
-                    if (v->count > 1) DelKeyForCurrentFrame(vKey, v, 2);
-                    if (v->count > 2) DelKeyForCurrentFrame(vKey, v, 3);
+                    if (v->count > 0)
+                        DelKeyForCurrentFrame(vKey, v, 1);
+                    if (v->count > 1)
+                        DelKeyForCurrentFrame(vKey, v, 2);
+                    if (v->count > 2)
+                        DelKeyForCurrentFrame(vKey, v, 3);
                 }
             }
         }
@@ -407,9 +414,12 @@ void TimeLineSystem::AddIncludeKeyForCurrentFrame(CodeTreePtr vCodeTree, std::st
 
                     if (v->timeLineSupported) {
                         AddKeyForCurrentFrame(puActiveKey, v, 0);
-                        if (v->count > 0) AddKeyForCurrentFrame(puActiveKey, v, 1);
-                        if (v->count > 1) AddKeyForCurrentFrame(puActiveKey, v, 2);
-                        if (v->count > 2) AddKeyForCurrentFrame(puActiveKey, v, 3);
+                        if (v->count > 0)
+                            AddKeyForCurrentFrame(puActiveKey, v, 1);
+                        if (v->count > 1)
+                            AddKeyForCurrentFrame(puActiveKey, v, 2);
+                        if (v->count > 2)
+                            AddKeyForCurrentFrame(puActiveKey, v, 3);
                     }
                 }
             }
@@ -429,9 +439,12 @@ void TimeLineSystem::DelIncludeKeyForCurrentFrame(CodeTreePtr vCodeTree, std::st
                     UniformVariantPtr v = it->second;
 
                     DelKeyForCurrentFrame(puActiveKey, v, 0);
-                    if (v->count > 0) DelKeyForCurrentFrame(puActiveKey, v, 1);
-                    if (v->count > 1) DelKeyForCurrentFrame(puActiveKey, v, 2);
-                    if (v->count > 2) DelKeyForCurrentFrame(puActiveKey, v, 3);
+                    if (v->count > 0)
+                        DelKeyForCurrentFrame(puActiveKey, v, 1);
+                    if (v->count > 1)
+                        DelKeyForCurrentFrame(puActiveKey, v, 2);
+                    if (v->count > 2)
+                        DelKeyForCurrentFrame(puActiveKey, v, 3);
                 }
             }
         }
@@ -462,8 +475,8 @@ void TimeLineSystem::AddKeyForCurrentFrame(ShaderKeyPtr vKey, UniformVariantPtr 
             case uType::uTypeEnum::U_MAT4:
                 if (v->timeLineSupported) {
                     vKey->puTimeLine.timeLine[v->name].uniformName = v->name;
-                    vKey->puTimeLine.timeLine[v->name].glslType    = v->glslType;
-                    vKey->puTimeLine.timeLine[v->name].widget      = v->widget;
+                    vKey->puTimeLine.timeLine[v->name].glslType = v->glslType;
+                    vKey->puTimeLine.timeLine[v->name].widget = v->widget;
 
                     const size_t countKeysBeforeInsertion = vKey->puTimeLine.timeLine[v->name].keys[vComponent].size();
 
@@ -482,7 +495,7 @@ void TimeLineSystem::AddKeyForCurrentFrame(ShaderKeyPtr vKey, UniformVariantPtr 
                         if (firstCreation) {
                             // longueur des point de controles, fonction du scale de la vue
                             currentUploadableUniform->bezierControlStartPoint = ct::fvec2(10.0f * puTimeLineScale, 0.0f);
-                            currentUploadableUniform->bezierContorlEndPoint   = ct::fvec2(10.0f * puTimeLineScale, 0.0f);
+                            currentUploadableUniform->bezierContorlEndPoint = ct::fvec2(10.0f * puTimeLineScale, 0.0f);
 
                             // on va voir si on pre calcule les tangeant du point qu'on insere
                             if (countKeysBeforeInsertion > 1) {
@@ -503,7 +516,7 @@ void TimeLineSystem::AddKeyForCurrentFrame(ShaderKeyPtr vKey, UniformVariantPtr 
                                 if (lastFrame > -1 && nextFrame > -1) {
                                     // ici on place la tangeante vers les point de controle d'avant et d'apres
                                     auto start = vKey->puTimeLine.timeLine[v->name].keys[vComponent][lastFrame];
-                                    auto end   = vKey->puTimeLine.timeLine[v->name].keys[vComponent][nextFrame];
+                                    auto end = vKey->puTimeLine.timeLine[v->name].keys[vComponent][nextFrame];
                                     if (start.use_count() && end.use_count()) {
                                         float sv = 0.0f;
                                         start->GetValue(&sv, vComponent);
@@ -519,7 +532,7 @@ void TimeLineSystem::AddKeyForCurrentFrame(ShaderKeyPtr vKey, UniformVariantPtr 
 
                                         // redimentionnement des point de controls
                                         currentUploadableUniform->bezierControlStartPoint = vec;
-                                        currentUploadableUniform->bezierContorlEndPoint   = vec;
+                                        currentUploadableUniform->bezierContorlEndPoint = vec;
                                     }
                                 }
                             }
@@ -694,7 +707,7 @@ void TimeLineSystem::DelSelectedKeys(ShaderKeyPtr vKey) {
             for (auto itKey = itStruct->second.keys.begin(); itKey != itStruct->second.keys.end(); ++itKey) {
                 int chan = itKey->first;
                 for (auto itChan = itKey->second.begin(); itChan != itKey->second.end(); ++itChan) {
-                    int frame     = itChan->first;
+                    int frame = itChan->first;
                     const auto st = itChan->second;
                     if (st.use_count()) {
                         if (IsKeyInSelection(st)) {
@@ -725,7 +738,7 @@ void TimeLineSystem::DeselectAllKeys(ShaderKeyPtr vKey) {
 
     if (vKey) {
         for (auto itStruct = vKey->puTimeLine.timeLine.begin(); itStruct != vKey->puTimeLine.timeLine.end(); ++itStruct) {
-            //std::string name = itStruct->first;
+            // std::string name = itStruct->first;
             for (auto itKey = itStruct->second.keys.begin(); itKey != itStruct->second.keys.end(); ++itKey) {
                 // int chan = itKey->first;
                 for (auto itChan = itKey->second.begin(); itChan != itKey->second.end(); ++itChan) {
@@ -751,12 +764,12 @@ void TimeLineSystem::SelectAllKeysInMouseSelectionRect(ShaderKeyPtr vKey, ImRect
         rc.Combine(puEndMouseClick);
 
         for (auto itStruct = vKey->puTimeLine.timeLine.begin(); itStruct != vKey->puTimeLine.timeLine.end(); ++itStruct) {
-            //std::string name = itStruct->first;
+            // std::string name = itStruct->first;
             for (auto itKey = itStruct->second.keys.begin(); itKey != itStruct->second.keys.end(); ++itKey) {
                 const int chan = itKey->first;
                 for (auto itChan = itKey->second.begin(); itChan != itKey->second.end(); ++itChan) {
                     const int frame = itChan->first;
-                    auto st         = itChan->second;
+                    auto st = itChan->second;
                     if (itChan->second.use_count()) {
                         // on recup la valeur
                         float v = 0.0f;
@@ -859,8 +872,15 @@ TimeLineSegmentInterpolation TimeLineSystem::GetTimeLineSegmentInterpolationMode
     return interpolation_mode;
 }
 
-float TimeLineSystem::Interpolate(UniformTimeKey* vTimeKey, const int& vStartFrame, const float& vStartValue, std::shared_ptr<UploadableUniform> vStart, const int& vEndFrame, const float& vEndValue, std::shared_ptr<UploadableUniform> vEnd,
-                                  const float& vRatio, bool vUseDerivation) {
+float TimeLineSystem::Interpolate(UniformTimeKey* vTimeKey,
+                                  const int& vStartFrame,
+                                  const float& vStartValue,
+                                  std::shared_ptr<UploadableUniform> vStart,
+                                  const int& vEndFrame,
+                                  const float& vEndValue,
+                                  std::shared_ptr<UploadableUniform> vEnd,
+                                  const float& vRatio,
+                                  bool vUseDerivation) {
     ZoneScoped;
 
     if (vTimeKey && vStart && vEnd) {
@@ -884,7 +904,13 @@ float TimeLineSystem::Interpolate_Linear(const float& vStart, const float& vEnd,
     return ct::mix(vStart, vEnd, vRatio);
 }
 
-float TimeLineSystem::Interpolate_Quadratic(const int& vStartFrame, const float& vStartValue, std::shared_ptr<UploadableUniform> vStart, const int& vEndFrame, const float& vEndValue, std::shared_ptr<UploadableUniform> vEnd, const float& vRatio,
+float TimeLineSystem::Interpolate_Quadratic(const int& vStartFrame,
+                                            const float& vStartValue,
+                                            std::shared_ptr<UploadableUniform> vStart,
+                                            const int& vEndFrame,
+                                            const float& vEndValue,
+                                            std::shared_ptr<UploadableUniform> vEnd,
+                                            const float& vRatio,
                                             bool vUseDerivation) {
     ZoneScoped;
 
@@ -892,16 +918,20 @@ float TimeLineSystem::Interpolate_Quadratic(const int& vStartFrame, const float&
         const ct::fvec2 p0 = ct::fvec2((float)vStartFrame, (float)vStartValue);
         const ct::fvec2 p2 = ct::fvec2((float)vEndFrame, (float)vEndValue);
         ct::fvec2 p1;
-        if (vStart->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_RIGHT || vStart->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_BOTH)
+        if (vStart->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_RIGHT ||
+            vStart->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_BOTH)
             p1 = p0 + vStart->bezierControlStartPoint;
-        else if (vEnd->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_LEFT || vEnd->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_BOTH)
+        else if (vEnd->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_LEFT ||
+                 vEnd->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_BOTH)
             p1 = p2 - vEnd->bezierContorlEndPoint;
         else {
             CTOOL_DEBUG_BREAK;
         }
 
-        if (IS_FLOAT_EQUAL(vRatio, 0.0f)) return vStartValue;
-        if (IS_FLOAT_EQUAL(vRatio, 1.0f)) return vEndValue;
+        if (IS_FLOAT_EQUAL(vRatio, 0.0f))
+            return vStartValue;
+        if (IS_FLOAT_EQUAL(vRatio, 1.0f))
+            return vEndValue;
 
         const float targetX = ct::mix(p0.x, p2.x, vRatio);
 
@@ -914,17 +944,17 @@ float TimeLineSystem::Interpolate_Quadratic(const int& vStartFrame, const float&
                 // dP(t) / dt =  - 2 * (1 - t) * P0 + 2 * t * P1 + 2 * P2
                 // dP(t) / dt =  -2 * u * P0 + 2 * t * P1 + P2
                 const float u = 1.0f - t;
-                w[0]          = -2.0f * u;
-                w[1]          = 2.0f * t;
-                w[2]          = 2.0f;
+                w[0] = -2.0f * u;
+                w[1] = 2.0f * t;
+                w[2] = 2.0f;
             } else {
                 // P(t) = (1 - t) ^ 2 * P0 + 2 * t * (1 - t) * P1 + t ^ 2 * P2
                 // P(t) = u ^ 2 * P0 + 2 * t * u * P1 + t * t  * P2
 
                 const float u = 1.0f - t;
-                w[0]          = u * u;
-                w[1]          = 2.0f * u * t;
-                w[2]          = t * t;
+                w[0] = u * u;
+                w[1] = 2.0f * u * t;
+                w[2] = t * t;
             }
 
             x = w[0] * p0.x + w[1] * p1.x + w[2] * p2.x;
@@ -944,7 +974,13 @@ float TimeLineSystem::Interpolate_Quadratic(const int& vStartFrame, const float&
     return 0.0f;
 }
 
-float TimeLineSystem::Interpolate_Bezier(const int& vStartFrame, const float& vStartValue, std::shared_ptr<UploadableUniform> vStart, const int& vEndFrame, const float& vEndValue, std::shared_ptr<UploadableUniform> vEnd, const float& vRatio,
+float TimeLineSystem::Interpolate_Bezier(const int& vStartFrame,
+                                         const float& vStartValue,
+                                         std::shared_ptr<UploadableUniform> vStart,
+                                         const int& vEndFrame,
+                                         const float& vEndValue,
+                                         std::shared_ptr<UploadableUniform> vEnd,
+                                         const float& vRatio,
                                          bool vUseDerivation) {
     ZoneScoped;
 
@@ -954,8 +990,10 @@ float TimeLineSystem::Interpolate_Bezier(const int& vStartFrame, const float& vS
         const ct::fvec2 p3 = ct::fvec2((float)vEndFrame, (float)vEndValue);
         const ct::fvec2 p2 = p3 - vEnd->bezierContorlEndPoint;
 
-        if (IS_FLOAT_EQUAL(vRatio, 0.0f)) return vStartValue;
-        if (IS_FLOAT_EQUAL(vRatio, 1.0f)) return vEndValue;
+        if (IS_FLOAT_EQUAL(vRatio, 0.0f))
+            return vStartValue;
+        if (IS_FLOAT_EQUAL(vRatio, 1.0f))
+            return vEndValue;
 
         const float targetX = ct::mix(p0.x, p3.x, vRatio);
 
@@ -968,19 +1006,19 @@ float TimeLineSystem::Interpolate_Bezier(const int& vStartFrame, const float& vS
                 // dP(t) / dt =  -3 * (1-t)^2 * P0 + 3 * (1-t)^2 * P1 - 6 * t * (1-t) * P1 - 3 * t^2 * P2 + 6 * t(1-t) * P2 + 3 * t^2 * P3
                 // dP(t) / dt =  -3 * u^2 * P0 + (3 * u^2 - 6 * t * u) * P1 + (6 * t * u - 3 * t^2) * P2 + 3 * t^2 * P3
                 const float u = 1.0f - t;
-                w[0]          = -3.0f * u * u;
-                w[1]          = 3.0f * u * u - 6.0f * t * u;
-                w[2]          = 6.0f * t * u - 3.0f * t * t;
-                w[3]          = 3.0f * t * t;
+                w[0] = -3.0f * u * u;
+                w[1] = 3.0f * u * u - 6.0f * t * u;
+                w[2] = 6.0f * t * u - 3.0f * t * t;
+                w[3] = 3.0f * t * t;
             } else {
                 // P(t) = (1 - t) ^ 3 * P0 + 3t(1 - t) ^ 2 * P1 + 3 * t ^ 2 (1 - t) * P2 + t ^ 3 * P3
                 // P(t) = u ^ 3 * P0 + 3 * t * u^2 * P1 + 3 * t^2 * u * P2 + t ^ 3 * P3
 
                 const float u = 1.0f - t;
-                w[0]          = u * u * u;
-                w[1]          = 3.0f * u * u * t;
-                w[2]          = 3.0f * u * t * t;
-                w[3]          = t * t * t;
+                w[0] = u * u * u;
+                w[1] = 3.0f * u * u * t;
+                w[2] = 3.0f * u * t * t;
+                w[3] = t * t * t;
             }
 
             x = w[0] * p0.x + w[1] * p1.x + w[2] * p2.x + w[3] * p3.x;
@@ -1080,7 +1118,7 @@ void TimeLineSystem::ReComputeInterpolation(UniformTimeKey* vUniformTimeKeyStruc
         if (st->keys.find(vComponent) != st->keys.end()) {  // trouvé
             if (st->keys[vComponent].size() != 1) {
                 int lastFrame = st->keys[vComponent].begin()->first;
-                auto last     = st->keys[vComponent].begin()->second;
+                auto last = st->keys[vComponent].begin()->second;
                 if (last.use_count()) {
                     int currentFrame = 0;
                     for (auto frame : st->keys[vComponent]) {
@@ -1104,25 +1142,28 @@ void TimeLineSystem::ReComputeInterpolation(UniformTimeKey* vUniformTimeKeyStruc
                                             case uType::uTypeEnum::U_VEC2:
                                             case uType::uTypeEnum::U_VEC3:
                                             case uType::uTypeEnum::U_VEC4: {
-                                                val_ptr->xyzw[vComponent]     = Interpolate(st, lastFrame, last->xyzw[vComponent], last, currentFrame, current->xyzw[vComponent], current, ratio);
+                                                val_ptr->xyzw[vComponent] =
+                                                    Interpolate(st, lastFrame, last->xyzw[vComponent], last, currentFrame, current->xyzw[vComponent], current, ratio);
                                                 val_ptr->useFloat[vComponent] = 1;
                                             } break;
                                             case uType::uTypeEnum::U_BOOL:
                                             case uType::uTypeEnum::U_BVEC2:
                                             case uType::uTypeEnum::U_BVEC3:
                                             case uType::uTypeEnum::U_BVEC4: {
-                                                val_ptr->xyzw[vComponent]    = Interpolate(st, lastFrame, last->xyzw[vComponent], last, currentFrame, current->xyzw[vComponent], current, ratio);
+                                                val_ptr->xyzw[vComponent] =
+                                                    Interpolate(st, lastFrame, last->xyzw[vComponent], last, currentFrame, current->xyzw[vComponent], current, ratio);
                                                 val_ptr->useBool[vComponent] = 1;
                                             } break;
                                             case uType::uTypeEnum::U_INT:
                                             case uType::uTypeEnum::U_IVEC2:
                                             case uType::uTypeEnum::U_IVEC3:
                                             case uType::uTypeEnum::U_IVEC4: {
-                                                val_ptr->ixyzw[vComponent]  = (int)Interpolate(st, lastFrame, (float)last->ixyzw[vComponent], last, currentFrame, (float)current->ixyzw[vComponent], current, ratio);
+                                                val_ptr->ixyzw[vComponent] = (int)Interpolate(
+                                                    st, lastFrame, (float)last->ixyzw[vComponent], last, currentFrame, (float)current->ixyzw[vComponent], current, ratio);
                                                 val_ptr->useInt[vComponent] = 1;
                                             } break;
                                             case uType::uTypeEnum::U_MAT2: {
-                                                float* arr     = glm::value_ptr(val_ptr->mat4[0]);
+                                                float* arr = glm::value_ptr(val_ptr->mat4[0]);
                                                 float* arrLast = glm::value_ptr(last->mat4[0]);
                                                 float* arrCurr = glm::value_ptr(current->mat4[0]);
                                                 for (int j = 0; j < 4; j++) {
@@ -1131,7 +1172,7 @@ void TimeLineSystem::ReComputeInterpolation(UniformTimeKey* vUniformTimeKeyStruc
                                                 val_ptr->useMat = 1;
                                             } break;
                                             case uType::uTypeEnum::U_MAT3: {
-                                                float* arr     = glm::value_ptr(val_ptr->mat4[0]);
+                                                float* arr = glm::value_ptr(val_ptr->mat4[0]);
                                                 float* arrLast = glm::value_ptr(last->mat4[0]);
                                                 float* arrCurr = glm::value_ptr(current->mat4[0]);
                                                 for (int j = 0; j < 9; j++) {
@@ -1140,7 +1181,7 @@ void TimeLineSystem::ReComputeInterpolation(UniformTimeKey* vUniformTimeKeyStruc
                                                 val_ptr->useMat = 1;
                                             } break;
                                             case uType::uTypeEnum::U_MAT4: {
-                                                float* arr     = glm::value_ptr(val_ptr->mat4[0]);
+                                                float* arr = glm::value_ptr(val_ptr->mat4[0]);
                                                 float* arrLast = glm::value_ptr(last->mat4[0]);
                                                 float* arrCurr = glm::value_ptr(current->mat4[0]);
                                                 for (int j = 0; j < 16; j++) {
@@ -1155,7 +1196,7 @@ void TimeLineSystem::ReComputeInterpolation(UniformTimeKey* vUniformTimeKeyStruc
                                 }
                             }
                             lastFrame = currentFrame;
-                            last      = current;
+                            last = current;
                         }
                     }
                 }
@@ -1177,24 +1218,41 @@ bool TimeLineSystem::UpdateUniforms(ShaderKeyPtr vKey, UniformVariantPtr vUniPtr
                     if (st->values.find(puCurrentFrame) != st->values.end()) {  // trouvé
                         auto v = st->values[puCurrentFrame];
                         if (v.use_count()) {
-                            if (v->useFloat[0]) vUniPtr->x = v->xyzw[0];
-                            if (v->useFloat[1]) vUniPtr->y = v->xyzw[1];
-                            if (v->useFloat[2]) vUniPtr->z = v->xyzw[2];
-                            if (v->useFloat[3]) vUniPtr->w = v->xyzw[3];
-                            if (v->useBool[0]) vUniPtr->bx = (v->xyzw[0] > 0.5f);
-                            if (v->useBool[1]) vUniPtr->by = (v->xyzw[1] > 0.5f);
-                            if (v->useBool[2]) vUniPtr->bz = (v->xyzw[2] > 0.5f);
-                            if (v->useBool[3]) vUniPtr->bw = (v->xyzw[3] > 0.5f);
-                            if (v->useInt[0]) vUniPtr->ix = v->ixyzw[0];
-                            if (v->useInt[1]) vUniPtr->iy = v->ixyzw[1];
-                            if (v->useInt[2]) vUniPtr->iz = v->ixyzw[2];
-                            if (v->useInt[3]) vUniPtr->iw = v->ixyzw[3];
-                            if (v->useMat) vUniPtr->mat4 = v->mat4;
+                            if (v->useFloat[0])
+                                vUniPtr->x = v->xyzw[0];
+                            if (v->useFloat[1])
+                                vUniPtr->y = v->xyzw[1];
+                            if (v->useFloat[2])
+                                vUniPtr->z = v->xyzw[2];
+                            if (v->useFloat[3])
+                                vUniPtr->w = v->xyzw[3];
+                            if (v->useBool[0])
+                                vUniPtr->bx = (v->xyzw[0] > 0.5f);
+                            if (v->useBool[1])
+                                vUniPtr->by = (v->xyzw[1] > 0.5f);
+                            if (v->useBool[2])
+                                vUniPtr->bz = (v->xyzw[2] > 0.5f);
+                            if (v->useBool[3])
+                                vUniPtr->bw = (v->xyzw[3] > 0.5f);
+                            if (v->useInt[0])
+                                vUniPtr->ix = v->ixyzw[0];
+                            if (v->useInt[1])
+                                vUniPtr->iy = v->ixyzw[1];
+                            if (v->useInt[2])
+                                vUniPtr->iz = v->ixyzw[2];
+                            if (v->useInt[3])
+                                vUniPtr->iw = v->ixyzw[3];
+                            if (v->useMat)
+                                vUniPtr->mat4 = v->mat4;
                             if (vUniPtr->widget == "checkbox" || vUniPtr->widget == "radio") {
-                                if (v->useFloat[0]) vUniPtr->bx = vUniPtr->x > 0.5f;
-                                if (v->useFloat[1]) vUniPtr->by = vUniPtr->y > 0.5f;
-                                if (v->useFloat[2]) vUniPtr->bz = vUniPtr->z > 0.5f;
-                                if (v->useFloat[3]) vUniPtr->bw = vUniPtr->w > 0.5f;
+                                if (v->useFloat[0])
+                                    vUniPtr->bx = vUniPtr->x > 0.5f;
+                                if (v->useFloat[1])
+                                    vUniPtr->by = vUniPtr->y > 0.5f;
+                                if (v->useFloat[2])
+                                    vUniPtr->bz = vUniPtr->z > 0.5f;
+                                if (v->useFloat[3])
+                                    vUniPtr->bw = vUniPtr->w > 0.5f;
                             }
                         }
                     }
@@ -1215,7 +1273,7 @@ std::string TimeLineSystem::getXml(const std::string& vOffset, const std::string
 
     str += vOffset + "<timelinesystem>\n";
 
-    str += vOffset + "\t<FrameBgColor>" + ct::fvariant(ct::fvec4(puFrameBg.x,puFrameBg.y, puFrameBg.z, puFrameBg.w)).GetS() + "</FrameBgColor>\n";
+    str += vOffset + "\t<FrameBgColor>" + ct::fvariant(ct::fvec4(puFrameBg.x, puFrameBg.y, puFrameBg.z, puFrameBg.w)).GetS() + "</FrameBgColor>\n";
     str += vOffset + "\t<RangeFrameColor>" + ct::fvariant(ct::fvec4(puRangeFrame.x, puRangeFrame.y, puRangeFrame.z, puRangeFrame.w)).GetS() + "</RangeFrameColor>\n";
     str += vOffset + "\t<ThickLinesDarkColor>" + ct::fvariant(ct::fvec4(puThickLinesDark.x, puThickLinesDark.y, puThickLinesDark.z, puThickLinesDark.w)).GetS() +
         "</ThickLinesDarkColor>\n";
@@ -1233,13 +1291,15 @@ bool TimeLineSystem::setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElemen
     ZoneScoped;
 
     // The value of this child identifies the name of this element
-    std::string strName       = "";
-    std::string strValue      = "";
+    std::string strName = "";
+    std::string strValue = "";
     std::string strParentName = "";
 
     strName = vElem->Value();
-    if (vElem->GetText()) strValue = vElem->GetText();
-    if (vParent != nullptr) strParentName = vParent->Value();
+    if (vElem->GetText())
+        strValue = vElem->GetText();
+    if (vParent != nullptr)
+        strParentName = vParent->Value();
 
     if (strParentName == "timelinesystem") {
         if (strName == "FrameBgColor") {
@@ -1286,14 +1346,14 @@ void TimeLineSystem::ShowDialog(ShaderKeyPtr vKey, ct::ivec2 vScreenSize) {
 
         if (ImGuiFileDialog::Instance()->Display("TimeLineRenderingToPictures", ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDocking, min, max)) {
             if (ImGuiFileDialog::Instance()->IsOk()) {
-                puRenderingPrefix      = ImGuiFileDialog::Instance()->GetCurrentFileName();
+                puRenderingPrefix = ImGuiFileDialog::Instance()->GetCurrentFileName();
                 const size_t lastPoint = puRenderingPrefix.find_last_of('.');
                 if (lastPoint != std::string::npos) {
                     puRenderingPrefix = puRenderingPrefix.substr(0, lastPoint);
                 }
                 puRenderingPath = ImGuiFileDialog::Instance()->GetCurrentPath();
-                puRendering     = true;
-                puCurrentFrame  = vKey->puTimeLine.rangeFrames.x;
+                puRendering = true;
+                puCurrentFrame = vKey->puTimeLine.rangeFrames.x;
                 puRenderingMode = RenderingModeEnum::RENDERING_MODE_PICTURES;
             }
             ImGuiFileDialog::Instance()->Close();
@@ -1306,13 +1366,14 @@ bool TimeLineSystem::DrawBar(ShaderKeyPtr vKey, ct::ivec2 vScreenSize) {
 
     bool change = false;
 
-    if (!vKey) return false;
+    if (!vKey)
+        return false;
 
     ShowDialog(vKey, vScreenSize);
 
     const ImVec2 cursorPos = ImGui::GetCursorScreenPos();
 
-    static float _groupPlayWidth   = 0.0f;
+    static float _groupPlayWidth = 0.0f;
     static float _groupParamsWidth = 0.0f;
 
     if (!IsRendering()) {
@@ -1381,38 +1442,38 @@ bool TimeLineSystem::DrawBar(ShaderKeyPtr vKey, ct::ivec2 vScreenSize) {
                 }
             }
             ImGui::EndMenu();
-        }        
+        }
 
         if (ImGui::BeginMenu("Debug")) {
             ImGui::Text("Pixel Horiz Steps");
             ImGui::SameLine();
             if (ImGui::DragFloat("##Pixel Horiz Steps", &puStepSize)) {
                 puStepSize = ct::maxi(puStepSize, 1.0f);
-                change     = true;
+                change = true;
             }
             ImGui::Text("Pixel Vert Steps");
             ImGui::SameLine();
             if (ImGui::DragFloat("##Pixel Vert Steps", &pucurveStepSize)) {
                 pucurveStepSize = ct::maxi(pucurveStepSize, 1.0f);
-                change          = true;
+                change = true;
             }
             ImGui::Text("Preview Ratio");
             ImGui::SameLine();
             if (ImGui::SliderFloat("##Preview Ratio", &_PreviewRatio, 0.0f, 1.0f)) {
                 _PreviewRatio = ct::clamp(_PreviewRatio, 0.0f, 1.0f);
-                change        = true;
+                change = true;
             }
             ImGui::Text("Curve Step Scale");
             ImGui::SameLine();
             if (ImGui::SliderFloat("##Curve Step Scale", &pucurveStepScale, 0.0001f, 50.0f)) {
                 pucurveStepScale = ct::maxi(pucurveStepScale, 0.0001f);
-                change           = true;
+                change = true;
             }
             ImGui::Text("Frame Step Scale");
             ImGui::SameLine();
             if (ImGui::SliderInt("##Frame Step Scale", &puStepScale, 1, 50)) {
                 puStepScale = ct::maxi(puStepScale, 1);
-                change      = true;
+                change = true;
             }
 
             ImGui::EndMenu();
@@ -1489,14 +1550,21 @@ bool TimeLineSystem::DrawBar(ShaderKeyPtr vKey, ct::ivec2 vScreenSize) {
         }
 
         if (ImGui::BeginMenu("Re Scale")) {
-            if (ImGui::MenuItem("re scale by 0.25")) ScaleTimeLine(vKey, 0.25f);
-            if (ImGui::MenuItem("re scale by 0.5")) ScaleTimeLine(vKey, 0.5f);
-            if (ImGui::MenuItem("re scale by 0.75")) ScaleTimeLine(vKey, 0.75f);
+            if (ImGui::MenuItem("re scale by 0.25"))
+                ScaleTimeLine(vKey, 0.25f);
+            if (ImGui::MenuItem("re scale by 0.5"))
+                ScaleTimeLine(vKey, 0.5f);
+            if (ImGui::MenuItem("re scale by 0.75"))
+                ScaleTimeLine(vKey, 0.75f);
             ImGui::Separator();
-            if (ImGui::MenuItem("re scale by 1.25")) ScaleTimeLine(vKey, 1.25f);
-            if (ImGui::MenuItem("re scale by 1.5")) ScaleTimeLine(vKey, 1.5f);
-            if (ImGui::MenuItem("re scale by 1.75")) ScaleTimeLine(vKey, 1.75f);
-            if (ImGui::MenuItem("re scale by 2.0")) ScaleTimeLine(vKey, 2.0f);
+            if (ImGui::MenuItem("re scale by 1.25"))
+                ScaleTimeLine(vKey, 1.25f);
+            if (ImGui::MenuItem("re scale by 1.5"))
+                ScaleTimeLine(vKey, 1.5f);
+            if (ImGui::MenuItem("re scale by 1.75"))
+                ScaleTimeLine(vKey, 1.75f);
+            if (ImGui::MenuItem("re scale by 2.0"))
+                ScaleTimeLine(vKey, 2.0f);
 
             ImGui::EndMenu();
         }
@@ -1551,7 +1619,8 @@ bool TimeLineSystem::DrawBar(ShaderKeyPtr vKey, ct::ivec2 vScreenSize) {
 
         ImGui::SameLine();
 
-        if (ImGui::RadioButtonLabeled(ImVec2(0.0f, 0.0f), "AS", "Aligned Symetric", puBezierHandler == TimeLineSplineHandler::TIMELINE_SPLINE_HANDLER_ALIGNED_SYMMETRIC)) {
+        if (ImGui::RadioButtonLabeled(
+                ImVec2(0.0f, 0.0f), "AS", "Aligned Symetric", puBezierHandler == TimeLineSplineHandler::TIMELINE_SPLINE_HANDLER_ALIGNED_SYMMETRIC)) {
             puBezierHandler = TimeLineSplineHandler::TIMELINE_SPLINE_HANDLER_ALIGNED_SYMMETRIC;
         }
 
@@ -1678,7 +1747,7 @@ bool TimeLineSystem::DrawBar(ShaderKeyPtr vKey, ct::ivec2 vScreenSize) {
 
             if (ImGui_DragInt(50, "##playtimefps", "Count Frame Per Second", &puFrameRate)) {
                 puFrameRateInMS = 1000 / puFrameRate;
-                change          = true;
+                change = true;
             }
 
             ImGui::SameLine();
@@ -1737,7 +1806,7 @@ void TimeLineSystem::GoToNextKey(ShaderKeyPtr vKey, int vCurrentFrame) {
     ZoneScoped;
 
     if (vKey) {
-        bool defined     = false;
+        bool defined = false;
         int closestFrame = vCurrentFrame;
         for (auto it = vKey->puTimeLine.timeLine.begin(); it != vKey->puTimeLine.timeLine.end(); ++it) {
             for (auto itComps = it->second.keys.begin(); itComps != it->second.keys.end(); ++itComps) {
@@ -1747,7 +1816,7 @@ void TimeLineSystem::GoToNextKey(ShaderKeyPtr vKey, int vCurrentFrame) {
                             closestFrame = ct::mini(itKeys->first, closestFrame);
                         } else {
                             closestFrame = itKeys->first;
-                            defined      = true;
+                            defined = true;
                         }
                         break;
                     }
@@ -1765,7 +1834,7 @@ void TimeLineSystem::GoToPreviousKey(ShaderKeyPtr vKey, int vCurrentFrame) {
     ZoneScoped;
 
     if (vKey) {
-        bool defined     = false;
+        bool defined = false;
         int closestFrame = vCurrentFrame;
         for (auto it = vKey->puTimeLine.timeLine.begin(); it != vKey->puTimeLine.timeLine.end(); ++it) {
             for (auto itComps = it->second.keys.begin(); itComps != it->second.keys.end(); ++itComps) {
@@ -1775,7 +1844,7 @@ void TimeLineSystem::GoToPreviousKey(ShaderKeyPtr vKey, int vCurrentFrame) {
                             closestFrame = ct::maxi(itKeys->first, closestFrame);
                         } else {
                             closestFrame = itKeys->first;
-                            defined      = true;
+                            defined = true;
                         }
                         break;
                     }
@@ -1813,12 +1882,12 @@ void TimeLineSystem::ScaleTimeLine(ShaderKeyPtr vKey, float vScale) {
         for (auto itStruct = tmp.begin(); itStruct != tmp.end(); ++itStruct) {
             std::string name = itStruct->first;
             for (auto itChan = itStruct->second.keys.begin(); itChan != itStruct->second.keys.end(); ++itChan) {
-                int chan                                    = itChan->first;
+                int chan = itChan->first;
                 vKey->puTimeLine.timeLine[name].uniformName = tmp[name].uniformName;
-                vKey->puTimeLine.timeLine[name].glslType    = tmp[name].glslType;
-                vKey->puTimeLine.timeLine[name].widget      = tmp[name].widget;
+                vKey->puTimeLine.timeLine[name].glslType = tmp[name].glslType;
+                vKey->puTimeLine.timeLine[name].widget = tmp[name].widget;
                 for (auto itFrame = itChan->second.begin(); itFrame != itChan->second.end(); ++itFrame) {
-                    int frame    = itFrame->first;
+                    int frame = itFrame->first;
                     int newFrame = (int)((float)frame * vScale);
                     if (frame != 0 && itChan->second.find(newFrame) != itChan->second.end())  // trouvé
                     {
@@ -1828,9 +1897,11 @@ void TimeLineSystem::ScaleTimeLine(ShaderKeyPtr vKey, float vScale) {
                         vKey->puTimeLine.timeLine[name].keys[chan][newFrame] = tmp[name].keys[chan][frame];
                     }
                 }
-                if (conversioNotPermise) break;
+                if (conversioNotPermise)
+                    break;
             }
-            if (conversioNotPermise) break;
+            if (conversioNotPermise)
+                break;
         }
 
         if (conversioNotPermise) {
@@ -1882,25 +1953,27 @@ void TimeLineSystem::ReArrangeForViewContent(ShaderKeyPtr vKey, ImRect vZone, fl
 
             // on va re scale
 
-            const ct::fvec2 countFramesValues  = aabb.Size();
+            const ct::fvec2 countFramesValues = aabb.Size();
             const ct::fvec2 middleFramesValues = aabb.GetCenter();
 
             if (vPaneOffsetX && countFramesValues.x > 0)  // test for avoid div by zero error
             {
                 const float zoneMaxX = vZone.Max.x - vZone.Min.x - puPaneWidth - pucurveBarWidth;
-                const int maxFrames  = (int)ct::ceil(zoneMaxX / puStepSize);  // *puStepScale;
-                if (maxFrames > 0) puStepScale = (int)(countFramesValues.x / (float)maxFrames);
-                puStepScale   = ct::maxi<int>(puStepScale, 1);
+                const int maxFrames = (int)ct::ceil(zoneMaxX / puStepSize);  // *puStepScale;
+                if (maxFrames > 0)
+                    puStepScale = (int)(countFramesValues.x / (float)maxFrames);
+                puStepScale = ct::maxi<int>(puStepScale, 1);
                 *vPaneOffsetX = puPaneWidth + pucurveBarWidth + middleFramesValues.x * puStepScale / puStepSize;
             }
 
             if (vPaneOffsetY && countFramesValues.y > 0.0f)  // test for avoid div by zero error
             {
-                const float zoneMaxY  = vZone.Max.y - vZone.Min.y - putimeBarHeight;
+                const float zoneMaxY = vZone.Max.y - vZone.Min.y - putimeBarHeight;
                 const float maxValues = zoneMaxY / pucurveStepSize;
-                if (IS_FLOAT_DIFFERENT(maxValues, 0.0f)) pucurveStepScale = countFramesValues.y / maxValues;
+                if (IS_FLOAT_DIFFERENT(maxValues, 0.0f))
+                    pucurveStepScale = countFramesValues.y / maxValues;
                 pucurveStepScale = ct::maxi<float>(pucurveStepScale, 1e-8f);
-                *vPaneOffsetY    = putimeBarHeight + (countFramesValues.y * 0.5f + middleFramesValues.y) / pucurveStepScale * pucurveStepSize;
+                *vPaneOffsetY = putimeBarHeight + (countFramesValues.y * 0.5f + middleFramesValues.y) / pucurveStepScale * pucurveStepSize;
             }
         }
     }
@@ -1930,7 +2003,8 @@ void TimeLineSystem::DoLoopLimitKeys(ShaderKeyPtr vKey, bool vStartOrEnd, bool v
                             if (vSameGradient) {
                                 // set gradient
                                 float len = chan.second[range.y]->bezierContorlEndPoint.length();
-                                if (vSameGradientLength) len = chan.second[range.x]->bezierControlStartPoint.length();
+                                if (vSameGradientLength)
+                                    len = chan.second[range.x]->bezierControlStartPoint.length();
                                 chan.second[range.y]->bezierContorlEndPoint = chan.second[range.x]->bezierControlStartPoint.GetNormalized() * len;
                             }
                         }
@@ -1948,7 +2022,8 @@ void TimeLineSystem::DoLoopLimitKeys(ShaderKeyPtr vKey, bool vStartOrEnd, bool v
                             if (vSameGradient) {
                                 // set gradient
                                 float len = chan.second[range.x]->bezierControlStartPoint.length();
-                                if (vSameGradientLength) len = chan.second[range.y]->bezierContorlEndPoint.length();
+                                if (vSameGradientLength)
+                                    len = chan.second[range.y]->bezierContorlEndPoint.length();
                                 chan.second[range.x]->bezierControlStartPoint = chan.second[range.y]->bezierContorlEndPoint.GetNormalized() * len;
                             }
                         }
@@ -1995,16 +2070,20 @@ bool TimeLineSystem::DoAnimation_WithoutUiTriggering(ShaderKeyPtr vKey) {
             if (puAnimationTimer.IsTimeToAct(puFrameRateInMS, true)) {
                 if (puPlayTimeLine) {
                     puCurrentFrame++;
-                    if (puCurrentFrame > vKey->puTimeLine.rangeFrames.y) puCurrentFrame = vKey->puTimeLine.rangeFrames.x;
-                    if (puCurrentFrame < vKey->puTimeLine.rangeFrames.x) puCurrentFrame = vKey->puTimeLine.rangeFrames.y;
+                    if (puCurrentFrame > vKey->puTimeLine.rangeFrames.y)
+                        puCurrentFrame = vKey->puTimeLine.rangeFrames.x;
+                    if (puCurrentFrame < vKey->puTimeLine.rangeFrames.x)
+                        puCurrentFrame = vKey->puTimeLine.rangeFrames.y;
                     puFrameChanged = true;
                     change |= true;
                 }
 
                 if (puPlayTimeLineReverse) {
                     puCurrentFrame--;
-                    if (puCurrentFrame > vKey->puTimeLine.rangeFrames.y) puCurrentFrame = vKey->puTimeLine.rangeFrames.x;
-                    if (puCurrentFrame < vKey->puTimeLine.rangeFrames.x) puCurrentFrame = vKey->puTimeLine.rangeFrames.y;
+                    if (puCurrentFrame > vKey->puTimeLine.rangeFrames.y)
+                        puCurrentFrame = vKey->puTimeLine.rangeFrames.x;
+                    if (puCurrentFrame < vKey->puTimeLine.rangeFrames.x)
+                        puCurrentFrame = vKey->puTimeLine.rangeFrames.y;
                     puFrameChanged = true;
                     change |= true;
                 }
@@ -2020,9 +2099,10 @@ bool TimeLineSystem::ImGui_DrawTrashButton(bool /*vHovered*/, const ImVec2& pos)
 
     using namespace ImGui;
 
-    ImGuiContext& g     = *GImGui;
+    ImGuiContext& g = *GImGui;
     ImGuiWindow* window = g.CurrentWindow;
-    if (window->SkipItems) return false;
+    if (window->SkipItems)
+        return false;
 
     const ImRect bb(pos, pos + ImVec2(g.FontSize, g.FontSize));
 
@@ -2038,10 +2118,11 @@ bool TimeLineSystem::ImGui_DrawTrashButton(bool /*vHovered*/, const ImVec2& pos)
     window->DrawList->AddRectFilled(bb.Min, bb.Max, col, 2);
 
     const float cross_extent = g.FontSize * 0.5f * 0.7071f - 1.0f;
-    const bool pushed        = ImGui::PushStyleColorWithContrast1(ImGuiCol_Button, ImGuiCol_Text, CustomStyle::puContrastedTextColor, CustomStyle::puContrastRatio);
+    const bool pushed = ImGui::PushStyleColorWithContrast1(ImGuiCol_Button, ImGuiCol_Text, CustomStyle::puContrastedTextColor, CustomStyle::puContrastRatio);
     window->DrawList->AddLine(center + ImVec2(+cross_extent, +cross_extent), center + ImVec2(-cross_extent, -cross_extent), ImGui::GetColorU32(ImGuiCol_Text), 2.5f);
     window->DrawList->AddLine(center + ImVec2(+cross_extent, -cross_extent), center + ImVec2(-cross_extent, +cross_extent), ImGui::GetColorU32(ImGuiCol_Text), 2.5f);
-    if (pushed) ImGui::PopStyleColor();
+    if (pushed)
+        ImGui::PopStyleColor();
     return pressed;
 }
 
@@ -2050,9 +2131,10 @@ bool TimeLineSystem::ImGui_DrawCheckButton(bool /*vHovered*/, const ImVec2& pos,
 
     using namespace ImGui;
 
-    ImGuiContext& g     = *GImGui;
+    ImGuiContext& g = *GImGui;
     ImGuiWindow* window = g.CurrentWindow;
-    if (window->SkipItems) return false;
+    if (window->SkipItems)
+        return false;
 
     const ImRect bb(pos, pos + ImVec2(g.FontSize, g.FontSize));
 
@@ -2071,7 +2153,7 @@ bool TimeLineSystem::ImGui_DrawCheckButton(bool /*vHovered*/, const ImVec2& pos,
     ImGui::RenderFrame(bb.Min, bb.Max, col, true, g.Style.FrameRounding);
     if (vFlag) {
         const float sizey = g.FontSize;
-        const float pad   = ImMax(1.0f, (float)(int)(sizey / 6.0f));
+        const float pad = ImMax(1.0f, (float)(int)(sizey / 6.0f));
         ImGui::RenderCheckMark(window->DrawList, bb.Min + ImVec2(pad, pad - 0.1f * sizey), ImGui::GetColorU32(ImGuiCol_CheckMark), sizey - pad * 2.0f);
     }
 
@@ -2081,7 +2163,8 @@ bool TimeLineSystem::ImGui_DrawCheckButton(bool /*vHovered*/, const ImVec2& pos,
 bool TimeLineSystem::ImGui_DragFloat(const float width, const char* label, const char* help, float* value) {
     ImGui::PushItemWidth(width);
     const bool di = ImGui::DragFloat(label, value);
-    if (ImGui::IsItemHovered()) ImGui::SetTooltip(help);
+    if (ImGui::IsItemHovered())
+        ImGui::SetTooltip(help);
     ImGui::PopItemWidth();
     return di;
 }
@@ -2089,7 +2172,8 @@ bool TimeLineSystem::ImGui_DragFloat(const float width, const char* label, const
 bool TimeLineSystem::ImGui_DragInt(const float width, const char* label, const char* help, int* value) {
     ImGui::PushItemWidth(width);
     const bool di = ImGui::DragInt(label, value);
-    if (ImGui::IsItemHovered()) ImGui::SetTooltip(help);
+    if (ImGui::IsItemHovered())
+        ImGui::SetTooltip(help);
     ImGui::PopItemWidth();
     return di;
 }
@@ -2098,14 +2182,14 @@ void TimeLineSystem::ScaleViewForFrames(int vCountFrames, float vMouseWheel) {
     ZoneScoped;
 
     const float centralFrame = ((float)vCountFrames * 0.5f - puPaneOffsetX / puStepSize) * (float)puStepScale;
-    puStepScale              = ct::maxi((int)(puStepScale - vMouseWheel), 1);  // clamp for avoid div by zero
-    puPaneOffsetX            = ((float)vCountFrames * 0.5f - centralFrame / (float)puStepScale) * puStepSize;
+    puStepScale = ct::maxi((int)(puStepScale - vMouseWheel), 1);  // clamp for avoid div by zero
+    puPaneOffsetX = ((float)vCountFrames * 0.5f - centralFrame / (float)puStepScale) * puStepSize;
 }
 
 void TimeLineSystem::ScaleViewForValues(ImRect vFrameBb, float vMouseWheel) {
     ZoneScoped;
 
-    const float countValue   = ct::ceil((vFrameBb.Max.y - vFrameBb.Min.y) / pucurveStepSize);
+    const float countValue = ct::ceil((vFrameBb.Max.y - vFrameBb.Min.y) / pucurveStepSize);
     const float centralValue = (countValue * 0.5f - puPaneOffsetY / pucurveStepSize) * pucurveStepScale;
     if (vMouseWheel < 0.0f)
         pucurveStepScale *= 1.25f;
@@ -2114,7 +2198,8 @@ void TimeLineSystem::ScaleViewForValues(ImRect vFrameBb, float vMouseWheel) {
     puPaneOffsetY = (countValue * 0.5f - centralValue / pucurveStepScale) * pucurveStepSize;
 }
 
-static const float DRAG_MOUSE_THRESHOLD_FACTOR = 0.50f;  // Multiplier for the default value of io.MouseDragThreshold to make DragFloat/DragInt react faster to mouse drags.
+static const float DRAG_MOUSE_THRESHOLD_FACTOR =
+    0.50f;  // Multiplier for the default value of io.MouseDragThreshold to make DragFloat/DragInt react faster to mouse drags.
 
 bool TimeLineSystem::DrawTimeLine(const char* label, ShaderKeyPtr vKey) {
     ZoneScoped;
@@ -2129,10 +2214,10 @@ bool TimeLineSystem::DrawTimeLine(const char* label, ShaderKeyPtr vKey) {
     ImGuiContext& g = *GImGui;
 
     const ImGuiStyle& style = g.Style;
-    const ImGuiID id        = window->GetID(label);
-    ImVec2 label_size       = CalcTextSize(label, nullptr, true);
+    const ImGuiID id = window->GetID(label);
+    ImVec2 label_size = CalcTextSize(label, nullptr, true);
 
-    bool showGraph    = IsShowingCurves(vKey);  // pas curve graph
+    bool showGraph = IsShowingCurves(vKey);  // pas curve graph
     puMouseOverButton = false;
 
     ImVec2 max_size = GetContentRegionAvail();
@@ -2141,7 +2226,8 @@ bool TimeLineSystem::DrawTimeLine(const char* label, ShaderKeyPtr vKey) {
     const ImRect total_bb(frame_bb.Min, frame_bb.Max);
 
     ItemSize(total_bb, style.FramePadding.y);
-    if (!ItemAdd(total_bb, id, &frame_bb)) return false;
+    if (!ItemAdd(total_bb, id, &frame_bb))
+        return false;
 
     int countFrames = (int)ct::ceil((frame_bb.Max.x - frame_bb.Min.x) / puStepSize);
 
@@ -2185,11 +2271,11 @@ bool TimeLineSystem::DrawTimeLine(const char* label, ShaderKeyPtr vKey) {
     ImRect valueBarRc;
     float curveBarW = 0.0f;
     if (showGraph) {
-        curveBarW  = pucurveBarWidth;
+        curveBarW = pucurveBarWidth;
         valueBarRc = ImRect(ImVec2(frame_bb.Min.x + puPaneWidth, frame_bb.Min.y + putimeBarHeight), ImVec2(frame_bb.Min.x + puPaneWidth + curveBarW, frame_bb.Max.y));
     }
     ImRect timeBarRc = ImRect(ImVec2(frame_bb.Min.x + puPaneWidth + curveBarW, frame_bb.Min.y), ImVec2(frame_bb.Max.x, frame_bb.Min.y + putimeBarHeight));
-    ImRect viewRc    = ImRect(ImVec2(frame_bb.Min.x + puPaneWidth + curveBarW, frame_bb.Min.y + putimeBarHeight), ImVec2(frame_bb.Max.x, frame_bb.Max.y));
+    ImRect viewRc = ImRect(ImVec2(frame_bb.Min.x + puPaneWidth + curveBarW, frame_bb.Min.y + putimeBarHeight), ImVec2(frame_bb.Max.x, frame_bb.Max.y));
 
     if (hovered) {
         // mouse wheel
@@ -2224,7 +2310,7 @@ bool TimeLineSystem::DrawTimeLine(const char* label, ShaderKeyPtr vKey) {
     // draw items header
     // ImVec4 cat = ImVec4(0.0f, 0.5f, 0.1f, 0.5f);
     char buffer[100] = "\0";
-    float offsetY    = label_size.y + puTextOffsetY * 2.0f + putimeBarHeight;
+    float offsetY = label_size.y + puTextOffsetY * 2.0f + putimeBarHeight;
 
     ImVec2 a, b;
 
@@ -2232,13 +2318,15 @@ bool TimeLineSystem::DrawTimeLine(const char* label, ShaderKeyPtr vKey) {
     {
         size_t paningIndex = 0;
         for (auto itSec = vKey->puTimeLine.timeLine.begin(); itSec != vKey->puTimeLine.timeLine.end(); ++itSec) {
-            if (++paningIndex < puUniformsPaneOffsetY) continue;
+            if (++paningIndex < puUniformsPaneOffsetY)
+                continue;
 
             if (frame_bb.Min.y + offsetY < frame_bb.Max.y) {
                 UniformTimeKey* vTimeKey = &itSec->second;
 
                 UniformVariantPtr uni = nullptr;
-                if (vKey) uni = vKey->GetUniformByName(vTimeKey->uniformName);
+                if (vKey)
+                    uni = vKey->GetUniformByName(vTimeKey->uniformName);
 
                 if (uni) {
                     if (uni->loc >= 0 || puShowUnUsed) {
@@ -2246,13 +2334,13 @@ bool TimeLineSystem::DrawTimeLine(const char* label, ShaderKeyPtr vKey) {
                         label_size = CalcTextSize(buffer, nullptr, true);
                         if (!showGraph) {
                             ImU32 frameTextCol = GetColorU32(ImGui::GetUniformLocColor(uni->loc));
-                            a                  = ImVec2(frame_bb.Min.x + g.Style.FramePadding.x, frame_bb.Min.y - g.Style.FramePadding.y * 0.25f + offsetY);
-                            b                  = ImVec2(frame_bb.Max.x - g.Style.FramePadding.x, frame_bb.Min.y + g.Style.FramePadding.y * 0.25f + label_size.y + offsetY);
+                            a = ImVec2(frame_bb.Min.x + g.Style.FramePadding.x, frame_bb.Min.y - g.Style.FramePadding.y * 0.25f + offsetY);
+                            b = ImVec2(frame_bb.Max.x - g.Style.FramePadding.x, frame_bb.Min.y + g.Style.FramePadding.y * 0.25f + label_size.y + offsetY);
                             window->DrawList->AddRectFilled(a, b, frameTextCol);
                         } else {
                             ImU32 frameTextCol = GetColorU32(ImGui::GetUniformLocColor(uni->loc));
-                            a                  = ImVec2(frame_bb.Min.x + g.Style.FramePadding.x, frame_bb.Min.y - g.Style.FramePadding.y * 0.25f + offsetY);
-                            b                  = ImVec2(frame_bb.Min.x - g.Style.FramePadding.x + puPaneWidth, frame_bb.Min.y + g.Style.FramePadding.y * 0.25f + label_size.y + offsetY);
+                            a = ImVec2(frame_bb.Min.x + g.Style.FramePadding.x, frame_bb.Min.y - g.Style.FramePadding.y * 0.25f + offsetY);
+                            b = ImVec2(frame_bb.Min.x - g.Style.FramePadding.x + puPaneWidth, frame_bb.Min.y + g.Style.FramePadding.y * 0.25f + label_size.y + offsetY);
                             window->DrawList->AddRectFilled(a, b, frameTextCol);
                         }
 
@@ -2279,7 +2367,8 @@ bool TimeLineSystem::DrawTimeLine(const char* label, ShaderKeyPtr vKey) {
 
                         int idx = 0;
                         for (auto it = vTimeKey->keys.begin(); it != vTimeKey->keys.end(); ++it) {
-                            if (vTimeKey->glslType == uType::uTypeEnum::U_FLOAT || vTimeKey->glslType == uType::uTypeEnum::U_VEC2 || vTimeKey->glslType == uType::uTypeEnum::U_VEC3 || vTimeKey->glslType == uType::uTypeEnum::U_VEC4) {
+                            if (vTimeKey->glslType == uType::uTypeEnum::U_FLOAT || vTimeKey->glslType == uType::uTypeEnum::U_VEC2 ||
+                                vTimeKey->glslType == uType::uTypeEnum::U_VEC3 || vTimeKey->glslType == uType::uTypeEnum::U_VEC4) {
                                 if (it->first == 0)
                                     snprintf(buffer, 100, "x %.3f", uni->x);
                                 else if (it->first == 1)
@@ -2290,7 +2379,8 @@ bool TimeLineSystem::DrawTimeLine(const char* label, ShaderKeyPtr vKey) {
                                     snprintf(buffer, 100, "w %.3f", uni->w);
                             }
 
-                            if (vTimeKey->glslType == uType::uTypeEnum::U_BOOL || vTimeKey->glslType == uType::uTypeEnum::U_BVEC2 || vTimeKey->glslType == uType::uTypeEnum::U_BVEC3 || vTimeKey->glslType == uType::uTypeEnum::U_BVEC4) {
+                            if (vTimeKey->glslType == uType::uTypeEnum::U_BOOL || vTimeKey->glslType == uType::uTypeEnum::U_BVEC2 ||
+                                vTimeKey->glslType == uType::uTypeEnum::U_BVEC3 || vTimeKey->glslType == uType::uTypeEnum::U_BVEC4) {
                                 if (it->first == 0)
                                     snprintf(buffer, 100, "x %s", uni->bx ? "true" : "false");
                                 else if (it->first == 1)
@@ -2301,7 +2391,8 @@ bool TimeLineSystem::DrawTimeLine(const char* label, ShaderKeyPtr vKey) {
                                     snprintf(buffer, 100, "w %s", uni->bw ? "true" : "false");
                             }
 
-                            if (vTimeKey->glslType == uType::uTypeEnum::U_INT || vTimeKey->glslType == uType::uTypeEnum::U_IVEC2 || vTimeKey->glslType == uType::uTypeEnum::U_IVEC3 || vTimeKey->glslType == uType::uTypeEnum::U_IVEC4) {
+                            if (vTimeKey->glslType == uType::uTypeEnum::U_INT || vTimeKey->glslType == uType::uTypeEnum::U_IVEC2 ||
+                                vTimeKey->glslType == uType::uTypeEnum::U_IVEC3 || vTimeKey->glslType == uType::uTypeEnum::U_IVEC4) {
                                 if (it->first == 0)
                                     snprintf(buffer, 100, "x %i", uni->ix);
                                 else if (it->first == 1)
@@ -2331,12 +2422,16 @@ bool TimeLineSystem::DrawTimeLine(const char* label, ShaderKeyPtr vKey) {
                             } else if (puUniformsToEdit.find(vTimeKey->uniformName) != puUniformsToEdit.end()) {
                                 if (puUniformsToEdit[vTimeKey->uniformName] & puTimeLineItemAxisMasks[it->first]) {
                                     // draw line rect rgba
-                                    a              = ImVec2(frame_bb.Min.x + g.Style.FramePadding.x, frame_bb.Min.y - g.Style.FramePadding.y * 0.25f + offsetY);
-                                    b              = ImVec2(frame_bb.Min.x - g.Style.FramePadding.x + puPaneWidth, frame_bb.Min.y + g.Style.FramePadding.y * 0.25f + label_size.y + offsetY);
+                                    a = ImVec2(frame_bb.Min.x + g.Style.FramePadding.x, frame_bb.Min.y - g.Style.FramePadding.y * 0.25f + offsetY);
+                                    b = ImVec2(frame_bb.Min.x - g.Style.FramePadding.x + puPaneWidth,
+                                               frame_bb.Min.y + g.Style.FramePadding.y * 0.25f + label_size.y + offsetY);
                                     ImVec4 colLine = ImVec4(0.9f, 0.1f, 0.1f, 0.6f);
-                                    if (it->first == 1) colLine = ImVec4(0.1f, 0.9f, 0.1f, 0.6f);
-                                    if (it->first == 2) colLine = ImVec4(0.1f, 0.1f, 0.9f, 0.6f);
-                                    if (it->first == 3) colLine = ImVec4(0.6f, 0.6f, 0.6f, 0.6f);
+                                    if (it->first == 1)
+                                        colLine = ImVec4(0.1f, 0.9f, 0.1f, 0.6f);
+                                    if (it->first == 2)
+                                        colLine = ImVec4(0.1f, 0.1f, 0.9f, 0.6f);
+                                    if (it->first == 3)
+                                        colLine = ImVec4(0.6f, 0.6f, 0.6f, 0.6f);
                                     window->DrawList->AddRectFilled(a, b, GetColorU32(colLine));
                                 }
                             }
@@ -2383,7 +2478,7 @@ bool TimeLineSystem::DrawTimeLine(const char* label, ShaderKeyPtr vKey) {
 
     // draw horizontal time steps
     int startFrame = (int)(-puPaneOffsetX / puStepSize);
-    int endFrame   = startFrame + countFrames;
+    int endFrame = startFrame + countFrames;
     ImGui_DrawHTimeBar(puPaneOffsetX, frame_bb, countFrames, startFrame);
     startFrame *= puStepScale;
     endFrame *= puStepScale;
@@ -2394,7 +2489,11 @@ bool TimeLineSystem::DrawTimeLine(const char* label, ShaderKeyPtr vKey) {
 
         // re arrange
 
-        if (ImGui_DrawButton(ICON_NDP2_STRETCH_TO_PAGE_OUTLINE "##ReArrangeViewOnContent", "Arrange view on content", frame_bb.Min + ImVec2(puPaneWidth, 0.0f), frame_bb.Min + ImVec2(puPaneWidth + pucurveBarWidth, putimeBarHeight), hovered)) {
+        if (ImGui_DrawButton(ICON_NDP2_STRETCH_TO_PAGE_OUTLINE "##ReArrangeViewOnContent",
+                             "Arrange view on content",
+                             frame_bb.Min + ImVec2(puPaneWidth, 0.0f),
+                             frame_bb.Min + ImVec2(puPaneWidth + pucurveBarWidth, putimeBarHeight),
+                             hovered)) {
             ReArrangeForViewContent(vKey, viewRc, &puPaneOffsetX, &puPaneOffsetY);
         }
     }
@@ -2409,9 +2508,10 @@ bool TimeLineSystem::DrawTimeLine(const char* label, ShaderKeyPtr vKey) {
 
     // Draw Frame Range
     const ImU32 frame_range_col = GetColorU32(puRangeFrame);
-    float startRangeOffset      = puPaneOffsetX + (int)(vKey->puTimeLine.rangeFrames.x * puStepSize) / puStepScale;
-    float endRangeOffset        = puPaneOffsetX + (int)(vKey->puTimeLine.rangeFrames.y * puStepSize) / puStepScale;
-    window->DrawList->AddRectFilled(frame_bb.Min + ImVec2(startRangeOffset, putimeBarHeight), frame_bb.Min + ImVec2(endRangeOffset, frame_bb.Max.y), frame_range_col, 0.0f);
+    float startRangeOffset = puPaneOffsetX + (int)(vKey->puTimeLine.rangeFrames.x * puStepSize) / puStepScale;
+    float endRangeOffset = puPaneOffsetX + (int)(vKey->puTimeLine.rangeFrames.y * puStepSize) / puStepScale;
+    window->DrawList->AddRectFilled(
+        frame_bb.Min + ImVec2(startRangeOffset, putimeBarHeight), frame_bb.Min + ImVec2(endRangeOffset, frame_bb.Max.y), frame_range_col, 0.0f);
 
     if (!showGraph)  // uniforms list
     {
@@ -2423,7 +2523,8 @@ bool TimeLineSystem::DrawTimeLine(const char* label, ShaderKeyPtr vKey) {
 
     // draw current frame grabber
     ImGuiID grabberId = 0;
-    if (timeBarRc.Contains(g.IO.MousePos)) grabberId = id;
+    if (timeBarRc.Contains(g.IO.MousePos))
+        grabberId = id;
     ImGui_DrawGrabber(grabberId, puCurrentFrame, (int)puPaneOffsetX, frame_bb);
 
     ImGui_DrawMouseSelectionRect(vKey, ImVec4(1, 1, 0, 1), 1.0f);
@@ -2464,14 +2565,21 @@ bool TimeLineSystem::ImGui_DrawHTimeBar(float vPaneOffsetX, ImRect vFrameBB, int
             snprintf(buffer, 100, "%i", frame * puStepScale);
             const ImVec2 label_size = CalcTextSize(buffer, nullptr, true);
 
-            window->DrawList->AddText(ImVec2(vFrameBB.Min.x + startOffset + puStepSize * i - label_size.x * 0.5f, vFrameBB.Min.y + putimeBarHeight - puTextOffsetY - label_size.y), GetColorU32(ImVec4(1, 1, 1, 1)), buffer);
+            window->DrawList->AddText(
+                ImVec2(vFrameBB.Min.x + startOffset + puStepSize * i - label_size.x * 0.5f, vFrameBB.Min.y + putimeBarHeight - puTextOffsetY - label_size.y),
+                GetColorU32(ImVec4(1, 1, 1, 1)),
+                buffer);
 
-            window->DrawList->AddLine(ImVec2(vFrameBB.Min.x + startOffset + puStepSize * i, vFrameBB.Min.y + putimeBarHeight - label_size.y * 0.4f), ImVec2(vFrameBB.Min.x + startOffset + puStepSize * i, vFrameBB.Max.y),
-                                      GetColorU32(ImVec4(0.5f, 0.5f, 0.5f, 0.5f)), lineThick);
+            window->DrawList->AddLine(ImVec2(vFrameBB.Min.x + startOffset + puStepSize * i, vFrameBB.Min.y + putimeBarHeight - label_size.y * 0.4f),
+                                      ImVec2(vFrameBB.Min.x + startOffset + puStepSize * i, vFrameBB.Max.y),
+                                      GetColorU32(ImVec4(0.5f, 0.5f, 0.5f, 0.5f)),
+                                      lineThick);
         }
 
         // add separation
-        window->DrawList->AddLine(ImVec2(vFrameBB.Min.x, vFrameBB.Min.y + putimeBarHeight), ImVec2(vFrameBB.Max.x, vFrameBB.Min.y + putimeBarHeight), GetColorU32(ImVec4(0.5f, 0.5f, 0.5f, 0.5f)));
+        window->DrawList->AddLine(ImVec2(vFrameBB.Min.x, vFrameBB.Min.y + putimeBarHeight),
+                                  ImVec2(vFrameBB.Max.x, vFrameBB.Min.y + putimeBarHeight),
+                                  GetColorU32(ImVec4(0.5f, 0.5f, 0.5f, 0.5f)));
     }
 
     ImGui::PopClipRect();
@@ -2501,23 +2609,27 @@ bool TimeLineSystem::ImGui_DrawVValueBar(float vPaneOffsetY, ImRect vFrameBB) {
     {
         const ImVec4 lineCol = ImVec4(0.5f, 0.5f, 0.5f, 0.5f);
         for (int i = 0; i < countValue; i++) {
-            float value     = (startValue + i) * -1.0f * pucurveStepScale;
+            float value = (startValue + i) * -1.0f * pucurveStepScale;
             float lineThick = 1.0f;
             if (IS_FLOAT_EQUAL(value, 0.0f)) {
-                value     = 0.0f;  // pour eviter l'affichage de -0.0
+                value = 0.0f;  // pour eviter l'affichage de -0.0
                 lineThick = 4.0f;
             }
             snprintf(buffer, 100, "%.3f", value);
             const ImVec2 label_size = CalcTextSize(buffer, nullptr, true);
 
-            window->DrawList->AddText(ImVec2(vFrameBB.Min.x + puPaneWidth, vFrameBB.Min.y + startOffset + pucurveStepSize * i - label_size.y * 0.5f), GetColorU32(ImVec4(1, 1, 1, 1)), buffer);
+            window->DrawList->AddText(
+                ImVec2(vFrameBB.Min.x + puPaneWidth, vFrameBB.Min.y + startOffset + pucurveStepSize * i - label_size.y * 0.5f), GetColorU32(ImVec4(1, 1, 1, 1)), buffer);
 
-            window->DrawList->AddLine(ImVec2(vFrameBB.Min.x + puPaneWidth + pucurveBarWidth - label_size.x * 0.4f, vFrameBB.Min.y + startOffset + pucurveStepSize * i), ImVec2(vFrameBB.Max.x, vFrameBB.Min.y + startOffset + pucurveStepSize * i),
-                                      GetColorU32(lineCol), lineThick);
+            window->DrawList->AddLine(ImVec2(vFrameBB.Min.x + puPaneWidth + pucurveBarWidth - label_size.x * 0.4f, vFrameBB.Min.y + startOffset + pucurveStepSize * i),
+                                      ImVec2(vFrameBB.Max.x, vFrameBB.Min.y + startOffset + pucurveStepSize * i),
+                                      GetColorU32(lineCol),
+                                      lineThick);
         }
 
         // add separation
-        window->DrawList->AddLine(ImVec2(vFrameBB.Min.x + puPaneWidth + pucurveBarWidth, vFrameBB.Min.y + startOffset), ImVec2(vFrameBB.Min.x + puPaneWidth + pucurveBarWidth, vFrameBB.Min.y + startOffset + pucurveStepSize * countValue),
+        window->DrawList->AddLine(ImVec2(vFrameBB.Min.x + puPaneWidth + pucurveBarWidth, vFrameBB.Min.y + startOffset),
+                                  ImVec2(vFrameBB.Min.x + puPaneWidth + pucurveBarWidth, vFrameBB.Min.y + startOffset + pucurveStepSize * countValue),
                                   GetColorU32(ImVec4(0.5f, 0.5f, 0.5f, 0.5f)));
     }
 
@@ -2532,15 +2644,16 @@ bool TimeLineSystem::ImGui_DrawButton(const char* vLabel, const char* vHelp, ImV
 
     using namespace ImGui;
 
-    ImGuiContext& g     = *GImGui;
+    ImGuiContext& g = *GImGui;
     ImGuiWindow* window = g.CurrentWindow;
-    if (window->SkipItems) return false;
+    if (window->SkipItems)
+        return false;
 
     const ImRect bb(vStart + g.Style.FramePadding, vEnd - g.Style.FramePadding);
 
     // Render
     ImVec2 center = bb.GetCenter();
-    const int id  = ImGui::IncPUSHID();
+    const int id = ImGui::IncPUSHID();
 
     ImGui::SetItemAllowOverlap();
 
@@ -2562,7 +2675,14 @@ bool TimeLineSystem::ImGui_DrawButton(const char* vLabel, const char* vHelp, ImV
     return pressed;
 }
 
-bool TimeLineSystem::ImGui_DrawTimeLinePointList(ShaderKeyPtr vKey, float offsetY, float vPaneOffsetX, float vPaneOffsetY, ImRect frame_bb, int startFrame, int endFrame, bool hovered) {
+bool TimeLineSystem::ImGui_DrawTimeLinePointList(ShaderKeyPtr vKey,
+                                                 float offsetY,
+                                                 float vPaneOffsetX,
+                                                 float vPaneOffsetY,
+                                                 ImRect frame_bb,
+                                                 int startFrame,
+                                                 int endFrame,
+                                                 bool hovered) {
     ZoneScoped;
 
     bool value_changed = false;
@@ -2578,7 +2698,8 @@ bool TimeLineSystem::ImGui_DrawTimeLinePointList(ShaderKeyPtr vKey, float offset
         // draw items points
         offsetY += g.FontSize + g.Style.FramePadding.y;
         for (auto sec : vKey->puTimeLine.timeLine) {
-            if (++paningIndex < vPaneOffsetY) continue;
+            if (++paningIndex < vPaneOffsetY)
+                continue;
 
             UniformTimeKey* vTimeKey = &sec.second;
 
@@ -2594,7 +2715,7 @@ bool TimeLineSystem::ImGui_DrawTimeLinePointList(ShaderKeyPtr vKey, float offset
                                     const int f = frame.first;  // frame
                                     if (frame.second.use_count()) {
                                         if (f >= startFrame && f <= endFrame) {
-                                            const float ox      = vPaneOffsetX + (int)(f * puStepSize) / puStepScale;
+                                            const float ox = vPaneOffsetX + (int)(f * puStepSize) / puStepScale;
                                             const ImVec2 center = ImVec2(frame_bb.Min.x + ox, frame_bb.Min.y + oy + g.FontSize * 0.5f);
 
                                             value_changed |= ImGui_DrawGraphPointButton(vTimeKey, frame.second, f, center, hovered);
@@ -2616,7 +2737,14 @@ bool TimeLineSystem::ImGui_DrawTimeLinePointList(ShaderKeyPtr vKey, float offset
     return value_changed;
 }
 
-bool TimeLineSystem::ImGui_DrawTimeLineCurveGraph(ShaderKeyPtr vKey, float vOffsetY, float vPaneOffsetX, float vPaneOffsetY, ImRect vFrameBB, int vStartFrame, int vEndFrame, bool vHovered) {
+bool TimeLineSystem::ImGui_DrawTimeLineCurveGraph(ShaderKeyPtr vKey,
+                                                  float vOffsetY,
+                                                  float vPaneOffsetX,
+                                                  float vPaneOffsetY,
+                                                  ImRect vFrameBB,
+                                                  int vStartFrame,
+                                                  int vEndFrame,
+                                                  bool vHovered) {
     ZoneScoped;
 
     bool value_changed = false;
@@ -2625,7 +2753,7 @@ bool TimeLineSystem::ImGui_DrawTimeLineCurveGraph(ShaderKeyPtr vKey, float vOffs
         using namespace ImGui;
 
         ImGuiWindow* window = GetCurrentWindow();
-        ImGuiContext& g     = *GImGui;
+        ImGuiContext& g = *GImGui;
 
         window->DrawList->ChannelsSplit(3);
 
@@ -2648,9 +2776,9 @@ bool TimeLineSystem::ImGui_DrawTimeLineCurveGraph(ShaderKeyPtr vKey, float vOffs
                                             auto lineStruct = &vTimeKey->keys[axis];
 
                                             if (lineStruct->size() > 0) {
-                                                int _lastFrame   = lineStruct->begin()->first;
+                                                int _lastFrame = lineStruct->begin()->first;
                                                 auto _lastStruct = vTimeKey->keys[axis].begin()->second;
-                                                ImVec2 _lastPos  = ImVec2(0.0f, 0.0f);
+                                                ImVec2 _lastPos = ImVec2(0.0f, 0.0f);
                                                 for (auto frame : *lineStruct) {
                                                     int curFrame = frame.first;  // frame
                                                     auto _Struct = frame.second;
@@ -2664,19 +2792,23 @@ bool TimeLineSystem::ImGui_DrawTimeLineCurveGraph(ShaderKeyPtr vKey, float vOffs
 
                                                         if (curFrame != _lastFrame) {
                                                             ImVec4 colLine = ImVec4(0.9f, 0.1f, 0.1f, 0.6f);
-                                                            if (axis == 1) colLine = ImVec4(0.1f, 0.9f, 0.1f, 0.6f);
-                                                            if (axis == 2) colLine = ImVec4(0.1f, 0.1f, 0.9f, 0.6f);
-                                                            if (axis == 3) colLine = ImVec4(0.6f, 0.6f, 0.6f, 0.6f);
+                                                            if (axis == 1)
+                                                                colLine = ImVec4(0.1f, 0.9f, 0.1f, 0.6f);
+                                                            if (axis == 2)
+                                                                colLine = ImVec4(0.1f, 0.1f, 0.9f, 0.6f);
+                                                            if (axis == 3)
+                                                                colLine = ImVec4(0.6f, 0.6f, 0.6f, 0.6f);
 
-                                                            value_changed |= ImGui_DrawGraphLineButton(vTimeKey, _lastFrame, curFrame, _lastPos, pos, _lastStruct, _Struct, colLine, vFrameBB, axis);
+                                                            value_changed |= ImGui_DrawGraphLineButton(
+                                                                vTimeKey, _lastFrame, curFrame, _lastPos, pos, _lastStruct, _Struct, colLine, vFrameBB, axis);
                                                         }
 
                                                         window->DrawList->ChannelsSetCurrent(2);
                                                         value_changed |= ImGui_DrawGraphPointButton(vTimeKey, _Struct, curFrame, pos, vHovered);
 
-                                                        _lastFrame  = curFrame;
+                                                        _lastFrame = curFrame;
                                                         _lastStruct = _Struct;
-                                                        _lastPos    = pos;
+                                                        _lastPos = pos;
                                                     }
                                                 }
                                             }
@@ -2696,8 +2828,16 @@ bool TimeLineSystem::ImGui_DrawTimeLineCurveGraph(ShaderKeyPtr vKey, float vOffs
     return value_changed;
 }
 
-bool TimeLineSystem::ImGui_DrawGraphLineButton(UniformTimeKey* vKeyStruct, int vLastFrame, int vFrame, ImVec2 vStartPoint, ImVec2 vEndPoint, std::shared_ptr<UploadableUniform> vStartStruct, std::shared_ptr<UploadableUniform> vEndStruct,
-                                               ImVec4 vColor, ImRect vFrame_bb, int vAxis) {
+bool TimeLineSystem::ImGui_DrawGraphLineButton(UniformTimeKey* vKeyStruct,
+                                               int vLastFrame,
+                                               int vFrame,
+                                               ImVec2 vStartPoint,
+                                               ImVec2 vEndPoint,
+                                               std::shared_ptr<UploadableUniform> vStartStruct,
+                                               std::shared_ptr<UploadableUniform> vEndStruct,
+                                               ImVec4 vColor,
+                                               ImRect vFrame_bb,
+                                               int vAxis) {
     ZoneScoped;
 
     bool res = false;
@@ -2705,7 +2845,7 @@ bool TimeLineSystem::ImGui_DrawGraphLineButton(UniformTimeKey* vKeyStruct, int v
     using namespace ImGui;
 
     ImGuiWindow* window = GetCurrentWindow();
-    ImGuiContext& g     = *GImGui;
+    ImGuiContext& g = *GImGui;
 
     const float thick = puTextOffsetY * 0.5f;
 
@@ -2716,14 +2856,14 @@ bool TimeLineSystem::ImGui_DrawGraphLineButton(UniformTimeKey* vKeyStruct, int v
             if (puShowInterpolatedPoints) {
                 // display pre calculated interpolated values
                 window->DrawList->ChannelsSetCurrent(1);
-                ImVec4 col           = vColor;
-                col.w                = 1.0f;
+                ImVec4 col = vColor;
+                col.w = 1.0f;
                 const int startFrame = vLastFrame / puStepScale;
-                const int endFrame   = vFrame / puStepScale;
+                const int endFrame = vFrame / puStepScale;
                 for (int i = startFrame; i <= endFrame; i++) {
-                    int frame      = i * puStepScale;
+                    int frame = i * puStepScale;
                     const int posX = (int)puPaneOffsetX + GetLocalPosFromFrame(frame);
-                    float v        = 0.0f;
+                    float v = 0.0f;
                     if (vKeyStruct->values[frame].use_count()) {
                         if (vKeyStruct->values[frame]->GetValue(&v, vAxis)) {
                             const int posY = (int)(puPaneOffsetY - GetLocalPosFromValue(v));
@@ -2738,17 +2878,17 @@ bool TimeLineSystem::ImGui_DrawGraphLineButton(UniformTimeKey* vKeyStruct, int v
             if (puShowInterpolatedPoints) {
                 // display pre calculated interpolated values
                 window->DrawList->ChannelsSetCurrent(1);
-                ImVec4 col           = vColor;
-                col.w                = 1.0f;
+                ImVec4 col = vColor;
+                col.w = 1.0f;
                 const int startFrame = vLastFrame / puStepScale;
-                const int endFrame   = vFrame / puStepScale;
+                const int endFrame = vFrame / puStepScale;
                 for (int i = startFrame; i <= endFrame; i++) {
-                    int frame      = i * puStepScale;
+                    int frame = i * puStepScale;
                     const int posX = (int)puPaneOffsetX + GetLocalPosFromFrame(frame);
-                    float v        = 0.0f;
+                    float v = 0.0f;
                     if (vKeyStruct->values[frame].use_count()) {
                         if (vKeyStruct->values[frame]->GetValue(&v, vAxis)) {
-                            const int posY  = (int)(puPaneOffsetY - GetLocalPosFromValue(v));
+                            const int posY = (int)(puPaneOffsetY - GetLocalPosFromValue(v));
                             const ImVec2 pt = vFrame_bb.Min + ImVec2((float)posX, (float)posY);
                             ImGui_DrawGraphPoint(pt, col);
                             {
@@ -2767,9 +2907,11 @@ bool TimeLineSystem::ImGui_DrawGraphLineButton(UniformTimeKey* vKeyStruct, int v
             const ct::fvec2 sv = GetLocalPosFromFrameValue(vStartStruct->bezierControlStartPoint);
             const ct::fvec2 ev = GetLocalPosFromFrameValue(vEndStruct->bezierContorlEndPoint);
             ImVec2 middleSplinePoint;
-            if (vStartStruct->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_RIGHT || vStartStruct->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_BOTH)
+            if (vStartStruct->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_RIGHT ||
+                vStartStruct->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_BOTH)
                 middleSplinePoint = vStartPoint + ImVec2(sv.x, -sv.y);
-            else if (vEndStruct->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_LEFT || vEndStruct->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_BOTH)
+            else if (vEndStruct->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_LEFT ||
+                     vEndStruct->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_BOTH)
                 middleSplinePoint = vEndPoint - ImVec2(ev.x, -ev.y);
             else {
                 CTOOL_DEBUG_BREAK;
@@ -2779,12 +2921,14 @@ bool TimeLineSystem::ImGui_DrawGraphLineButton(UniformTimeKey* vKeyStruct, int v
             if (puShowControlPoints) {
                 const int nFrames = vFrame - vLastFrame;
 
-                if (vStartStruct->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_RIGHT || vStartStruct->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_BOTH) {
+                if (vStartStruct->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_RIGHT ||
+                    vStartStruct->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_BOTH) {
                     window->DrawList->AddLine(vStartPoint, middleSplinePoint, GetColorU32(vColor), thick);
                     res |= ImGui_DrawGraphSplinePointButton(vKeyStruct, vLastFrame, vStartPoint, middleSplinePoint, vStartStruct, nFrames, true, vAxis, vFrame_bb);
                 }
 
-                if (vEndStruct->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_LEFT || vEndStruct->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_BOTH) {
+                if (vEndStruct->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_LEFT ||
+                    vEndStruct->timeLineHandlerType == TimeLineHandlerType::TIMELINE_HANDLER_TYPE_CONTROL_POINT_BOTH) {
                     window->DrawList->AddLine(vEndPoint, middleSplinePoint, GetColorU32(vColor), thick);
                     res |= ImGui_DrawGraphSplinePointButton(vKeyStruct, vFrame, vEndPoint, middleSplinePoint, vEndStruct, nFrames, false, vAxis, vFrame_bb);
                 }
@@ -2793,17 +2937,17 @@ bool TimeLineSystem::ImGui_DrawGraphLineButton(UniformTimeKey* vKeyStruct, int v
             if (puShowInterpolatedPoints) {
                 // display pre calculated interpolated values
                 window->DrawList->ChannelsSetCurrent(1);
-                ImVec4 col           = vColor;
-                col.w                = 1.0f;
+                ImVec4 col = vColor;
+                col.w = 1.0f;
                 const int startFrame = vLastFrame / puStepScale;
-                const int endFrame   = vFrame / puStepScale;
+                const int endFrame = vFrame / puStepScale;
                 for (int i = startFrame; i <= endFrame; i++) {
-                    int frame      = i * puStepScale;
+                    int frame = i * puStepScale;
                     const int posX = (int)puPaneOffsetX + GetLocalPosFromFrame(frame);
-                    float v        = 0.0f;
+                    float v = 0.0f;
                     if (vKeyStruct->values[frame].use_count()) {
                         if (vKeyStruct->values[frame]->GetValue(&v, vAxis)) {
-                            const int posY  = (int)(puPaneOffsetY - GetLocalPosFromValue(v));
+                            const int posY = (int)(puPaneOffsetY - GetLocalPosFromValue(v));
                             const ImVec2 pt = vFrame_bb.Min + ImVec2((float)posX, (float)posY);
                             ImGui_DrawGraphPoint(pt, col);
                             {
@@ -2819,10 +2963,10 @@ bool TimeLineSystem::ImGui_DrawGraphLineButton(UniformTimeKey* vKeyStruct, int v
 
             // display bezier
             window->DrawList->ChannelsSetCurrent(0);
-            const ct::fvec2 sv            = GetLocalPosFromFrameValue(vStartStruct->bezierControlStartPoint);
-            const ct::fvec2 ev            = GetLocalPosFromFrameValue(vEndStruct->bezierContorlEndPoint);
+            const ct::fvec2 sv = GetLocalPosFromFrameValue(vStartStruct->bezierControlStartPoint);
+            const ct::fvec2 ev = GetLocalPosFromFrameValue(vEndStruct->bezierContorlEndPoint);
             const ImVec2 startSplinePoint = vStartPoint + ImVec2(sv.x, -sv.y);
-            const ImVec2 endSplinePoint   = vEndPoint - ImVec2(ev.x, -ev.y);
+            const ImVec2 endSplinePoint = vEndPoint - ImVec2(ev.x, -ev.y);
             window->DrawList->AddBezierCubic(vStartPoint, startSplinePoint, endSplinePoint, vEndPoint, GetColorU32(vColor), thick);
 
             if (puShowControlPoints) {
@@ -2857,7 +3001,7 @@ bool TimeLineSystem::ImGui_DrawGraphPointButton(UniformTimeKey* vKeyStruct, std:
 
     if (vKeyStruct && vStruct) {
         const float r = puTextOffsetY * 0.9f;
-        ImVec4 c      = ImVec4(0.8f, 0.8f, 0.8f, 1);
+        ImVec4 c = ImVec4(0.8f, 0.8f, 0.8f, 1);
 
         if (IsKeyInSelection(vStruct)) {
             c = ImVec4(1, 1, 0, 1);
@@ -2865,7 +3009,7 @@ bool TimeLineSystem::ImGui_DrawGraphPointButton(UniformTimeKey* vKeyStruct, std:
 
         if (vHovered && puUseMouseSelectionType != TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_GRABBER_MOVING) {
             if (ct::fvec2(g.IO.MousePos.x - vPoint.x, g.IO.MousePos.y - vPoint.y).lengthSquared() < r * r) {
-                c                 = ImVec4(1, 0, 1, 1);
+                c = ImVec4(1, 0, 1, 1);
                 puMouseOverButton = true;
 
                 if (g.IO.MouseReleased[0]) {
@@ -2906,7 +3050,14 @@ void TimeLineSystem::ImGui_DrawGraphPoint(ImVec2 vPoint, ImVec4 vColor) {
     window->DrawList->AddCircleFilled(vPoint, r, GetColorU32(vColor), 4);
 }
 
-bool TimeLineSystem::ImGui_DrawGraphSplinePointButton(UniformTimeKey* vKeyStruct, int vFrame, ImVec2 vBasePoint, ImVec2 vControlPoint, std::shared_ptr<UploadableUniform> vStruct, int /*vCountFrames*/, bool vIsStartOrEnd, int vAxis,
+bool TimeLineSystem::ImGui_DrawGraphSplinePointButton(UniformTimeKey* vKeyStruct,
+                                                      int vFrame,
+                                                      ImVec2 vBasePoint,
+                                                      ImVec2 vControlPoint,
+                                                      std::shared_ptr<UploadableUniform> vStruct,
+                                                      int /*vCountFrames*/,
+                                                      bool vIsStartOrEnd,
+                                                      int vAxis,
                                                       ImRect /*vFrame_bb*/) {
     ZoneScoped;
 
@@ -2915,20 +3066,21 @@ bool TimeLineSystem::ImGui_DrawGraphSplinePointButton(UniformTimeKey* vKeyStruct
     using namespace ImGui;
 
     ImGuiWindow* window = GetCurrentWindow();
-    ImGuiContext& g     = *GImGui;
+    ImGuiContext& g = *GImGui;
 
     if (vKeyStruct && vStruct.use_count()) {
         const float r = puTextOffsetY * 0.75f;
-        ImVec4 c      = ImVec4(0, 1, 1, 1);
+        ImVec4 c = ImVec4(0, 1, 1, 1);
 
-        if (puUseMouseSelectionType == TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_POINT || puUseMouseSelectionType == TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_CONTROL_POINT) {
+        if (puUseMouseSelectionType == TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_POINT ||
+            puUseMouseSelectionType == TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_CONTROL_POINT) {
             if (g.IO.MouseDown[0])  // left click
             {
                 if (vKeyStruct->currentEditedPoint == vStruct && vKeyStruct->splineStartButtonDown && vKeyStruct->currentAxisButton == vAxis) {
                     if (vKeyStruct->currentStartButton == vFrame && vIsStartOrEnd) {
                         c = ImVec4(1, 0, 1, 1);
 
-                        const ImVec2 cPos   = g.IO.MousePos;
+                        const ImVec2 cPos = g.IO.MousePos;
                         const ImVec2 vec = cPos - vBasePoint;
 
                         // float nFrames = (float)vCountFrames;
@@ -2942,7 +3094,7 @@ bool TimeLineSystem::ImGui_DrawGraphSplinePointButton(UniformTimeKey* vKeyStruct
                         } else if (puBezierHandler == TimeLineSplineHandler::TIMELINE_SPLINE_HANDLER_ALIGNED_SYMMETRIC) {
                             auto it = vKeyStruct->keys[vAxis].find(vFrame);
                             if (!vKeyStruct->keys[vAxis].empty()) {
-                                const auto itBegin   = vKeyStruct->keys[vAxis].begin();
+                                const auto itBegin = vKeyStruct->keys[vAxis].begin();
                                 const int firstFrame = itBegin->first;
                                 if (vFrame > firstFrame) {
                                     it--;
@@ -2958,7 +3110,7 @@ bool TimeLineSystem::ImGui_DrawGraphSplinePointButton(UniformTimeKey* vKeyStruct
                     if (vKeyStruct->currentEndButton == vFrame && !vIsStartOrEnd) {
                         c = ImVec4(1, 0, 1, 1);
 
-                        const ImVec2 cPos   = g.IO.MousePos;
+                        const ImVec2 cPos = g.IO.MousePos;
                         const ImVec2 vec = vBasePoint - cPos;
 
                         // float nFrames = (float)vCountFrames;
@@ -2984,14 +3136,14 @@ bool TimeLineSystem::ImGui_DrawGraphSplinePointButton(UniformTimeKey* vKeyStruct
 
                         if (vIsStartOrEnd) {
                             vKeyStruct->splineStartButtonDown = true;
-                            vKeyStruct->currentStartButton    = vFrame;
-                            vKeyStruct->currentEditedPoint    = vStruct;
-                            vKeyStruct->currentAxisButton     = vAxis;
+                            vKeyStruct->currentStartButton = vFrame;
+                            vKeyStruct->currentEditedPoint = vStruct;
+                            vKeyStruct->currentAxisButton = vAxis;
                         } else {
                             vKeyStruct->splineEndButtonDown = true;
-                            vKeyStruct->currentEndButton    = vFrame;
-                            vKeyStruct->currentEditedPoint  = vStruct;
-                            vKeyStruct->currentAxisButton   = vAxis;
+                            vKeyStruct->currentEndButton = vFrame;
+                            vKeyStruct->currentEditedPoint = vStruct;
+                            vKeyStruct->currentAxisButton = vAxis;
                         }
                     }
 
@@ -3007,11 +3159,11 @@ bool TimeLineSystem::ImGui_DrawGraphSplinePointButton(UniformTimeKey* vKeyStruct
                 }
 
                 vKeyStruct->splineStartButtonDown = false;
-                vKeyStruct->currentStartButton    = -1;
-                vKeyStruct->splineEndButtonDown   = false;
-                vKeyStruct->currentEndButton      = -1;
-                vKeyStruct->currentEditedPoint    = nullptr;
-                vKeyStruct->currentAxisButton     = -1;
+                vKeyStruct->currentStartButton = -1;
+                vKeyStruct->splineEndButtonDown = false;
+                vKeyStruct->currentEndButton = -1;
+                vKeyStruct->currentEditedPoint = nullptr;
+                vKeyStruct->currentAxisButton = -1;
             }
         }
 
@@ -3066,8 +3218,8 @@ ct::fvec2 TimeLineSystem::GetFrameValueFromLocalPos(const ct::fvec2& vPos) {
     ZoneScoped;
 
     ct::fvec2 p = vPos;
-    p.x         = GetFrameFromLocalPos(p.x);
-    p.y         = GetValueFromLocalPos(p.y);
+    p.x = GetFrameFromLocalPos(p.x);
+    p.y = GetValueFromLocalPos(p.y);
     return p;
 }
 
@@ -3075,8 +3227,8 @@ ct::fvec2 TimeLineSystem::GetLocalPosFromFrameValue(const ct::fvec2& vFrameValue
     ZoneScoped;
 
     ct::fvec2 p = vFrameValue;
-    p.x         = (float)GetLocalPosFromFrame(p.x);
-    p.y         = GetLocalPosFromValue(p.y);
+    p.x = (float)GetLocalPosFromFrame(p.x);
+    p.y = GetLocalPosFromValue(p.y);
     return p;
 }
 
@@ -3084,8 +3236,8 @@ ct::fvec2 TimeLineSystem::GetFrameValueFromWorldPos(const ct::fvec2& vPos, const
     ZoneScoped;
 
     ct::fvec2 p = vPos;
-    p.x         = GetFrameFromLocalPos(p.x - vZone.Min.x - puPaneOffsetX);
-    p.y         = GetValueFromLocalPos(vZone.Min.y + puPaneOffsetY - p.y);
+    p.x = GetFrameFromLocalPos(p.x - vZone.Min.x - puPaneOffsetX);
+    p.y = GetValueFromLocalPos(vZone.Min.y + puPaneOffsetY - p.y);
     return p;
 }
 
@@ -3093,8 +3245,8 @@ ct::fvec2 TimeLineSystem::GetWorldPosFromFrameValue(const ct::fvec2& vFrameValue
     ZoneScoped;
 
     ct::fvec2 p = vFrameValue;
-    p.x         = vZone.Min.x + puPaneOffsetX + GetLocalPosFromFrame(p.x);
-    p.y         = vZone.Min.y + puPaneOffsetY - GetLocalPosFromValue(p.y);
+    p.x = vZone.Min.x + puPaneOffsetX + GetLocalPosFromFrame(p.x);
+    p.y = vZone.Min.y + puPaneOffsetY - GetLocalPosFromValue(p.y);
     return p;
 }
 
@@ -3105,7 +3257,7 @@ void TimeLineSystem::ImGui_DrawGrabber(const ImGuiID& vId, const int& vFrame, co
 
     ImGuiWindow* window = GetCurrentWindow();
 
-    ImGuiContext& g         = *GImGui;
+    ImGuiContext& g = *GImGui;
     const ImGuiStyle& style = g.Style;
 
     char buffer[100] = "\0";
@@ -3117,13 +3269,19 @@ void TimeLineSystem::ImGui_DrawGrabber(const ImGuiID& vId, const int& vFrame, co
     }
 
     const int sliderPos = GetLocalPosFromFrame(vFrame);
-    const float offset  = (float)(vOffset + sliderPos);
+    const float offset = (float)(vOffset + sliderPos);
     snprintf(buffer, 100, "%i", vFrame);
     const ImVec2 label_size = CalcTextSize(buffer, nullptr, true);
-    window->DrawList->AddRectFilled(frame_bb.Min + ImVec2(offset - label_size.x, putimeBarHeight - label_size.y - puTextOffsetY * 2.0f), frame_bb.Min + ImVec2(offset + label_size.x, putimeBarHeight),
-                                    GetColorU32(g.ActiveId == vId ? ImGuiCol_SliderGrabActive : ImGuiCol_SliderGrab), style.GrabRounding * 0.5f);
-    window->DrawList->AddLine(ImVec2(offset + frame_bb.Min.x, frame_bb.Min.y + putimeBarHeight + puTextOffsetY), ImVec2(offset + frame_bb.Min.x, frame_bb.Max.y), GetColorU32(g.ActiveId == vId ? ImGuiCol_SliderGrabActive : ImGuiCol_SliderGrab), 3.0f);
-    window->DrawList->AddText(ImVec2(offset + frame_bb.Min.x - label_size.x * 0.5f, frame_bb.Min.y + putimeBarHeight - puTextOffsetY - label_size.y), GetColorU32(ImVec4(1, 1, 1, 1)), buffer);
+    window->DrawList->AddRectFilled(frame_bb.Min + ImVec2(offset - label_size.x, putimeBarHeight - label_size.y - puTextOffsetY * 2.0f),
+                                    frame_bb.Min + ImVec2(offset + label_size.x, putimeBarHeight),
+                                    GetColorU32(g.ActiveId == vId ? ImGuiCol_SliderGrabActive : ImGuiCol_SliderGrab),
+                                    style.GrabRounding * 0.5f);
+    window->DrawList->AddLine(ImVec2(offset + frame_bb.Min.x, frame_bb.Min.y + putimeBarHeight + puTextOffsetY),
+                              ImVec2(offset + frame_bb.Min.x, frame_bb.Max.y),
+                              GetColorU32(g.ActiveId == vId ? ImGuiCol_SliderGrabActive : ImGuiCol_SliderGrab),
+                              3.0f);
+    window->DrawList->AddText(
+        ImVec2(offset + frame_bb.Min.x - label_size.x * 0.5f, frame_bb.Min.y + putimeBarHeight - puTextOffsetY - label_size.y), GetColorU32(ImVec4(1, 1, 1, 1)), buffer);
 
     ImGui::PopClipRect();
 }
@@ -3132,20 +3290,22 @@ bool TimeLineSystem::ImGui_AutoKeyingButton(const char* vName, bool* vAutoKeying
     ZoneScoped;
 
     ImGuiWindow* window = ImGui::GetCurrentWindow();
-    if (window->SkipItems) return false;
+    if (window->SkipItems)
+        return false;
 
-    ImGuiContext& g  = *GImGui;
+    ImGuiContext& g = *GImGui;
     const ImGuiID id = window->GetID(vName);
-    const float h    = ImGui::GetFrameHeight();
-    const ImVec2 sz  = ImVec2(h, h);
+    const float h = ImGui::GetFrameHeight();
+    const ImVec2 sz = ImVec2(h, h);
     const ImRect bb(window->DC.CursorPos, window->DC.CursorPos + sz);
     ImGui::ItemSize(bb);
-    if (!ImGui::ItemAdd(bb, id)) return false;
+    if (!ImGui::ItemAdd(bb, id))
+        return false;
 
     bool hovered, held;
     const bool pressed = ImGui::ButtonBehavior(bb, id, &hovered, &held, ImGuiButtonFlags_PressedOnClick);
 
-    ImU32 col      = ImGui::GetColorU32((hovered && held) ? ImGuiCol_ButtonActive : hovered ? ImGuiCol_ButtonHovered : ImGuiCol_Button);
+    ImU32 col = ImGui::GetColorU32((hovered && held) ? ImGuiCol_ButtonActive : hovered ? ImGuiCol_ButtonHovered : ImGuiCol_Button);
     ImU32 pointCol = ImGui::GetColorU32(ImVec4(0, 0, 0, 1));
     if (vAutoKeying) {
         if (pressed) {
@@ -3153,7 +3313,7 @@ bool TimeLineSystem::ImGui_AutoKeyingButton(const char* vName, bool* vAutoKeying
         }
 
         if (*vAutoKeying) {
-            col      = ImGui::GetColorU32((hovered && held) ? ImGuiCol_HeaderActive : hovered ? ImGuiCol_HeaderHovered : ImGuiCol_Header);
+            col = ImGui::GetColorU32((hovered && held) ? ImGuiCol_HeaderActive : hovered ? ImGuiCol_HeaderHovered : ImGuiCol_Header);
             pointCol = ImGui::GetColorU32(ImVec4(1, 1, 1, 1));
         }
     }
@@ -3165,7 +3325,8 @@ bool TimeLineSystem::ImGui_AutoKeyingButton(const char* vName, bool* vAutoKeying
     const ImVec2 center = bb.GetCenter();
     window->DrawList->AddCircleFilled(center, sz.y * 0.25f, pointCol, 12);
 
-    if (ImGui::IsItemHovered()) ImGui::SetTooltip("Auto Keying with uniform tuning");
+    if (ImGui::IsItemHovered())
+        ImGui::SetTooltip("Auto Keying with uniform tuning");
 
     return pressed;
 }
@@ -3174,15 +3335,17 @@ bool TimeLineSystem::ImGui_AbortButton(const char* vName) {
     ZoneScoped;
 
     ImGuiWindow* window = ImGui::GetCurrentWindow();
-    if (window->SkipItems) return false;
+    if (window->SkipItems)
+        return false;
 
-    ImGuiContext& g  = *GImGui;
+    ImGuiContext& g = *GImGui;
     const ImGuiID id = window->GetID(vName);
-    const float h    = ImGui::GetFrameHeight();
-    const ImVec2 sz  = ImVec2(h, h);
+    const float h = ImGui::GetFrameHeight();
+    const ImVec2 sz = ImVec2(h, h);
     const ImRect bb(window->DC.CursorPos, window->DC.CursorPos + sz);
     ImGui::ItemSize(bb);
-    if (!ImGui::ItemAdd(bb, id)) return false;
+    if (!ImGui::ItemAdd(bb, id))
+        return false;
 
     bool hovered, held;
     const bool pressed = ImGui::ButtonBehavior(bb, id, &hovered, &held, ImGuiButtonFlags_PressedOnClick);
@@ -3193,13 +3356,15 @@ bool TimeLineSystem::ImGui_AbortButton(const char* vName) {
     ImGui::RenderNavHighlight(bb, id);
     ImGui::RenderFrame(bb.Min, bb.Max, col, true, g.Style.FrameRounding);
 
-    ImVec2 center     = bb.GetCenter();
+    ImVec2 center = bb.GetCenter();
     const bool pushed =
         ImGui::PushStyleColorWithContrast1(ImGuiCol_Button, ImGuiCol_Text, ImGui::CustomStyle::puContrastedTextColor, ImGui::CustomStyle::puContrastRatio);
     window->DrawList->AddRectFilled(bb.Min + sz * 0.25f, bb.Max - sz * 0.25f, ImGui::GetColorU32(ImGuiCol_Text));
-    if (pushed) ImGui::PopStyleColor();
+    if (pushed)
+        ImGui::PopStyleColor();
 
-    if (ImGui::IsItemHovered()) ImGui::SetTooltip("Abort Rendering");
+    if (ImGui::IsItemHovered())
+        ImGui::SetTooltip("Abort Rendering");
 
     return pressed;
 }
@@ -3213,7 +3378,12 @@ void TimeLineSystem::ImGui_DrawMouseSelectionRect(ShaderKeyPtr /*vKey*/, ImVec4 
         // ImGuiContext& g = *GImGui;
         // const ImGuiStyle& style = g.Style;
 
-        window->DrawList->AddRect(ImVec2(puStartMouseClick.x, puStartMouseClick.y), ImVec2(puEndMouseClick.x, puEndMouseClick.y), ImGui::GetColorU32(vColor), 0.0f, ImDrawFlags_RoundCornersAll, vThick);
+        window->DrawList->AddRect(ImVec2(puStartMouseClick.x, puStartMouseClick.y),
+                                  ImVec2(puEndMouseClick.x, puEndMouseClick.y),
+                                  ImGui::GetColorU32(vColor),
+                                  0.0f,
+                                  ImDrawFlags_RoundCornersAll,
+                                  vThick);
     }
 }
 
@@ -3221,8 +3391,8 @@ void TimeLineSystem::MoveSelectedKeysWithMouse(ShaderKeyPtr vKey, ImRect vZone, 
     ZoneScoped;
 
     if (vKey) {
-        ct::fvec2 start  = GetFrameValueFromWorldPos(vStartPos, vZone);
-        ct::fvec2 end    = GetFrameValueFromWorldPos(vEndPos, vZone);
+        ct::fvec2 start = GetFrameValueFromWorldPos(vStartPos, vZone);
+        ct::fvec2 end = GetFrameValueFromWorldPos(vEndPos, vZone);
         ct::fvec2 offset = end - start;
 
         if (!offset.emptyAND()) {
@@ -3232,7 +3402,7 @@ void TimeLineSystem::MoveSelectedKeysWithMouse(ShaderKeyPtr vKey, ImRect vZone, 
             auto tmp = vKey->puTimeLine.timeLine;
 
             // on explore le tmp
-            int lastFrame          = 0;
+            int lastFrame = 0;
             bool needRecomputation = false;
             for (auto itStruct = tmp.begin(); itStruct != tmp.end(); ++itStruct) {
                 std::string name = itStruct->first;
@@ -3240,7 +3410,7 @@ void TimeLineSystem::MoveSelectedKeysWithMouse(ShaderKeyPtr vKey, ImRect vZone, 
                     int chan = itKey->first;
                     for (auto itChan = itKey->second.begin(); itChan != itKey->second.end(); ++itChan) {
                         int frame = itChan->first;
-                        auto st   = vKey->puTimeLine.timeLine[name].keys[chan][frame];
+                        auto st = vKey->puTimeLine.timeLine[name].keys[chan][frame];
                         if (st.use_count()) {
                             if (IsKeyInSelection(st)) {
                                 // on recup la valeur
@@ -3321,7 +3491,13 @@ std::vector<int> TimeLineSystem::GetFramesToList(ShaderKeyPtr vKey, std::string 
     return res;
 }
 
-void TimeLineSystem::ReSizeControlPoints(ShaderKeyPtr vKey, std::string vUniformName, int vComponent, int vOldFrame, std::vector<int> vOldFrameKeys, int vNewFrame, std::vector<int> vNewFrameKeys) {
+void TimeLineSystem::ReSizeControlPoints(ShaderKeyPtr vKey,
+                                         std::string vUniformName,
+                                         int vComponent,
+                                         int vOldFrame,
+                                         std::vector<int> vOldFrameKeys,
+                                         int vNewFrame,
+                                         std::vector<int> vNewFrameKeys) {
     ZoneScoped;
 
     // on va redefinir la taille des point de controles
@@ -3332,7 +3508,7 @@ void TimeLineSystem::ReSizeControlPoints(ShaderKeyPtr vKey, std::string vUniform
             const auto it = st->find(vNewFrame);
             if (it != st->end()) {
                 // old
-                size_t ofp       = 0;
+                size_t ofp = 0;
                 const size_t oos = vOldFrameKeys.size();
                 for (size_t i = 0; i < oos; ++i) {
                     if (vOldFrameKeys[i] == vOldFrame) {
@@ -3342,7 +3518,7 @@ void TimeLineSystem::ReSizeControlPoints(ShaderKeyPtr vKey, std::string vUniform
                 }
 
                 // new
-                size_t nfp       = 0;
+                size_t nfp = 0;
                 const size_t nos = vNewFrameKeys.size();
                 for (size_t i = 0; i < nos; ++i) {
                     if (vNewFrameKeys[i] == vNewFrame) {
@@ -3434,14 +3610,14 @@ bool TimeLineSystem::DoSelection(ShaderKeyPtr vKey, ImGuiID /*vId*/, ImRect vWid
             // ClearActiveID();
 
             puUseMouseSelectionType = TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_NONE;
-            puMouseStartOverButton  = false;
+            puMouseStartOverButton = false;
         } else {
             if (g.IO.MouseDown[0])  // bouton gauche enfoncé
             {
                 if (vTimebarZone.Contains(g.IO.MousePos) && puUseMouseSelectionType == TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_NONE ||
                     puUseMouseSelectionType == TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_GRABBER_MOVING)  // selection de frame dans la timezone
                 {
-                    puUseMouseSelectionType   = TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_GRABBER_MOVING;
+                    puUseMouseSelectionType = TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_GRABBER_MOVING;
                     const float mouse_abs_pos = g.IO.MousePos.x - puPaneOffsetX - vWidgetZone.Min.x;
                     const int frameUnderMouse = (int)(mouse_abs_pos * (float)puStepScale / puStepSize);
 
@@ -3454,20 +3630,22 @@ bool TimeLineSystem::DoSelection(ShaderKeyPtr vKey, ImGuiID /*vId*/, ImRect vWid
                 {
                     // first click
                     if (puUseMouseSelectionType == TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_NONE) {
-                        puStartMouseClick.x     = g.IO.MousePos.x;
-                        puStartMouseClick.y     = g.IO.MousePos.y;
+                        puStartMouseClick.x = g.IO.MousePos.x;
+                        puStartMouseClick.y = g.IO.MousePos.y;
                         puUseMouseSelectionType = TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_POINT;
-                        if (puMouseOverButton) puMouseStartOverButton = true;
+                        if (puMouseOverButton)
+                            puMouseStartOverButton = true;
                     }
 
                     if (!puMouseStartOverButton)  // pas au dessus d'un bouton
                     {
                         // rectangle selection
-                        if ((puUseMouseSelectionType == TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_POINT || puUseMouseSelectionType == TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_RECTANGLE)) {
+                        if ((puUseMouseSelectionType == TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_POINT ||
+                             puUseMouseSelectionType == TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_RECTANGLE)) {
                             if (IS_FLOAT_DIFFERENT(g.IO.MousePos.x, puStartMouseClick.x) || IS_FLOAT_DIFFERENT(g.IO.MousePos.y, puStartMouseClick.y)) {
                                 puUseMouseSelectionType = TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_RECTANGLE;
-                                puEndMouseClick.x       = g.IO.MousePos.x;
-                                puEndMouseClick.y       = g.IO.MousePos.y;
+                                puEndMouseClick.x = g.IO.MousePos.x;
+                                puEndMouseClick.y = g.IO.MousePos.y;
                             }
                         }
                     }
@@ -3475,8 +3653,8 @@ bool TimeLineSystem::DoSelection(ShaderKeyPtr vKey, ImGuiID /*vId*/, ImRect vWid
                     if (IsSelectionExist())  // si une selection existe
                     {
                         if (puMouseOverButton && puUseMouseSelectionType == TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_POINT) {
-                            puStartMouseClick.x     = g.IO.MousePos.x;
-                            puStartMouseClick.y     = g.IO.MousePos.y;
+                            puStartMouseClick.x = g.IO.MousePos.x;
+                            puStartMouseClick.y = g.IO.MousePos.y;
                             puUseMouseSelectionType = TimeLineMouseSelectionType::TIMELINE_MOUSE_SELECTION_TYPE_MOVE_POINT;
                         }
 
@@ -3485,7 +3663,8 @@ bool TimeLineSystem::DoSelection(ShaderKeyPtr vKey, ImGuiID /*vId*/, ImRect vWid
                                 puEndMouseClick.x = g.IO.MousePos.x;
                                 puEndMouseClick.y = g.IO.MousePos.y;
 
-                                MoveSelectedKeysWithMouse(vKey, vWidgetZone, ct::fvec2(puStartMouseClick.x, puStartMouseClick.y), ct::fvec2(puEndMouseClick.x, puEndMouseClick.y));
+                                MoveSelectedKeysWithMouse(
+                                    vKey, vWidgetZone, ct::fvec2(puStartMouseClick.x, puStartMouseClick.y), ct::fvec2(puEndMouseClick.x, puEndMouseClick.y));
 
                                 puStartMouseClick.x = puEndMouseClick.x;
                                 puStartMouseClick.y = puEndMouseClick.y;
@@ -3522,11 +3701,11 @@ void TimeLineSystem::Clean_KeepOnlyChangedUniforms(ShaderKeyPtr vKey) {
     if (vKey) {
         std::list<std::string> UniformsToRemove;
         for (auto itUni = vKey->puTimeLine.timeLine.begin(); itUni != vKey->puTimeLine.timeLine.end(); ++itUni) {
-            std::string name          = itUni->first;
+            std::string name = itUni->first;
             uType::uTypeEnum glslType = itUni->second.glslType;
-            bool change               = false;
+            bool change = false;
             for (auto itChan = itUni->second.keys.begin(); itChan != itUni->second.keys.end(); ++itChan) {
-                int chan                                = itChan->first;
+                int chan = itChan->first;
                 std::shared_ptr<UploadableUniform> last = nullptr;
                 if (itChan->second.size() > 1) {
                     for (auto frame : itChan->second) {
@@ -3623,7 +3802,7 @@ TimeLineInfos TimeLineSystem::LoadTimeLineConfig(std::string vConfigFile) {
             auto timekey = UniformTimeKey();
             if (arr.size() == 1) {
                 std::string s = arr[0];
-                size_t fc     = s.find('[');
+                size_t fc = s.find('[');
                 if (fc != std::string::npos) {
                     size_t ec = s.find(']', fc + 1);
                     if (ec != std::string::npos) {
@@ -3634,9 +3813,12 @@ TimeLineInfos TimeLineSystem::LoadTimeLineConfig(std::string vConfigFile) {
                 }
             } else {
                 for (size_t idx = 0; idx < arr.size(); idx++) {
-                    if (idx == 0) timekey.uniformName = arr[idx];
-                    if (idx == 1) timekey.glslType = uType::GetGlslTypeFromString(arr[idx]);
-                    if (idx == 2) timekey.widget = arr[idx];
+                    if (idx == 0)
+                        timekey.uniformName = arr[idx];
+                    if (idx == 1)
+                        timekey.glslType = uType::GetGlslTypeFromString(arr[idx]);
+                    if (idx == 2)
+                        timekey.widget = arr[idx];
                     if (idx > 2) {
                         // 0(0,0.430333;21,0.37845;45,0.340716;68,0.334598;90,0.337801)
                         auto str = arr[idx];
@@ -3645,11 +3827,11 @@ TimeLineInfos TimeLineSystem::LoadTimeLineConfig(std::string vConfigFile) {
                             if (ch == "[") {
                                 size_t endCrochet = str.find(']');
                                 if (endCrochet != std::string::npos) {
-                                    std::string res                                    = str.substr(1, endCrochet - 1);
+                                    std::string res = str.substr(1, endCrochet - 1);
                                     UniformHelper::FBOSizeForMouseUniformNormalization = ct::fvec2(res, ';');
                                 }
                             } else {
-                                int chan        = ct::ivariant(ch).GetI();
+                                int chan = ct::ivariant(ch).GetI();
                                 size_t firstPar = str.find('(', 0);
                                 if (firstPar != std::string::npos) {
                                     size_t endPar = str.find(')', firstPar);
@@ -3666,8 +3848,8 @@ TimeLineInfos TimeLineSystem::LoadTimeLineConfig(std::string vConfigFile) {
                                                 int frame = ct::ivariant(key[0]).GetI();
 
                                                 std::shared_ptr<UploadableUniform> uni = std::make_shared<UploadableUniform>();
-                                                uni->uniformName                       = timekey.uniformName;
-                                                uni->glslType                          = timekey.glslType;
+                                                uni->uniformName = timekey.uniformName;
+                                                uni->glslType = timekey.glslType;
 
                                                 switch (timekey.glslType) {
                                                     case uType::uTypeEnum::U_FLOAT:
@@ -3675,7 +3857,7 @@ TimeLineInfos TimeLineSystem::LoadTimeLineConfig(std::string vConfigFile) {
                                                     case uType::uTypeEnum::U_VEC3:
                                                     case uType::uTypeEnum::U_VEC4: {
                                                         uni->useFloat[chan] = 1;
-                                                        float v             = ct::fvariant(key[1]).GetF();
+                                                        float v = ct::fvariant(key[1]).GetF();
                                                         if (timekey.widget == "mouse_2pos_2click" || timekey.widget == "mouse_2press_2click") {
                                                             if (timekey.glslType == uType::uTypeEnum::U_VEC4) {
                                                                 uni->xyzw[chan] = v * UniformHelper::FBOSizeForMouseUniformNormalization[chan % 2];
@@ -3689,36 +3871,51 @@ TimeLineInfos TimeLineSystem::LoadTimeLineConfig(std::string vConfigFile) {
                                                     case uType::uTypeEnum::U_BVEC3:
                                                     case uType::uTypeEnum::U_BVEC4: {
                                                         uni->useBool[chan] = 1;
-                                                        float v            = ct::fvariant(key[1]).GetF();
-                                                        uni->xyzw[chan]    = v;
+                                                        float v = ct::fvariant(key[1]).GetF();
+                                                        uni->xyzw[chan] = v;
                                                     } break;
                                                     case uType::uTypeEnum::U_INT:
                                                     case uType::uTypeEnum::U_IVEC2:
                                                     case uType::uTypeEnum::U_IVEC3:
                                                     case uType::uTypeEnum::U_IVEC4: {
                                                         uni->useInt[chan] = 1;
-                                                        int v             = ct::ivariant(key[1]).GetI();
-                                                        uni->ixyzw[chan]  = v;
+                                                        int v = ct::ivariant(key[1]).GetI();
+                                                        uni->ixyzw[chan] = v;
                                                     } break;
                                                     case uType::uTypeEnum::U_MAT2: {
-                                                        uni->useMat     = 1;
+                                                        uni->useMat = 1;
                                                         const auto& vec = ct::fvariant(key[1]).GetVectorFloat(',');
                                                         if (vec.size() == 4) {
                                                             uni->mat4 = glm::mat2(vec[0], vec[1], vec[2], vec[3]);
                                                         }
                                                     } break;
                                                     case uType::uTypeEnum::U_MAT3: {
-                                                        uni->useMat     = 1;
+                                                        uni->useMat = 1;
                                                         const auto& vec = ct::fvariant(key[1]).GetVectorFloat(',');
                                                         if (vec.size() == 9) {
                                                             uni->mat4 = glm::mat3(vec[0], vec[1], vec[2], vec[3], vec[4], vec[5], vec[6], vec[7], vec[8]);
                                                         }
                                                     } break;
                                                     case uType::uTypeEnum::U_MAT4: {
-                                                        uni->useMat     = 1;
+                                                        uni->useMat = 1;
                                                         const auto& vec = ct::fvariant(key[1]).GetVectorFloat(',');
                                                         if (vec.size() == 16) {
-                                                            uni->mat4 = glm::mat4(vec[0], vec[1], vec[2], vec[3], vec[4], vec[5], vec[6], vec[7], vec[8], vec[9], vec[10], vec[11], vec[12], vec[13], vec[14], vec[15]);
+                                                            uni->mat4 = glm::mat4(vec[0],
+                                                                                  vec[1],
+                                                                                  vec[2],
+                                                                                  vec[3],
+                                                                                  vec[4],
+                                                                                  vec[5],
+                                                                                  vec[6],
+                                                                                  vec[7],
+                                                                                  vec[8],
+                                                                                  vec[9],
+                                                                                  vec[10],
+                                                                                  vec[11],
+                                                                                  vec[12],
+                                                                                  vec[13],
+                                                                                  vec[14],
+                                                                                  vec[15]);
                                                         }
                                                     } break;
                                                     default: break;
@@ -3727,7 +3924,7 @@ TimeLineInfos TimeLineSystem::LoadTimeLineConfig(std::string vConfigFile) {
                                                 // spline control points
                                                 if (key.size() == 6) {
                                                     uni->bezierControlStartPoint = ct::fvec2(ct::fvariant(key[2]).GetF(), ct::fvariant(key[3]).GetF());
-                                                    uni->bezierContorlEndPoint   = ct::fvec2(ct::fvariant(key[4]).GetF(), ct::fvariant(key[5]).GetF());
+                                                    uni->bezierContorlEndPoint = ct::fvec2(ct::fvariant(key[4]).GetF(), ct::fvariant(key[5]).GetF());
                                                 }
 
                                                 timekey.keys[chan][frame] = uni;
@@ -3765,7 +3962,7 @@ bool TimeLineSystem::SaveTimeLineConfig(std::string vConfigFile, TimeLineInfos v
         if (!vTimeLineInfos.timeLine.empty()) {
             for (auto it = vTimeLineInfos.timeLine.begin(); it != vTimeLineInfos.timeLine.end(); ++it) {
                 uType::uTypeEnum glslType = it->second.glslType;
-                std::string widget        = it->second.widget;
+                std::string widget = it->second.widget;
                 ct::replaceString(widget, ":", "_");
 
                 std::string lineUniform = it->second.uniformName + ":" + ConvertUniformsTypeEnumToString(glslType) + ":" + widget + ":";
@@ -3779,15 +3976,17 @@ bool TimeLineSystem::SaveTimeLineConfig(std::string vConfigFile, TimeLineInfos v
                 for (auto itStr = it->second.keys.begin(); itStr != it->second.keys.end(); ++itStr) {
                     int chan = itStr->first;
 
-                    if (itStr != it->second.keys.begin()) lineUniform += ":";
+                    if (itStr != it->second.keys.begin())
+                        lineUniform += ":";
 
                     lineUniform += ct::toStr(chan) + "(";
 
                     for (auto itKey = itStr->second.begin(); itKey != itStr->second.end(); ++itKey) {
                         int frame = itKey->first;
-                        auto uni  = itKey->second;
+                        auto uni = itKey->second;
                         if (uni.use_count()) {
-                            if (itKey != itStr->second.begin()) lineUniform += ";";
+                            if (itKey != itStr->second.begin())
+                                lineUniform += ";";
 
                             lineUniform += ct::toStr(frame) + ",";
 
@@ -3818,19 +4017,22 @@ bool TimeLineSystem::SaveTimeLineConfig(std::string vConfigFile, TimeLineInfos v
                                 } break;
                                 case uType::uTypeEnum::U_MAT2: {
                                     for (int i = 0; i < 4; i++) {
-                                        if (i > 0) lineUniform += ',';
+                                        if (i > 0)
+                                            lineUniform += ',';
                                         lineUniform += ct::toStr(glm::value_ptr(uni->mat4)[i]);
                                     }
                                 } break;
                                 case uType::uTypeEnum::U_MAT3: {
                                     for (int i = 0; i < 9; i++) {
-                                        if (i > 0) lineUniform += ',';
+                                        if (i > 0)
+                                            lineUniform += ',';
                                         lineUniform += ct::toStr(glm::value_ptr(uni->mat4)[i]);
                                     }
                                 } break;
                                 case uType::uTypeEnum::U_MAT4: {
                                     for (int i = 0; i < 16; i++) {
-                                        if (i > 0) lineUniform += ',';
+                                        if (i > 0)
+                                            lineUniform += ',';
                                         lineUniform += ct::toStr(glm::value_ptr(uni->mat4)[i]);
                                     }
                                 } break;
@@ -3873,7 +4075,7 @@ void TimeLineSystem::ShowCurveForUniform(ShaderKeyPtr vKey, std::string vUniform
     if (vKey) {
         auto it = vKey->puTimeLine.timeLine.find(vUniformName);
         if (it != vKey->puTimeLine.timeLine.end()) {
-            //std::string name = it->first;
+            // std::string name = it->first;
             for (auto itChan = it->second.keys.begin(); itChan != it->second.keys.end(); ++itChan) {
                 ShowCurveForUniformAxis(vUniformName, itChan->first);
             }
@@ -3904,7 +4106,8 @@ void TimeLineSystem::HideCurveForUniformAxis(std::string vUniformName, int vAxis
     if (puUniformsToEdit.find(vUniformName) != puUniformsToEdit.end())  // trouvé
     {
         puUniformsToEdit[vUniformName] &= ~puTimeLineItemAxisMasks[vAxis];
-        if (puUniformsToEdit[vUniformName] == 0) HideCurveForUniform(vUniformName);
+        if (puUniformsToEdit[vUniformName] == 0)
+            HideCurveForUniform(vUniformName);
     }
 }
 
@@ -3912,7 +4115,8 @@ bool TimeLineSystem::IsShowingCurves(ShaderKeyPtr vKey) {
     ZoneScoped;
 
     if (vKey) {
-        if (vKey->puTimeLine.timeLine.empty()) puUniformsToEdit.clear();
+        if (vKey->puTimeLine.timeLine.empty())
+            puUniformsToEdit.clear();
     }
     return (!puUniformsToEdit.empty());
 }
