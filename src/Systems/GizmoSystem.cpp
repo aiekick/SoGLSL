@@ -872,7 +872,7 @@ bool GizmoSystem::LoadRenderPack() {
     return false;
 }
 
-void GizmoSystem::SetRenderPackFXAA(bool vUseFXAA, int vCountSamples) {
+void GizmoSystem::SetRenderPackFXAA(const bool& vUseFXAA, const int32_t& vCountSamples) {
     if (puGizmoCulling_RenderPack) {
         puGizmoCulling_RenderPack->puUseFXAA = vUseFXAA;
         puGizmoCulling_RenderPack->puCountFXAASamples = vCountSamples;

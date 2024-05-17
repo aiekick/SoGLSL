@@ -19,6 +19,7 @@
 #include <ctools/ConfigAbstract.h>
 #include <Headers/RenderPackHeaders.h>
 #include <Interfaces/WidgetInterface.h>
+#include <Interfaces/SubSystemInterface.h>
 #include <Renderer/RenderPack.h>
 
 #include <miniaudio.h>
@@ -32,7 +33,7 @@ class RenderPack;
 class UniformVariant;
 
 struct UniformParsedStruct;
-class SoundSystem : public WidgetInterface, public conf::ConfigAbstract {
+class SoundSystem : public WidgetInterface, public SubSystemInterface, public conf::ConfigAbstract {
 public:
     static constexpr size_t scFftSize = 512U;
     static constexpr size_t scFullFftSize = scFftSize * 2U;
@@ -119,14 +120,15 @@ public:
     bool setFromXml(tinyxml2::XMLElement* vElem, tinyxml2::XMLElement* vParent, const std::string& vUserDatas) override;
 
 public:
-    std::string InitRenderPack(const GuiBackend_Window& vWin, CodeTreePtr vCodeTree);
-    bool LoadRenderPack();
-    void FinishRenderPack();
-    void DestroyRenderPack();
-    RenderPackWeak GetRenderPack() {
+    std::string InitRenderPack(const GuiBackend_Window& vWin, CodeTreePtr vCodeTree) override;
+    bool LoadRenderPack() override;
+    void SaveRenderPack() override{}
+    void FinishRenderPack() override;
+    void DestroyRenderPack() override;
+    RenderPackWeak GetRenderPack() override {
         return m_SoundHisto_RenderPack_Ptr;
     }
-    ShaderKeyPtr GetShaderKey() {
+    ShaderKeyPtr GetShaderKey() override {
         return m_SoundHisto_Key_Ptr;
     }
 

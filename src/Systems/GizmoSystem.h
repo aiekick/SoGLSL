@@ -19,6 +19,7 @@
 #include <ctools/ConfigAbstract.h>
 #include <Headers/RenderPackHeaders.h>
 #include <Interfaces/WidgetInterface.h>
+#include <Interfaces/SubSystemInterface.h>
 
 #include <ImGuiPack/ImGuiPack.h>
 
@@ -32,7 +33,7 @@ class RenderPack;
 class UniformVariant;
 
 struct UniformParsedStruct;
-class GizmoSystem : public WidgetInterface, public conf::ConfigAbstract {
+class GizmoSystem : public WidgetInterface, public SubSystemInterface, public conf::ConfigAbstract {
 public:
     bool puActivated = false;
     bool puUseGizmoCulling = false;
@@ -106,17 +107,17 @@ private:
     void Complete_Uniform_Culling(ShaderKeyPtr vParentKey, RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform);
 
 public:
-    std::string InitRenderPack(const GuiBackend_Window& vWin, CodeTreePtr vCodeTree);
-    bool LoadRenderPack();
-    void SetRenderPackFXAA(bool vUseFXAA, int vCountSamples);
-    void SaveRenderPack();
-    void FinishRenderPack();
-    void DestroyRenderPack();
+    std::string InitRenderPack(const GuiBackend_Window& vWin, CodeTreePtr vCodeTree) override;
+    bool LoadRenderPack() override;
+    void SetRenderPackFXAA(const bool& vUseFXAA, const int32_t& vCountSamples);
+    void SaveRenderPack() override;
+    void FinishRenderPack() override;
+    void DestroyRenderPack() override;
     void CreateGizmoCullingScript();
-    RenderPackWeak GetRenderPack() {
+    RenderPackWeak GetRenderPack() override{
         return puGizmoCulling_RenderPack;
     }
-    ShaderKeyPtr GetShaderKey() {
+    ShaderKeyPtr GetShaderKey() override{
         return puGizmoCulling_Key;
     }
 
