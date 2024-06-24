@@ -1,7 +1,7 @@
 FetchContent_Declare(
 	stb
 	GIT_REPOSITORY	https://github.com/nothings/stb.git
-	GIT_TAG			ae721c50eaf761660b4f90cc590453cdb0c2acd0 # alst commit at 13/02/2024 since there is no tags
+	GIT_TAG			013ac3beddff3dbffafd5177e7972067cd2b5083 # last commit at 31/05/2024 since there is no tags
 	SOURCE_DIR		${CMAKE_CURRENT_SOURCE_DIR}/build/_deps/stb
 	GIT_PROGRESS	true
 	GIT_SHALLOW		true
