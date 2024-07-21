@@ -26,7 +26,7 @@
 #include <Systems/CameraSystem.h>
 #include <Profiler/TracyProfiler.h>
 #include <ImGuiPack.h>
-#include <InAppGpuProfiler/InAppGpuProfiler.h>
+#include <InAppGpuProfiler/iagp.h>
 #include <functional>
 
 /////////////////////////////////////////////////////////////////////
