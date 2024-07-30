@@ -250,8 +250,14 @@ public:
     void FillIncludeFileList(std::list<ShaderKeyPtr> vShaderKey);
     void FillIncludeFileListOfShaderKey(ShaderKeyPtr vShaderKey);
     void SaveConfigIncludeFiles();
-    void SaveConfigIncludeFile(const std::string& vKey, std::unordered_map<std::string, UniformsMultiLoc*>* vMultiLocs, const std::string& vUniformConfigName, bool vIsConfigFile=false);
-    void LoadConfigIncludeFile(const std::string& vShaderFileName, const CONFIG_TYPE_Enum& vConfigType, const std::string& vUniformConfigName, bool vIsConfigFile=false);
+    void SaveConfigIncludeFile(const std::string& vKey,
+                               std::unordered_map<std::string, UniformsMultiLoc*>* vMultiLocs,
+                               const std::string& vUniformConfigName,
+                               const bool vIsConfigFile = false);
+    void LoadConfigIncludeFile(const std::string& vShaderFileName,
+                               const CONFIG_TYPE_Enum& vConfigType,
+                               const std::string& vUniformConfigName,
+                               const bool vIsConfigFile = false);
     void AddUniformNameForIncludeFile(const std::string& vUniformName, const std::string& vIncludeFile);
     void SetUniformPointerForIncludeUniformName(ShaderKeyPtr vShaderKey, UniformVariantPtr vUniformPointer, const std::string& vUniformName);
 

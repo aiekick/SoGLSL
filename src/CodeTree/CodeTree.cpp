@@ -2304,7 +2304,7 @@ void CodeTree::SaveConfigIncludeFiles() {
 void CodeTree::SaveConfigIncludeFile(const std::string& vKey,
                                      std::unordered_map<std::string, UniformsMultiLoc*>* vMultiLocs,
                                      const std::string& vUniformConfigName,
-                                     bool vIsConfigFile) {
+                                     const bool vIsConfigFile) {
     std::string configFile = CodeTree::GetConfigFileName(vKey, vUniformConfigName);
 
     if (!configFile.empty()) {
@@ -2353,7 +2353,10 @@ void CodeTree::SaveConfigIncludeFile(const std::string& vKey,
 // [FIXME]
 // je pige pas pourquoi je charge pas les multiloc actuellement et fait un propagate pluto que charger tout les includes...
 // a refactoer dans la shaderkey
-void CodeTree::LoadConfigIncludeFile(const std::string& vShaderFileName, const CONFIG_TYPE_Enum& vConfigType, const std::string& vUniformConfigName, bool vIsConfigFile) {
+void CodeTree::LoadConfigIncludeFile(const std::string& vShaderFileName,
+                                     const CONFIG_TYPE_Enum& vConfigType,
+                                     const std::string& vUniformConfigName,
+                                     const bool vIsConfigFile) {
     std::string configFile = CodeTree::GetConfigFileName(vShaderFileName, vUniformConfigName);
 
     if (!configFile.empty()) {
@@ -2406,7 +2409,9 @@ void CodeTree::LoadConfigIncludeFile(const std::string& vShaderFileName, const C
                                 if (name == "UniformSection" && arr.size() > 2) {
                                     puIncludeUniformSectionOpened[vShaderFileName][arr[1]] = ct::ivariant(arr[2]).GetB();
                                 } else if (!vIsConfigFile && name == "UniformLocked" && arr.size() > 1) {
-                                    if (dico->find(arr[1]) != dico->end()) {  // found
+                                    if (vIsConfigFile) {
+                                        dico->at(arr[1])->uniform->lockedAgainstConfigLoading = false;
+                                    } else if (dico->find(arr[1]) != dico->end()) {  // found
                                         dico->at(arr[1])->uniform->lockedAgainstConfigLoading = true;
                                     }
                                 } else {

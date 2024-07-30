@@ -474,8 +474,11 @@ public:
     void ClearReplaceCodes();
 
     // config files *.conf
-    void LoadConfigShaderFile(const std::string& vShaderFileName, const CONFIG_TYPE_Enum& vConfigType, const std::string& vUniformConfigName, bool vIsConfigFile = false);
-    void SaveConfigShaderFile(std::string vShaderFileName, CONFIG_TYPE_Enum vConfigType, std::string vUniformConfigName, bool vIsConfigFile = false);
+    void LoadConfigShaderFile(const std::string& vShaderFileName,
+                              const CONFIG_TYPE_Enum& vConfigType,
+                              const std::string& vUniformConfigName,
+                              const bool vIsConfigFile = false);
+    void SaveConfigShaderFile(std::string vShaderFileName, CONFIG_TYPE_Enum vConfigType, std::string vUniformConfigName, const bool vIsConfigFile = false);
     void LoadRenderPackConfig(CONFIG_TYPE_Enum vConfigType);
     void LoadConfigIncludeFile(std::string vUniformConfigName);
     void SaveRenderPackConfig(CONFIG_TYPE_Enum vConfigType);
