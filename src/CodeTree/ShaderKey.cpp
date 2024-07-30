@@ -2059,7 +2059,7 @@ void ShaderKey::AddBufferName(const std::string& vBufferName, bool vPropagateToP
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ShaderKey::LoadConfigShaderFile(const std::string& vShaderFileName, const CONFIG_TYPE_Enum& vConfigType, const std::string& vUniformConfigName) {
+void ShaderKey::LoadConfigShaderFile(const std::string& vShaderFileName, const CONFIG_TYPE_Enum& vConfigType, const std::string& vUniformConfigName, bool vIsConfigFile) {
     std::string configFile = CodeTree::GetConfigFileName(vShaderFileName, vUniformConfigName);
 
     if (!configFile.empty()) {
@@ -2117,7 +2117,7 @@ void ShaderKey::LoadConfigShaderFile(const std::string& vShaderFileName, const C
 
                     if (name == "UniformSection" && arr.size() > 2) {
                         puUniformSectionOpened[arr[1]] = ct::ivariant(arr[2]).GetB();
-                    } else if (name == "UniformLocked" && arr.size() > 1) {
+                    } else if (!vIsConfigFile && name == "UniformLocked" && arr.size() > 1) {
                         if (puUniformsDataBase.find(arr[1]) != puUniformsDataBase.end()) {  // found
                             puUniformsDataBase.at(arr[1])->lockedAgainstConfigLoading = true;
                         }
@@ -2144,7 +2144,7 @@ void ShaderKey::LoadConfigShaderFile(const std::string& vShaderFileName, const C
     }
 }
 
-void ShaderKey::SaveConfigShaderFile(std::string vShaderFileName, CONFIG_TYPE_Enum vConfigType, std::string vUniformConfigName) {
+void ShaderKey::SaveConfigShaderFile(std::string vShaderFileName, CONFIG_TYPE_Enum vConfigType, std::string vUniformConfigName, bool vIsConfigFile) {
     if (!vShaderFileName.empty()) {
         std::string configFile = puParentCodeTree->GetConfigFileName(vShaderFileName, vUniformConfigName);
 
@@ -2189,7 +2189,7 @@ void ShaderKey::SaveConfigShaderFile(std::string vShaderFileName, CONFIG_TYPE_En
                         // on vaut sauver que les uniforms qui ne sont que dans ce shader, donc pas utilise dans des includes
                         if (puParentCodeTree->puIncludeUniformNames.find(it->second->name) == puParentCodeTree->puIncludeUniformNames.end()) {  // non found
                             uniformStream += UniformHelper::SerializeUniform(it->second);
-                            if (it->second->lockedAgainstConfigLoading) {
+                            if (!vIsConfigFile && it->second->lockedAgainstConfigLoading) {
                                 uniformLockedStream += "UniformLocked:" + it->second->name + "\n";
                             }
                             sectionUsed[it->second->sectionName] = 0;

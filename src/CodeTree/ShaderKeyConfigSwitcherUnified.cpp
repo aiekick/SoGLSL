@@ -264,10 +264,10 @@ bool ConfigSwitcherUnit::prNewConfigField(const float& /*aw*/) {
 
                 if (prShaderKey->puIsInclude) {
                     if (prCodeTree->puIncludeUniformsList.find(prShaderKey->puKey) != prCodeTree->puIncludeUniformsList.end()) {
-                        prCodeTree->SaveConfigIncludeFile(prShaderKey->puKey, &prCodeTree->puIncludeUniformsList[prShaderKey->puKey], configName);
+                        prCodeTree->SaveConfigIncludeFile(prShaderKey->puKey, &prCodeTree->puIncludeUniformsList[prShaderKey->puKey], configName, true);
                     }
                 } else {
-                    prShaderKey->SaveConfigShaderFile(prShaderKey->puKey, CONFIG_TYPE_Enum::CONFIG_TYPE_UNIFORM, configName);
+                    prShaderKey->SaveConfigShaderFile(prShaderKey->puKey, CONFIG_TYPE_Enum::CONFIG_TYPE_UNIFORM, configName, true);
                 }
 
                 SaveUniformConfigSummaryFile(prShaderKey->puKey);
@@ -391,9 +391,9 @@ void ConfigSwitcherUnit::SelectConfigByName(const std::string& vName) {
     }
 
     if (prShaderKey->puIsInclude) {
-        prCodeTree->LoadConfigIncludeFile(prShaderKey->puKey, CONFIG_TYPE_Enum::CONFIG_TYPE_UNIFORM, vName);
+        prCodeTree->LoadConfigIncludeFile(prShaderKey->puKey, CONFIG_TYPE_Enum::CONFIG_TYPE_UNIFORM, vName, true);
     } else {
-        prShaderKey->LoadConfigShaderFile(prShaderKey->puKey, CONFIG_TYPE_Enum::CONFIG_TYPE_UNIFORM, vName);
+        prShaderKey->LoadConfigShaderFile(prShaderKey->puKey, CONFIG_TYPE_Enum::CONFIG_TYPE_UNIFORM, vName, true);
     }
 
     prShaderKey->puConfigSwitcherSelectedConfig = vName;
@@ -446,10 +446,10 @@ bool ConfigSwitcherUnit::DrawConfigSwitcher(const float& vWidth, const float& /*
                 if (prShaderKey->puIsInclude) {
                     if (prCodeTree->puIncludeUniformsList.find(prShaderKey->puKey) != prCodeTree->puIncludeUniformsList.end()) {
                         prCodeTree->SaveConfigIncludeFile(
-                            prShaderKey->puKey, &prCodeTree->puIncludeUniformsList[prShaderKey->puKey], prShaderKey->puConfigSwitcherSelectedConfig);
+                            prShaderKey->puKey, &prCodeTree->puIncludeUniformsList[prShaderKey->puKey], prShaderKey->puConfigSwitcherSelectedConfig, true);
                     }
                 } else {
-                    prShaderKey->SaveConfigShaderFile(prShaderKey->puKey, CONFIG_TYPE_Enum::CONFIG_TYPE_UNIFORM, prShaderKey->puConfigSwitcherSelectedConfig);
+                    prShaderKey->SaveConfigShaderFile(prShaderKey->puKey, CONFIG_TYPE_Enum::CONFIG_TYPE_UNIFORM, prShaderKey->puConfigSwitcherSelectedConfig, true);
                 }
 
                 SaveUniformConfigSummaryFile(prShaderKey->puKey);

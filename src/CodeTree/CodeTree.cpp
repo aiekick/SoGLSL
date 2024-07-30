@@ -2301,7 +2301,10 @@ void CodeTree::SaveConfigIncludeFiles() {
     }
 }
 
-void CodeTree::SaveConfigIncludeFile(const std::string& vKey, std::unordered_map<std::string, UniformsMultiLoc*>* vMultiLocs, const std::string& vUniformConfigName) {
+void CodeTree::SaveConfigIncludeFile(const std::string& vKey,
+                                     std::unordered_map<std::string, UniformsMultiLoc*>* vMultiLocs,
+                                     const std::string& vUniformConfigName,
+                                     bool vIsConfigFile) {
     std::string configFile = CodeTree::GetConfigFileName(vKey, vUniformConfigName);
 
     if (!configFile.empty()) {
@@ -2322,7 +2325,7 @@ void CodeTree::SaveConfigIncludeFile(const std::string& vKey, std::unordered_map
                 UniformsMultiLoc* loc = itLoc->second;
 
                 uniformStream += UniformHelper::SerializeUniform(loc->uniform);
-                if (loc->uniform->lockedAgainstConfigLoading) {
+                if (!vIsConfigFile && loc->uniform->lockedAgainstConfigLoading) {
                     uniformLockedStream += "UniformLocked:" + loc->uniform->name + "\n";
                 }
                 sectionUsed[loc->uniform->sectionName] = 0;
@@ -2350,7 +2353,7 @@ void CodeTree::SaveConfigIncludeFile(const std::string& vKey, std::unordered_map
 // [FIXME]
 // je pige pas pourquoi je charge pas les multiloc actuellement et fait un propagate pluto que charger tout les includes...
 // a refactoer dans la shaderkey
-void CodeTree::LoadConfigIncludeFile(const std::string& vShaderFileName, const CONFIG_TYPE_Enum& vConfigType, const std::string& vUniformConfigName) {
+void CodeTree::LoadConfigIncludeFile(const std::string& vShaderFileName, const CONFIG_TYPE_Enum& vConfigType, const std::string& vUniformConfigName, bool vIsConfigFile) {
     std::string configFile = CodeTree::GetConfigFileName(vShaderFileName, vUniformConfigName);
 
     if (!configFile.empty()) {
@@ -2402,7 +2405,7 @@ void CodeTree::LoadConfigIncludeFile(const std::string& vShaderFileName, const C
 
                                 if (name == "UniformSection" && arr.size() > 2) {
                                     puIncludeUniformSectionOpened[vShaderFileName][arr[1]] = ct::ivariant(arr[2]).GetB();
-                                } else if (name == "UniformLocked" && arr.size() > 1) {
+                                } else if (!vIsConfigFile && name == "UniformLocked" && arr.size() > 1) {
                                     if (dico->find(arr[1]) != dico->end()) {  // found
                                         dico->at(arr[1])->uniform->lockedAgainstConfigLoading = true;
                                     }

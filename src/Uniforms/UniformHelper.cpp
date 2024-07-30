@@ -330,11 +330,11 @@ int UniformHelper::UpdateMipMap(const GuiBackend_Window& vWin, UniformVariantPtr
 }
 
 ////////////////////////////////////////
-// if absolute path is z:\\, we will have an issue since each uniforms params are spliited by ':'
-// theses two function will secure / desecure these path by replace "Z:\\" by "drive(Z)" and "drive(Z)" by "Z:\\"
+// if absolute path is c:\\, we will have an issue since each uniforms params are spliited by ':'
+// theses two function will secure / desecure these path by replace "C:\\" by "drive(C)" and "drive(C)" by "C:\\"
 std::string UniformHelper::SecureAbsolutePath(const std::string& vAbsolutePath) {
     auto res = vAbsolutePath;
-    // will replace "Z:\\" by "[drive[Z]]"
+    // will replace "C:\\" by "[drive[C]]"
 #ifdef WIN32
     if (!vAbsolutePath.empty()) {
         const auto& pos = vAbsolutePath.find(":\\");
@@ -348,7 +348,7 @@ std::string UniformHelper::SecureAbsolutePath(const std::string& vAbsolutePath) 
 
 std::string UniformHelper::DeSecureAbsolutePath(const std::string& vAbsolutePath) {
     auto res = vAbsolutePath;
-    // will replace "[drive[Z]]" by "Z:\\"
+    // will replace "[drive[C]]" by "C:\\"
 #ifdef WIN32
     if (!vAbsolutePath.empty()) {
         const auto& pos = vAbsolutePath.find("[drive[");
