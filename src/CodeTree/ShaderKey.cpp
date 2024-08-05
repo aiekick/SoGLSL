@@ -3317,33 +3317,24 @@ void ShaderKey::Complete_Uniform_Input(RenderPackWeak vRenderPack, const Uniform
 
     vUniform->timeLineSupported = true;
     vUniform->count = uType::GetCountChannelForType(vUniform->glslType);
-
+    vUniform->step = 1.0f;
     if (!vUniformParsed.params.empty()) {
         std::vector<std::string> arr = ct::splitStringToVector(vUniformParsed.params, ":");
         if (vUniform->count)  // slider
         {
             // si n = 4 et la string vaut 0.5,0.2, on aura xy=0.5 et zw = 0.2, c'est juste pour ca qu'on fait ca dessous
-            if (!arr.empty())  // inf
-                vUniform->inf = ct::fvec4(arr[0], ',', vUniform->count);
-            if (arr.size() > 1)  // sup
-                vUniform->sup = ct::fvec4(arr[1], ',', vUniform->count);
-            if (arr.size() > 2)  // default
-                vUniform->def = ct::fvec4(arr[2], ',', vUniform->count);
-            if (arr.size() > 3)  // step
-                vUniform->step = ct::fvec4(arr[3], ',', vUniform->count);
+            if (arr.size() > 1)  // inf
+                vUniform->inf = ct::fvec4(arr[1], ',', vUniform->count);
+            if (arr.size() > 2)  // sup
+                vUniform->sup = ct::fvec4(arr[2], ',', vUniform->count);
+            if (arr.size() > 3)  // default
+                vUniform->def = ct::fvec4(arr[3], ',', vUniform->count);
+            if (arr.size() > 4)  // step
+                vUniform->step = ct::fvec4(arr[4], ',', vUniform->count);
         }
     }
 
     switch (vUniform->glslType) {
-        case uType::uTypeEnum::U_BOOL:
-        case uType::uTypeEnum::U_BVEC2:
-        case uType::uTypeEnum::U_BVEC3:
-        case uType::uTypeEnum::U_BVEC4:
-            vUniform->bx = (bool)vUniform->def.x;
-            vUniform->by = (bool)vUniform->def.y;
-            vUniform->bz = (bool)vUniform->def.z;
-            vUniform->bw = (bool)vUniform->def.w;
-            break;
 
         case uType::uTypeEnum::U_FLOAT:
         case uType::uTypeEnum::U_VEC2:
@@ -3374,7 +3365,6 @@ void ShaderKey::Complete_Uniform_Input(RenderPackWeak vRenderPack, const Uniform
             vUniform->uz = (uint32_t)vUniform->def.z;
             vUniform->uw = (uint32_t)vUniform->def.w;
             break;
-
         default: break;
     }
 }

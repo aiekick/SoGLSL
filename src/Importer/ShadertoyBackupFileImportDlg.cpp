@@ -337,7 +337,7 @@ void ShadertoyBackupFileImportDlg::DrawButtonsPane() {
 
     ImGui::SameLine();
 
-    if (ImGui::ContrastedButton("R")) {
+    if (ImGui::ContrastedButton(ICON_NDP_RESET)) {
         ct::ResetBuffer(m_SearchBuffer);
         prApplyFiltering(m_SearchBuffer);
     }

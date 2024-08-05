@@ -636,7 +636,7 @@ bool GizmoSystem::DrawWidget(CodeTreePtr vCodeTree,
             {
                 ImGui::PushItemWidth(vMaxWidth);
                 ImGui::BeginGroup();
-                if (ImGui::ContrastedButton("Reset", "Reset Matrix to Default")) {
+                    if (ImGui::ContrastedButton(ICON_NDP_RESET, "Reset Matrix to Default")) {
                     v->mat4 = v->mat4Def;
                 }
                 ImGui::SameLine();
@@ -654,12 +654,12 @@ bool GizmoSystem::DrawWidget(CodeTreePtr vCodeTree,
                 ImGui::SameLine(vFirstColumnWidth);
                 ImGui::PushItemWidth(vMaxWidth - ImGui::GetCursorPosX());
                 ImGui::BeginGroup();
-                if (ImGui::ContrastedButton("R", "Reset Matrix to Default")) {
+                if (ImGui::ContrastedButton(ICON_NDP_RESET, "Reset Matrix to Default")) {
                     *vChange |= true;
                     v->mat4 = v->mat4Def;
                 }
                 ImGui::SameLine();
-                if (ImGui::ContrastedButton("Sel", "Select Gizmo")) {
+                if (ImGui::ContrastedButton(ICON_NDP2_SELECT, "Select Gizmo")) {
                     if (!vRenderPack.expired()) {
                         *vChange |= true;
                         CodeTree::puCurrentGizmo = v;
@@ -667,11 +667,11 @@ bool GizmoSystem::DrawWidget(CodeTreePtr vCodeTree,
                 }
                 ImGui::SameLine();
                 ImGui::PushID(ImGui::IncPUSHID());
-                *vChange |= ImGui::RadioButtonLabeled(ImVec2(0.0f, 0.0f), "Icon", "Show/Hide Gizmo Icon", &v->bx);
+                *vChange |= ImGui::RadioButtonLabeled(ImVec2(0.0f, 0.0f), ICON_NDP2_ADJUST, "Show/Hide Gizmo Icon", &v->bx);
                 ImGui::PopID();
                 ImGui::SameLine();
                 ImGui::PushID(ImGui::IncPUSHID());
-                *vChange |= ImGui::RadioButtonLabeled(ImVec2(0.0f, 0.0f), "Txt", "Show/Hide Gizmo Text", &v->by);
+                *vChange |= ImGui::RadioButtonLabeled(ImVec2(0.0f, 0.0f), ICON_NDP2_ALPHA, "Show/Hide Gizmo Text", &v->by);
                 ImGui::PopID();
                 ImGui::EndGroup();
                 ImGui::PopItemWidth();
