@@ -26,6 +26,7 @@
 #include <CodeTree/ShaderKey.h>
 #include <ctools/Logger.h>
 #include <Res/CustomFont2.h>
+#include <Uniforms/UniformWidgets.h>
 
 static bool useGizmoCulling = false;
 
@@ -565,19 +566,19 @@ bool GizmoSystem::DrawWidget(CodeTreePtr vCodeTree,
             key = rpPtr->GetShaderKey();
 
         if (vUniPtr->widget == "cullingtype") {
-            vCodeTree->DrawUniformName(key, v);
+            UniformWidgets::drawUniformName(key, v);
             ImGui::SameLine(vFirstColumnWidth);
             ImGui::Text("%i", vUniPtr->ix);
 
             catched = true;
         } else if (vUniPtr->widget == "useculling") {
-            vCodeTree->DrawUniformName(key, v);
+            UniformWidgets::drawUniformName(key, v);
             ImGui::SameLine(vFirstColumnWidth);
             ImGui::Text("%1.f", vUniPtr->x);
 
             catched = true;
         } else if (vUniPtr->widget == "culling") {
-            vCodeTree->DrawUniformName(key, v);
+            UniformWidgets::drawUniformName(key, v);
             ImGui::SameLine(vFirstColumnWidth);
 
             if (v->loc > -1)
@@ -649,7 +650,7 @@ bool GizmoSystem::DrawWidget(CodeTreePtr vCodeTree,
             } else {
                 ImGui::Separator();
 
-                vCodeTree->DrawUniformName(key, v);
+                UniformWidgets::drawUniformName(key, v);
                 ImGui::SameLine(vFirstColumnWidth);
                 ImGui::PushItemWidth(vMaxWidth - ImGui::GetCursorPosX());
                 ImGui::BeginGroup();

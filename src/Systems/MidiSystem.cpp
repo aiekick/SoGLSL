@@ -23,6 +23,7 @@
 #include <Renderer/RenderPack.h>
 #include <ctools/Logger.h>
 #include <ImGuiPack.h>
+#include <Uniforms/UniformWidgets.h>
 
 #include <Res/CustomFont.h>
 #include <Gui/GuiBackend.h>
@@ -238,7 +239,7 @@ bool MidiSystem::DrawWidget(CodeTreePtr vCodeTree,
             if (rpPtr)
                 key = rpPtr->GetShaderKey();
 
-            vCodeTree->DrawUniformName(key, v, 0);
+            UniformWidgets::drawUniformName(key, v, 0);
             ImGui::SameLine(vFirstColumnWidth);
             ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(v->loc));
             if (ImGui::SliderFloatDefault(vMaxWidth - ImGui::GetCursorPosX(), ("##x" + v->name).c_str(), &v->x, v->inf.x, v->sup.x, v->def.x, 0.0f, "%.5f")) {

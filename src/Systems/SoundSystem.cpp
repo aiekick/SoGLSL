@@ -31,6 +31,7 @@
 #include <Profiler/TracyProfiler.h>
 #include <ImGuiPack.h>
 #include "RenderDocController.h"
+#include <Uniforms/UniformWidgets.h>
 
 bool SoundSystem::Init(CodeTreePtr vCodeTree) {
     puActivated = false;
@@ -342,7 +343,7 @@ bool SoundSystem::DrawWidget(CodeTreePtr vCodeTree,
             catched = true;
             ImGui::Separator();
 
-            vCodeTree->DrawUniformName(key, v);
+            UniformWidgets::drawUniformName(key, v);
             ImGui::SameLine(vFirstColumnWidth);
 
             //this is a texture1D, cant shown with imgui
@@ -353,7 +354,7 @@ bool SoundSystem::DrawWidget(CodeTreePtr vCodeTree,
             catched = true;
             ImGui::Separator();
 
-            vCodeTree->DrawUniformName(key, v);
+            UniformWidgets::drawUniformName(key, v);
             ImGui::SameLine(vFirstColumnWidth);
             ImGui::Texture(m_SoundHisto_RenderPack_Ptr->GetTexture(), 100.0f, ImVec4(1, 1, 1, 1), 10);
         }

@@ -2501,6 +2501,8 @@ void ShaderKey::Complete_Uniform_Float(RenderPackWeak vRenderPack, const Uniform
         GamePadSystem::Instance()->Complete_Uniform(m_This, vRenderPack, vUniformParsed, vUniform);
     } else if (vUniform->widgetType == "midi") {
         MidiSystem::Instance()->Complete_Uniform(m_This, vRenderPack, vUniformParsed, vUniform);
+    } else if (vUniform->widgetType == "input") {
+        Complete_Uniform_Input(vRenderPack, vUniformParsed, vUniform);
     }
 #ifdef USE_VR
     else if (vUniform->widgetType == "vr") {
@@ -2535,6 +2537,8 @@ void ShaderKey::Complete_Uniform_Vec2(RenderPackWeak vRenderPack, const UniformP
         Complete_Uniform_Picture(vRenderPack, vUniformParsed, vUniform);
     } else if (vUniform->widgetType == "midi") {
         MidiSystem::Instance()->Complete_Uniform(m_This, vRenderPack, vUniformParsed, vUniform);
+    } else if (vUniform->widgetType == "input") {
+        Complete_Uniform_Input(vRenderPack, vUniformParsed, vUniform);
     }
 #ifdef USE_VR
     else if (vUniform->widgetType == "vr") {
@@ -2573,6 +2577,8 @@ void ShaderKey::Complete_Uniform_Vec3(RenderPackWeak vRenderPack, const UniformP
         GamePadSystem::Instance()->Complete_Uniform(m_This, vRenderPack, vUniformParsed, vUniform);
     } else if (vUniform->widgetType == "midi") {
         MidiSystem::Instance()->Complete_Uniform(m_This, vRenderPack, vUniformParsed, vUniform);
+    } else if (vUniform->widgetType == "input") {
+        Complete_Uniform_Input(vRenderPack, vUniformParsed, vUniform);
     }
 #ifdef USE_VR
     else if (vUniform->widgetType == "vr") {
@@ -2603,11 +2609,12 @@ void ShaderKey::Complete_Uniform_Vec4(RenderPackWeak vRenderPack, const UniformP
         Complete_Uniform_Shadertoy(vRenderPack, vUniformParsed, vUniform);
     } else if (vUniform->widgetType == "gamepad") {
         GamePadSystem::Instance()->Complete_Uniform(m_This, vRenderPack, vUniformParsed, vUniform);
-    } else if (vUniform->widgetType == "color")  // widget time
-    {
+    } else if (vUniform->widgetType == "color") {
         Complete_Uniform_Color(vRenderPack, vUniformParsed, vUniform);
     } else if (vUniform->widgetType == "midi") {
         MidiSystem::Instance()->Complete_Uniform(m_This, vRenderPack, vUniformParsed, vUniform);
+    } else if (vUniform->widgetType == "input") {
+        Complete_Uniform_Input(vRenderPack, vUniformParsed, vUniform);
     } else {
         Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
     }
@@ -2622,8 +2629,7 @@ void ShaderKey::Complete_Uniform_Int(RenderPackWeak vRenderPack, const UniformPa
         vUniform->constant = true;
     } else if (vUniform->widgetType == "combobox") {
         Complete_Uniform_Combobox(vRenderPack, vUniformParsed, vUniform);
-    } else if (vUniform->widgetType == "frame")  // widget deltatime
-    {
+    } else if (vUniform->widgetType == "frame") {
         Complete_Uniform_Shadertoy(vRenderPack, vUniformParsed, vUniform);
     } else if (vUniform->widgetType == "cullingtype") {
         GizmoSystem::Instance()->Complete_Uniform(m_This, vRenderPack, vUniformParsed, vUniform);
@@ -2633,7 +2639,9 @@ void ShaderKey::Complete_Uniform_Int(RenderPackWeak vRenderPack, const UniformPa
         VRBackend::Instance()->Complete_Uniform(m_This, vRenderPack, vUniformParsed, vUniform);
     }
 #endif
-    else {
+    else if (vUniform->widgetType == "input") {
+        Complete_Uniform_Input(vRenderPack, vUniformParsed, vUniform);
+    } else {
         Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
     }
 }
@@ -2645,6 +2653,8 @@ void ShaderKey::Complete_Uniform_IVec2(RenderPackWeak vRenderPack, const Uniform
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
         vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
+    } else if (vUniform->widgetType == "input") {
+        Complete_Uniform_Input(vRenderPack, vUniformParsed, vUniform);
     } else {
         Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
     }
@@ -2657,6 +2667,8 @@ void ShaderKey::Complete_Uniform_IVec3(RenderPackWeak vRenderPack, const Uniform
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
         vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
+    } else if (vUniform->widgetType == "input") {
+        Complete_Uniform_Input(vRenderPack, vUniformParsed, vUniform);
     } else {
         Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
     }
@@ -2669,6 +2681,8 @@ void ShaderKey::Complete_Uniform_IVec4(RenderPackWeak vRenderPack, const Uniform
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
         vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
+    } else if (vUniform->widgetType == "input") {
+        Complete_Uniform_Input(vRenderPack, vUniformParsed, vUniform);
     } else {
         Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
     }
@@ -2687,7 +2701,9 @@ void ShaderKey::Complete_Uniform_UInt(RenderPackWeak vRenderPack, const UniformP
         VRBackend::Instance()->Complete_Uniform(m_This, vRenderPack, vUniformParsed, vUniform);
     }
 #endif
-    else {
+    else if (vUniform->widgetType == "input") {
+        Complete_Uniform_Input(vRenderPack, vUniformParsed, vUniform);
+    } else {
         Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
     }
 }
@@ -2699,6 +2715,8 @@ void ShaderKey::Complete_Uniform_UVec2(RenderPackWeak vRenderPack, const Uniform
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
         vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
+    } else if (vUniform->widgetType == "input") {
+        Complete_Uniform_Input(vRenderPack, vUniformParsed, vUniform);
     } else {
         Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
     }
@@ -2711,6 +2729,8 @@ void ShaderKey::Complete_Uniform_UVec3(RenderPackWeak vRenderPack, const Uniform
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
         vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
+    } else if (vUniform->widgetType == "input") {
+        Complete_Uniform_Input(vRenderPack, vUniformParsed, vUniform);
     } else {
         Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
     }
@@ -2723,6 +2743,8 @@ void ShaderKey::Complete_Uniform_UVec4(RenderPackWeak vRenderPack, const Uniform
     if (IsCustomWidgetName(vUniform->glslType, vUniformParsed.params) || IsCustomWidgetName(vUniform->glslType, vUniform->widgetType)) {
         vUniform->widget = vUniformParsed.params;
         vUniform->constant = true;
+    } else if (vUniform->widgetType == "input") {
+        Complete_Uniform_Input(vRenderPack, vUniformParsed, vUniform);
     } else {
         Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
     }
@@ -2745,9 +2767,6 @@ void ShaderKey::Complete_Uniform_Bool(RenderPackWeak vRenderPack, const UniformP
         VRBackend::Instance()->Complete_Uniform(m_This, vRenderPack, vUniformParsed, vUniform);
     }
 #endif
-    else {
-        Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
-    }
 }
 
 void ShaderKey::Complete_Uniform_BVec2(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
@@ -2763,9 +2782,7 @@ void ShaderKey::Complete_Uniform_BVec2(RenderPackWeak vRenderPack, const Uniform
         Complete_Uniform_Button(vRenderPack, vUniformParsed, vUniform);
     } else if (vUniform->widgetType == "radio") {
         Complete_Uniform_Radio(vRenderPack, vUniformParsed, vUniform);
-    } else {
-        Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
-    }
+    } 
 }
 
 void ShaderKey::Complete_Uniform_BVec3(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
@@ -2781,9 +2798,7 @@ void ShaderKey::Complete_Uniform_BVec3(RenderPackWeak vRenderPack, const Uniform
         Complete_Uniform_Button(vRenderPack, vUniformParsed, vUniform);
     } else if (vUniform->widgetType == "radio") {
         Complete_Uniform_Radio(vRenderPack, vUniformParsed, vUniform);
-    } else {
-        Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
-    }
+    } 
 }
 
 void ShaderKey::Complete_Uniform_BVec4(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
@@ -2799,9 +2814,7 @@ void ShaderKey::Complete_Uniform_BVec4(RenderPackWeak vRenderPack, const Uniform
         Complete_Uniform_Button(vRenderPack, vUniformParsed, vUniform);
     } else if (vUniform->widgetType == "radio") {
         Complete_Uniform_Radio(vRenderPack, vUniformParsed, vUniform);
-    } else {
-        Complete_Uniform_Slider(vRenderPack, vUniformParsed, vUniform);
-    }
+    } 
 }
 
 void ShaderKey::Complete_Uniform_Mat2(RenderPackWeak /*vRenderPack*/, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
@@ -3231,6 +3244,74 @@ void ShaderKey::Complete_Uniform_Mouse(RenderPackWeak vRenderPack, const Uniform
 }
 
 void ShaderKey::Complete_Uniform_Slider(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
+    if (vRenderPack.expired() || !vUniform)
+        return;
+
+    vUniform->timeLineSupported = true;
+    vUniform->count = uType::GetCountChannelForType(vUniform->glslType);
+
+    if (!vUniformParsed.params.empty()) {
+        std::vector<std::string> arr = ct::splitStringToVector(vUniformParsed.params, ":");
+        if (vUniform->count)  // slider
+        {
+            // si n = 4 et la string vaut 0.5,0.2, on aura xy=0.5 et zw = 0.2, c'est juste pour ca qu'on fait ca dessous
+            if (!arr.empty())  // inf
+                vUniform->inf = ct::fvec4(arr[0], ',', vUniform->count);
+            if (arr.size() > 1)  // sup
+                vUniform->sup = ct::fvec4(arr[1], ',', vUniform->count);
+            if (arr.size() > 2)  // default
+                vUniform->def = ct::fvec4(arr[2], ',', vUniform->count);
+            if (arr.size() > 3)  // step
+                vUniform->step = ct::fvec4(arr[3], ',', vUniform->count);
+        }
+    }
+
+    switch (vUniform->glslType) {
+        case uType::uTypeEnum::U_BOOL:
+        case uType::uTypeEnum::U_BVEC2:
+        case uType::uTypeEnum::U_BVEC3:
+        case uType::uTypeEnum::U_BVEC4:
+            vUniform->bx = (bool)vUniform->def.x;
+            vUniform->by = (bool)vUniform->def.y;
+            vUniform->bz = (bool)vUniform->def.z;
+            vUniform->bw = (bool)vUniform->def.w;
+            break;
+
+        case uType::uTypeEnum::U_FLOAT:
+        case uType::uTypeEnum::U_VEC2:
+        case uType::uTypeEnum::U_VEC3:
+        case uType::uTypeEnum::U_VEC4:
+            vUniform->x = vUniform->def.x;
+            vUniform->y = vUniform->def.y;
+            vUniform->z = vUniform->def.z;
+            vUniform->w = vUniform->def.w;
+            break;
+
+        case uType::uTypeEnum::U_INT:
+        case uType::uTypeEnum::U_IVEC2:
+        case uType::uTypeEnum::U_IVEC3:
+        case uType::uTypeEnum::U_IVEC4:
+            vUniform->ix = (int32_t)vUniform->def.x;
+            vUniform->iy = (int32_t)vUniform->def.y;
+            vUniform->iz = (int32_t)vUniform->def.z;
+            vUniform->iw = (int32_t)vUniform->def.w;
+            break;
+
+        case uType::uTypeEnum::U_UINT:
+        case uType::uTypeEnum::U_UVEC2:
+        case uType::uTypeEnum::U_UVEC3:
+        case uType::uTypeEnum::U_UVEC4:
+            vUniform->ux = (uint32_t)vUniform->def.x;
+            vUniform->uy = (uint32_t)vUniform->def.y;
+            vUniform->uz = (uint32_t)vUniform->def.z;
+            vUniform->uw = (uint32_t)vUniform->def.w;
+            break;
+
+        default: break;
+    }
+}
+
+void ShaderKey::Complete_Uniform_Input(RenderPackWeak vRenderPack, const UniformParsedStruct& vUniformParsed, UniformVariantPtr vUniform) {
     if (vRenderPack.expired() || !vUniform)
         return;
 

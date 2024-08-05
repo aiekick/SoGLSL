@@ -22,6 +22,7 @@
 #include <Gui/CustomGuiWidgets.h>
 #include <Manager/HelpManager.h>
 #include <CodeTree/Parsing/SectionCode.h>
+#include <Uniforms/UniformWidgets.h>
 
 InterfacePanes::InterfacePanes() {
     puForceRefreshCode = true;
@@ -451,7 +452,8 @@ void InterfacePanes::DrawDebugPane(CodeTreePtr vCodeTree) {
                             if (showControls) {
                                 ImGui::Indent();
 
-                                vCodeTree->DrawImGuiUniformWidgetForPanes(itUni->second, ImGui::GetContentRegionMax().x, SHADER_UNIFORM_FIRST_COLUMN_WIDTH);
+                                UniformWidgets::drawImGuiUniformWidgetForPanes(
+                                    vCodeTree, itUni->second, ImGui::GetContentRegionMax().x, SHADER_UNIFORM_FIRST_COLUMN_WIDTH);
 
                                 ImGui::Unindent();
                             }
@@ -485,7 +487,8 @@ void InterfacePanes::DrawDebugPane(CodeTreePtr vCodeTree) {
                                 if (showControls) {
                                     ImGui::Indent();
 
-                                    vCodeTree->DrawImGuiUniformWidgetForPanes(itUni->second, ImGui::GetContentRegionMax().x, SHADER_UNIFORM_FIRST_COLUMN_WIDTH);
+                                    UniformWidgets::drawImGuiUniformWidgetForPanes(
+                                        vCodeTree, itUni->second, ImGui::GetContentRegionMax().x, SHADER_UNIFORM_FIRST_COLUMN_WIDTH);
 
                                     ImGui::Unindent();
                                 }
@@ -528,7 +531,8 @@ void InterfacePanes::DrawDebugPane(CodeTreePtr vCodeTree) {
                                 if (showControls) {
                                     ImGui::Indent();
 
-                                    vCodeTree->DrawImGuiUniformWidgetForPanes(multiLoc->uniform, ImGui::GetContentRegionMax().x, SHADER_UNIFORM_FIRST_COLUMN_WIDTH);
+                                    UniformWidgets::drawImGuiUniformWidgetForPanes(
+                                        vCodeTree, multiLoc->uniform, ImGui::GetContentRegionMax().x, SHADER_UNIFORM_FIRST_COLUMN_WIDTH);
 
                                     ImGui::Unindent();
                                 }
@@ -549,7 +553,8 @@ void InterfacePanes::DrawDebugPane(CodeTreePtr vCodeTree) {
                                     if (showControls) {
                                         ImGui::Indent();
 
-                                        vCodeTree->DrawImGuiUniformWidgetForPanes(itMu->first, ImGui::GetContentRegionMax().x, SHADER_UNIFORM_FIRST_COLUMN_WIDTH);
+                                        UniformWidgets::drawImGuiUniformWidgetForPanes(
+                                            vCodeTree, itMu->first, ImGui::GetContentRegionMax().x, SHADER_UNIFORM_FIRST_COLUMN_WIDTH);
 
                                         ImGui::Unindent();
                                     }

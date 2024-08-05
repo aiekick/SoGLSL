@@ -22,6 +22,7 @@
 #include <CodeTree/CodeTree.h>
 #include <Renderer/RenderPack.h>
 #include <ctools/Logger.h>
+#include <Uniforms/UniformWidgets.h>
 
 #include <imgui.h>
 #ifndef IMGUI_DEFINE_MATH_OPERATORS
@@ -303,7 +304,7 @@ bool GamePadSystem::DrawWidget(CodeTreePtr vCodeTree,
             key = rpPtr->GetShaderKey();
 
         if (vUniPtr->widget == "gamepad:leftthumb") {
-            vCodeTree->DrawUniformName(key, v);
+            UniformWidgets::drawUniformName(key, v);
             ImGui::SameLine(vFirstColumnWidth);
 
             ImGui::BeginGroup();
@@ -331,7 +332,7 @@ bool GamePadSystem::DrawWidget(CodeTreePtr vCodeTree,
 
             catched = true;
         } else if (vUniPtr->widget == "gamepad:rightthumb") {
-            vCodeTree->DrawUniformName(key, v);
+            UniformWidgets::drawUniformName(key, v);
             ImGui::SameLine(vFirstColumnWidth);
 
             ImGui::BeginGroup();
@@ -359,7 +360,7 @@ bool GamePadSystem::DrawWidget(CodeTreePtr vCodeTree,
 
             catched = true;
         } else if (vUniPtr->widget == "gamepad:lefttrigger") {
-            vCodeTree->DrawUniformName(key, v);
+            UniformWidgets::drawUniformName(key, v);
             ImGui::SameLine(vFirstColumnWidth);
 
             ImGui::BeginGroup();
@@ -374,7 +375,7 @@ bool GamePadSystem::DrawWidget(CodeTreePtr vCodeTree,
 
             catched = true;
         } else if (vUniPtr->widget == "gamepad:righttrigger") {
-            vCodeTree->DrawUniformName(key, v);
+            UniformWidgets::drawUniformName(key, v);
             ImGui::SameLine(vFirstColumnWidth);
 
             ImGui::BeginGroup();
@@ -389,7 +390,7 @@ bool GamePadSystem::DrawWidget(CodeTreePtr vCodeTree,
 
             catched = true;
         } else if (vUniPtr->widget == "gamepad:cross") {
-            vCodeTree->DrawUniformName(key, v);
+            UniformWidgets::drawUniformName(key, v);
             ImGui::SameLine(vFirstColumnWidth);
 
             ImGui::BeginGroup();
@@ -417,7 +418,7 @@ bool GamePadSystem::DrawWidget(CodeTreePtr vCodeTree,
 
             catched = true;
         } else if (vUniPtr->widget == "gamepad:mainbuttons") {
-            vCodeTree->DrawUniformName(key, v);
+            UniformWidgets::drawUniformName(key, v);
             ImGui::SameLine(vFirstColumnWidth);
 
             ImGui::BeginGroup();

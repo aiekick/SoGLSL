@@ -20,6 +20,7 @@
 #include <Headers/RenderPackHeaders.h>
 #include <Interfaces/WidgetInterface.h>
 #include <Interfaces/SubSystemInterface.h>
+#include <Uniforms/UniformWidgets.h>
 
 #include <ImGuiPack/ImGuiPack.h>
 
@@ -33,7 +34,7 @@ class RenderPack;
 class UniformVariant;
 
 struct UniformParsedStruct;
-class GizmoSystem : public WidgetInterface, public SubSystemInterface, public conf::ConfigAbstract {
+class GizmoSystem : public WidgetInterface, public UniformWidgets, public SubSystemInterface, public conf::ConfigAbstract {
 public:
     bool puActivated = false;
     bool puUseGizmoCulling = false;

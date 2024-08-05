@@ -24,6 +24,7 @@
 #include <CodeTree/Parsing/SectionCode.h>
 #include <Headers/RenderPackHeaders.h>
 #include <CodeTree/Parsing/UniformParsing.h>
+#include <Uniforms/UniformWidgets.h>
 #include <RtMidi.h>
 #include <imgui.h>
 #include <string>
@@ -36,7 +37,7 @@ class ShaderKey;
 class RenderPack;
 struct GuiBackend_Window;
 class UniformVariant;
-class MidiSystem : public WidgetInterface, public MidiInterface, public conf::ConfigAbstract {
+class MidiSystem : public WidgetInterface, public UniformWidgets, public MidiInterface, public conf::ConfigAbstract {
 private:
     std::vector<std::shared_ptr<RtMidiIn>> m_RtMidis;
     bool m_ShowConfigDialog = false;

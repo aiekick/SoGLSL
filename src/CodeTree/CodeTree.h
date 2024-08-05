@@ -208,9 +208,6 @@ public:
     std::unordered_map<std::string, UniformVariantPtr>* GetUniformsFromIncludeFileName(const std::string& vIncludeFileName);
 
     void RecordToTimeLine(ShaderKeyPtr vKey, UniformVariantPtr vUniPtr, int vComponent = 0);
-    bool DrawUniformName(ShaderKeyPtr vKey, UniformVariantPtr vUniPtr, int vComponent = 0, const char* vTxt = nullptr);
-    void DrawUniformComment(UniformVariantPtr vUniPtr);
-    bool CheckUniformVisiblity(UniformVariantPtr vUniPtr, bool vShowUnUsed);
     bool DrawImGuiUniformWidget(ShaderKeyPtr vKey,
                                 float vFirstColumnWidth,
                                 RenderPackWeak vRenderPack = RenderPackWeak(),
@@ -220,12 +217,6 @@ public:
     bool DrawImGuiIncludesUniformWidget(UniformsMultiLoc* vUniLoc,
                                         float vFirstColumnWidth,
                                         RenderPackWeak vMainRenderPack = RenderPackWeak(),
-                                        bool vShowUnUsed = true,
-                                        bool vShowCustom = false);
-    bool DrawImGuiUniformWidgetForPanes(UniformVariantPtr vUniPtr,
-                                        float vMaxWidth,
-                                        float vFirstColumnWidth,
-                                        RenderPackWeak vRenderPack = RenderPackWeak(),
                                         bool vShowUnUsed = true,
                                         bool vShowCustom = false);
 

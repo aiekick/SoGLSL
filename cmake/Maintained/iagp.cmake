@@ -1,7 +1,7 @@
-set(IN_APP_GPU_PROFILER_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/InAppGpuProfiler)
+set(IN_APP_GPU_PROFILER_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/iagp)
 set(IN_APP_GPU_PROFILER_LIBRARIES iagp)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/InAppGpuProfiler)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/iagp)
 
 if(USE_SHARED_LIBS)
 	set_target_properties(iagp PROPERTIES FOLDER 3rdparty/aiekick/Shared)

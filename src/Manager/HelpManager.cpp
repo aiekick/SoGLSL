@@ -214,6 +214,8 @@ void HelpManager::Init(std::string vAppName) {
         AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Gizmo", "");
     }
 
+    AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Input", "");
+
     AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Midi", "");
     AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Mouse", "");
     AddUniformHelp("3.Shader Scripting", "Uniforms", "Widgets", "Sliders", "");
@@ -1114,6 +1116,22 @@ you have a button, for hide the gizmo, on top right if you want
 
 you need maybe to activate the space3d : Settings/Show 3d Space (maybe you need to reset the cam, in the left panel)
 )";
+    } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Input") {
+        markdownText =
+            u8R"(
+you can have usefull Input uniform widgets :
+
+the syntax is :
+
+uniform float(input:inf:sup:default:step) name");
+uniform vec2(input:inf0,inf1:sup0,sup1:default0,default1:step0,step1) name");
+uniform vec3(input:inf0,inf1,inf2:sup0,sup1,sup2:default0,default1,default2:step0,step1,step2) name");
+uniform vec4(input:inf0,inf1,inf2,inf3:sup0,sup1,sup2,sup3:default0,default1,default2,default3:step0,step1,step2,step3) name");
+
+## each group between ':' can be expressed with one value or many :
+* if you define 0.5 with a vec3, its like vec3(0.5,0.5,0.5), but you can also define 0.5,0.5,0.5 directly
+* you can mix, by ex : vec3(0:1:0.8,0.2,0.5) work well :)
+)";
     } else if (_selectedPath == "3.Shader Scripting/Uniforms/Widgets/Mouse") {
         markdownText =
             u8R"(
@@ -1144,10 +1162,10 @@ you can have usefull Slider uniform widgets :
 
 the syntax is :
 
-uniform float(inf:sup:default) name");
-uniform vec2(inf0,inf1:sup0,sup1:default0,default1) name");
-uniform vec3(inf0,inf1,inf2:sup0,sup1,sup2:default0,default1,default2) name");
-uniform vec4(inf0,inf1,inf2,inf3:sup0,sup1,sup2,sup3:default0,default1,default2,default3) name");
+uniform float(inf:sup:default:step) name");
+uniform vec2(inf0,inf1:sup0,sup1:default0,default1:step0,step1) name");
+uniform vec3(inf0,inf1,inf2:sup0,sup1,sup2:default0,default1,default2:step0,step1,step2) name");
+uniform vec4(inf0,inf1,inf2,inf3:sup0,sup1,sup2,sup3:default0,default1,default2,default3:step0,step1,step2,step3) name");
 
 ## each group between ':' can be expressed with one value or many :
 * if you define 0.5 with a vec3, its like vec3(0.5,0.5,0.5), but you can also define 0.5,0.5,0.5 directly
