@@ -732,8 +732,9 @@ bool UniformWidgets::m_drawColorWidget(const ImVec2& vWidths, CodeTreePtr vCodeT
             if (vUniPtr->count == 4)
                 vUniPtr->w = vUniPtr->def.w;
         }
+        float w = vWidths.y - ImGui::GetItemRectSize().x - vWidths.x;
         ImGui::SameLine();
-        ImGui::PushItemWidth(vWidths.y - ImGui::GetCursorPosX() - 9.0f);
+        ImGui::PushItemWidth(w);
         ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(vUniPtr->loc));
         ImGui::PushID(ImGui::IncPUSHID());
         if (vUniPtr->count == 4) {
