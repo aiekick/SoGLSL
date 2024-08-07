@@ -5,7 +5,7 @@
 #pragma once
 
 #define FONT_ICON_BUFFER_NAME_NDP2 NDP2_compressed_data_base85
-#define FONT_ICON_BUFFER_SIZE_NDP2 0xa7fd
+#define FONT_ICON_BUFFER_SIZE_NDP2 0xa8ac
 
 #define ICON_MIN_NDP2 0xf01d
 #define ICON_MAX_NDP2 0xfffb
@@ -80,6 +80,7 @@
 #define ICON_NDP2_CARDS u8"\ufe8a"
 #define ICON_NDP2_CARDS_OUTLINE u8"\ufe89"
 #define ICON_NDP2_CARDS_PLAYING_OUTLINE u8"\ufe88"
+#define ICON_NDP2_CHART_BELL_CURVE u8"\ufc2c"
 #define ICON_NDP2_CHART_LINE u8"\uff87"
 #define ICON_NDP2_CHECKBOX_BLANK u8"\uff86"
 #define ICON_NDP2_CHECKBOX_BLANK_CIRCLE u8"\uff85"

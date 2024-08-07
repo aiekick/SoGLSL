@@ -5,7 +5,7 @@
 #pragma once
 
 #define FONT_ICON_BUFFER_NAME_NDPTB NDPTB_compressed_data_base85
-#define FONT_ICON_BUFFER_SIZE_NDPTB 0x1d79
+#define FONT_ICON_BUFFER_SIZE_NDPTB 0x1e23
 
 #define ICON_MIN_NDPTB 0xf018
 #define ICON_MAX_NDPTB 0xffee
@@ -22,6 +22,7 @@
 #define ICON_NDPTB_BUG u8"\uf0e4"
 #define ICON_NDPTB_CALENDAR_EXPORT u8"\ufb09"
 #define ICON_NDPTB_CAMCORDER u8"\uf0fc"
+#define ICON_NDPTB_CHART_BELL_CURVE u8"\ufc2c"
 #define ICON_NDPTB_CLIPBOARD_PULSE u8"\uf85c"
 #define ICON_NDPTB_COMMENT_ALERT u8"\uf17d"
 #define ICON_NDPTB_COMMENT_ARROW_LEFT u8"\uf9e0"
