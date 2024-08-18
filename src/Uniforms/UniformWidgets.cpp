@@ -35,18 +35,13 @@ bool UniformWidgets::drawImGuiUniformWidgetForPanes(  //
             auto rpPtr = vRenderPack.lock();
             if (rpPtr)
                 vShaderKeyPtr = rpPtr->GetShaderKey();
-            if (GizmoSystem::Instance()->DrawWidget(vCodeTreePtr, vUniPtr, widths.y, widths.x, vRenderPack, vShowUnUsed, vShowCustom, false, &change)) {
-                change = true;
+            if (GizmoSystem::Instance()->DrawWidget(vCodeTreePtr, vUniPtr, widths.y, widths.x, vRenderPack, vShowUnUsed, vShowCustom, false, &change)) {  
             } else if (GamePadSystem::Instance()->DrawWidget(vCodeTreePtr, vUniPtr, widths.y, widths.x, vRenderPack, vShowUnUsed, vShowCustom, false, &change)) {
-                change = true;
             } else if (MidiSystem::Instance()->DrawWidget(vCodeTreePtr, vUniPtr, widths.y, widths.x, vRenderPack, vShowUnUsed, vShowCustom, false, &change)) {
-                change = true;
             } else if (SoundSystem::Instance()->DrawWidget(vCodeTreePtr, vUniPtr, widths.y, widths.x, vRenderPack, vShowUnUsed, vShowCustom, false, &change)) {
-                change = true;
             }
 #ifdef USE_VR
             else if (VRBackend::Instance()->DrawWidget(vCodeTreePtr, vUniPtr, vWidths.y, vWidths.x, vRenderPack, vShowUnUsed, vShowCustom, false, &change)) {
-                change = true;
             }
 #endif
             else if (vUniPtr->widgetType == "time") {
@@ -241,33 +236,25 @@ bool UniformWidgets::drawUniformName(ShaderKeyPtr vKey, UniformVariantPtr vUniPt
                 bool status = TimeLineSystem::Instance()->IsKeyExist(vKey, vUniPtr, vComponent);
                 if (!status) {
                     ImGui::PushID(ImGui::IncPUSHID());
-                    keyChanged = ImGui::ButtonNoFrame(
+                    keyChanged |= ImGui::ButtonNoFrame(
                         ICON_NDP2_CHECKBOX_BLANK_CIRCLE "##bulletforaddkeyintimeline", ImVec2(7, 7), ImVec4(0.5f, 0.5f, 0.5f, 1), "add vShaderKeyPtr in timeline");
                     ImGui::PopID();
-                    if (keyChanged) {
-                        status = !status;
-                        if (status) {
-                            TimeLineSystem::Instance()->AddKeyForCurrentFrame(vKey, vUniPtr, vComponent);
-                        } else {
-                            TimeLineSystem::Instance()->DelKeyForCurrentFrame(vKey, vUniPtr, vComponent);
-                        }
-                    }
                 } else {
                     status = TimeLineSystem::Instance()->IsKeyExistForCurrentFrame(vKey, vUniPtr, vComponent);
                     ImGui::PushID(ImGui::IncPUSHID());
-                    keyChanged =
+                    keyChanged |=
                         ImGui::ButtonNoFrame(status ? ICON_NDP2_HEXAGON "##losangeforaddkeyintimeline" : ICON_NDP2_HEXAGON_OUTLINE "##losangeforaddkeyintimeline",
                                              ImVec2(7, 7),
                                              ImVec4(0.9f, 0.9f, 0.1f, 1),
                                              "add vShaderKeyPtr in timeline");
                     ImGui::PopID();
-                    if (keyChanged) {
-                        status = !status;
-                        if (status) {
-                            TimeLineSystem::Instance()->AddKeyForCurrentFrame(vKey, vUniPtr, vComponent);
-                        } else {
-                            TimeLineSystem::Instance()->DelKeyForCurrentFrame(vKey, vUniPtr, vComponent);
-                        }
+                }
+                if (keyChanged) {
+                    status = !status;
+                    if (status) {
+                        TimeLineSystem::Instance()->AddKeyForCurrentFrame(vKey, vUniPtr, vComponent);
+                    } else {
+                        TimeLineSystem::Instance()->DelKeyForCurrentFrame(vKey, vUniPtr, vComponent);
                     }
                 }
 
@@ -302,20 +289,20 @@ bool UniformWidgets::m_drawTimeWidget(const ImVec2& vWidths, CodeTreePtr vCodeTr
     drawUniformName(vShaderKeyPtr, vUniPtr);
     ImGui::SameLine(vWidths.x);
     if (ImGui::ContrastedButton(ICON_NDP_RESET, "Reset")) {
-        change |= true;
+        change = true;
         vUniPtr->bx = (vUniPtr->def.x > 0.5f);
         vUniPtr->x = 0.0f;
     }
     ImGui::SameLine();
     if (ImGui::ToggleContrastedButton(ICON_NDP_PAUSE, ICON_NDP_PLAY, &vUniPtr->bx)) {
-        change |= true;
+        change = true;
     }
     ImGui::SameLine();
     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImGui::GetUniformLocColor(vUniPtr->loc));
     ImGui::PushItemWidth(vWidths.y - ImGui::GetCursorPosX());
     ImGui::PushID(ImGui::IncPUSHID());
     if (ImGui::InputFloat("##Time", &vUniPtr->x)) {
-        change |= true;
+        change = true;
         vCodeTreePtr->RecordToTimeLine(vShaderKeyPtr, vUniPtr, 0);
     }
     ImGui::PopID();
