@@ -23,6 +23,7 @@
 #include <Manager/HelpManager.h>
 #include <CodeTree/Parsing/SectionCode.h>
 #include <Uniforms/UniformWidgets.h>
+#include <Res/CustomFont2.h>
 
 InterfacePanes::InterfacePanes() {
     puForceRefreshCode = true;

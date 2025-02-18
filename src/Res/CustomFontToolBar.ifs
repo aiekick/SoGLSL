@@ -32,6 +32,7 @@
 				<glyph orgId="62333" newId="62333" orgName="mouse" newName="mouse" trans="0;0" scale="1;1"/>
 				<glyph orgId="62343" newId="62343" orgName="music-note" newName="music-note" trans="0;0" scale="1;1"/>
 				<glyph orgId="62501" newId="62501" orgName="power" newName="power" trans="0;0" scale="1;1"/>
+				<glyph orgId="62514" newId="62514" orgName="qrcode" newName="qrcode" trans="0;0" scale="1;1"/>
 				<glyph orgId="62662" newId="62662" orgName="spellcheck" newName="spellcheck" trans="0;0" scale="1;1"/>
 				<glyph orgId="62735" newId="62735" orgName="thermometer" newName="thermometer" trans="0;0" scale="1;1"/>
 				<glyph orgId="62809" newId="62809" orgName="vector-curve" newName="vector-curve" trans="0;0" scale="1;1"/>
@@ -87,6 +88,9 @@
 			<filtering>1</filtering>
 			<enabled>true</enabled>
 			<collapsed>false</collapsed>
+			<filters>
+				<filter name="qr"/>
+			</filters>
 		</font>
 		<rangecoloring show="false" hash="10;15;35;0.5"/>
 		<previewglyphcount>21</previewglyphcount>

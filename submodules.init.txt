@@ -18,6 +18,7 @@ git submodule add --force -b "main" https://github.com/libsdl-org/SDL.git 3rdpar
 git submodule add --force -b "master" https://github.com/assimp/assimp 3rdparty/assimp
 
 git submodule add --force -b "master" https://github.com/aiekick/cTools.git 3rdparty/ctools
+git submodule add --force -b "master" https://github.com/aiekick/EzLibs.git 3rdparty/ezlibs
 git submodule add --force -b "master" https://github.com/aiekick/ImGuiPack.git 3rdparty/ImGuiPack
 git submodule add --force -b "master" https://github.com/aiekick/InAppGpuProfiler.git 3rdparty/InAppGpuProfiler
 

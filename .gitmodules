@@ -10,3 +10,7 @@
 	path = 3rdparty/iagp
 	url = https://github.com/aiekick/InAppGpuProfiler.git
 	branch = master
+[submodule "3rdparty/ezlibs"]
+	path = 3rdparty/ezlibs
+	url = https://github.com/aiekick/EzLibs.git
+	branch = master

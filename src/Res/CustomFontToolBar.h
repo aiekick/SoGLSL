@@ -5,7 +5,7 @@
 #pragma once
 
 #define FONT_ICON_BUFFER_NAME_NDPTB NDPTB_compressed_data_base85
-#define FONT_ICON_BUFFER_SIZE_NDPTB 0x1e23
+#define FONT_ICON_BUFFER_SIZE_NDPTB 0x1ef0
 
 #define ICON_MIN_NDPTB 0xf018
 #define ICON_MAX_NDPTB 0xffee
@@ -71,6 +71,7 @@
 #define ICON_NDPTB_ORBIT u8"\uf018"
 #define ICON_NDPTB_POWER u8"\uf425"
 #define ICON_NDPTB_PRINTER_3D_NOZZLE u8"\ufe3e"
+#define ICON_NDPTB_QRCODE u8"\uf432"
 #define ICON_NDPTB_SPELLCHECK u8"\uf4c6"
 #define ICON_NDPTB_THERMOMETER u8"\uf50f"
 #define ICON_NDPTB_TUNE u8"\uf62e"

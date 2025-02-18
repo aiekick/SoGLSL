@@ -5,7 +5,7 @@
 #pragma once
 
 #define FONT_ICON_BUFFER_NAME_NDP2 NDP2_compressed_data_base85
-#define FONT_ICON_BUFFER_SIZE_NDP2 0xa8ac
+#define FONT_ICON_BUFFER_SIZE_NDP2 0xab40
 
 #define ICON_MIN_NDP2 0xf01d
 #define ICON_MAX_NDP2 0xfffb
@@ -331,6 +331,9 @@
 #define ICON_NDP2_POLL_BOX u8"\ufefa"
 #define ICON_NDP2_PRINTER_3D_NOZZLE u8"\ufe3e"
 #define ICON_NDP2_PRINTER_3D_NOZZLE_OUTLINE u8"\ufe3f"
+#define ICON_NDP2_QRCODE u8"\uf432"
+#define ICON_NDP2_QRCODE_EDIT u8"\uf8b7"
+#define ICON_NDP2_QRCODE_SCAN u8"\uf433"
 #define ICON_NDP2_RADIOBOX_MARKED u8"\ufef8"
 #define ICON_NDP2_RAY_END u8"\ufef7"
 #define ICON_NDP2_RAY_END_ARROW u8"\ufef6"

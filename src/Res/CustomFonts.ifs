@@ -298,6 +298,8 @@
 				<glyph orgId="62468" newId="65276" orgName="pin-off" newName="pin-off" trans="0;0" scale="1;1"/>
 				<glyph orgId="62486" newId="65275" orgName="plus-box" newName="plus-box" trans="0;0" scale="1;1"/>
 				<glyph orgId="62496" newId="65274" orgName="poll-box" newName="poll-box" trans="0;0" scale="1;1"/>
+				<glyph orgId="62514" newId="62514" orgName="qrcode" newName="qrcode" trans="0;0" scale="1;1"/>
+				<glyph orgId="62515" newId="62515" orgName="qrcode-scan" newName="qrcode-scan" trans="0;0" scale="1;1"/>
 				<glyph orgId="62525" newId="65273" orgName="checkbox-blank-circle-outline" newName="checkbox-blank-circle-outline" trans="0;0" scale="1;1"/>
 				<glyph orgId="62526" newId="65272" orgName="radiobox-marked" newName="radiobox-marked" trans="0;0" scale="1;1"/>
 				<glyph orgId="62528" newId="65271" orgName="ray-end" newName="ray-end" trans="0;0" scale="1;1"/>
@@ -430,6 +432,7 @@
 				<glyph orgId="63602" newId="65138" orgName="gauge-empty" newName="gauge-empty" trans="0;0" scale="1;1"/>
 				<glyph orgId="63603" newId="65137" orgName="gauge-full" newName="gauge-full" trans="0;0" scale="1;1"/>
 				<glyph orgId="63604" newId="65136" orgName="gauge-low" newName="gauge-low" trans="0;0" scale="1;1"/>
+				<glyph orgId="63671" newId="63671" orgName="qrcode-edit" newName="qrcode-edit" trans="0;0" scale="1;1"/>
 				<glyph orgId="63836" newId="65135" orgName="database-import" newName="database-import" trans="0;0" scale="1;1"/>
 				<glyph orgId="63837" newId="65134" orgName="database-export" newName="database-export" trans="0;0" scale="1;1"/>
 				<glyph orgId="63847" newId="65133" orgName="folder-search" newName="folder-search" trans="0;0" scale="1;1"/>
@@ -587,9 +590,9 @@
 			<padding>1</padding>
 			<filtering>1</filtering>
 			<enabled>true</enabled>
-			<collapsed>false</collapsed>
+			<collapsed>true</collapsed>
 			<filters>
-				<filter name="curve"/>
+				<filter name="qr"/>
 			</filters>
 		</font>
 		<rangecoloring show="false" hash="10;15;35;0.5"/>
@@ -605,19 +608,19 @@
 		<glyphdrawingflags>1535</glyphdrawingflags>
 		<glyphpreviewquadbeziercounsegment>0</glyphpreviewquadbeziercounsegment>
 		<glyphpreviewzoomprecision>20</glyphpreviewzoomprecision>
-		<genmodeflags>1064</genmodeflags>
+		<genmodeflags>1067</genmodeflags>
 		<fonttomergein>materialdesignicons.ttf</fonttomergein>
 		<glyphdisplaytuningmode>1</glyphdisplaytuningmode>
 		<sourcefontpaneflags>1</sourcefontpaneflags>
-		<lastgeneratedpath>C:\gamedev\gitea\NoodlesPlate\3rdparty\SoGLSL\src\Res</lastgeneratedpath>
+		<lastgeneratedpath>C:\Gamedev\github\NoodlesPlate\3rdparty\SoGLSL\src\Res</lastgeneratedpath>
 		<lastgeneratedfilename></lastgeneratedfilename>
 		<zoomglyphs>false</zoomglyphs>
 		<showbaseline>false</showbaseline>
 		<showadvancex>false</showadvancex>
 		<glyphdrawingflags>1535</glyphdrawingflags>
 		<finalselection>
-			<selection orgId="61441" font="forkawesome.ttf"/>
 			<selection orgId="61441" font="materialdesignicons.ttf"/>
+			<selection orgId="61441" font="forkawesome.ttf"/>
 			<selection orgId="61442" font="forkawesome.ttf"/>
 			<selection orgId="61445" font="forkawesome.ttf"/>
 			<selection orgId="61446" font="forkawesome.ttf"/>
@@ -634,8 +637,8 @@
 			<selection orgId="61464" font="materialdesignicons.ttf"/>
 			<selection orgId="61466" font="materialdesignicons.ttf"/>
 			<selection orgId="61469" font="materialdesignicons.ttf"/>
-			<selection orgId="61470" font="forkawesome.ttf"/>
 			<selection orgId="61470" font="materialdesignicons.ttf"/>
+			<selection orgId="61470" font="forkawesome.ttf"/>
 			<selection orgId="61473" font="forkawesome.ttf"/>
 			<selection orgId="61478" font="materialdesignicons.ttf"/>
 			<selection orgId="61479" font="materialdesignicons.ttf"/>
@@ -647,40 +650,40 @@
 			<selection orgId="61486" font="forkawesome.ttf"/>
 			<selection orgId="61489" font="forkawesome.ttf"/>
 			<selection orgId="61499" font="materialdesignicons.ttf"/>
-			<selection orgId="61501" font="forkawesome.ttf"/>
 			<selection orgId="61501" font="materialdesignicons.ttf"/>
-			<selection orgId="61502" font="forkawesome.ttf"/>
+			<selection orgId="61501" font="forkawesome.ttf"/>
 			<selection orgId="61502" font="materialdesignicons.ttf"/>
+			<selection orgId="61502" font="forkawesome.ttf"/>
 			<selection orgId="61503" font="materialdesignicons.ttf"/>
 			<selection orgId="61504" font="materialdesignicons.ttf"/>
 			<selection orgId="61505" font="materialdesignicons.ttf"/>
-			<selection orgId="61508" font="forkawesome.ttf"/>
 			<selection orgId="61508" font="materialdesignicons.ttf"/>
+			<selection orgId="61508" font="forkawesome.ttf"/>
 			<selection orgId="61509" font="forkawesome.ttf"/>
 			<selection orgId="61510" font="forkawesome.ttf"/>
-			<selection orgId="61511" font="forkawesome.ttf"/>
 			<selection orgId="61511" font="materialdesignicons.ttf"/>
+			<selection orgId="61511" font="forkawesome.ttf"/>
 			<selection orgId="61512" font="forkawesome.ttf"/>
 			<selection orgId="61513" font="forkawesome.ttf"/>
-			<selection orgId="61514" font="forkawesome.ttf"/>
 			<selection orgId="61514" font="materialdesignicons.ttf"/>
+			<selection orgId="61514" font="forkawesome.ttf"/>
 			<selection orgId="61515" font="forkawesome.ttf"/>
-			<selection orgId="61516" font="forkawesome.ttf"/>
 			<selection orgId="61516" font="materialdesignicons.ttf"/>
+			<selection orgId="61516" font="forkawesome.ttf"/>
 			<selection orgId="61517" font="forkawesome.ttf"/>
 			<selection orgId="61518" font="forkawesome.ttf"/>
 			<selection orgId="61519" font="materialdesignicons.ttf"/>
 			<selection orgId="61520" font="forkawesome.ttf"/>
 			<selection orgId="61521" font="forkawesome.ttf"/>
-			<selection orgId="61522" font="forkawesome.ttf"/>
 			<selection orgId="61522" font="materialdesignicons.ttf"/>
+			<selection orgId="61522" font="forkawesome.ttf"/>
 			<selection orgId="61525" font="forkawesome.ttf"/>
-			<selection orgId="61526" font="forkawesome.ttf"/>
 			<selection orgId="61526" font="materialdesignicons.ttf"/>
+			<selection orgId="61526" font="forkawesome.ttf"/>
 			<selection orgId="61527" font="forkawesome.ttf"/>
 			<selection orgId="61528" font="forkawesome.ttf"/>
-			<selection orgId="61529" font="forkawesome.ttf"/>
 			<selection orgId="61529" font="materialdesignicons.ttf"/>
+			<selection orgId="61529" font="forkawesome.ttf"/>
 			<selection orgId="61530" font="forkawesome.ttf"/>
 			<selection orgId="61531" font="forkawesome.ttf"/>
 			<selection orgId="61532" font="forkawesome.ttf"/>
@@ -689,8 +692,8 @@
 			<selection orgId="61535" font="materialdesignicons.ttf"/>
 			<selection orgId="61536" font="forkawesome.ttf"/>
 			<selection orgId="61537" font="forkawesome.ttf"/>
-			<selection orgId="61538" font="forkawesome.ttf"/>
 			<selection orgId="61538" font="materialdesignicons.ttf"/>
+			<selection orgId="61538" font="forkawesome.ttf"/>
 			<selection orgId="61539" font="forkawesome.ttf"/>
 			<selection orgId="61540" font="forkawesome.ttf"/>
 			<selection orgId="61543" font="forkawesome.ttf"/>
@@ -718,8 +721,8 @@
 			<selection orgId="61639" font="forkawesome.ttf"/>
 			<selection orgId="61641" font="forkawesome.ttf"/>
 			<selection orgId="61655" font="forkawesome.ttf"/>
-			<selection orgId="61656" font="forkawesome.ttf"/>
 			<selection orgId="61656" font="materialdesignicons.ttf"/>
+			<selection orgId="61656" font="forkawesome.ttf"/>
 			<selection orgId="61657" font="forkawesome.ttf"/>
 			<selection orgId="61658" font="forkawesome.ttf"/>
 			<selection orgId="61660" font="forkawesome.ttf"/>
@@ -732,8 +735,8 @@
 			<selection orgId="61686" font="forkawesome.ttf"/>
 			<selection orgId="61692" font="materialdesignicons.ttf"/>
 			<selection orgId="61695" font="materialdesignicons.ttf"/>
-			<selection orgId="61700" font="forkawesome.ttf"/>
 			<selection orgId="61700" font="materialdesignicons.ttf"/>
+			<selection orgId="61700" font="forkawesome.ttf"/>
 			<selection orgId="61701" font="forkawesome.ttf"/>
 			<selection orgId="61702" font="forkawesome.ttf"/>
 			<selection orgId="61703" font="forkawesome.ttf"/>
@@ -761,8 +764,8 @@
 			<selection orgId="61773" font="forkawesome.ttf"/>
 			<selection orgId="61776" font="forkawesome.ttf"/>
 			<selection orgId="61777" font="forkawesome.ttf"/>
-			<selection orgId="61778" font="forkawesome.ttf"/>
 			<selection orgId="61778" font="materialdesignicons.ttf"/>
+			<selection orgId="61778" font="forkawesome.ttf"/>
 			<selection orgId="61783" font="materialdesignicons.ttf"/>
 			<selection orgId="61788" font="forkawesome.ttf"/>
 			<selection orgId="61794" font="materialdesignicons.ttf"/>
@@ -837,10 +840,10 @@
 			<selection orgId="62146" font="materialdesignicons.ttf"/>
 			<selection orgId="62147" font="materialdesignicons.ttf"/>
 			<selection orgId="62160" font="forkawesome.ttf"/>
-			<selection orgId="62161" font="forkawesome.ttf"/>
 			<selection orgId="62161" font="materialdesignicons.ttf"/>
-			<selection orgId="62162" font="forkawesome.ttf"/>
+			<selection orgId="62161" font="forkawesome.ttf"/>
 			<selection orgId="62162" font="materialdesignicons.ttf"/>
+			<selection orgId="62162" font="forkawesome.ttf"/>
 			<selection orgId="62163" font="forkawesome.ttf"/>
 			<selection orgId="62164" font="forkawesome.ttf"/>
 			<selection orgId="62168" font="materialdesignicons.ttf"/>

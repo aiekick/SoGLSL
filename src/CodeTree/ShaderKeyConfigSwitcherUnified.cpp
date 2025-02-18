@@ -33,7 +33,6 @@
 
 inline std::set<std::string> inConfigSwitchertScanDirectory(const std::string& vPath) {
     std::set<std::string> res;
-
     if (!vPath.empty()) {
         const std::filesystem::path fspath(vPath);
         const auto dir_iter = std::filesystem::directory_iterator(fspath);
@@ -49,7 +48,6 @@ inline std::set<std::string> inConfigSwitchertScanDirectory(const std::string& v
             }
         }
     }
-
     return res;
 }
 

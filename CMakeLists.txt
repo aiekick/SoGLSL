@@ -178,6 +178,7 @@ set(SOGSL_INCLUDE_DIRS
 	${IN_APP_GPU_PROFILER_INCLUDE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}/3rdparty
 	${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/tracy/public
+	${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ezlibs/include
 )
 
 set(SOGSL_INCLUDE_DIRS ${SOGSL_INCLUDE_DIRS} PARENT_SCOPE) ## set this var in the parent scope
