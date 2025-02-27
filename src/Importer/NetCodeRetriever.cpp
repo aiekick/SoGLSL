@@ -31,7 +31,7 @@ std::atomic<float> NetCodeRetriever::sGenerationTime(0.0f);
 std::atomic<UrlLoadingStatus> NetCodeRetriever::sUrlLoadingStatus(UrlLoadingStatus::URL_LOADING_STATUE_OK);
 std::mutex NetCodeRetriever::sWorkerThread_Mutex;
 std::list<ShaderInfos> NetCodeRetriever::sShaders = std::list<ShaderInfos>();
-std::atomic<bool> NetCodeRetriever::sInportInOneFile(false);
+std::atomic<bool> NetCodeRetriever::sInportInOneFile(true);
 VersionStruct NetCodeRetriever::sVersion = VersionStruct();
 
 /////////////////////////////////////////////////////////////////////
@@ -163,20 +163,17 @@ bool NetCodeRetriever::drawUrl(bool* vShow, bool vHideProxySettings, bool vHideS
 
     if (!vHideProxySettings) {
         ImGui::Checkbox("Proxy ?", &puUseProxy);
-        ImGui::SameLine();
         if (puUseProxy) {
             ImGui::PushItemWidth(150.0f);
             ImGui::InputText("##proxy", puProxyPath, 100);
             if (ImGui::IsItemHovered())
                 ImGui::SetTooltip("Type here the proxy ip and port in the format => ip:port");
             ImGui::PopItemWidth();
-            ImGui::SameLine();
             ImGui::PushItemWidth(150.0f);
             ImGui::InputText("##userpwd", puUserPwd, 100);
             if (ImGui::IsItemHovered())
                 ImGui::SetTooltip("Type here the proxy user and password in the format => user:password");
             ImGui::PopItemWidth();
-            ImGui::SameLine();
         }
     }
 
@@ -186,7 +183,6 @@ bool NetCodeRetriever::drawUrl(bool* vShow, bool vHideProxySettings, bool vHideS
         if (ImGui::IsItemHovered())
             ImGui::SetTooltip("Type here the ShaderToy AkiKey here");
         ImGui::PopItemWidth();
-        ImGui::SameLine();
     }
 
     if (puWorkerThread.joinable() && NetCodeRetriever::sProgress > 0.0) {
@@ -199,8 +195,6 @@ bool NetCodeRetriever::drawUrl(bool* vShow, bool vHideProxySettings, bool vHideS
         const float w = ImGui::GetIO().DisplaySize.x - ImGui::GetCursorPosX() - 60.0f;
 
         ImGui::ProgressBar(pr, ImVec2(w, 0), puUrl);
-
-        ImGui::SameLine();
 
         if (ImGui::ContrastedButton("Stop")) {
             StopWorkerThread();
@@ -219,17 +213,11 @@ bool NetCodeRetriever::drawUrl(bool* vShow, bool vHideProxySettings, bool vHideS
 
         float starP = ImGui::GetCursorPosX();
 
-        ImGui::SameLine();
-
         bool _InportInOneFile = NetCodeRetriever::sInportInOneFile;
         ImGui::RadioButtonLabeled(ImVec2(120.0f, 0.0f), "Import in One File", "Import all Buffers In One File", &_InportInOneFile);
         NetCodeRetriever::sInportInOneFile = _InportInOneFile;
 
-        ImGui::SameLine();
-
         load |= ImGui::ContrastedButton("Load");
-
-        ImGui::SameLine();
 
         if (ImGui::ContrastedButton("Hide")) {
             *vShow = false;

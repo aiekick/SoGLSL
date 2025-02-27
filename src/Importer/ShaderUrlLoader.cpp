@@ -1371,9 +1371,9 @@ void ShaderUrlLoader::AddUniformsFromCode(ShaderInfos *vShaderInfos,
                                         lst = ct::strContains(*vCommonCode, baseName);
                                     DoChannelInput(baseName, vShaderInfos, 3, lst.size(), vImportInOneFile);
                                 } else if (baseName == "sampler2D") {
-                                    vShaderInfos->specific_uniforms += "uniform sampler2D(pictures:choose) " + name + ";\n";
+                                    vShaderInfos->specific_uniforms += "uniform sampler2D(picture) " + name + ";\n";
                                 } else if (baseName == "samplerCube") {
-                                    vShaderInfos->specific_uniforms += "uniform samplerCube(choose) " + name + ";\n";
+                                    vShaderInfos->specific_uniforms += "uniform samplerCube() " + name + ";\n";
                                 }
                             }
                         }
@@ -1587,9 +1587,9 @@ void ShaderUrlLoader::DoChannelInput(std::string vBaseName, ShaderInfos *vShader
             } else {
                 LogVarError("Channel id %i not found", id);
             }
-        } else  // l'input n'est pas r�f�renc� on va ajoute un uniform de type texture vide
+        } else  // l'input n'est pas référence on va ajoute un uniform de type texture vide
         {
-            vShaderInfos->specific_uniforms += "uniform sampler2D(pictures:choose) " + vBaseName + ";\n";
+            vShaderInfos->specific_uniforms += "uniform sampler2D(picture) " + vBaseName + ";\n";
         }
     }
 }

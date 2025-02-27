@@ -134,12 +134,12 @@ struct ShadertoyStruct {
                             ShaderToyInput input;
                             input.id = var_in.get("id").to_str();
                             input.type = var_in.get("type").to_str();
-                            if (input.type.empty()) {
+                            if (input.type.empty() || input.type == "null") {
                                 input.type = var_in.get("ctype").to_str();
                             }
 
                             input.chan = var_in.get("channel").to_str();
-                            input.filepath = "https://www.shadertoy.com" + var_in.get("filepath").to_str();
+                            input.filepath = "https://www.shadertoy.com" + var_in.get("src").to_str();
 
                             picojson::value sampler = var_in.get("sampler");
                             input.sampler.filter = sampler.get("filter").to_str();
